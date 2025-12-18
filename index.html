@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programme STI - Tunisie</title>
+    <link rel="stylesheet" href="style.css">
+     <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>📘 Guide du Programme STI <img src="flag.png" alt="" width="40px" height="40px"></h1>
+        <p>Sciences et Technologies de l'Informatique - Tunisie</p>
+    </header>
+
+    <div class="container">
+        <div class="intro">
+            <h2>🎯 À propos de ce guide</h2>
+            <p>Ce guide présente de manière claire et structurée le curriculum officiel tunisien pour les classes de 2ème, 3ème et 4ème année STI. Cliquez sur chaque niveau pour découvrir le contenu détaillé du programme.</p>
+        </div>
+
+        <div class="search-box">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="🔍 Rechercher un sujet, une technologie, une balise...">
+                <button class="clear-search" id="clearBtn">✕</button>
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+
+        <div class="search-results" id="searchResults">
+            <h3>Résultats de recherche (<span id="resultCount">0</span>)</h3>
+            <div id="resultsContainer"></div>
+        </div>
+
+        <div class="levels-grid">
+            <!-- 2ème Année -->
+            <div class="level-card level-2" id="level2">
+                <div class="level-header">
+                    <div class="level-number">2</div>
+                    <div class="level-title">
+                        <h3>2ème Année STI</h3>
+                        <p>Fondamentaux du Web</p>
+                    </div>
+                </div>
+                <button class="toggle-btn" onclick="toggleLevel('level2-content')">Voir le programme</button>
+                
+                <div class="level-content" id="level2-content">
+                    <div class="section">
+                        <h4>🌐 HTML5 - Structure de base</h4>
+                        <div class="tags">
+                            <span class="tag">&lt;html&gt;</span>
+                            <span class="tag">&lt;head&gt;</span>
+                            <span class="tag">&lt;body&gt;</span>
+                            <span class="tag">&lt;p&gt;</span>
+                            <span class="tag">&lt;h1&gt; à &lt;h6&gt;</span>
+                            <span class="tag">&lt;br&gt;</span>
+                            <span class="tag">&lt;mark&gt;</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📋 Listes et Tableaux</h4>
+                        <div class="tags">
+                            <span class="tag">&lt;ul&gt; &lt;ol&gt;</span>
+                            <span class="tag">&lt;li&gt;</span>
+                            <span class="tag">&lt;table&gt;</span>
+                            <span class="tag">&lt;tr&gt; &lt;td&gt; &lt;th&gt;</span>
+                            <span class="tag">&lt;thead&gt; &lt;tbody&gt; &lt;tfoot&gt;</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🎨 Multimédia</h4>
+                        <div class="tags">
+                            <span class="tag">&lt;img&gt;</span>
+                            <span class="tag">&lt;audio&gt;</span>
+                            <span class="tag">&lt;video&gt;</span>
+                            <span class="tag">&lt;a&gt;</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📝 Formulaires de base</h4>
+                        <div class="tags">
+                            <span class="tag">&lt;form&gt;</span>
+                            <span class="tag">input: text, number, radio, checkbox</span>
+                            <span class="tag">&lt;select&gt; &lt;option&gt;</span>
+                            <span class="tag">&lt;fieldset&gt; &lt;legend&gt;</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🎨 CSS3 - Styles inline et internes</h4>
+                        <div class="tags">
+                            <span class="tag">font-family</span>
+                            <span class="tag">font-size</span>
+                            <span class="tag">color</span>
+                            <span class="tag">text-align</span>
+                            <span class="tag">border</span>
+                            <span class="tag">background</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>✅ Validation HTML5</h4>
+                        <div class="highlight-box">
+                            <strong>Outil officiel :</strong> W3C Validator (https://validator.w3.org/)
+                        </div>
+                    </div>
+
+                    <div class="forbidden">
+                        <h4>⚠️ À NE PAS enseigner en 2ème</h4>
+                        <div class="forbidden-item">❌ Balises sémantiques (header, nav, footer, etc.)</div>
+                        <div class="forbidden-item">❌ JavaScript</div>
+                        <div class="forbidden-item">❌ CSS externe (fichier .css séparé)</div>
+                        <div class="forbidden-item">❌ Formulaires avancés (date, time, email)</div>
+                        <div class="forbidden-item">❌ Sélecteurs CSS complexes</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3ème Année -->
+            <div class="level-card level-3" id="level3">
+                <div class="level-header">
+                    <div class="level-number">3</div>
+                    <div class="level-title">
+                        <h3>3ème Année STI</h3>
+                        <p>Web Interactif & BDD</p>
+                    </div>
+                </div>
+                <button class="toggle-btn" onclick="toggleLevel('level3-content')">Voir le programme</button>
+                
+                <div class="level-content" id="level3-content">
+                    <div class="section">
+                        <h4>🌐 HTML5 Avancé</h4>
+                        <div class="tags">
+                            <span class="tag">&lt;header&gt; &lt;footer&gt; &lt;nav&gt;</span>
+                            <span class="tag">&lt;main&gt; &lt;section&gt; &lt;article&gt;</span>
+                            <span class="tag">&lt;aside&gt; &lt;address&gt;</span>
+                            <span class="tag">&lt;div&gt; &lt;span&gt;</span>
+                            <span class="tag">&lt;iframe&gt;</span>
+                            <span class="tag">&lt;details&gt; &lt;summary&gt;</span>
+                            <span class="tag">&lt;figure&gt; &lt;figcaption&gt;</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📝 Formulaires avancés</h4>
+                        <div class="tags">
+                            <span class="tag">input: date, time, email, tel</span>
+                            <span class="tag">input: password, range, button</span>
+                            <span class="tag">required, min, max</span>
+                            <span class="tag">placeholder, readonly, disabled</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>⚡ Événements HTML</h4>
+                        <div class="tags">
+                            <span class="tag">onclick</span>
+                            <span class="tag">oninput</span>
+                            <span class="tag">onchange</span>
+                            <span class="tag">onfocus / onblur</span>
+                            <span class="tag">onload</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🎨 CSS3 Avancé</h4>
+                        <div class="tags">
+                            <span class="tag">Fichiers .css externes</span>
+                            <span class="tag">Sélecteurs: #id, .class, *</span>
+                            <span class="tag">Box model: margin, padding</span>
+                            <span class="tag">position: absolute, relative, fixed</span>
+                            <span class="tag">float, display</span>
+                            <span class="tag">border-radius, box-shadow</span>
+                            <span class="tag">opacity, overflow</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>✨ Animations CSS</h4>
+                        <div class="tags">
+                            <span class="tag">transition</span>
+                            <span class="tag">@keyframes</span>
+                            <span class="tag">animation</span>
+                            <span class="tag">transform: rotate, scale, translate</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>💻 JavaScript - Introduction</h4>
+                        <div class="tags">
+                            <span class="tag">Variables: let, const</span>
+                            <span class="tag">Types: string, number, boolean</span>
+                            <span class="tag">alert(), prompt()</span>
+                            <span class="tag">document.getElementById()</span>
+                            <span class="tag">innerHTML</span>
+                            <span class="tag">if/else, switch</span>
+                            <span class="tag">for, while, do...while</span>
+                            <span class="tag">function</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📚 Objets JavaScript</h4>
+                        <div class="tags">
+                            <span class="tag">Date: getDate(), getMonth(), getFullYear()</span>
+                            <span class="tag">String: length, substring, indexOf, toLowerCase()</span>
+                            <span class="tag">Array: length</span>
+                            <span class="tag">Math: random(), round(), trunc()</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>💾 Base de Données (Introduction)</h4>
+                        <div class="highlight-box">
+                            <strong>Important :</strong> En 3ème année, l'enseignement est SIMPLIFIÉ - utilisation principalement de l'interface graphique (phpMyAdmin).
+                        </div>
+                        <div class="tags">
+                            <span class="tag">BDR et SGBDR</span>
+                            <span class="tag">Table, Enregistrement, Champ</span>
+                            <span class="tag">Clé primaire, Clé étrangère</span>
+                            <span class="tag">Relations: 1:1, 1:∞, ∞:∞</span>
+                            <span class="tag">Contraintes: PRIMARY KEY, NOT NULL</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔍 SQL Simple (1 table)</h4>
+                        <div class="tags">
+                            <span class="tag">SELECT avec WHERE</span>
+                            <span class="tag">ORDER BY</span>
+                            <span class="tag">DISTINCT</span>
+                            <span class="tag">INSERT INTO</span>
+                            <span class="tag">UPDATE</span>
+                            <span class="tag">DELETE</span>
+                            <span class="tag">Opérateurs: BETWEEN, LIKE, IN</span>
+                        </div>
+                    </div>
+
+                    <div class="forbidden">
+                        <h4>⚠️ À NE PAS enseigner en 3ème</h4>
+                        <div class="forbidden-item">❌ PHP</div>
+                        <div class="forbidden-item">❌ Flexbox et Grid CSS</div>
+                        <div class="forbidden-item">❌ Unités vh, vw</div>
+                        <div class="forbidden-item">❌ console.log() (utiliser alert et innerHTML)</div>
+                        <div class="forbidden-item">❌ addEventListener (utiliser onclick, oninput, etc.)</div>
+                        <div class="forbidden-item">❌ Jointures SQL</div>
+                        <div class="forbidden-item">❌ Fonctions d'agrégation (COUNT, SUM, AVG)</div>
+                        <div class="forbidden-item">❌ GROUP BY et HAVING</div>
+                        <div class="forbidden-item">❌ getElementsByName</div>
+                        <div class="forbidden-item">❌ CREATE/ALTER TABLE en SQL (utiliser interface graphique)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4ème Année -->
+            <div class="level-card level-4" id="level4">
+                <div class="level-header">
+                    <div class="level-number">4</div>
+                    <div class="level-title">
+                        <h3>4ème Année STI</h3>
+                        <p>Sites Dynamiques & BDD Avancée</p>
+                    </div>
+                </div>
+                <button class="toggle-btn" onclick="toggleLevel('level4-content')">Voir le programme</button>
+                
+                <div class="level-content" id="level4-content">
+                    <div class="section">
+                        <h4>🌐 HTML5 - Nouveautés</h4>
+                        <div class="tags">
+                            <span class="tag">&lt;datalist&gt;</span>
+                            <span class="tag">onkeydown / onkeyup</span>
+                            <span class="tag">onmouseover / onmouseout</span>
+                            <span class="tag">onplay / onpause</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🎨 CSS3 - Nouveaux sélecteurs</h4>
+                        <div class="tags">
+                            <span class="tag">a:link, a:visited</span>
+                            <span class="tag">a:hover, input:focus</span>
+                            <span class="tag">input[required]</span>
+                            <span class="tag">input[type="text"]</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>💻 JavaScript - Nouveautés</h4>
+                        <div class="tags">
+                            <span class="tag">getElementsByName()</span>
+                            <span class="tag">Modification attributs: value, checked, disabled</span>
+                            <span class="tag">Modification styles: color, background, border</span>
+                            <span class="tag">Méthodes: play(), pause()</span>
+                            <span class="tag">selectedIndex</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>💾 Base de Données Avancée</h4>
+                        <div class="tags">
+                            <span class="tag">CREATE DATABASE / DROP DATABASE</span>
+                            <span class="tag">CREATE TABLE avec contraintes</span>
+                            <span class="tag">ALTER TABLE (ADD, DROP, MODIFY)</span>
+                            <span class="tag">Types: INT, VARCHAR, DATE, DATETIME</span>
+                            <span class="tag">AUTO_INCREMENT</span>
+                            <span class="tag">FOREIGN KEY avec CASCADE</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔍 SQL Avancé</h4>
+                        <div class="tags">
+                            <span class="tag">Jointures (SQL-89 avec WHERE)</span>
+                            <span class="tag">Fonctions agrégation: COUNT, SUM, AVG</span>
+                            <span class="tag">GROUP BY / HAVING</span>
+                            <span class="tag">Sous-requêtes non corrélées</span>
+                            <span class="tag">Fonctions date: YEAR(), MONTH(), DAY()</span>
+                            <span class="tag">NOW(), ADDDATE(), DATEDIFF()</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🐘 PHP - Bases</h4>
+                        <div class="tags">
+                            <span class="tag">&lt;?php ?&gt;</span>
+                            <span class="tag">Variables: $variable</span>
+                            <span class="tag">echo, print</span>
+                            <span class="tag">Types: int, float, string, bool, array</span>
+                            <span class="tag">if/else, for, while</span>
+                            <span class="tag">Fonctions: strlen(), substr(), date()</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📤 Transmission de données PHP</h4>
+                        <div class="tags">
+                            <span class="tag">$_GET - via URL</span>
+                            <span class="tag">$_POST - via formulaire</span>
+                            <span class="tag">isset()</span>
+                            <span class="tag">require()</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔗 PHP + MySQL</h4>
+                        <div class="highlight-box">
+                            <strong>Important :</strong> Utiliser uniquement mysqli (pas PDO)
+                        </div>
+                        <div class="tags">
+                            <span class="tag">mysqli_connect()</span>
+                            <span class="tag">mysqli_query()</span>
+                            <span class="tag">mysqli_fetch_array()</span>
+                            <span class="tag">mysqli_num_rows()</span>
+                            <span class="tag">mysqli_affected_rows()</span>
+                            <span class="tag">mysqli_error()</span>
+                            <span class="tag">mysqli_close()</span>
+                        </div>
+                    </div>
+
+                    <div class="forbidden">
+                        <h4>⚠️ À NE PAS enseigner en 4ème</h4>
+                        <div class="forbidden-item">❌ PDO (utiliser mysqli uniquement)</div>
+                        <div class="forbidden-item">❌ Sessions et cookies</div>
+                        <div class="forbidden-item">❌ Upload de fichiers</div>
+                        <div class="forbidden-item">❌ AJAX</div>
+                        <div class="forbidden-item">❌ JSON</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="intro">
+            <h2>📊 Récapitulatif des progressions</h2>
+            <p><strong>2ème année :</strong> HTML5 de base + CSS inline/interne + Validation</p>
+            <p><strong>3ème année :</strong> HTML5 sémantique + CSS externe/animations + JavaScript + BDD introduction simple</p>
+            <p><strong>4ème année :</strong> BDD avancée avec SQL complet + PHP + PHP/MySQL avec mysqli</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>📘 Guide du Programme STI - Sciences et Technologies de l'Informatique</p>
+        <p>Document officiel pour les enseignants - Tunisie 🇹🇳</p>
+    </footer>
+
+    <a href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" class="chatbot-link">
+        <span class="chatbot-icon">🤖</span>
+        <span>Chatbot Annexe STI</span>
+    </a>
+
+   
+</body>
+</html>
