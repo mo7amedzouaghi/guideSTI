@@ -430,6 +430,28 @@ footer {
 
 footer p {
     color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.creator {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid #f0f0f0;
+}
+
+.creator::before {
+    content: "👨‍💻 ";
+}
+
+.creator-name {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
 }
 
 /* Animations */
