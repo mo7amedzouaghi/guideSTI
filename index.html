@@ -16,12 +16,12 @@
     <div class="container">
         <div class="intro">
             <h2>🎯 À propos de ce guide</h2>
-            <p>Ce guide présente de manière claire et structurée le curriculum officiel tunisien pour les classes de 2ème, 3ème et 4ème année STI. Cliquez sur chaque niveau pour découvrir le contenu détaillé du programme.</p>
+            <p>Ce guide présente de manière claire et structurée le curriculum officiel tunisien pour les classes de 2ème, 3ème et 4ème année STI. Chaque section contient des exemples de code, les attributs nécessaires et les paramètres des fonctions.</p>
         </div>
 
         <div class="search-box">
             <div class="search-container">
-                <input type="text" id="searchInput" placeholder="🔍 Rechercher un sujet, une technologie, une balise...">
+                <input type="text" id="searchInput" placeholder="🔎 Rechercher un sujet, une technologie, une balise...">
                 <button class="clear-search" id="clearBtn">✕</button>
                 <span class="search-icon">🔍</span>
             </div>
@@ -47,64 +47,151 @@
                 <div class="level-content" id="level2-content">
                     <div class="section">
                         <h4>🌐 HTML5 - Structure de base</h4>
-                        <div class="tags">
-                            <span class="tag">&lt;html&gt;</span>
-                            <span class="tag">&lt;head&gt;</span>
-                            <span class="tag">&lt;body&gt;</span>
-                            <span class="tag">&lt;p&gt;</span>
-                            <span class="tag">&lt;h1&gt; à &lt;h6&gt;</span>
-                            <span class="tag">&lt;br&gt;</span>
-                            <span class="tag">&lt;mark&gt;</span>
+                        <div class="subsection">
+                            <strong>Structure obligatoire :</strong>
+                            <div class="code-example">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Titre de la page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Contenu --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                            </div>
+                        </div>
+                        <div class="subsection">
+                            <strong>Organisation du texte :</strong>
+                            <div class="tags">
+                                <span class="tag">&lt;p&gt; - Paragraphe</span>
+                                <span class="tag">&lt;br&gt; - Retour à la ligne</span>
+                                <span class="tag">&lt;h1&gt; à &lt;h6&gt; - Titres</span>
+                                <span class="tag">&lt;mark&gt; - Texte surligné</span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="section">
                         <h4>📋 Listes et Tableaux</h4>
-                        <div class="tags">
-                            <span class="tag">&lt;ul&gt; &lt;ol&gt;</span>
-                            <span class="tag">&lt;li&gt;</span>
-                            <span class="tag">&lt;table&gt;</span>
-                            <span class="tag">&lt;tr&gt; &lt;td&gt; &lt;th&gt;</span>
-                            <span class="tag">&lt;thead&gt; &lt;tbody&gt; &lt;tfoot&gt;</span>
+                        <div class="subsection">
+                            <strong>Listes :</strong>
+                            <div class="tags">
+                                <span class="tag">&lt;ul&gt; - Liste à puces</span>
+                                <span class="tag">&lt;ol&gt; - Liste ordonnée</span>
+                                <span class="tag">&lt;li&gt; - Élément de liste</span>
+                            </div>
+                        </div>
+                        <div class="subsection">
+                            <strong>Tableaux :</strong>
+                            <div class="tags">
+                                <span class="tag">&lt;table&gt; - Tableau</span>
+                                <span class="tag">&lt;tr&gt; - Ligne</span>
+                                <span class="tag">&lt;td&gt; - Cellule</span>
+                                <span class="tag">&lt;th&gt; - En-tête</span>
+                                <span class="tag">&lt;thead&gt; &lt;tbody&gt; &lt;tfoot&gt;</span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="section">
                         <h4>🎨 Multimédia</h4>
                         <div class="tags">
-                            <span class="tag">&lt;img&gt;</span>
-                            <span class="tag">&lt;audio&gt;</span>
-                            <span class="tag">&lt;video&gt;</span>
-                            <span class="tag">&lt;a&gt;</span>
+                            <span class="tag">&lt;img&gt; - Attributs: src, alt</span>
+                            <span class="tag">&lt;audio&gt; - Attributs: controls, src</span>
+                            <span class="tag">&lt;video&gt; - Attributs: controls, src</span>
+                            <span class="tag">&lt;a&gt; - Attributs: href, target</span>
                         </div>
                     </div>
 
                     <div class="section">
                         <h4>📝 Formulaires de base</h4>
-                        <div class="tags">
-                            <span class="tag">&lt;form&gt;</span>
-                            <span class="tag">input: text, number, radio, checkbox</span>
-                            <span class="tag">&lt;select&gt; &lt;option&gt;</span>
-                            <span class="tag">&lt;fieldset&gt; &lt;legend&gt;</span>
+                        <div class="subsection">
+                            <strong>Balise form :</strong>
+                            <div class="tags">
+                                <span class="tag">&lt;form&gt; - Attributs: action, method, target</span>
+                            </div>
+                        </div>
+                        <div class="subsection">
+                            <strong>Types d'input :</strong>
+                            <div class="tags">
+                                <span class="tag">text - Texte simple</span>
+                                <span class="tag">number - Nombre</span>
+                                <span class="tag">radio - Bouton radio</span>
+                                <span class="tag">checkbox - Case à cocher</span>
+                                <span class="tag">reset - Réinitialiser</span>
+                                <span class="tag">submit - Soumettre</span>
+                            </div>
+                        </div>
+                        <div class="subsection">
+                            <strong>Autres éléments :</strong>
+                            <div class="tags">
+                                <span class="tag">&lt;select&gt; &lt;option&gt;</span>
+                                <span class="tag">&lt;fieldset&gt; &lt;legend&gt;</span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="section">
                         <h4>🎨 CSS3 - Styles inline et internes</h4>
+                        <div class="subsection">
+                            <strong>Style inline :</strong>
+                            <div class="code-example">&lt;p style="color: blue; font-size: 18px;"&gt;Texte stylé&lt;/p&gt;</div>
+                        </div>
+                        <div class="subsection">
+                            <strong>Style interne (dans &lt;head&gt;) :</strong>
+                            <div class="code-example">
+&lt;style&gt;
+  p {
+    color: blue;
+    font-size: 18px;
+  }
+&lt;/style&gt;
+                            </div>
+                        </div>
+                        <div class="subsection">
+                            <strong>Syntaxe CSS : sélecteur { propriété: valeur; }</strong>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📐 Propriétés CSS - Texte</h4>
                         <div class="tags">
-                            <span class="tag">font-family</span>
-                            <span class="tag">font-size</span>
-                            <span class="tag">color</span>
-                            <span class="tag">text-align</span>
-                            <span class="tag">border</span>
-                            <span class="tag">background</span>
+                            <span class="tag">font-family - Police</span>
+                            <span class="tag">font-size - Taille</span>
+                            <span class="tag">font-weight: bold, bolder, lighter</span>
+                            <span class="tag">font-style: italic</span>
+                            <span class="tag">text-align: left, center, right, justify</span>
+                            <span class="tag">color - Couleur du texte</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔲 Propriétés CSS - Bordures</h4>
+                        <div class="tags">
+                            <span class="tag">border-color - Couleur</span>
+                            <span class="tag">border-style: solid, dashed, dotted</span>
+                            <span class="tag">border-width - Largeur</span>
+                            <span class="tag">border - Propriété abrégée</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🎨 Propriétés CSS - Arrière-plan</h4>
+                        <div class="tags">
+                            <span class="tag">background-color - Couleur</span>
+                            <span class="tag">background-image - Image</span>
+                            <span class="tag">background-repeat: repeat, no-repeat</span>
+                            <span class="tag">background - Propriété abrégée</span>
                         </div>
                     </div>
 
                     <div class="section">
                         <h4>✅ Validation HTML5</h4>
                         <div class="highlight-box">
-                            <strong>Outil officiel :</strong> W3C Validator (https://validator.w3.org/)
+                            <strong>Outil officiel :</strong> W3C Validator (https://validator.w3.org/)<br>
+                            <strong>Objectif :</strong> Corriger les erreurs et avertissements
                         </div>
                     </div>
 
@@ -132,110 +219,484 @@
                 
                 <div class="level-content" id="level3-content">
                     <div class="section">
-                        <h4>🌐 HTML5 Avancé</h4>
+                        <h4>🌐 HTML5 - En-tête</h4>
                         <div class="tags">
-                            <span class="tag">&lt;header&gt; &lt;footer&gt; &lt;nav&gt;</span>
-                            <span class="tag">&lt;main&gt; &lt;section&gt; &lt;article&gt;</span>
-                            <span class="tag">&lt;aside&gt; &lt;address&gt;</span>
-                            <span class="tag">&lt;div&gt; &lt;span&gt;</span>
-                            <span class="tag">&lt;iframe&gt;</span>
-                            <span class="tag">&lt;details&gt; &lt;summary&gt;</span>
-                            <span class="tag">&lt;figure&gt; &lt;figcaption&gt;</span>
+                            <span class="tag">&lt;link&gt; - Attributs: href, rel, type</span>
+                            <span class="tag">&lt;script&gt; - Attributs: src, type</span>
+                        </div>
+                        <div class="code-example">
+&lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;script src="script.js"&gt;&lt;/script&gt;
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>📝 Formulaires avancés</h4>
+                        <h4>📦 HTML5 - Conteneurs</h4>
                         <div class="tags">
-                            <span class="tag">input: date, time, email, tel</span>
-                            <span class="tag">input: password, range, button</span>
-                            <span class="tag">required, min, max</span>
-                            <span class="tag">placeholder, readonly, disabled</span>
+                            <span class="tag">&lt;div&gt; - Conteneur block</span>
+                            <span class="tag">&lt;span&gt; - Conteneur inline</span>
+                            <span class="tag">&lt;iframe&gt; - Attributs: src, name</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🏗️ HTML5 - Structure sémantique</h4>
+                        <div class="tags">
+                            <span class="tag">&lt;main&gt; - Contenu principal</span>
+                            <span class="tag">&lt;article&gt; - Article autonome</span>
+                            <span class="tag">&lt;section&gt; - Section</span>
+                            <span class="tag">&lt;nav&gt; - Navigation</span>
+                            <span class="tag">&lt;header&gt; - En-tête</span>
+                            <span class="tag">&lt;footer&gt; - Pied de page</span>
+                            <span class="tag">&lt;aside&gt; - Contenu secondaire</span>
+                            <span class="tag">&lt;address&gt; - Contact</span>
+                            <span class="tag">&lt;cite&gt; - Citation</span>
+                            <span class="tag">&lt;output&gt; - Sortie de calcul</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔽 HTML5 - Interactivité</h4>
+                        <div class="tags">
+                            <span class="tag">&lt;details&gt; - Contenu pliable</span>
+                            <span class="tag">&lt;summary&gt; - Titre du details</span>
+                            <span class="tag">Attribut: open</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🖼️ HTML5 - Multimédia avancé</h4>
+                        <div class="tags">
+                            <span class="tag">&lt;figure&gt; - Figure</span>
+                            <span class="tag">&lt;figcaption&gt; - Légende</span>
+                            <span class="tag">&lt;source&gt; - Source alternative</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📝 Formulaires avancés - Nouveaux types</h4>
+                        <div class="tags">
+                            <span class="tag">date - Sélecteur de date</span>
+                            <span class="tag">time - Sélecteur d'heure</span>
+                            <span class="tag">email - Email avec validation</span>
+                            <span class="tag">tel - Téléphone</span>
+                            <span class="tag">password - Mot de passe masqué</span>
+                            <span class="tag">range - Curseur</span>
+                            <span class="tag">button - Bouton générique</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📝 Formulaires - Attributs importants</h4>
+                        <div class="tags">
+                            <span class="tag">required - Champ obligatoire</span>
+                            <span class="tag">min, max - Valeurs limites</span>
+                            <span class="tag">placeholder - Texte indicatif</span>
+                            <span class="tag">readonly - Lecture seule</span>
+                            <span class="tag">disabled - Désactivé</span>
+                            <span class="tag">list - Liste de suggestions</span>
                         </div>
                     </div>
 
                     <div class="section">
                         <h4>⚡ Événements HTML</h4>
                         <div class="tags">
-                            <span class="tag">onclick</span>
-                            <span class="tag">oninput</span>
-                            <span class="tag">onchange</span>
-                            <span class="tag">onfocus / onblur</span>
-                            <span class="tag">onload</span>
+                            <span class="tag">onfocus - Obtient le focus</span>
+                            <span class="tag">onblur - Perd le focus</span>
+                            <span class="tag">onclick - Clic</span>
+                            <span class="tag">oninput - Valeur change (temps réel)</span>
+                            <span class="tag">onchange - Valeur change (après validation)</span>
+                            <span class="tag">onload - Page chargée</span>
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>🎨 CSS3 Avancé</h4>
+                        <h4>🎨 CSS3 - Feuille de style externe</h4>
+                        <div class="code-example">&lt;link rel="stylesheet" href="mesStyles.css"&gt;</div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🎯 CSS3 - Sélecteurs</h4>
                         <div class="tags">
-                            <span class="tag">Fichiers .css externes</span>
-                            <span class="tag">Sélecteurs: #id, .class, *</span>
-                            <span class="tag">Box model: margin, padding</span>
-                            <span class="tag">position: absolute, relative, fixed</span>
-                            <span class="tag">float, display</span>
-                            <span class="tag">border-radius, box-shadow</span>
-                            <span class="tag">opacity, overflow</span>
+                            <span class="tag">p { } - Élément</span>
+                            <span class="tag">#id { } - Identifiant</span>
+                            <span class="tag">.class { } - Classe</span>
+                            <span class="tag">h1, h2 { } - Groupe</span>
+                            <span class="tag">* { } - Universel</span>
+                            <span class="tag">:hover - Pseudo-classe</span>
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>✨ Animations CSS</h4>
+                        <h4>✍️ CSS3 - Propriétés texte avancées</h4>
                         <div class="tags">
-                            <span class="tag">transition</span>
-                            <span class="tag">@keyframes</span>
-                            <span class="tag">animation</span>
-                            <span class="tag">transform: rotate, scale, translate</span>
+                            <span class="tag">text-shadow - Ombre du texte</span>
+                            <span class="tag">text-transform: uppercase, lowercase, capitalize</span>
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>💻 JavaScript - Introduction</h4>
+                        <h4>📋 CSS3 - Propriétés listes</h4>
                         <div class="tags">
-                            <span class="tag">Variables: let, const</span>
-                            <span class="tag">Types: string, number, boolean</span>
-                            <span class="tag">alert(), prompt()</span>
-                            <span class="tag">document.getElementById()</span>
-                            <span class="tag">innerHTML</span>
-                            <span class="tag">if/else, switch</span>
-                            <span class="tag">for, while, do...while</span>
-                            <span class="tag">function</span>
+                            <span class="tag">list-style-type: circle, square, upper-roman, lower-alpha</span>
+                            <span class="tag">list-style-position: inside, outside</span>
+                            <span class="tag">list-style-image - Image comme puce</span>
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>📚 Objets JavaScript</h4>
+                        <h4>🎨 CSS3 - Arrière-plan avancé</h4>
                         <div class="tags">
-                            <span class="tag">Date: getDate(), getMonth(), getFullYear()</span>
-                            <span class="tag">String: length, substring, indexOf, toLowerCase()</span>
-                            <span class="tag">Array: length</span>
-                            <span class="tag">Math: random(), round(), trunc()</span>
+                            <span class="tag">background-size: cover, contain</span>
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>💾 Base de Données (Introduction)</h4>
+                        <h4>📦 CSS3 - Modèle de boîte</h4>
+                        <div class="tags">
+                            <span class="tag">width, height - Dimensions</span>
+                            <span class="tag">padding - Marge intérieure</span>
+                            <span class="tag">margin - Marge extérieure</span>
+                            <span class="tag">box-shadow - Ombre de boîte</span>
+                            <span class="tag">display: inline, block, inline-block</span>
+                            <span class="tag">position: absolute, fixed, relative, static, sticky</span>
+                            <span class="tag">float: left, right, none</span>
+                            <span class="tag">top, bottom, left, right</span>
+                            <span class="tag">overflow: visible, hidden, scroll, auto</span>
+                            <span class="tag">opacity - Transparence (0 à 1)</span>
+                            <span class="tag">border-radius - Coins arrondis</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>✨ CSS3 - Transitions</h4>
+                        <div class="code-example">
+.element {
+  transition: all 0.3s ease;
+}
+.element:hover {
+  transform: scale(1.1);
+}
+                        </div>
+                        <div class="tags">
+                            <span class="tag">transition-delay - Délai</span>
+                            <span class="tag">transition-duration - Durée</span>
+                            <span class="tag">transition-property - Propriété ciblée</span>
+                            <span class="tag">transition - Abrégée</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🎬 CSS3 - Animations</h4>
+                        <div class="code-example">
+@keyframes monAnimation {
+  0% { left: 0; }
+  100% { left: 100px; }
+}
+.element {
+  animation: monAnimation 2s infinite;
+}
+                        </div>
+                        <div class="tags">
+                            <span class="tag">@keyframes - Définir animation</span>
+                            <span class="tag">animation-name - Nom</span>
+                            <span class="tag">animation-duration - Durée</span>
+                            <span class="tag">animation-delay - Délai</span>
+                            <span class="tag">animation-iteration-count - Répétitions (ou infinite)</span>
+                            <span class="tag">animation-direction - Direction</span>
+                            <span class="tag">animation - Abrégée</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔄 CSS3 - Transformations</h4>
+                        <div class="tags">
+                            <span class="tag">transform: rotate() - Rotation</span>
+                            <span class="tag">transform: scale() - Échelle</span>
+                            <span class="tag">transform: translate() - Translation</span>
+                            <span class="tag">transform: skew() - Inclinaison</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>💻 JavaScript - Emplacement du script</h4>
+                        <div class="code-example">
+&lt;!-- Dans le HTML --&gt;
+&lt;script&gt;
+  // Code JavaScript
+&lt;/script&gt;
+
+&lt;!-- Fichier externe --&gt;
+&lt;script src="mesControles.js"&gt;&lt;/script&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📤 JavaScript - Entrées/Sorties</h4>
+                        <div class="code-example">
+// Entrées
+let nom = prompt('Quel est votre nom ?');
+
+// Sorties
+alert('Bonjour !');
+document.write('Texte dans la page');
+element.innerHTML = 'Nouveau contenu';
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔍 JavaScript - Accès aux éléments</h4>
+                        <div class="code-example">let element = document.getElementById('monId');</div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📦 JavaScript - Variables et constantes</h4>
+                        <div class="code-example">
+let variable = 10;  // Variable (peut changer)
+const constante = 20;  // Constante (ne change pas)
+                        </div>
+                        <div class="subsection">
+                            <strong>Types de données :</strong>
+                            <div class="tags">
+                                <span class="tag">string - Chaîne</span>
+                                <span class="tag">number - Nombre</span>
+                                <span class="tag">boolean - Booléen (true/false)</span>
+                                <span class="tag">array - Tableau</span>
+                                <span class="tag">date - Date</span>
+                            </div>
+                        </div>
+                        <div class="subsection">
+                            <strong>Portée : Locale (fonction) ou Globale (partout)</strong>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔀 JavaScript - Structures conditionnelles</h4>
+                        <div class="code-example">
+// IF / ELSE IF / ELSE
+if (condition) {
+  // Code
+} else if (autreCondition) {
+  // Code
+} else {
+  // Code
+}
+
+// SWITCH
+switch (variable) {
+  case valeur1:
+    // Code
+    break;
+  case valeur2:
+    // Code
+    break;
+  default:
+    // Code
+}
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔁 JavaScript - Structures itératives</h4>
+                        <div class="code-example">
+// FOR
+for (let i = 0; i < 10; i++) {
+  // Code
+}
+
+// WHILE
+while (condition) {
+  // Code
+}
+
+// DO...WHILE
+do {
+  // Code
+} while (condition);
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>⚙️ JavaScript - Fonctions</h4>
+                        <div class="code-example">
+// Déclaration
+function maFonction(parametre1, parametre2) {
+  // Code
+  return resultat;
+}
+
+// Appel
+let resultat = maFonction(valeur1, valeur2);
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📅 JavaScript - Objet Date</h4>
+                        <div class="code-example">
+let maintenant = new Date();
+let jour = maintenant.getDate();
+let mois = maintenant.getMonth();
+let annee = maintenant.getFullYear();
+let dateStr = maintenant.toString();
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📝 JavaScript - Objet String</h4>
+                        <div class="code-example">
+let texte = 'Bonjour';
+let longueur = texte.length;
+let sousChaine = texte.substring(0, 3);
+let position = texte.indexOf('jour');
+let dernierePos = texte.lastIndexOf('o');
+let remplace = texte.replace('Bonjour', 'Salut');
+let minuscules = texte.toLowerCase();
+let majuscules = texte.toUpperCase();
+let nettoye = texte.trim();
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔢 JavaScript - Conversions</h4>
+                        <div class="code-example">
+let chaine = String.fromCharCode(65, 66, 67); // 'ABC'
+let estNombre = isNaN('123'); // false
+let nombre = Number('123'); // 123
+let reel = parseFloat('3.14'); // 3.14
+let entier = parseInt('10', 10); // 10
+let enChaine = String(123); // '123'
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📊 JavaScript - Array et Math</h4>
+                        <div class="code-example">
+// Array
+let tableau = ['a', 'b', 'c'];
+let longueur = tableau.length;
+
+// Math
+let aleatoire = Math.random();
+let arrondi = Math.round(4.7);
+let tronque = Math.trunc(4.9);
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>💾 Base de Données - Concepts</h4>
                         <div class="highlight-box">
-                            <strong>Important :</strong> En 3ème année, l'enseignement est SIMPLIFIÉ - utilisation principalement de l'interface graphique (phpMyAdmin).
+                            <strong>Important :</strong> En 3ème année, utilisation SIMPLIFIÉE avec l'interface graphique (phpMyAdmin)
                         </div>
-                        <div class="tags">
-                            <span class="tag">BDR et SGBDR</span>
-                            <span class="tag">Table, Enregistrement, Champ</span>
-                            <span class="tag">Clé primaire, Clé étrangère</span>
-                            <span class="tag">Relations: 1:1, 1:∞, ∞:∞</span>
-                            <span class="tag">Contraintes: PRIMARY KEY, NOT NULL</span>
+                        <div class="subsection">
+                            <strong>Définitions :</strong>
+                            <div class="tags">
+                                <span class="tag">BDR - Base de Données Relationnelle</span>
+                                <span class="tag">SGBDR - Système de Gestion (MySQL)</span>
+                                <span class="tag">Table - Structure de données</span>
+                                <span class="tag">Enregistrement - Ligne</span>
+                                <span class="tag">Champ - Colonne/Attribut</span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>🔍 SQL Simple (1 table)</h4>
+                        <h4>🔑 Base de Données - Clés et relations</h4>
                         <div class="tags">
-                            <span class="tag">SELECT avec WHERE</span>
-                            <span class="tag">ORDER BY</span>
-                            <span class="tag">DISTINCT</span>
-                            <span class="tag">INSERT INTO</span>
-                            <span class="tag">UPDATE</span>
-                            <span class="tag">DELETE</span>
-                            <span class="tag">Opérateurs: BETWEEN, LIKE, IN</span>
+                            <span class="tag">Clé primaire - Identifiant unique (soulignée)</span>
+                            <span class="tag">Clé étrangère - Référence (suivie de #)</span>
+                            <span class="tag">1:1 - Un à un</span>
+                            <span class="tag">1:∞ - Un à plusieurs</span>
+                            <span class="tag">∞:∞ - Plusieurs à plusieurs</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🛡️ Base de Données - Contraintes</h4>
+                        <div class="tags">
+                            <span class="tag">PRIMARY KEY - Clé primaire</span>
+                            <span class="tag">FOREIGN KEY - Clé étrangère</span>
+                            <span class="tag">NOT NULL - Non vide</span>
+                            <span class="tag">UNIQUE - Unique</span>
+                            <span class="tag">CHECK - Vérification</span>
+                            <span class="tag">DEFAULT - Valeur par défaut</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📐 Représentation des bases</h4>
+                        <div class="subsection">
+                            <strong>Textuelle :</strong>
+                            <div class="code-example">
+Étudiants (id, nom, prenom, classe_id#)
+Classes (id, nom, niveau)
+                            </div>
+                        </div>
+                        <div class="subsection">
+                            <strong>Graphique :</strong>
+                            <div class="code-example">Classes (1) ----< (∞) Étudiants</div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔍 SQL Simple - SELECT</h4>
+                        <div class="code-example">
+-- Sélection simple
+SELECT nom, prenom, age FROM etudiants;
+
+-- Avec condition
+SELECT nom, prenom FROM etudiants WHERE age > 18;
+
+-- Avec tri
+SELECT nom, prenom FROM etudiants ORDER BY nom ASC;
+
+-- Sans doublons
+SELECT DISTINCT ville FROM etudiants;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>➕ SQL Simple - INSERT, UPDATE, DELETE</h4>
+                        <div class="code-example">
+-- INSERT
+INSERT INTO etudiants (nom, prenom, age)
+VALUES ('Ben Ali', 'Ahmed', 20);
+
+-- UPDATE
+UPDATE etudiants SET age = 21 WHERE nom = 'Ben Ali';
+
+-- DELETE
+DELETE FROM etudiants WHERE age < 18;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔧 SQL - Opérateurs</h4>
+                        <div class="code-example">
+-- BETWEEN
+SELECT * FROM etudiants WHERE age BETWEEN 18 AND 25;
+
+-- LIKE
+SELECT * FROM etudiants WHERE nom LIKE 'Ben%';
+
+-- IN
+SELECT * FROM etudiants WHERE ville IN ('Tunis', 'Sousse', 'Sfax');
+
+-- IS NULL
+SELECT * FROM etudiants WHERE email IS NULL;
+                        </div>
+                        <div class="tags">
+                            <span class="tag">Comparaison: =, <>, >, <, >=, <=</span>
+                            <span class="tag">Logiques: AND, OR, NOT</span>
+                            <span class="tag">Spéciaux: BETWEEN, LIKE, IN, IS NULL</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📊 Types de données SQL</h4>
+                        <div class="tags">
+                            <span class="tag">INT - Entier</span>
+                            <span class="tag">VARCHAR(n) - Chaîne variable</span>
+                            <span class="tag">DATE - Date</span>
                         </div>
                     </div>
 
@@ -269,94 +730,560 @@
                 <div class="level-content" id="level4-content">
                     <div class="section">
                         <h4>🌐 HTML5 - Nouveautés</h4>
-                        <div class="tags">
-                            <span class="tag">&lt;datalist&gt;</span>
-                            <span class="tag">onkeydown / onkeyup</span>
-                            <span class="tag">onmouseover / onmouseout</span>
-                            <span class="tag">onplay / onpause</span>
+                        <div class="subsection">
+                            <strong>Nouvel élément :</strong>
+                            <div class="code-example">
+&lt;input list="villes" name="ville"&gt;
+&lt;datalist id="villes"&gt;
+  &lt;option value="Tunis"&gt;
+  &lt;option value="Sousse"&gt;
+  &lt;option value="Sfax"&gt;
+&lt;/datalist&gt;
+                            </div>
+                        </div>
+                        <div class="subsection">
+                            <strong>Nouveaux événements :</strong>
+                            <div class="tags">
+                                <span class="tag">onkeydown - Touche pressée</span>
+                                <span class="tag">onkeyup - Touche relâchée</span>
+                                <span class="tag">onmouseover - Survol souris</span>
+                                <span class="tag">onmouseout - Sortie souris</span>
+                                <span class="tag">onplay - Lecture média</span>
+                                <span class="tag">onpause - Pause média</span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="section">
                         <h4>🎨 CSS3 - Nouveaux sélecteurs</h4>
-                        <div class="tags">
-                            <span class="tag">a:link, a:visited</span>
-                            <span class="tag">a:hover, input:focus</span>
-                            <span class="tag">input[required]</span>
-                            <span class="tag">input[type="text"]</span>
+                        <div class="subsection">
+                            <strong>Pseudo-classes de lien :</strong>
+                            <div class="code-example">
+a:link { color: blue; }      /* Non visité */
+a:visited { color: purple; } /* Visité */
+                            </div>
+                        </div>
+                        <div class="subsection">
+                            <strong>Pseudo-classes d'état :</strong>
+                            <div class="code-example">
+a:hover { color: red; }                /* Survol */
+input:focus { border: 2px solid blue; } /* Focus */
+                            </div>
+                        </div>
+                        <div class="subsection">
+                            <strong>Sélecteurs d'attributs :</strong>
+                            <div class="code-example">
+input[required] { border: 2px solid red; }
+input[type="text"] { width: 100%; }
+                            </div>
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>💻 JavaScript - Nouveautés</h4>
-                        <div class="tags">
-                            <span class="tag">getElementsByName()</span>
-                            <span class="tag">Modification attributs: value, checked, disabled</span>
-                            <span class="tag">Modification styles: color, background, border</span>
-                            <span class="tag">Méthodes: play(), pause()</span>
-                            <span class="tag">selectedIndex</span>
+                        <h4>🔄 CSS3 - Transformations</h4>
+                        <div class="code-example">
+.element {
+  transform: rotate(45deg);
+  transform: scale(1.5);
+  transform: translate(50px, 100px);
+  transform: skew(10deg, 5deg);
+}
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>💾 Base de Données Avancée</h4>
+                        <h4>🎭 CSS3 - Filtres</h4>
                         <div class="tags">
-                            <span class="tag">CREATE DATABASE / DROP DATABASE</span>
-                            <span class="tag">CREATE TABLE avec contraintes</span>
-                            <span class="tag">ALTER TABLE (ADD, DROP, MODIFY)</span>
-                            <span class="tag">Types: INT, VARCHAR, DATE, DATETIME</span>
-                            <span class="tag">AUTO_INCREMENT</span>
-                            <span class="tag">FOREIGN KEY avec CASCADE</span>
+                            <span class="tag">filter: blur() - Flou</span>
+                            <span class="tag">filter: grayscale() - Niveaux de gris</span>
+                            <span class="tag">filter: invert() - Inversion</span>
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>🔍 SQL Avancé</h4>
-                        <div class="tags">
-                            <span class="tag">Jointures (SQL-89 avec WHERE)</span>
-                            <span class="tag">Fonctions agrégation: COUNT, SUM, AVG</span>
-                            <span class="tag">GROUP BY / HAVING</span>
-                            <span class="tag">Sous-requêtes non corrélées</span>
-                            <span class="tag">Fonctions date: YEAR(), MONTH(), DAY()</span>
-                            <span class="tag">NOW(), ADDDATE(), DATEDIFF()</span>
+                        <h4>💻 JavaScript - getElementsByName</h4>
+                        <div class="code-example">
+// Par nom
+let elements = document.getElementsByName('genre');
+
+// Parcourir
+for (let i = 0; i < elements.length; i++) {
+  if (elements[i].checked) {
+    alert(elements[i].value);
+  }
+}
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>🐘 PHP - Bases</h4>
-                        <div class="tags">
-                            <span class="tag">&lt;?php ?&gt;</span>
-                            <span class="tag">Variables: $variable</span>
-                            <span class="tag">echo, print</span>
-                            <span class="tag">Types: int, float, string, bool, array</span>
-                            <span class="tag">if/else, for, while</span>
-                            <span class="tag">Fonctions: strlen(), substr(), date()</span>
+                        <h4>🔧 JavaScript - Modification d'attributs</h4>
+                        <div class="highlight-box">
+                            <strong>Se limiter à :</strong> value, checked, disabled, readonly, src, muted
+                        </div>
+                        <div class="code-example">
+element.value = 'Nouvelle valeur';
+element.checked = true;
+element.disabled = false;
+element.readonly = true;
+element.src = 'nouvelle-image.jpg';
+element.muted = false;
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>📤 Transmission de données PHP</h4>
-                        <div class="tags">
-                            <span class="tag">$_GET - via URL</span>
-                            <span class="tag">$_POST - via formulaire</span>
-                            <span class="tag">isset()</span>
-                            <span class="tag">require()</span>
+                        <h4>🎨 JavaScript - Modification de styles</h4>
+                        <div class="highlight-box">
+                            <strong>Se limiter à :</strong> color, background, border, font, width, height
+                        </div>
+                        <div class="code-example">
+element.style.color = 'blue';
+element.style.background = 'yellow';
+element.style.border = '2px solid red';
+element.style.font = '16px Arial';
+element.style.width = '200px';
+element.style.height = '100px';
                         </div>
                     </div>
 
                     <div class="section">
-                        <h4>🔗 PHP + MySQL</h4>
+                        <h4>▶️ JavaScript - Méthodes média</h4>
+                        <div class="highlight-box">
+                            <strong>Se limiter à :</strong> play(), pause()
+                        </div>
+                        <div class="code-example">
+video.play();
+video.pause();
+
+// Liste déroulante
+let select = document.getElementById('maListe');
+let index = select.selectedIndex;
+let valeur = select.options[index].value;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>💾 BDD - Types de données</h4>
+                        <div class="tags">
+                            <span class="tag">INT - Entier</span>
+                            <span class="tag">DECIMAL(p,d) - Réel</span>
+                            <span class="tag">CHAR(n) - Chaîne fixe</span>
+                            <span class="tag">VARCHAR(n) - Chaîne variable</span>
+                            <span class="tag">TEXT - Texte long</span>
+                            <span class="tag">DATE - Date</span>
+                            <span class="tag">TIME - Heure</span>
+                            <span class="tag">DATETIME - Date et heure</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🏗️ SQL - Création de base</h4>
+                        <div class="code-example">
+CREATE DATABASE ecole;
+DROP DATABASE ecole;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📋 SQL - Création de table</h4>
+                        <div class="code-example">
+CREATE TABLE etudiants (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  nom VARCHAR(50) NOT NULL,
+  prenom VARCHAR(50),
+  age INT CHECK (age >= 0 AND age <= 150),
+  email VARCHAR(100) UNIQUE,
+  classe_id INT,
+  FOREIGN KEY (classe_id) REFERENCES classes(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔧 SQL - ALTER TABLE</h4>
+                        <div class="code-example">
+-- Ajouter une colonne
+ALTER TABLE etudiants ADD telephone VARCHAR(20);
+
+-- Supprimer une colonne
+ALTER TABLE etudiants DROP COLUMN telephone;
+
+-- Modifier une colonne
+ALTER TABLE etudiants MODIFY COLUMN nom VARCHAR(100);
+
+-- Renommer une colonne
+ALTER TABLE etudiants RENAME COLUMN prenom TO first_name;
+
+-- Ajouter une contrainte
+ALTER TABLE etudiants
+ADD CONSTRAINT fk_classe
+FOREIGN KEY (classe_id) REFERENCES classes(id);
+
+-- Supprimer une contrainte
+ALTER TABLE etudiants DROP CONSTRAINT fk_classe;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🗑️ SQL - Suppression</h4>
+                        <div class="code-example">DROP TABLE etudiants;</div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📊 SQL - Fonctions d'agrégation</h4>
+                        <div class="code-example">
+SELECT ville, COUNT(*) AS nombre, AVG(age) AS age_moyen
+FROM etudiants
+GROUP BY ville
+HAVING COUNT(*) > 5;
+                        </div>
+                        <div class="tags">
+                            <span class="tag">COUNT() - Compter</span>
+                            <span class="tag">SUM() - Somme</span>
+                            <span class="tag">AVG() - Moyenne</span>
+                            <span class="tag">MIN() - Minimum</span>
+                            <span class="tag">MAX() - Maximum</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔗 SQL - Jointures (SQL-89)</h4>
+                        <div class="highlight-box">
+                            <strong>Important :</strong> Utiliser la syntaxe classique avec WHERE
+                        </div>
+                        <div class="code-example">
+-- Jointure simple
+SELECT e.nom, e.prenom, c.nom AS classe
+FROM etudiants e, classes c
+WHERE e.classe_id = c.id;
+
+-- Jointure multiple
+SELECT e.nom, c.nom AS classe, n.nom AS niveau
+FROM etudiants e, classes c, niveaux n
+WHERE e.classe_id = c.id AND c.niveau_id = n.id;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔍 SQL - Sous-requêtes</h4>
+                        <div class="highlight-box">
+                            <strong>Uniquement non corrélées</strong>
+                        </div>
+                        <div class="code-example">
+SELECT nom, prenom
+FROM etudiants
+WHERE classe_id IN (
+  SELECT id FROM classes WHERE niveau = '3ème'
+);
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📅 SQL - Fonctions date</h4>
+                        <div class="code-example">
+-- Extraire des parties
+SELECT * FROM commandes
+WHERE YEAR(date_commande) = 2024
+  AND MONTH(date_commande) = 11;
+
+-- DATE() : Extraire date
+SELECT DATE('2024-11-19 14:30:45'); -- 2024-11-19
+
+-- DAY(), MONTH(), YEAR()
+SELECT DAY('2024-11-19');   -- 19
+SELECT MONTH('2024-11-19'); -- 11
+SELECT YEAR('2024-11-19');  -- 2024
+
+-- NOW() : Date et heure courantes
+SELECT NOW(); -- 2024-11-19 14:30:45
+
+-- ADDDATE() : Ajouter des jours/intervalle
+SELECT ADDDATE('2024-11-19', 10);
+SELECT ADDDATE('2024-11-19', INTERVAL 1 MONTH);
+
+-- DATEDIFF() : Différence en jours
+SELECT DATEDIFF('2024-11-19', '2024-11-10'); -- 9
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🐘 PHP - Structure de base</h4>
+                        <div class="code-example">
+&lt;?php
+// Code PHP
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📦 PHP - Variables et types</h4>
+                        <div class="code-example">
+&lt;?php
+// Types
+$age = 25;              // int
+$prix = 19.99;          // float
+$nom = 'Ahmed';         // string
+$actif = true;          // bool
+$fruits = array('Pomme', 'Banane'); // array
+
+// Transtypage
+$nombre = (int)'42';
+$texte = (string)123;
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📤 PHP - Affichage</h4>
+                        <div class="code-example">
+&lt;?php
+echo 'Bonjour le monde!';
+echo '&lt;h1&gt;Titre&lt;/h1&gt;';
+
+$nom = 'Ahmed';
+echo 'Bonjour ' . $nom;  // Concaténation avec .
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔀 PHP - Structures de contrôle</h4>
+                        <div class="code-example">
+&lt;?php
+// IF
+if ($age >= 18) {
+  echo 'Majeur';
+} else {
+  echo 'Mineur';
+}
+
+// FOR
+for ($i = 0; $i < 10; $i++) {
+  echo $i;
+}
+
+// WHILE
+while ($i < 10) {
+  echo $i;
+  $i++;
+}
+
+// DO...WHILE
+do {
+  echo $i;
+  $i++;
+} while ($i < 10);
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔢 PHP - Fonctions mathématiques</h4>
+                        <div class="code-example">
+&lt;?php
+$absolu = abs(-15);      // 15
+$racine = sqrt(16);      // 4
+$arrondi = round(4.7);   // 5
+$aleatoire = rand(1, 10); // Entre 1 et 10
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📝 PHP - Fonctions chaînes</h4>
+                        <div class="code-example">
+&lt;?php
+$longueur = strlen('Bonjour');  // 7
+$majuscule = strtoupper('bonjour'); // BONJOUR
+$minuscule = strtolower('BONJOUR'); // bonjour
+$sousChaine = substr('Bonjour', 0, 3); // Bon
+$position = strpos('Bonjour', 'jour'); // 3
+$remplace = str_replace('monde', 'tous', 'Bonjour le monde');
+$nettoye = trim('  texte  '); // texte
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📅 PHP - Date/Heure</h4>
+                        <div class="code-example">
+&lt;?php
+echo date('d/m/Y');     // 19/11/2024
+echo date('H:i:s');     // 14:30:45
+$timestamp = strtotime('2024-11-19');
+$valide = checkdate(12, 31, 2024); // true
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📊 PHP - Tableaux</h4>
+                        <div class="code-example">
+&lt;?php
+$fruits = array('Pomme', 'Banane', 'Orange');
+$nombre = count($fruits); // 3
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📥 PHP - Importer un fichier</h4>
+                        <div class="code-example">
+&lt;?php
+require('config.php');
+require('functions.php');
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🌐 PHP - Transmission via URL ($_GET)</h4>
+                        <div class="code-example">
+&lt;!-- page.php?nom=Ahmed&age=25 --&gt;
+&lt;?php
+$nom = $_GET['nom'];  // Ahmed
+$age = $_GET['age'];  // 25
+echo 'Bonjour ' . $nom;
+?&gt;
+
+&lt;!-- Créer un lien avec paramètres --&gt;
+&lt;a href="page.php?id=1&action=voir"&gt;Voir détail&lt;/a&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📨 PHP - Transmission via formulaire ($_POST)</h4>
+                        <div class="code-example">
+&lt;form action="traitement.php" method="post"&gt;
+  &lt;input type="text" name="nom"&gt;
+  &lt;input type="email" name="email"&gt;
+  &lt;input type="submit" value="Envoyer"&gt;
+&lt;/form&gt;
+
+&lt;!-- traitement.php --&gt;
+&lt;?php
+if (isset($_POST['nom'])) {
+  $nom = $_POST['nom'];
+  $email = $_POST['email'];
+  echo 'Bonjour ' . $nom;
+}
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔗 PHP + MySQL - Connexion</h4>
                         <div class="highlight-box">
                             <strong>Important :</strong> Utiliser uniquement mysqli (pas PDO)
                         </div>
+                        <div class="code-example">
+&lt;?php
+$conn = mysqli_connect('localhost', 'user', 'password', 'database');
+
+if (!$conn) {
+  die('Connexion échouée: ' . mysqli_connect_error());
+}
+echo 'Connecté avec succès';
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔍 PHP + MySQL - SELECT</h4>
+                        <div class="code-example">
+&lt;?php
+$sql = 'SELECT * FROM etudiants WHERE age > 18';
+$result = mysqli_query($conn, $sql);
+
+if ($result) {
+  while ($row = mysqli_fetch_array($result)) {
+    echo $row['nom'] . ' ' . $row['prenom'] . '&lt;br&gt;';
+    // Ou : echo $row[0] . ' ' . $row[1] . '&lt;br&gt;';
+  }
+  
+  $nombre = mysqli_num_rows($result);
+  echo 'Nombre de résultats: ' . $nombre;
+} else {
+  echo 'Erreur: ' . mysqli_error($conn);
+}
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>➕ PHP + MySQL - INSERT</h4>
+                        <div class="code-example">
+&lt;?php
+$nom = $_POST['nom'];
+$prenom = $_POST['prenom'];
+$age = $_POST['age'];
+
+$sql = "INSERT INTO etudiants (nom, prenom, age)
+        VALUES ('$nom', '$prenom', $age)";
+
+if (mysqli_query($conn, $sql)) {
+  $affected = mysqli_affected_rows($conn);
+  echo $affected . ' enregistrement inséré';
+} else {
+  echo 'Erreur: ' . mysqli_error($conn);
+}
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>✏️ PHP + MySQL - UPDATE</h4>
+                        <div class="code-example">
+&lt;?php
+$id = $_GET['id'];
+$nouvelAge = $_POST['age'];
+
+$sql = "UPDATE etudiants SET age = $nouvelAge WHERE id = $id";
+
+if (mysqli_query($conn, $sql)) {
+  $affected = mysqli_affected_rows($conn);
+  echo $affected . ' enregistrement(s) modifié(s)';
+}
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🗑️ PHP + MySQL - DELETE</h4>
+                        <div class="code-example">
+&lt;?php
+$id = $_GET['id'];
+
+$sql = "DELETE FROM etudiants WHERE id = $id";
+
+if (mysqli_query($conn, $sql)) {
+  $affected = mysqli_affected_rows($conn);
+  echo $affected . ' enregistrement(s) supprimé(s)';
+}
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>🔌 PHP + MySQL - Fermeture</h4>
+                        <div class="code-example">
+&lt;?php
+mysqli_close($conn);
+?&gt;
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📚 Fonctions mysqli</h4>
                         <div class="tags">
-                            <span class="tag">mysqli_connect()</span>
-                            <span class="tag">mysqli_query()</span>
-                            <span class="tag">mysqli_fetch_array()</span>
-                            <span class="tag">mysqli_num_rows()</span>
-                            <span class="tag">mysqli_affected_rows()</span>
-                            <span class="tag">mysqli_error()</span>
-                            <span class="tag">mysqli_close()</span>
+                            <span class="tag">mysqli_connect() - Connexion</span>
+                            <span class="tag">mysqli_query() - Exécuter requête</span>
+                            <span class="tag">mysqli_fetch_array() - Récupérer ligne</span>
+                            <span class="tag">mysqli_num_rows() - Nombre de lignes</span>
+                            <span class="tag">mysqli_affected_rows() - Lignes affectées</span>
+                            <span class="tag">mysqli_error() - Message d'erreur</span>
+                            <span class="tag">mysqli_close() - Fermer connexion</span>
                         </div>
                     </div>
 
@@ -374,22 +1301,20 @@
 
         <div class="intro">
             <h2>📊 Récapitulatif des progressions</h2>
-            <p><strong>2ème année :</strong> HTML5 de base + CSS inline/interne + Validation</p>
-            <p><strong>3ème année :</strong> HTML5 sémantique + CSS externe/animations + JavaScript + BDD introduction simple</p>
-            <p><strong>4ème année :</strong> BDD avancée avec SQL complet + PHP + PHP/MySQL avec mysqli</p>
+            <p><strong>2ème année :</strong> HTML5 de base + CSS inline/interne + Validation W3C</p>
+            <p><strong>3ème année :</strong> HTML5 sémantique + CSS externe/animations + JavaScript + BDD introduction simple (interface graphique)</p>
+            <p><strong>4ème année :</strong> BDD avancée avec SQL complet (CREATE, ALTER, jointures, agrégations) + PHP + PHP/MySQL avec mysqli</p>
         </div>
     </div>
 
     <footer>
         <p>📘 Guide du Programme STI - Sciences et Technologies de l'Informatique</p>
-        <p>Document conforme au programme officiel pour les enseignants - Tunisie 🇹🇳</p>
+        <p>Document officiel pour les enseignants - Tunisie 🇹🇳</p>
     </footer>
 
     <a href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" class="chatbot-link">
         <span class="chatbot-icon">🤖</span>
         <span>Chatbot Annexe STI</span>
     </a>
-
-   
 </body>
 </html>
