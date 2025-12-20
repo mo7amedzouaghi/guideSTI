@@ -912,9 +912,13 @@ ALTER TABLE etudiants DROP COLUMN telephone;
 
 -- Modifier une colonne
 ALTER TABLE etudiants MODIFY COLUMN nom VARCHAR(100);
-
+/*avec ALTER
+ALTER TABLE etudiants ALTER COLUMN nom VARCHAR(100);
+                            
 -- Renommer une colonne
 ALTER TABLE etudiants RENAME COLUMN prenom TO first_name;
+/*avec CHANGE 
+ ALTER TABLE etudiants CHANGE prenom first_name VARCHAR(100);                           
 
 -- Ajouter une contrainte
 ALTER TABLE etudiants
