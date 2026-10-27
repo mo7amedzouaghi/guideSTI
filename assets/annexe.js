@@ -40,7 +40,7 @@
       var lignes = parCle[k].map(function (it) {
         var extra = it.x.map(function (x) { return '<div class="ref-ex">' + esc(x) + "</div>"; }).join("");
         var rq = it.r ? '<div class="enc att" style="margin:6px 0 0;padding:6px 10px;font-size:13.5px"><b class="ico">!</b><span>' + esc(it.r) + "</span></div>" : "";
-        return "<tr><td><code>" + esc(it.e) + "</code></td><td>" + esc(it.d) + extra + rq +
+        return '<tr><td><a href="https://mo7amedzouaghi.github.io/annexe4STITN/?q=' + encodeURIComponent(it.e) + '" target="_blank" rel="noopener" title="Fiche détaillée : paramètres, exemple, remarques"><code>' + esc(it.e) + "</code></a></td><td>" + esc(it.d) + extra + rq +
           '</td><td><span class="nb n' + it.n + '">' + it.n + "ème</span></td></tr>";
       }).join("");
       return '<section class="ref-cat"><h3>' + esc(k) + '</h3><div class="tableau-wrap"><table class="t"><thead><tr><th>Élément</th><th>Définition</th><th>Niveau</th></tr></thead><tbody>' + lignes + "</tbody></table></div></section>";

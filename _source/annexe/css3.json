@@ -2,337 +2,603 @@
   "Sélecteurs": [
     {
       "sélecteur": "element",
-      "définition": "Sélectionne tous les éléments de type *element*.",
-      "exemple": "p {\n  font-size: 16px;\n  line-height: 1.5;\n}"
+      "définition": "Sélectionne tous les éléments de type element.",
+      "exemple": "p {\n  color: #1c2536;\n  font-size: 15px;\n}",
+      "niveau": 2,
+      "motsClés": "sélecteur balise élément type tous les paragraphes"
     },
     {
       "sélecteur": "#id",
-      "définition": "Cible un élément en fonction de la valeur de son attribut *id*.",
-      "exemple": "#header {\n  background: linear-gradient(90deg, #667eea, #764ba2);\n  padding: 20px;\n}"
+      "définition": "Cible un élément en fonction de la valeur de son attribut id.",
+      "exemple": "/* <header id=\"bandeau\"> */\n#bandeau {\n  background-color: #0D2B6B;\n  color: white;\n}",
+      "remarques": [
+        "Un id est unique dans la page.",
+        "linear-gradient() n'est pas dans l'annexe : fond uni avec background-color ou image avec background-image."
+      ],
+      "niveau": 3,
+      "motsClés": "sélecteur identifiant id dièse unique"
     },
     {
       "sélecteur": ".class",
-      "définition": "Cible les éléments en fonction de la valeur de leur attribut *class*.",
-      "exemple": ".btn {\n  background: #007bff;\n  color: white;\n  padding: 10px 20px;\n  border-radius: 5px;\n}"
+      "définition": "Cible les éléments en fonction de la valeur de leur attribut class.",
+      "exemple": "/* <p class=\"alerte\"> */\n.alerte {\n  color: #C62828;\n  font-weight: bold;\n}",
+      "remarques": [
+        "Une même classe peut être donnée à plusieurs éléments."
+      ],
+      "niveau": 3,
+      "motsClés": "sélecteur classe point plusieurs éléments"
     },
     {
       "sélecteur": "element[attr]",
-      "définition": "Cible les éléments qui possèdent l'attribut *attr*.",
-      "exemple": "input[required] {\n  border: 2px solid red;\n}"
+      "définition": "Cible les éléments qui possèdent l'attribut attr.",
+      "exemple": "input[required] {\n  border: 2px solid #C62828;\n}",
+      "remarques": [
+        "Niveau 4ème."
+      ],
+      "niveau": 4,
+      "motsClés": "sélecteur attribut présence crochets"
     },
     {
       "sélecteur": "element[attr=valeur]",
-      "définition": "Cible les éléments en fonction de la valeur de l'attribut *attr*.",
-      "exemple": "input[type=\"text\"] {\n  width: 100%;\n  padding: 10px;\n}"
+      "définition": "Cible les éléments en fonction de la valeur de l'attribut attr.",
+      "exemple": "input[type=\"email\"] {\n  width: 250px;\n}",
+      "remarques": [
+        "Niveau 4ème."
+      ],
+      "niveau": 4,
+      "motsClés": "sélecteur attribut valeur type crochets"
     },
     {
       "sélecteur": "element.class",
-      "définition": "Cible tous les éléments de type *element* en fonction de la valeur de leur attribut *class*.",
-      "exemple": "p.important {\n  font-weight: bold;\n  color: red;\n}"
+      "définition": "Cible tous les éléments de type element en fonction de la valeur de leur attribut class.",
+      "exemple": "/* seulement les <p class=\"note\"> */\np.note {\n  color: gray;\n}",
+      "remarques": [
+        "Niveau 4ème."
+      ],
+      "niveau": 4,
+      "motsClés": "sélecteur élément classe"
     },
     {
       "sélecteur": "a:link",
       "définition": "Cible tous les liens non visités.",
-      "exemple": "a:link {\n  color: blue;\n  text-decoration: none;\n}"
+      "exemple": "a:link {\n  color: #1D4ED8;\n}",
+      "niveau": 4,
+      "motsClés": "lien non visité pseudo-classe"
     },
     {
       "sélecteur": "a:visited",
       "définition": "Cible tous les liens visités.",
-      "exemple": "a:visited {\n  color: purple;\n}"
+      "exemple": "a:visited {\n  color: #5B2C9F;\n}",
+      "niveau": 4,
+      "motsClés": "lien visité pseudo-classe"
     },
     {
       "sélecteur": "a:hover",
       "définition": "Cible l'élément au moment où l'utilisateur le survole avec le pointeur de la souris.",
-      "exemple": "a:hover {\n  color: red;\n  text-decoration: underline;\n}"
+      "exemple": "a:hover {\n  color: #D35400;\n}\n.carte:hover {\n  border-color: #F5B800;\n}",
+      "remarques": [
+        "Ordre des pseudo-classes de lien : link, visited, hover, active.",
+        "En 3ème, :hover sert surtout à déclencher les transitions."
+      ],
+      "niveau": 3,
+      "motsClés": "survol souris hover pseudo-classe"
     },
-    {"sélecteur": ":focus",
+    {
+      "sélecteur": ":focus",
       "définition": "Cible l'élément lorsqu'il a le focus (par exemple lors d'un clic ou de la navigation au clavier).",
-      "exemple": "input:focus {\n  border-color: #007bff;\n  outline: 2px solid #007bff;\n  box-shadow: 0 0 5px rgba(0,123,255,0.5);\n}"
+      "exemple": "input:focus {\n  border: 2px solid #F5B800;\n  background-color: #fff6d6;\n}",
+      "remarques": [
+        "outline n'est pas dans l'annexe : on utilise border et background-color."
+      ],
+      "niveau": 4,
+      "motsClés": "focus champ actif saisie pseudo-classe"
     },
     {
       "sélecteur": "a:active",
       "définition": "Cible l'élément au moment où il est activé par l'utilisateur.",
-      "exemple": "a:active {\n  color: orange;\n}"
+      "exemple": "a:active {\n  color: #C62828;\n}",
+      "niveau": 4,
+      "motsClés": "lien clic actif pseudo-classe"
     }
   ],
   "Propriétés de mise en forme du texte": [
     {
       "propriété": "font-family",
       "définition": "Spécifie les noms de polices possibles par ordre de préférence.",
-      "exemple": "body {\n  font-family: Arial, Helvetica, sans-serif;\n}"
+      "exemple": "body {\n  font-family: Arial, Verdana, sans-serif;\n}",
+      "valeurs": "Noms de polices par ordre de préférence, terminés par une famille générique (serif, sans-serif, monospace)",
+      "remarques": [
+        "Nom de police contenant un espace : entre guillemets, \"Times New Roman\"."
+      ],
+      "niveau": 2,
+      "motsClés": "police caractères typographie"
     },
     {
       "propriété": "font-weight",
       "définition": "Spécifie la manière dont les caractères d'un texte doivent être affichés (bold, bolder, lighter).",
-      "exemple": "h1 {\n  font-weight: bold;\n}\n.light-text {\n  font-weight: 300;\n}"
+      "exemple": "h2 {\n  font-weight: bold;\n}\n.leger {\n  font-weight: lighter;\n}",
+      "valeurs": "bold, bolder, lighter",
+      "remarques": [
+        "Le gras se fait en CSS, jamais avec <b> ou <strong>.",
+        "Les valeurs numériques (300, 700) ne sont pas dans l'annexe."
+      ],
+      "niveau": 2,
+      "motsClés": "gras graisse épaisseur texte bold"
     },
     {
       "propriété": "font-style",
       "définition": "Spécifie le style d'un texte (italic).",
-      "exemple": "em {\n  font-style: italic;\n}"
+      "exemple": "cite {\n  font-style: italic;\n}",
+      "valeurs": "italic",
+      "remarques": [
+        "L'italique se fait en CSS, jamais avec <i> ou <em>."
+      ],
+      "niveau": 2,
+      "motsClés": "italique penché"
     },
     {
       "propriété": "font-size",
       "définition": "Spécifie la taille d'une police.",
-      "exemple": "p {\n  font-size: 16px;\n}\nh1 {\n  font-size: 2em;\n}"
+      "exemple": "h1 {\n  font-size: 28px;\n}\np {\n  font-size: 15px;\n}",
+      "valeurs": "Valeur en px (ou en %)",
+      "remarques": [
+        "Unités em, rem, vw, vh hors programme : px ou %."
+      ],
+      "niveau": 2,
+      "motsClés": "taille texte police grandeur"
     },
     {
       "propriété": "font",
       "définition": "Super-propriété de font. Combine font-family, font-weight, font-style, font-size.",
-      "exemple": "p {\n  font: italic bold 16px/1.5 Arial, sans-serif;\n}"
+      "exemple": "p {\n  font: italic bold 16px Arial, sans-serif;\n}",
+      "valeurs": "[font-style] [font-weight] font-size font-family",
+      "remarques": [
+        "La taille et la police sont obligatoires, dans cet ordre, à la fin.",
+        "line-height n'est pas dans l'annexe."
+      ],
+      "niveau": 2,
+      "motsClés": "police abrégée raccourci"
     },
     {
       "propriété": "text-align",
       "définition": "Spécifie l'alignement horizontal d'un texte (left, center, right, justify).",
-      "exemple": "h1 {\n  text-align: center;\n}\np {\n  text-align: justify;\n}"
+      "exemple": "h1 {\n  text-align: center;\n}\np {\n  text-align: justify;\n}",
+      "valeurs": "left, center, right, justify",
+      "niveau": 2,
+      "motsClés": "aligner alignement centrer centré justifier titre texte"
     },
     {
       "propriété": "text-shadow",
       "définition": "Définit une ombre au texte.",
-      "exemple": "h1 {\n  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);\n}"
+      "exemple": "h1 {\n  text-shadow: 2px 2px 4px gray;\n}",
+      "valeurs": "décalage-x décalage-y [flou] couleur",
+      "niveau": 3,
+      "motsClés": "ombre texte"
     },
     {
       "propriété": "text-transform",
       "définition": "Spécifie la façon de transformer les caractères d'un texte en majuscules ou en minuscules (uppercase, lowercase, capitalize).",
-      "exemple": ".uppercase {\n  text-transform: uppercase;\n}\n.capitalize {\n  text-transform: capitalize;\n}"
+      "exemple": "nav a {\n  text-transform: uppercase;\n}\n.nom {\n  text-transform: capitalize;\n}",
+      "valeurs": "uppercase, lowercase, capitalize",
+      "niveau": 3,
+      "motsClés": "majuscules minuscules casse capitale"
     },
     {
       "propriété": "color",
       "définition": "Spécifie la couleur du texte.",
-      "exemple": "h1 {\n  color: #3498db;\n}\np {\n  color: rgb(50, 50, 50);\n}"
+      "exemple": "h1 {\n  color: #0D2B6B;\n}\np {\n  color: rgb(40, 40, 40);\n}",
+      "valeurs": "Nom (red), hexadécimal (#0D2B6B), rgb(r, g, b)",
+      "niveau": 2,
+      "motsClés": "couleur texte"
     }
   ],
   "Propriétés des listes": [
     {
       "propriété": "list-style-type",
       "définition": "Définit le type de marqueur d'éléments de liste (circle, square, upper-roman, lower-alpha).",
-      "exemple": "ul {\n  list-style-type: square;\n}\nol {\n  list-style-type: upper-roman;\n}"
+      "exemple": "ul {\n  list-style-type: square;\n}\nol {\n  list-style-type: upper-roman;\n}",
+      "valeurs": "circle, square, upper-roman, lower-alpha",
+      "remarques": [
+        "none (supprimer les puces) n'est pas listé dans l'annexe."
+      ],
+      "niveau": 3,
+      "motsClés": "puce numérotation type liste"
     },
     {
       "propriété": "list-style-position",
       "définition": "Spécifie la position des marqueurs d'éléments d'une liste à puces (outside, inside).",
-      "exemple": "ul {\n  list-style-position: inside;\n}"
+      "exemple": "ul {\n  list-style-position: inside;\n}",
+      "valeurs": "outside, inside",
+      "niveau": 3,
+      "motsClés": "position puce intérieur"
     },
     {
       "propriété": "list-style-image",
       "définition": "Spécifie une image comme marqueur d'éléments de liste.",
-      "exemple": "ul {\n  list-style-image: url('bullet.png');\n}"
+      "exemple": "ul {\n  list-style-image: url(\"images/puce.png\");\n}",
+      "valeurs": "url(\"fichier\")",
+      "niveau": 3,
+      "motsClés": "image puce"
     },
     {
       "propriété": "list-style",
       "définition": "Super-propriété de liste. Combine list-style-type, list-style-position, list-style-image.",
-      "exemple": "ul {\n  list-style: square inside url('bullet.png');\n}"
+      "exemple": "ul {\n  list-style: square inside;\n}",
+      "valeurs": "type position image",
+      "niveau": 3,
+      "motsClés": "liste abrégée raccourci"
     }
   ],
   "Propriétés d'arrière-plan": [
     {
       "propriété": "background-color",
       "définition": "Définit la couleur d'arrière-plan d'un élément.",
-      "exemple": ".card {\n  background-color: #f0f0f0;\n}"
+      "exemple": "body {\n  background-color: #F3F6FA;\n}",
+      "valeurs": "Nom, hexadécimal, rgb()",
+      "niveau": 2,
+      "motsClés": "fond couleur arrière-plan"
     },
     {
       "propriété": "background-image",
       "définition": "Définit une image d'arrière-plan pour un élément.",
-      "exemple": ".hero {\n  background-image: url('background.jpg');\n}"
+      "exemple": "header {\n  background-image: url(\"../images/sahara.jpg\");\n}",
+      "valeurs": "url(\"fichier\")",
+      "remarques": [
+        "Le chemin est relatif au fichier .css : ../images/ si le CSS est dans un dossier css/."
+      ],
+      "niveau": 2,
+      "motsClés": "image de fond arrière-plan"
     },
     {
       "propriété": "background-repeat",
       "définition": "Définit la façon dont une image d'arrière-plan est répétée (repeat, repeat-x, repeat-y).",
-      "exemple": ".pattern {\n  background-image: url('pattern.png');\n  background-repeat: repeat;\n}"
+      "exemple": "body {\n  background-image: url(\"motif.png\");\n  background-repeat: repeat-x;\n}",
+      "valeurs": "repeat, repeat-x, repeat-y",
+      "remarques": [
+        "no-repeat est une valeur CSS standard, mais elle n'est pas listée dans l'annexe."
+      ],
+      "niveau": 2,
+      "motsClés": "répétition fond mosaïque"
     },
     {
       "propriété": "background-size",
       "définition": "Spécifie la taille d'une image d'arrière-plan.",
-      "exemple": ".cover {\n  background-size: cover;\n}\n.contain {\n  background-size: contain;\n}"
+      "exemple": "header {\n  background-image: url(\"carthage.jpg\");\n  background-size: cover;\n}",
+      "valeurs": "cover, contain, ou largeur hauteur en px / %",
+      "niveau": 3,
+      "motsClés": "taille image de fond couvrir"
     },
     {
       "propriété": "background",
       "définition": "Super-propriété d'arrière-plan. Combine background-color, background-image, background-repeat, background-size.",
-      "exemple": ".hero {\n  background: #fff url('bg.jpg') no-repeat center/cover;\n}"
+      "exemple": "header {\n  background: #0D2B6B url(\"motif.png\") repeat-x;\n}",
+      "valeurs": "couleur image répétition taille",
+      "niveau": 2,
+      "motsClés": "fond abrégé raccourci"
     }
   ],
   "Transformation": [
     {
       "propriété": "transform",
       "définition": "Applique un effet de transformation 2D ou 3D à un élément (rotate(), skew(), scale(), translate()).",
-      "exemple": ".rotate {\n  transform: rotate(45deg);\n}\n.scale {\n  transform: scale(1.5);\n}\n.move {\n  transform: translate(50px, 100px);\n}"
+      "exemple": ".vignette:hover {\n  transform: rotate(5deg) scale(1.2) translate(10px, 0px);\n}",
+      "valeurs": "rotate(angle), scale(x [, y]), translate(x, y), skew(x, y)",
+      "remarques": [
+        "Toutes les fonctions sur une seule ligne : une seconde déclaration transform remplace la première.",
+        "translateX() et translateY() ne sont pas dans l'annexe : translate(x, y)."
+      ],
+      "niveau": 3,
+      "motsClés": "transformation rotation agrandir déplacer incliner rotate scale translate skew"
     }
   ],
   "Propriétés des images": [
     {
       "propriété": "filter",
       "définition": "Définit des filtres sur un élément (blur(), grayscale(), invert()).",
-      "exemple": "img {\n  filter: grayscale(100%);\n}\n.blurred {\n  filter: blur(5px);\n}"
+      "exemple": "img.archive {\n  filter: grayscale(100%);\n}\nimg.flou {\n  filter: blur(3px);\n}",
+      "valeurs": "blur(px), grayscale(%), invert(%)",
+      "remarques": [
+        "Niveau 4ème."
+      ],
+      "niveau": 4,
+      "motsClés": "filtre image noir et blanc flou négatif"
     }
   ],
   "Propriétés des tableaux": [
     {
       "propriété": "table-layout",
       "définition": "Définit la façon de disposer les cellules, lignes et colonnes d'un tableau.",
-      "exemple": "table {\n  table-layout: fixed;\n  width: 100%;\n}"
+      "exemple": "table {\n  table-layout: fixed;\n  width: 100%;\n}",
+      "valeurs": "auto, fixed",
+      "remarques": [
+        "fixed : les colonnes gardent la largeur fixée, quel que soit le contenu."
+      ],
+      "niveau": 3,
+      "motsClés": "tableau disposition colonnes largeur fixe"
     },
     {
       "propriété": "border-collapse",
       "définition": "Définit si les bordures des cellules sont fusionnées ou séparées (separate, collapse).",
-      "exemple": "table {\n  border-collapse: collapse;\n}"
+      "exemple": "table {\n  border-collapse: collapse;\n}\ntd, th {\n  border: 1px solid #0D2B6B;\n}",
+      "valeurs": "separate, collapse",
+      "niveau": 3,
+      "motsClés": "bordures fusionnées tableau"
     }
   ],
   "Propriétés des boîtes": [
     {
       "propriété": "width",
       "définition": "Définit la largeur d'un élément.",
-      "exemple": ".container {\n  width: 1200px;\n}\n.responsive {\n  width: 100%;\n}"
+      "exemple": ".colonne {\n  width: 30%;\n}\nimg {\n  width: 250px;\n}",
+      "valeurs": "Valeur en px ou %",
+      "niveau": 3,
+      "motsClés": "largeur dimension"
     },
     {
       "propriété": "height",
       "définition": "Définit la hauteur d'un élément.",
-      "exemple": ".banner {\n  height: 400px;\n}\n.square {\n  height: 200px;\n}"
+      "exemple": "html, body {\n  height: 100%;\n}\n.zone {\n  height: 80%;\n}",
+      "valeurs": "Valeur en px ou %",
+      "remarques": [
+        "Une hauteur en % exige une hauteur définie sur le parent : html, body { height: 100%; }.",
+        "vh n'est pas dans l'annexe."
+      ],
+      "niveau": 3,
+      "motsClés": "hauteur dimension"
     },
     {
       "propriété": "position",
       "définition": "Spécifie le type de la méthode de positionnement utilisée pour un élément (absolute, fixed, relative, static, sticky).",
-      "exemple": ".fixed-nav {\n  position: fixed;\n  top: 0;\n  width: 100%;\n}\n.relative-box {\n  position: relative;\n  left: 20px;\n}"
+      "exemple": ".bandeau {\n  position: fixed;\n  top: 0px;\n  width: 100%;\n}\n.badge {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}",
+      "valeurs": "absolute, fixed, relative, static, sticky",
+      "remarques": [
+        "absolute se place par rapport au premier parent positionné (souvent position: relative sur le parent).",
+        "top, left… n'agissent que si position n'est pas static."
+      ],
+      "niveau": 3,
+      "motsClés": "positionner placement absolu relatif fixe collant"
     },
     {
       "propriété": "float",
       "définition": "Place/Fait flotter un élément dans un conteneur (left, right, none).",
-      "exemple": ".image-left {\n  float: left;\n  margin-right: 20px;\n}"
+      "exemple": "nav {\n  float: left;\n  width: 25%;\n}\nsection {\n  float: right;\n  width: 70%;\n}",
+      "valeurs": "left, right, none",
+      "remarques": [
+        "Pour arrêter le flottement sous les colonnes : clear: both (absent de l'annexe, proposé à la réforme).",
+        "Flexbox (display: flex) et Grid ne sont pas au programme."
+      ],
+      "niveau": 3,
+      "motsClés": "flotter flottant côte à côte colonnes mise en page"
     },
     {
       "propriété": "padding",
       "définition": "Propriété abrégée qui définit la marge intérieure d'un élément des 4 côtés.",
-      "exemple": ".box {\n  padding: 20px;\n}\n.custom {\n  padding: 10px 20px 15px 25px;\n}"
+      "exemple": ".carte {\n  padding: 15px;            /* 4 côtés */\n  padding: 10px 20px;       /* haut-bas  gauche-droite */\n  padding: 5px 10px 15px 20px; /* haut droite bas gauche */\n}",
+      "valeurs": "1 à 4 valeurs en px ou %",
+      "niveau": 3,
+      "motsClés": "marge intérieure espacement"
     },
     {
       "propriété": "margin",
       "définition": "Définit les marges d'un élément.",
-      "exemple": ".container {\n  margin: 0 auto;\n}\n.spaced {\n  margin: 20px 0;\n}"
+      "exemple": "section {\n  margin: 20px;\n}\n.centre {\n  width: 800px;\n  margin: 0px auto;   /* centrage horizontal */\n}",
+      "valeurs": "1 à 4 valeurs en px, % ou auto",
+      "niveau": 3,
+      "motsClés": "marge extérieure espacement centrer"
     },
     {
       "propriété": "box-shadow",
       "définition": "Ajoute des ombres à la boîte d'un élément.",
-      "exemple": ".card {\n  box-shadow: 0 4px 6px rgba(0,0,0,0.1);\n}\n.elevated {\n  box-shadow: 0 10px 20px rgba(0,0,0,0.2);\n}"
+      "exemple": ".carte {\n  box-shadow: 4px 4px 8px gray;\n}",
+      "valeurs": "décalage-x décalage-y [flou] couleur",
+      "niveau": 3,
+      "motsClés": "ombre boîte"
     },
     {
       "propriété": "display",
       "définition": "Spécifie le comportement d'affichage d'un élément (inline, block, inline-block).",
-      "exemple": ".bloc {\n  display: block;\n}\n.inline {\n  display: inline-block;\n}"
+      "exemple": "nav a {\n  display: inline-block;\n  width: 120px;\n}",
+      "valeurs": "inline, block, inline-block",
+      "remarques": [
+        "flex, grid et none ne sont pas listés dans l'annexe."
+      ],
+      "niveau": 3,
+      "motsClés": "affichage bloc en ligne"
     },
     {
       "propriété": "top",
       "définition": "Spécifie la position verticale, par rapport au haut, d'un élément positionné.",
-      "exemple": ".absolute-top {\n  position: absolute;\n  top: 10px;\n}"
+      "exemple": ".badge {\n  position: absolute;\n  top: 10px;\n}",
+      "valeurs": "Valeur en px ou %",
+      "niveau": 3,
+      "motsClés": "décalage haut position"
     },
     {
       "propriété": "bottom",
       "définition": "Spécifie la position verticale, par rapport au bas, d'un élément positionné.",
-      "exemple": ".footer-fixed {\n  position: fixed;\n  bottom: 0;\n}"
+      "exemple": ".pied {\n  position: fixed;\n  bottom: 0px;\n}",
+      "valeurs": "Valeur en px ou %",
+      "niveau": 3,
+      "motsClés": "décalage bas position"
     },
     {
       "propriété": "left",
       "définition": "Spécifie la position horizontale, par rapport à la gauche, d'un élément positionné.",
-      "exemple": ".sidebar {\n  position: absolute;\n  left: 0;\n}"
+      "exemple": ".menu {\n  position: absolute;\n  left: 0px;\n}",
+      "valeurs": "Valeur en px ou %",
+      "niveau": 3,
+      "motsClés": "décalage gauche position"
     },
     {
       "propriété": "right",
       "définition": "Spécifie la position horizontale, par rapport à la droite, d'un élément positionné.",
-      "exemple": ".close-btn {\n  position: absolute;\n  right: 10px;\n}"
+      "exemple": ".fermer {\n  position: absolute;\n  right: 10px;\n}",
+      "valeurs": "Valeur en px ou %",
+      "niveau": 3,
+      "motsClés": "décalage droite position"
     },
     {
       "propriété": "overflow",
       "définition": "Spécifie le comportement du contenu lorsqu'il déborde de la boîte d'un élément (visible, hidden, clip, scroll, auto).",
-      "exemple": ".scrollable {\n  overflow: auto;\n}\n.hidden-overflow {\n  overflow: hidden;\n}"
+      "exemple": ".actualites {\n  height: 150px;\n  overflow: scroll;\n}",
+      "valeurs": "visible, hidden, clip, scroll, auto",
+      "niveau": 3,
+      "motsClés": "débordement défilement barre"
     },
     {
       "propriété": "opacity",
       "définition": "Définit le niveau de transparence.",
-      "exemple": ".transparent {\n  opacity: 0.5;\n}\n.fade:hover {\n  opacity: 1;\n}"
+      "exemple": ".filigrane {\n  opacity: 0.3;\n}",
+      "valeurs": "Nombre de 0 (transparent) à 1 (opaque)",
+      "niveau": 3,
+      "motsClés": "transparence opacité"
     }
   ],
   "Propriétés des bordures": [
     {
       "propriété": "border-color",
       "définition": "Définit la couleur des bordures d'un élément.",
-      "exemple": ".box {\n  border-color: #333;\n}"
+      "exemple": ".cadre {\n  border-style: solid;\n  border-color: #F5B800;\n}",
+      "valeurs": "Nom, hexadécimal, rgb()",
+      "niveau": 2,
+      "motsClés": "couleur bordure"
     },
     {
       "propriété": "border-style",
       "définition": "Définit le style des bordures d'un élément.",
-      "exemple": ".dashed {\n  border-style: dashed;\n}\n.solid {\n  border-style: solid;\n}"
+      "exemple": ".cadre {\n  border-style: dashed;\n}",
+      "valeurs": "solid, dashed, dotted, double…",
+      "remarques": [
+        "Sans border-style, la bordure ne s'affiche pas."
+      ],
+      "niveau": 2,
+      "motsClés": "style bordure trait pointillé"
     },
     {
       "propriété": "border-radius",
       "définition": "Définit le rayon des coins arrondis d'un élément.",
-      "exemple": ".rounded {\n  border-radius: 10px;\n}\n.circle {\n  border-radius: 50%;\n}"
+      "exemple": ".carte {\n  border-radius: 10px;\n}\nimg.profil {\n  border-radius: 50%;   /* cercle */\n}",
+      "valeurs": "Valeur en px ou %",
+      "niveau": 3,
+      "motsClés": "coins arrondis cercle"
     },
     {
       "propriété": "border-width",
       "définition": "Définit la largeur des bordures d'un élément (medium, thin, thick, valeur en px).",
-      "exemple": ".thick-border {\n  border-width: 5px;\n}\n.thin {\n  border-width: 1px;\n}"
+      "exemple": ".cadre {\n  border-width: 3px;\n}",
+      "valeurs": "medium, thin, thick, ou valeur en px",
+      "niveau": 2,
+      "motsClés": "épaisseur bordure"
     },
     {
       "propriété": "border",
       "définition": "Super-propriété de bordure. Combine border-color, border-style, border-width, border-radius.",
-      "exemple": ".card {\n  border: 2px solid #333;\n  border-radius: 10px;\n}"
+      "exemple": "td {\n  border: 1px solid #0D2B6B;\n}",
+      "valeurs": "épaisseur style couleur",
+      "niveau": 2,
+      "motsClés": "bordure abrégée cadre"
     }
   ],
   "Transition": [
     {
       "propriété": "transition-delay",
       "définition": "Spécifie le délai nécessaire avant que la transition commence.",
-      "exemple": ".delayed {\n  transition-delay: 0.5s;\n}"
+      "exemple": ".bouton {\n  transition-property: background-color;\n  transition-duration: 1s;\n  transition-delay: 0.5s;\n}",
+      "valeurs": "Durée en s (ou ms)",
+      "niveau": 3,
+      "motsClés": "délai attente transition"
     },
     {
       "propriété": "transition-duration",
       "définition": "Spécifie la durée de la transition.",
-      "exemple": ".smooth {\n  transition-duration: 0.3s;\n}"
+      "exemple": ".bouton {\n  transition-property: width;\n  transition-duration: 2s;\n}",
+      "valeurs": "Durée en s (ou ms)",
+      "niveau": 3,
+      "motsClés": "durée transition"
     },
     {
       "propriété": "transition-property",
       "définition": "Spécifie les propriétés CSS sur lesquelles l'effet de transition sera appliqué.",
-      "exemple": ".btn {\n  transition-property: background-color, transform;\n}"
+      "exemple": ".bouton {\n  transition-property: background-color;\n  transition-duration: 1s;\n}",
+      "valeurs": "Nom d'une propriété CSS (width, background-color…)",
+      "niveau": 3,
+      "motsClés": "propriété animée transition"
     },
     {
       "propriété": "transition",
       "définition": "Super-propriété de transition. Combine transition-property, transition-duration et transition-delay.",
-      "exemple": ".button {\n  transition: all 0.3s ease;\n}\n.button:hover {\n  background: #007bff;\n  transform: scale(1.05);\n}"
+      "exemple": ".bouton {\n  background-color: #0D2B6B;\n  transition: background-color 1s 0.2s;\n}\n.bouton:hover {\n  background-color: #F5B800;\n}",
+      "valeurs": "propriété durée [délai]",
+      "remarques": [
+        "Se déclare sur l'élément, jamais dans :hover (sinon l'effet ne joue qu'à l'aller).",
+        "transition-timing-function (ease, linear…) n'est pas dans l'annexe."
+      ],
+      "niveau": 3,
+      "motsClés": "transition effet progressif survol animation douce"
     }
   ],
   "Animation": [
     {
       "propriété": "@keyframes",
       "définition": "Spécifie les états clés de l'animation.",
-      "exemple": "@keyframes slide {\n  0% { left: 0; }\n  100% { left: 100px; }\n}\n.animated {\n  animation: slide 2s;\n}"
+      "exemple": "@keyframes clignote {\n  0%   { opacity: 1; }\n  50%  { opacity: 0.2; }\n  100% { opacity: 1; }\n}",
+      "valeurs": "Étapes en % (0% à 100%)",
+      "remarques": [
+        "Pour animer left ou top, l'élément doit être positionné (position: relative)."
+      ],
+      "niveau": 3,
+      "motsClés": "animation étapes images clés"
     },
     {
       "propriété": "animation-name",
       "définition": "Spécifie le nom de l'animation.",
-      "exemple": ".spin {\n  animation-name: rotate;\n}"
+      "exemple": ".alerte {\n  animation-name: clignote;\n  animation-duration: 1s;\n}",
+      "valeurs": "Nom défini par @keyframes",
+      "niveau": 3,
+      "motsClés": "nom animation"
     },
     {
       "propriété": "animation-delay",
       "définition": "Spécifie le délai nécessaire avant que l'animation commence.",
-      "exemple": ".delayed-animation {\n  animation-delay: 1s;\n}"
+      "exemple": ".titre {\n  animation-name: glisser;\n  animation-duration: 2s;\n  animation-delay: 1s;\n}",
+      "valeurs": "Durée en s (ou ms)",
+      "niveau": 3,
+      "motsClés": "délai animation"
     },
     {
       "propriété": "animation-duration",
       "définition": "Spécifie la durée de l'animation.",
-      "exemple": ".fast {\n  animation-duration: 0.5s;\n}"
+      "exemple": ".titre {\n  animation-name: glisser;\n  animation-duration: 2s;\n}",
+      "valeurs": "Durée en s (ou ms)",
+      "niveau": 3,
+      "motsClés": "durée animation cycle"
     },
     {
       "propriété": "animation-iteration-count",
       "définition": "Spécifie le nombre de répétitions de l'animation.",
-      "exemple": ".infinite {\n  animation-iteration-count: infinite;\n}\n.twice {\n  animation-iteration-count: 2;\n}"
+      "exemple": ".alerte {\n  animation-name: clignote;\n  animation-duration: 1s;\n  animation-iteration-count: infinite;\n}",
+      "valeurs": "Nombre entier, ou infinite",
+      "niveau": 3,
+      "motsClés": "répétition nombre infini animation"
     },
     {
       "propriété": "animation-direction",
       "définition": "Définit la direction de l'animation.",
-      "exemple": ".alternate {\n  animation-direction: alternate;\n}"
+      "exemple": ".bateau {\n  animation-name: traversee;\n  animation-duration: 3s;\n  animation-iteration-count: infinite;\n  animation-direction: alternate;\n}",
+      "valeurs": "normal, reverse, alternate",
+      "niveau": 3,
+      "motsClés": "sens direction aller retour animation"
     },
     {
       "propriété": "animation",
       "définition": "Super-propriété de l'animation. Combine animation-name, animation-duration, animation-delay, animation-iteration-count et animation-direction.",
-      "exemple": ".spin {\n  animation: rotate 2s infinite linear;\n}\n@keyframes rotate {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}"
+      "exemple": "@keyframes traversee {\n  0%   { left: 0px; }\n  100% { left: 300px; }\n}\n.bateau {\n  position: relative;\n  animation: traversee 3s 0s infinite alternate;\n}",
+      "valeurs": "nom durée [délai] [répétitions] [direction]",
+      "remarques": [
+        "Les fonctions de rythme (linear, ease…) ne sont pas dans l'annexe."
+      ],
+      "niveau": 3,
+      "motsClés": "animation abrégée mouvement"
     }
   ]
 }

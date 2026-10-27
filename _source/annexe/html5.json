@@ -3,367 +3,858 @@
     {
       "balise": "<html>",
       "définition": "Représente la racine d'un document HTML.",
-      "exemple": "<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <title>Ma page</title>\n  </head>\n  <body>\n    <h1>Bienvenue</h1>\n  </body>\n</html>"
+      "exemple": "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Lycée Oued Ellil</title>\n</head>\n<body>\n  <h1>Bienvenue</h1>\n</body>\n</html>",
+      "paramètres": [
+        {
+          "nom": "lang",
+          "rôle": "Langue du contenu : fr, ar, en"
+        }
+      ],
+      "remarques": [
+        "<!DOCTYPE html> précède toujours <html>."
+      ],
+      "niveau": 2,
+      "motsClés": "racine page document squelette structure doctype"
     },
     {
       "balise": "<head>",
       "définition": "Conteneur de métadonnées placé entre la balise <html> et la balise <body>.",
-      "exemple": "<head>\n  <meta charset=\"UTF-8\">\n  <title>Titre de la page</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>"
+      "exemple": "<head>\n  <meta charset=\"UTF-8\">\n  <title>Découvrir la Tunisie</title>\n  <link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">\n  <script type=\"text/javascript\" src=\"js/script.js\"></script>\n</head>",
+      "remarques": [
+        "Rien de ce qu'il contient n'est affiché dans la page, sauf le titre dans l'onglet."
+      ],
+      "niveau": 2,
+      "motsClés": "en-tête document métadonnées"
     },
     {
       "balise": "<body>",
       "définition": "Définit le corps du document.",
-      "exemple": "<body>\n  <header>En-tête</header>\n  <main>Contenu principal</main>\n  <footer>Pied de page</footer>\n</body>"
+      "exemple": "<body>\n  <h1>Lycée Oued Ellil</h1>\n  <p>Bienvenue sur notre site.</p>\n</body>",
+      "remarques": [
+        "onload s'écrit sur <body> : <body onload=\"init()\">."
+      ],
+      "niveau": 2,
+      "motsClés": "corps contenu visible page"
     }
   ],
   "Éléments d'en-tête": [
     {
       "balise": "<link>",
       "définition": "Définit la relation entre le document actuel et une ressource externe.",
-      "attributs": ["href", "rel", "type"],
-      "exemple": "<link rel=\"stylesheet\" href=\"styles.css\">\n<link rel=\"icon\" type=\"image/png\" href=\"favicon.png\">"
+      "attributs": [
+        "href",
+        "rel",
+        "type"
+      ],
+      "exemple": "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">",
+      "paramètres": [
+        {
+          "nom": "rel",
+          "rôle": "Relation avec la page : stylesheet pour une feuille de style"
+        },
+        {
+          "nom": "type",
+          "rôle": "Type du fichier : text/css"
+        },
+        {
+          "nom": "href",
+          "rôle": "Chemin du fichier relié"
+        }
+      ],
+      "remarques": [
+        "Niveau 3ème : le CSS externe n'est pas au programme de 2ème."
+      ],
+      "niveau": 3,
+      "motsClés": "lier feuille de style css externe"
     },
     {
       "balise": "<meta>",
       "définition": "Définit les métadonnées du document.",
-      "attributs": ["charset", "name", "content"],
-      "exemple": "<meta charset=\"UTF-8\">\n<meta name=\"description\" content=\"Description du site\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
+      "attributs": [
+        "charset",
+        "name",
+        "content"
+      ],
+      "exemple": "<meta charset=\"UTF-8\">\n<meta name=\"description\" content=\"Site du club informatique\">\n<meta name=\"author\" content=\"Club info - Lycée Oued Ellil\">",
+      "paramètres": [
+        {
+          "nom": "charset",
+          "rôle": "Encodage des caractères : UTF-8"
+        },
+        {
+          "nom": "name",
+          "rôle": "Nom de la métadonnée : description, author, keywords"
+        },
+        {
+          "nom": "content",
+          "rôle": "Valeur de la métadonnée"
+        }
+      ],
+      "remarques": [
+        "Sans charset=\"UTF-8\", les lettres accentuées s'affichent mal."
+      ],
+      "niveau": 2,
+      "motsClés": "encodage utf-8 description accents métadonnée"
     },
     {
       "balise": "<script>",
       "définition": "Intègre un script côté client (JavaScript).",
-      "attributs": ["src", "type"],
-      "exemple": "<script src=\"script.js\"></script>\n<script>\n  console.log('Hello World!');\n</script>"
+      "attributs": [
+        "src",
+        "type"
+      ],
+      "exemple": "<!-- fichier externe (obligatoire en 4ème) -->\n<script type=\"text/javascript\" src=\"js/controle.js\"></script>\n\n<!-- script interne (3ème) -->\n<script>\n  function saluer() {\n    alert(\"Bonjour\");\n  }\n</script>",
+      "paramètres": [
+        {
+          "nom": "src",
+          "rôle": "Chemin du fichier .js"
+        },
+        {
+          "nom": "type",
+          "rôle": "text/javascript (facultatif)"
+        }
+      ],
+      "remarques": [
+        "En 4ème, le JavaScript est obligatoirement dans un fichier externe.",
+        "Une balise <script src=…> reste vide."
+      ],
+      "niveau": 3,
+      "motsClés": "javascript script fichier js relier"
     },
     {
       "balise": "<style>",
       "définition": "Définit les informations de style (CSS) pour un document.",
-      "attributs": ["type", "media"],
-      "exemple": "<style>\n  body {\n    background-color: #f0f0f0;\n    font-family: Arial, sans-serif;\n  }\n</style>"
+      "attributs": [
+        "type",
+        "media"
+      ],
+      "exemple": "<style type=\"text/css\">\n  h1 {\n    color: navy;\n  }\n</style>",
+      "paramètres": [
+        {
+          "nom": "type",
+          "rôle": "text/css"
+        },
+        {
+          "nom": "media",
+          "rôle": "Support visé : screen, print"
+        }
+      ],
+      "remarques": [
+        "Se place dans <head>. CSS interne : niveau 2ème."
+      ],
+      "niveau": 2,
+      "motsClés": "css interne style feuille dans la page"
     },
     {
       "balise": "<title>",
       "définition": "Définit le titre du document.",
-      "exemple": "<title>Mon Site Web - Accueil</title>"
+      "exemple": "<title>Club informatique - Inscriptions</title>",
+      "remarques": [
+        "Obligatoire pour la validation W3C."
+      ],
+      "niveau": 2,
+      "motsClés": "titre onglet navigateur favoris"
     }
   ],
   "Éléments de structuration d'une page web": [
     {
       "balise": "<header>",
       "définition": "Conteneur pour le contenu d'introduction ou un ensemble de liens de navigation.",
-      "exemple": "<header>\n  <h1>Mon Site Web</h1>\n  <nav>\n    <a href=\"#accueil\">Accueil</a>\n    <a href=\"#contact\">Contact</a>\n  </nav>\n</header>"
+      "exemple": "<header>\n  <h1>Découvrir la Tunisie</h1>\n  <p>Le patrimoine de nos régions</p>\n</header>",
+      "remarques": [
+        "Balises sémantiques : niveau 3ème."
+      ],
+      "niveau": 3,
+      "motsClés": "en-tête sémantique bandeau haut de page logo"
     },
     {
       "balise": "<nav>",
       "définition": "Définit un ensemble de liens de navigation.",
-      "exemple": "<nav>\n  <ul>\n    <li><a href=\"/\">Accueil</a></li>\n    <li><a href=\"/produits\">Produits</a></li>\n    <li><a href=\"/contact\">Contact</a></li>\n  </ul>\n</nav>"
+      "exemple": "<nav>\n  <a href=\"index.html\">Accueil</a>\n  <a href=\"regions.html\">Régions</a>\n  <a href=\"contact.html\">Contact</a>\n</nav>",
+      "niveau": 3,
+      "motsClés": "navigation menu liens sémantique"
     },
     {
       "balise": "<footer>",
       "définition": "Définit un pied de page pour un document ou une section.",
-      "exemple": "<footer>\n  <p>&copy; 2024 Mon Site. Tous droits réservés.</p>\n  <p>Contact: info@monsite.com</p>\n</footer>"
+      "exemple": "<footer>\n  <address>Lycée Oued Ellil - Manouba</address>\n</footer>",
+      "niveau": 3,
+      "motsClés": "pied de page bas sémantique"
     },
     {
       "balise": "<section>",
       "définition": "Définit une section dans un document.",
-      "exemple": "<section>\n  <h2>À propos de nous</h2>\n  <p>Nous sommes une entreprise...</p>\n</section>"
+      "exemple": "<section>\n  <h2>Sites archéologiques</h2>\n  <article>…</article>\n</section>",
+      "niveau": 3,
+      "motsClés": "section regroupement thématique sémantique"
     },
     {
       "balise": "<article>",
       "définition": "Spécifie un contenu indépendant et autonome.",
-      "exemple": "<article>\n  <h2>Titre de l'article</h2>\n  <p>Contenu de l'article...</p>\n  <footer>Publié le 19/11/2024</footer>\n</article>"
+      "exemple": "<article>\n  <h3>Carthage</h3>\n  <p>Fondée au IXe siècle av. J.-C.</p>\n</article>",
+      "niveau": 3,
+      "motsClés": "article contenu autonome fiche sémantique"
     },
     {
       "balise": "<aside>",
       "définition": "Définit un contenu en dehors du contenu principal. Souvent placé sous forme de barre latérale.",
-      "exemple": "<aside>\n  <h3>Articles connexes</h3>\n  <ul>\n    <li><a href=\"#\">Article 1</a></li>\n    <li><a href=\"#\">Article 2</a></li>\n  </ul>\n</aside>"
+      "exemple": "<aside>\n  <h3>Le saviez-vous ?</h3>\n  <p>El Jem abrite le 3e plus grand amphithéâtre romain.</p>\n</aside>",
+      "niveau": 3,
+      "motsClés": "encadré contenu annexe latéral sémantique"
     },
     {
       "balise": "<main>",
       "définition": "Définit le contenu principal d'un document.",
-      "exemple": "<main>\n  <h1>Contenu Principal</h1>\n  <p>Ceci est le contenu principal de la page.</p>\n</main>"
+      "exemple": "<main>\n  <h2>Nos activités</h2>\n  <p>…</p>\n</main>",
+      "remarques": [
+        "Un seul <main> par page."
+      ],
+      "niveau": 3,
+      "motsClés": "contenu principal sémantique"
     }
   ],
   "Éléments de structuration de texte et média": [
     {
       "balise": "<cite>",
       "définition": "Définit le titre d'une œuvre.",
-      "exemple": "<p>Mon livre préféré est <cite>Le Petit Prince</cite>.</p>"
+      "exemple": "<p>Notre livre du mois : <cite>Le Prophète</cite> de Gibran.</p>",
+      "niveau": 3,
+      "motsClés": "citation titre œuvre livre"
     },
     {
       "balise": "<p>",
       "définition": "Définit un paragraphe.",
-      "exemple": "<p>Ceci est un paragraphe de texte.</p>"
+      "exemple": "<p>Les inscriptions au club sont ouvertes jusqu'au 15 novembre.</p>",
+      "niveau": 2,
+      "motsClés": "paragraphe texte bloc"
     },
     {
       "balise": "<h1> à <h6>",
       "définition": "Définit un titre de niveau n (de 1 à 6).",
-      "exemple": "<h1>Titre principal</h1>\n<h2>Sous-titre</h2>\n<h3>Sous-sous-titre</h3>"
+      "exemple": "<h1>Lycée Oued Ellil</h1>\n<h2>Clubs</h2>\n<h3>Club informatique</h3>",
+      "remarques": [
+        "Un seul <h1> par page ; ne pas sauter de niveau.",
+        "Ne pas choisir un titre pour sa taille : la taille se règle en CSS."
+      ],
+      "niveau": 2,
+      "motsClés": "titre sous-titre niveau hiérarchie"
     },
     {
       "balise": "<hr>",
       "définition": "Définit une rupture thématique sous forme de ligne horizontale.",
-      "exemple": "<p>Première section</p>\n<hr>\n<p>Deuxième section</p>"
+      "exemple": "<p>Première partie</p>\n<hr>\n<p>Deuxième partie</p>",
+      "niveau": 2,
+      "motsClés": "ligne séparation horizontale trait"
     },
     {
       "balise": "<img>",
       "définition": "Intègre une image.",
-      "attributs": ["src", "alt"],
-      "exemple": "<img src=\"photo.jpg\" alt=\"Description de l'image\" width=\"300\">"
+      "attributs": [
+        "src",
+        "alt"
+      ],
+      "exemple": "<img src=\"images/dougga.jpg\" alt=\"Théâtre romain de Dougga\" width=\"300\">",
+      "paramètres": [
+        {
+          "nom": "src",
+          "rôle": "Chemin du fichier image"
+        },
+        {
+          "nom": "alt",
+          "rôle": "Texte de remplacement (obligatoire)"
+        }
+      ],
+      "remarques": [
+        "Sans alt, la page n'est pas valide W3C.",
+        "Les dimensions se règlent de préférence en CSS (width, height)."
+      ],
+      "niveau": 2,
+      "motsClés": "image photo illustration"
     },
     {
       "balise": "<figure>",
       "définition": "Spécifie un conteneur autonome qui peut contenir divers éléments.",
-      "exemple": "<figure>\n  <img src=\"graphique.png\" alt=\"Graphique\">\n  <figcaption>Figure 1: Statistiques 2024</figcaption>\n</figure>"
+      "exemple": "<figure>\n  <img src=\"images/eljem.jpg\" alt=\"Amphithéâtre d'El Jem\">\n  <figcaption>L'amphithéâtre d'El Jem</figcaption>\n</figure>",
+      "niveau": 3,
+      "motsClés": "figure illustration légende image"
     },
     {
       "balise": "<figcaption>",
       "définition": "Définit une légende pour un élément <figure>.",
-      "exemple": "<figure>\n  <img src=\"image.jpg\" alt=\"Image\">\n  <figcaption>Légende de l'image</figcaption>\n</figure>"
+      "exemple": "<figure>\n  <img src=\"carte.png\" alt=\"Carte des gouvernorats\">\n  <figcaption>Les 24 gouvernorats</figcaption>\n</figure>",
+      "niveau": 3,
+      "motsClés": "légende figure"
     },
     {
       "balise": "<audio>",
       "définition": "Intègre du contenu sonore dans un document.",
-      "attributs": ["controls", "src"],
-      "exemple": "<audio controls>\n  <source src=\"musique.mp3\" type=\"audio/mpeg\">\n  Votre navigateur ne supporte pas l'audio.\n</audio>"
+      "attributs": [
+        "controls",
+        "src"
+      ],
+      "exemple": "<audio src=\"sons/hymne.mp3\" controls></audio>",
+      "paramètres": [
+        {
+          "nom": "src",
+          "rôle": "Chemin du fichier audio (mp3)"
+        },
+        {
+          "nom": "controls",
+          "rôle": "Affiche les boutons lecture, pause, volume"
+        }
+      ],
+      "remarques": [
+        "<source> n'est pas dans l'annexe : le fichier est donné par l'attribut src.",
+        "Sans controls, le lecteur est invisible."
+      ],
+      "niveau": 2,
+      "motsClés": "son audio musique lecteur"
     },
     {
       "balise": "<video>",
       "définition": "Intègre du contenu vidéo dans un document.",
-      "attributs": ["controls", "src"],
-      "exemple": "<video width=\"320\" height=\"240\" controls>\n  <source src=\"video.mp4\" type=\"video/mp4\">\n  Votre navigateur ne supporte pas la vidéo.\n</video>"
+      "attributs": [
+        "controls",
+        "src"
+      ],
+      "exemple": "<video src=\"videos/visite.mp4\" controls width=\"400\"></video>",
+      "paramètres": [
+        {
+          "nom": "src",
+          "rôle": "Chemin du fichier vidéo (mp4)"
+        },
+        {
+          "nom": "controls",
+          "rôle": "Affiche les commandes de lecture"
+        }
+      ],
+      "remarques": [
+        "<source> n'est pas dans l'annexe : le fichier est donné par l'attribut src."
+      ],
+      "niveau": 2,
+      "motsClés": "vidéo lecteur film"
     },
     {
       "balise": "<a>",
       "définition": "Définit un lien hypertexte via l'attribut href.",
-      "attributs": ["href", "target"],
-      "exemple": "<a href=\"https://www.example.com\" target=\"_blank\">Visitez notre site</a>"
+      "attributs": [
+        "href",
+        "target"
+      ],
+      "exemple": "<a href=\"contact.html\">Contact</a>\n<a href=\"https://www.education.tn\" target=\"_blank\">Ministère</a>\n<a href=\"carthage.html\" target=\"cadre\">Carthage</a>",
+      "paramètres": [
+        {
+          "nom": "href",
+          "rôle": "Adresse de destination (page, fichier, URL)"
+        },
+        {
+          "nom": "target",
+          "rôle": "_self, _blank, _parent, _top, ou nom d'un iframe"
+        }
+      ],
+      "niveau": 2,
+      "motsClés": "lien hypertexte lien navigation url"
     },
     {
       "balise": "<br>",
       "définition": "Définit un retour à la ligne.",
-      "exemple": "<p>Première ligne<br>Deuxième ligne</p>"
+      "exemple": "<p>Lycée Oued Ellil<br>Manouba</p>",
+      "remarques": [
+        "Ne sert pas à espacer des blocs : utiliser margin en CSS."
+      ],
+      "niveau": 2,
+      "motsClés": "retour à la ligne saut de ligne"
     },
     {
       "balise": "<address>",
       "définition": "Définit les coordonnées de l'auteur/propriétaire d'un document ou d'un article.",
-      "exemple": "<address>\n  Écrit par <a href=\"mailto:email@example.com\">Ahmed Ben Ali</a>.<br>\n  Tunis, Tunisie\n</address>"
+      "exemple": "<address>\n  Lycée Oued Ellil<br>\n  Tél. : 71 000 000\n</address>",
+      "niveau": 3,
+      "motsClés": "adresse contact coordonnées"
     },
     {
       "balise": "<details>",
       "définition": "Spécifie des détails supplémentaires que l'utilisateur peut ouvrir et fermer à la demande.",
-      "attributs": ["open"],
-      "exemple": "<details>\n  <summary>En savoir plus</summary>\n  <p>Contenu détaillé ici...</p>\n</details>"
+      "attributs": [
+        "open"
+      ],
+      "exemple": "<details>\n  <summary>Horaires</summary>\n  <p>Du lundi au samedi, de 8h à 18h.</p>\n</details>",
+      "paramètres": [
+        {
+          "nom": "open",
+          "rôle": "Bloc déplié dès l'affichage"
+        }
+      ],
+      "niveau": 3,
+      "motsClés": "dépliable replier cacher afficher plus"
     },
     {
       "balise": "<summary>",
       "définition": "Définit un en-tête visible pour l'élément <details>.",
-      "exemple": "<details>\n  <summary>Cliquez pour voir</summary>\n  <p>Informations cachées</p>\n</details>"
+      "exemple": "<details open>\n  <summary>Conditions d'inscription</summary>\n  <p>Être élève du lycée.</p>\n</details>",
+      "niveau": 3,
+      "motsClés": "titre bloc dépliable"
     }
   ],
   "Conteneurs": [
     {
       "balise": "<span>",
       "définition": "Regroupe des éléments dans un bloc de contenu.",
-      "exemple": "<p>Ce texte contient <span style=\"color: red;\">un mot en rouge</span>.</p>"
+      "exemple": "<p>Prix : <span class=\"prix\">15 DT</span></p>",
+      "remarques": [
+        "Conteneur neutre en ligne : sert à appliquer un style (avec class) à une partie de texte."
+      ],
+      "niveau": 3,
+      "motsClés": "conteneur en ligne portion texte"
     },
     {
       "balise": "<div>",
       "définition": "Groupe plusieurs éléments HTML de type block.",
-      "exemple": "<div class=\"container\">\n  <h2>Titre</h2>\n  <p>Contenu du conteneur</p>\n</div>"
+      "exemple": "<div class=\"carte\">\n  <h3>Kairouan</h3>\n  <p>Ville sainte.</p>\n</div>",
+      "remarques": [
+        "Préférer une balise sémantique (section, article…) quand elle existe."
+      ],
+      "niveau": 3,
+      "motsClés": "conteneur bloc division boîte"
     },
     {
       "balise": "<iframe>",
       "définition": "Définit un cadre en ligne.",
-      "attributs": ["src", "name"],
-      "exemple": "<iframe src=\"https://www.example.com\" width=\"600\" height=\"400\"></iframe>"
+      "attributs": [
+        "src",
+        "name"
+      ],
+      "exemple": "<a href=\"carthage.html\" target=\"cadre\">Carthage</a>\n<iframe src=\"accueil.html\" name=\"cadre\" width=\"600\" height=\"300\"></iframe>",
+      "paramètres": [
+        {
+          "nom": "src",
+          "rôle": "Page affichée au départ"
+        },
+        {
+          "nom": "name",
+          "rôle": "Nom du cadre, utilisé comme target d'un lien"
+        }
+      ],
+      "niveau": 3,
+      "motsClés": "cadre intégrer page dans page fenêtre"
     }
   ],
   "Listes": [
     {
       "balise": "<ul>",
       "définition": "Définit une liste à puces.",
-      "exemple": "<ul>\n  <li>Premier élément</li>\n  <li>Deuxième élément</li>\n  <li>Troisième élément</li>\n</ul>"
+      "exemple": "<ul>\n  <li>Carthage</li>\n  <li>Dougga</li>\n</ul>",
+      "niveau": 2,
+      "motsClés": "liste à puces non ordonnée"
     },
     {
       "balise": "<ol>",
       "définition": "Définit une liste ordonnée.",
-      "attributs": ["reversed", "type", "start"],
-      "exemple": "<ol>\n  <li>Première étape</li>\n  <li>Deuxième étape</li>\n  <li>Troisième étape</li>\n</ol>"
+      "attributs": [
+        "reversed",
+        "type",
+        "start"
+      ],
+      "exemple": "<ol type=\"I\" start=\"3\">\n  <li>Troisième</li>\n  <li>Quatrième</li>\n</ol>\n<ol reversed>\n  <li>Trois</li>\n  <li>Deux</li>\n</ol>",
+      "paramètres": [
+        {
+          "nom": "type",
+          "rôle": "1, A, a, I, i"
+        },
+        {
+          "nom": "start",
+          "rôle": "Numéro du premier élément"
+        },
+        {
+          "nom": "reversed",
+          "rôle": "Numérotation décroissante"
+        }
+      ],
+      "niveau": 2,
+      "motsClés": "liste numérotée ordonnée"
     },
     {
       "balise": "<li>",
       "définition": "Définit un élément dans une liste.",
-      "exemple": "<ul>\n  <li>Élément de liste</li>\n</ul>"
+      "exemple": "<ul>\n  <li>Élément de liste</li>\n</ul>",
+      "niveau": 2,
+      "motsClés": "élément de liste item"
     }
   ],
   "Tableaux": [
     {
       "balise": "<table>",
       "définition": "Définit un tableau.",
-      "exemple": "<table border=\"1\">\n  <thead>\n    <tr>\n      <th>Nom</th>\n      <th>Âge</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Ali</td>\n      <td>25</td>\n    </tr>\n  </tbody>\n</table>"
+      "exemple": "<table border=\"1\">\n  <caption>Résultats du 1er trimestre</caption>\n  <tr>\n    <th>Nom</th>\n    <th>Moyenne</th>\n  </tr>\n  <tr>\n    <td>Rim</td>\n    <td>15.25</td>\n  </tr>\n</table>",
+      "remarques": [
+        "Un tableau se construit ligne par ligne : <tr>, puis les cellules."
+      ],
+      "niveau": 2,
+      "motsClés": "tableau grille données"
     },
     {
       "balise": "<thead>",
       "définition": "Définit l'entête d'un tableau.",
-      "exemple": "<table>\n  <thead>\n    <tr>\n      <th>Colonne 1</th>\n      <th>Colonne 2</th>\n    </tr>\n  </thead>\n</table>"
+      "exemple": "<table border=\"1\">\n  <thead>\n    <tr><th>Article</th><th>Prix</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Clé USB</td><td>25</td></tr>\n  </tbody>\n  <tfoot>\n    <tr><td>Total</td><td>25</td></tr>\n  </tfoot>\n</table>",
+      "niveau": 2,
+      "motsClés": "en-tête tableau"
     },
     {
       "balise": "<tbody>",
       "définition": "Définit le corps d'un tableau.",
-      "exemple": "<table>\n  <tbody>\n    <tr>\n      <td>Donnée 1</td>\n      <td>Donnée 2</td>\n    </tr>\n  </tbody>\n</table>"
+      "exemple": "<table border=\"1\">\n  <thead>\n    <tr><th>Article</th><th>Prix</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Clé USB</td><td>25</td></tr>\n  </tbody>\n  <tfoot>\n    <tr><td>Total</td><td>25</td></tr>\n  </tfoot>\n</table>",
+      "niveau": 2,
+      "motsClés": "corps tableau"
     },
     {
       "balise": "<tfoot>",
       "définition": "Définit le pied d'un tableau.",
-      "exemple": "<table>\n  <tfoot>\n    <tr>\n      <td>Total</td>\n      <td>100</td>\n    </tr>\n  </tfoot>\n</table>"
+      "exemple": "<table border=\"1\">\n  <thead>\n    <tr><th>Article</th><th>Prix</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Clé USB</td><td>25</td></tr>\n  </tbody>\n  <tfoot>\n    <tr><td>Total</td><td>25</td></tr>\n  </tfoot>\n</table>",
+      "niveau": 2,
+      "motsClés": "pied tableau total"
     },
     {
       "balise": "<tr>",
       "définition": "Définit une ligne dans un tableau.",
-      "exemple": "<tr>\n  <td>Cellule 1</td>\n  <td>Cellule 2</td>\n</tr>"
+      "exemple": "<tr>\n  <td>Lundi</td>\n  <td>Informatique</td>\n</tr>",
+      "niveau": 2,
+      "motsClés": "ligne tableau row"
     },
     {
       "balise": "<th>",
       "définition": "Définit une cellule d'en-tête dans un tableau.",
-      "exemple": "<tr>\n  <th>En-tête 1</th>\n  <th>En-tête 2</th>\n</tr>"
+      "exemple": "<tr>\n  <th>Jour</th>\n  <th>Matière</th>\n</tr>",
+      "niveau": 2,
+      "motsClés": "cellule en-tête tableau titre colonne"
     },
     {
       "balise": "<td>",
       "définition": "Définit une cellule dans un tableau.",
-      "exemple": "<tr>\n  <td>Donnée 1</td>\n  <td>Donnée 2</td>\n</tr>"
+      "exemple": "<tr>\n  <td>Mardi</td>\n  <td>Physique</td>\n</tr>",
+      "niveau": 2,
+      "motsClés": "cellule donnée tableau"
     },
     {
       "balise": "<caption>",
       "définition": "Définit une légende de tableau.",
-      "exemple": "<table>\n  <caption>Liste des étudiants</caption>\n  <tr>\n    <th>Nom</th>\n    <th>Note</th>\n  </tr>\n</table>"
+      "exemple": "<table border=\"1\">\n  <caption>Emploi du temps</caption>\n  <tr><th>Heure</th><th>Matière</th></tr>\n</table>",
+      "remarques": [
+        "Se place juste après <table>."
+      ],
+      "niveau": 2,
+      "motsClés": "titre légende tableau"
     }
   ],
   "Événements": [
     {
       "événement": "onblur",
       "définition": "Se déclenche au moment où l'élément perd le focus.",
-      "exemple": "<input type=\"text\" onblur=\"alert('Vous avez quitté le champ')\">"
+      "exemple": "<input type=\"text\" id=\"nom\" onblur=\"verifierNom()\">",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "niveau": 3,
+      "motsClés": "événement perte focus quitter champ"
     },
     {
       "événement": "onclick",
       "définition": "Se déclenche lors d'un clic sur l'élément.",
-      "exemple": "<button onclick=\"alert('Bouton cliqué!')\">Cliquez-moi</button>"
+      "exemple": "<input type=\"button\" value=\"Valider\" onclick=\"verifier()\">",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "remarques": [
+        "Le bouton est <input type=\"button\"> : <button> n'est pas dans l'annexe.",
+        "addEventListener n'est pas au programme : l'événement s'écrit dans la balise."
+      ],
+      "niveau": 3,
+      "motsClés": "événement clic cliquer bouton"
     },
     {
       "événement": "onfocus",
       "définition": "Se déclenche au moment où l'élément obtient le focus.",
-      "exemple": "<input type=\"text\" onfocus=\"this.style.background='yellow'\">"
+      "exemple": "<input type=\"text\" id=\"cin\" onfocus=\"aide()\">",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "niveau": 3,
+      "motsClés": "événement focus entrer champ"
     },
     {
       "événement": "oninput",
       "définition": "Se déclenche dès que la valeur d'un élément a changé.",
-      "exemple": "<input type=\"text\" oninput=\"document.getElementById('result').innerHTML = this.value\">\n<p id=\"result\"></p>"
+      "exemple": "<input type=\"range\" id=\"note\" min=\"0\" max=\"20\" oninput=\"afficher()\">\n<span id=\"val\"></span>",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "remarques": [
+        "oninput réagit à chaque modification ; onchange seulement quand la valeur est validée."
+      ],
+      "niveau": 3,
+      "motsClés": "événement saisie temps réel curseur valeur change"
     },
     {
       "événement": "onload",
       "définition": "Se déclenche lorsque la page est complètement chargée.",
-      "exemple": "<body onload=\"alert('Page chargée!')\">"
+      "exemple": "<body onload=\"init()\">",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "niveau": 3,
+      "motsClés": "événement chargement page démarrage"
     },
     {
       "événement": "onmouseover",
       "définition": "Se déclenche lorsque le pointeur de la souris survole l'élément.",
-      "exemple": "<div onmouseover=\"this.style.color='red'\">Survolez-moi</div>"
+      "exemple": "<img src=\"carte.png\" alt=\"Carte\" id=\"carte\" onmouseover=\"agrandir()\">",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "niveau": 4,
+      "motsClés": "événement survol souris entrer"
     },
     {
       "événement": "onmouseout",
       "définition": "Se déclenche lorsque le pointeur de la souris sort de l'élément.",
-      "exemple": "<div onmouseout=\"this.style.color='black'\">Quittez-moi</div>"
+      "exemple": "<img src=\"carte.png\" alt=\"Carte\" id=\"carte\" onmouseout=\"reduire()\">",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "niveau": 4,
+      "motsClés": "événement souris sortir quitter"
     },
     {
       "événement": "onplay",
       "définition": "Se déclenche lorsque la lecture d'un fichier audio/vidéo commence.",
-      "exemple": "<video onplay=\"console.log('Vidéo en cours')\" controls>\n  <source src=\"video.mp4\">\n</video>"
+      "exemple": "<video src=\"visite.mp4\" controls onplay=\"debut()\"></video>",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "niveau": 4,
+      "motsClés": "événement lecture vidéo audio démarre"
     },
     {
       "événement": "onpause",
       "définition": "Se déclenche lorsqu'un élément audio/vidéo est mis en pause.",
-      "exemple": "<audio onpause=\"alert('Audio en pause')\" controls>\n  <source src=\"audio.mp3\">\n</audio>"
+      "exemple": "<audio src=\"hymne.mp3\" controls onpause=\"pause()\"></audio>",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "niveau": 4,
+      "motsClés": "événement pause média"
     },
     {
       "événement": "onsubmit",
       "définition": "Se déclenche lorsqu'un formulaire est soumis.",
-      "exemple": "<form onsubmit=\"return validerFormulaire()\">\n  <input type=\"text\" required>\n  <input type=\"submit\" value=\"Envoyer\">\n</form>"
+      "exemple": "<form action=\"ajout.php\" method=\"post\" onsubmit=\"return verifier()\">\n  …\n  <input type=\"submit\" value=\"Envoyer\">\n</form>",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "remarques": [
+        "Uniquement sur <form>, avec return : la fonction renvoie false pour bloquer l'envoi, true pour l'autoriser.",
+        "Jamais sur un bouton : pour un contrôle sans envoi, input type=\"button\" + onclick."
+      ],
+      "niveau": 4,
+      "motsClés": "événement envoi formulaire soumettre php"
     },
     {
       "événement": "onchange",
       "définition": "Se déclenche lorsque la valeur d'un élément est modifiée.",
-      "exemple": "<select onchange=\"alert('Sélection changée')\">\n  <option>Option 1</option>\n  <option>Option 2</option>\n</select>"
+      "exemple": "<select id=\"gouv\" onchange=\"afficherVilles()\">\n  <option>-- Choisir --</option>\n  <option>Manouba</option>\n</select>",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "niveau": 3,
+      "motsClés": "événement changement valeur liste sélection"
     },
     {
       "événement": "onkeydown",
       "définition": "Se déclenche lorsqu'une touche du clavier est pressée.",
-      "exemple": "<input type=\"text\" onkeydown=\"console.log('Touche pressée')\">"
+      "exemple": "<input type=\"text\" id=\"code\" onkeydown=\"compter()\">",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "niveau": 4,
+      "motsClés": "événement touche clavier enfoncée"
     },
     {
       "événement": "onkeyup",
       "définition": "Se déclenche lorsqu'une touche est relâchée.",
-      "exemple": "<input type=\"text\" onkeyup=\"console.log('Touche relâchée')\">"
+      "exemple": "<input type=\"text\" id=\"cin\" onkeyup=\"compter()\">",
+      "paramètres": [
+        {
+          "nom": "valeur",
+          "rôle": "Appel d'une fonction JavaScript : nomFonction()"
+        }
+      ],
+      "niveau": 4,
+      "motsClés": "événement touche clavier relâchée compter caractères"
     }
   ],
   "Attributs globaux": [
     {
       "attribut": "class",
       "définition": "Spécifie un nom de classe pour un élément.",
-      "exemple": "<div class=\"container main-content\">Contenu</div>"
+      "exemple": "<p class=\"alerte\">Inscriptions closes</p>\n<p class=\"alerte important\">Dernier délai</p>",
+      "remarques": [
+        "Plusieurs classes séparées par un espace."
+      ],
+      "niveau": 3,
+      "motsClés": "classe style css plusieurs éléments"
     },
     {
       "attribut": "hidden",
       "définition": "Renseigne la visibilité d'un élément.",
-      "exemple": "<p hidden>Ce paragraphe est caché</p>"
+      "exemple": "<p id=\"msg\" hidden>Inscription enregistrée</p>",
+      "niveau": 3,
+      "motsClés": "caché masquer invisible"
     },
     {
       "attribut": "id",
       "définition": "Spécifie un identifiant unique pour un élément HTML.",
-      "exemple": "<div id=\"header\">En-tête</div>"
+      "exemple": "<input type=\"text\" id=\"nom\" name=\"nom\">",
+      "remarques": [
+        "Unique dans la page ; utilisé par getElementById, label for et le sélecteur #id."
+      ],
+      "niveau": 3,
+      "motsClés": "identifiant unique getElementById label"
     },
     {
       "attribut": "lang",
       "définition": "Spécifie la langue du contenu de l'élément.",
-      "exemple": "<p lang=\"ar\">مرحبا</p>"
+      "exemple": "<html lang=\"fr\">\n…\n<p lang=\"ar\">مرحبا</p>",
+      "niveau": 2,
+      "motsClés": "langue"
     },
     {
       "attribut": "style",
       "définition": "Spécifie un style en ligne.",
-      "exemple": "<p style=\"color: blue; font-size: 18px;\">Texte stylé</p>"
+      "exemple": "<p style=\"color: green; font-size: 18px;\">Inscriptions ouvertes</p>",
+      "remarques": [
+        "CSS en ligne : niveau 2ème. À partir de la 3ème, préférer la feuille de style externe."
+      ],
+      "niveau": 2,
+      "motsClés": "css en ligne inline style"
     },
     {
       "attribut": "title",
       "définition": "Spécifie des informations supplémentaires sur un élément.",
-      "exemple": "<abbr title=\"HyperText Markup Language\">HTML</abbr>"
+      "exemple": "<img src=\"logo.png\" alt=\"Logo\" title=\"Lycée Oued Ellil\">",
+      "remarques": [
+        "<abbr> n'est pas dans l'annexe."
+      ],
+      "niveau": 3,
+      "motsClés": "infobulle survol texte aide"
     }
   ],
   "Éléments de formulaire": [
     {
       "balise": "<form>",
       "définition": "Crée un formulaire HTML.",
-      "attributs": ["action", "method", "target"],
+      "attributs": [
+        "action",
+        "method",
+        "target"
+      ],
       "valeurs_attributs": {
-        "method": ["get", "post"],
-        "target": ["_self", "_blank", "_parent", "_top", "iframeName"]
+        "method": [
+          "get",
+          "post"
+        ],
+        "target": [
+          "_self",
+          "_blank",
+          "_parent",
+          "_top",
+          "iframeName"
+        ]
       },
-      "exemple": "<form action=\"/submit\" method=\"post\">\n  <label for=\"nom\">Nom:</label>\n  <input type=\"text\" id=\"nom\" name=\"nom\">\n  <input type=\"submit\" value=\"Envoyer\">\n</form>"
+      "exemple": "<form action=\"inscription.php\" method=\"post\">\n  …\n</form>",
+      "paramètres": [
+        {
+          "nom": "action",
+          "rôle": "Page qui traite les données (ex. inscription.php)"
+        },
+        {
+          "nom": "method",
+          "rôle": "get (données dans l'URL) ou post (données cachées)"
+        },
+        {
+          "nom": "target",
+          "rôle": "_self, _blank, _parent, _top, ou nom d'un iframe"
+        }
+      ],
+      "niveau": 2,
+      "motsClés": "formulaire envoyer données"
     },
     {
       "balise": "<fieldset>",
       "définition": "Regroupe des éléments liés dans un formulaire.",
-      "exemple": "<fieldset>\n  <legend>Informations personnelles</legend>\n  <label for=\"prenom\">Prénom:</label>\n  <input type=\"text\" id=\"prenom\" name=\"prenom\">\n</fieldset>"
+      "exemple": "<fieldset>\n  <legend>Identité</legend>\n  <label for=\"nom\">Nom :</label>\n  <input type=\"text\" id=\"nom\" name=\"nom\">\n</fieldset>",
+      "niveau": 2,
+      "motsClés": "groupe champs cadre formulaire"
     },
     {
       "balise": "<legend>",
       "définition": "Définit une légende pour l'élément <fieldset>.",
-      "exemple": "<fieldset>\n  <legend>Coordonnées</legend>\n  <input type=\"email\" name=\"email\">\n</fieldset>"
+      "exemple": "<fieldset>\n  <legend>Coordonnées</legend>\n  …\n</fieldset>",
+      "niveau": 2,
+      "motsClés": "titre groupe fieldset"
     },
     {
       "balise": "<label>",
       "définition": "Définit un libellé pour un élément graphique.",
-      "attributs": ["for"],
-      "exemple": "<label for=\"email\">Adresse email:</label>\n<input type=\"email\" id=\"email\" name=\"email\">"
+      "attributs": [
+        "for"
+      ],
+      "exemple": "<label for=\"email\">E-mail :</label>\n<input type=\"email\" id=\"email\" name=\"email\">",
+      "paramètres": [
+        {
+          "nom": "for",
+          "rôle": "id du champ associé"
+        }
+      ],
+      "remarques": [
+        "Cliquer sur l'étiquette place le curseur dans le champ."
+      ],
+      "niveau": 2,
+      "motsClés": "étiquette libellé champ"
     },
     {
       "balise": "<input>",
@@ -371,60 +862,190 @@
       "types": [
         {
           "type": "button, reset, submit",
-          "attributs_generiques": ["name", "value", "disabled"],
+          "attributs_generiques": [
+            "name",
+            "value",
+            "disabled"
+          ],
           "attributs_specifiques": []
         },
         {
           "type": "text, email, tel",
-          "attributs_generiques": ["name", "value", "placeholder", "readonly", "required", "disabled", "list"],
+          "attributs_generiques": [
+            "name",
+            "value",
+            "placeholder",
+            "readonly",
+            "required",
+            "disabled",
+            "list"
+          ],
           "attributs_specifiques": []
         },
         {
           "type": "password",
-          "attributs_generiques": ["name", "value", "placeholder", "readonly", "required", "disabled"],
+          "attributs_generiques": [
+            "name",
+            "value",
+            "placeholder",
+            "readonly",
+            "required",
+            "disabled"
+          ],
           "attributs_specifiques": []
         },
         {
           "type": "number, range",
-          "attributs_generiques": ["name", "value", "readonly", "required", "disabled"],
-          "attributs_specifiques": ["min", "max"]
+          "attributs_generiques": [
+            "name",
+            "value",
+            "readonly",
+            "required",
+            "disabled"
+          ],
+          "attributs_specifiques": [
+            "min",
+            "max"
+          ]
         },
         {
           "type": "date, time",
-          "attributs_generiques": ["name", "value", "required", "disabled"],
-          "attributs_specifiques": ["min", "max"]
+          "attributs_generiques": [
+            "name",
+            "value",
+            "required",
+            "disabled"
+          ],
+          "attributs_specifiques": [
+            "min",
+            "max"
+          ]
         },
         {
           "type": "checkbox, radio",
-          "attributs_generiques": ["name", "value", "required", "disabled"],
-          "attributs_specifiques": ["checked"]
+          "attributs_generiques": [
+            "name",
+            "value",
+            "required",
+            "disabled"
+          ],
+          "attributs_specifiques": [
+            "checked"
+          ]
         }
       ],
-      "exemple": "<input type=\"text\" name=\"username\" placeholder=\"Nom d'utilisateur\" required>\n<input type=\"email\" name=\"email\" placeholder=\"Email\">\n<input type=\"password\" name=\"password\" required>\n<input type=\"number\" name=\"age\" min=\"18\" max=\"100\">\n<input type=\"date\" name=\"date_naissance\">\n<input type=\"checkbox\" name=\"accepter\" checked>\n<input type=\"radio\" name=\"genre\" value=\"homme\">\n<input type=\"submit\" value=\"Envoyer\">"
+      "exemple": "<input type=\"text\" name=\"nom\" placeholder=\"Votre nom\" required>\n<input type=\"number\" name=\"age\" min=\"15\" max=\"20\">\n<input type=\"radio\" name=\"sexe\" value=\"F\"> Fille\n<input type=\"radio\" name=\"sexe\" value=\"G\"> Garçon\n<input type=\"checkbox\" name=\"photo\" value=\"oui\" checked>\n<input type=\"button\" value=\"Valider\" onclick=\"verifier()\">",
+      "remarques": [
+        "2ème : text, number, radio, checkbox, submit, reset. 3ème : email, tel, password, date, time, range, button.",
+        "Les boutons radio d'un même groupe partagent le même name."
+      ],
+      "niveau": 2,
+      "motsClés": "champ saisie formulaire bouton type text number radio checkbox email password date range"
     },
     {
       "balise": "<textarea>",
       "définition": "Définit une zone de saisie de texte multilignes.",
-      "attributs": ["name", "cols", "rows", "readonly", "required", "disabled", "placeholder", "maxlength"],
-      "exemple": "<textarea name=\"commentaire\" rows=\"4\" cols=\"50\" placeholder=\"Votre commentaire ici...\" maxlength=\"500\"></textarea>"
+      "attributs": [
+        "name",
+        "cols",
+        "rows",
+        "readonly",
+        "required",
+        "disabled",
+        "placeholder",
+        "maxlength"
+      ],
+      "exemple": "<textarea name=\"message\" rows=\"4\" cols=\"40\" maxlength=\"300\" placeholder=\"Votre message\"></textarea>",
+      "paramètres": [
+        {
+          "nom": "name",
+          "rôle": "Nom de la donnée envoyée"
+        },
+        {
+          "nom": "rows",
+          "rôle": "Nombre de lignes visibles"
+        },
+        {
+          "nom": "cols",
+          "rôle": "Nombre de colonnes visibles"
+        },
+        {
+          "nom": "maxlength",
+          "rôle": "Nombre maximal de caractères"
+        },
+        {
+          "nom": "placeholder",
+          "rôle": "Texte indicatif"
+        },
+        {
+          "nom": "readonly / required / disabled",
+          "rôle": "Lecture seule / obligatoire / désactivé"
+        }
+      ],
+      "niveau": 2,
+      "motsClés": "zone de texte multiligne commentaire message"
     },
     {
       "balise": "<select>",
       "définition": "Définit une liste déroulante.",
-      "attributs": ["name", "required", "disabled", "multiple"],
-      "exemple": "<select name=\"pays\">\n  <option value=\"tn\">Tunisie</option>\n  <option value=\"fr\">France</option>\n  <option value=\"dz\">Algérie</option>\n</select>"
+      "attributs": [
+        "name",
+        "required",
+        "disabled",
+        "multiple"
+      ],
+      "exemple": "<select id=\"gouv\" name=\"gouv\">\n  <option value=\"\">-- Choisir --</option>\n  <option value=\"Manouba\">Manouba</option>\n  <option value=\"Ariana\">Ariana</option>\n</select>",
+      "paramètres": [
+        {
+          "nom": "name",
+          "rôle": "Nom de la donnée"
+        },
+        {
+          "nom": "multiple",
+          "rôle": "Plusieurs choix possibles"
+        },
+        {
+          "nom": "required / disabled",
+          "rôle": "Obligatoire / désactivé"
+        }
+      ],
+      "remarques": [
+        "En JavaScript, on teste selectedIndex == 0 pour vérifier qu'un choix a été fait."
+      ],
+      "niveau": 2,
+      "motsClés": "liste déroulante choix menu"
     },
     {
       "balise": "<datalist>",
       "définition": "Spécifie une liste d'options prédéfinies connectée à un élément <input>.",
-      "exemple": "<input list=\"villes\" name=\"ville\">\n<datalist id=\"villes\">\n  <option value=\"Tunis\">\n  <option value=\"Sousse\">\n  <option value=\"Sfax\">\n</datalist>"
+      "exemple": "<input type=\"text\" name=\"ville\" list=\"villes\">\n<datalist id=\"villes\">\n  <option value=\"Tunis\">\n  <option value=\"Sousse\">\n  <option value=\"Sfax\">\n</datalist>",
+      "remarques": [
+        "Relié au champ par l'attribut list = id du datalist.",
+        "Niveau 4ème."
+      ],
+      "niveau": 4,
+      "motsClés": "suggestions saisie autocomplétion liste"
     },
     {
       "balise": "<option>",
       "définition": "Définit une option dans une liste de sélection.",
-      "attributs": ["value", "selected"],
-      "exemple": "<select name=\"couleur\">\n  <option value=\"rouge\">Rouge</option>\n  <option value=\"bleu\" selected>Bleu</option>\n  <option value=\"vert\">Vert</option>\n</select>"
+      "attributs": [
+        "value",
+        "selected"
+      ],
+      "exemple": "<select name=\"classe\">\n  <option value=\"3SI1\">3ème SI 1</option>\n  <option value=\"3SI2\" selected>3ème SI 2</option>\n</select>",
+      "paramètres": [
+        {
+          "nom": "value",
+          "rôle": "Valeur envoyée"
+        },
+        {
+          "nom": "selected",
+          "rôle": "Option choisie par défaut"
+        }
+      ],
+      "niveau": 2,
+      "motsClés": "option choix liste"
     }
   ]
-
 }

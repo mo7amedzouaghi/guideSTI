@@ -3,175 +3,421 @@
     {
       "type": "INT",
       "définition": "Entier.",
-      "exemple": "CREATE TABLE etudiants (\n  id INT,\n  age INT\n);\n-- id et age sont des colonnes de type entier"
+      "exemple": "CREATE TABLE Exemple (\n  idEleve INT\n);",
+      "remarques": [
+        "Entier : identifiants, quantités, années."
+      ],
+      "niveau": 3,
+      "motsClés": "type entier nombre"
     },
     {
       "type": "DECIMAL",
       "définition": "Réel.",
-      "exemple": "CREATE TABLE produits (\n  prix DECIMAL(10, 2),  -- 10 chiffres au total, 2 après la virgule\n  poids DECIMAL(5, 3)   -- 5 chiffres au total, 3 après la virgule\n);\n-- Exemple: prix = 12345.67, poids = 12.345"
+      "exemple": "CREATE TABLE Exemple (\n  moyenne DECIMAL(4,2)   -- de -99.99 à 99.99\n);",
+      "remarques": [
+        "DECIMAL(p,d) : p chiffres au total dont d après la virgule."
+      ],
+      "niveau": 3,
+      "motsClés": "type réel décimal virgule prix moyenne"
     },
     {
       "type": "CHAR",
       "définition": "Chaîne de caractères de longueur fixe.",
-      "exemple": "CREATE TABLE personnes (\n  code_postal CHAR(4),  -- Toujours 4 caractères\n  sexe CHAR(1)          -- Toujours 1 caractère\n);\n-- Exemple: code_postal = '1000', sexe = 'M'"
+      "exemple": "CREATE TABLE Exemple (\n  codePostal CHAR(4)     -- toujours 4 caractères\n);",
+      "remarques": [
+        "Longueur fixe : codes, sexe (CHAR(1))."
+      ],
+      "niveau": 3,
+      "motsClés": "type chaîne fixe caractères"
     },
     {
       "type": "VARCHAR",
       "définition": "Chaîne de caractères de longueur variable dont la longueur maximale est fixée.",
-      "exemple": "CREATE TABLE utilisateurs (\n  nom VARCHAR(50),      -- Maximum 50 caractères\n  email VARCHAR(100)    -- Maximum 100 caractères\n);\n-- Exemple: nom = 'Ahmed', email = 'ahmed@example.com'"
+      "exemple": "CREATE TABLE Exemple (\n  nom VARCHAR(30)        -- 30 caractères au maximum\n);",
+      "remarques": [
+        "Longueur variable : noms, adresses, e-mails."
+      ],
+      "niveau": 3,
+      "motsClés": "type chaîne variable texte nom"
     },
     {
       "type": "TEXT",
       "définition": "Chaîne de caractères de longueur variable.",
-      "exemple": "CREATE TABLE articles (\n  titre VARCHAR(200),\n  contenu TEXT          -- Texte de longueur variable (jusqu'à 65535 caractères)\n);\n-- Exemple: contenu = 'Ceci est un article très long...'"
+      "exemple": "CREATE TABLE Exemple (\n  resume TEXT\n);",
+      "remarques": [
+        "Texte long : commentaires, descriptions."
+      ],
+      "niveau": 3,
+      "motsClés": "type texte long description"
     },
     {
       "type": "DATE",
       "définition": "Date.",
-      "exemple": "CREATE TABLE evenements (\n  date_debut DATE,\n  date_fin DATE\n);\nINSERT INTO evenements VALUES ('2024-11-19', '2024-11-20');\n-- Format: AAAA-MM-JJ"
+      "exemple": "CREATE TABLE Exemple (\n  dateNais DATE         -- 'AAAA-MM-JJ'\n);",
+      "remarques": [
+        "Format 'AAAA-MM-JJ', entre apostrophes.",
+        "BOOLEAN n'est pas dans l'annexe : utiliser CHAR(1) ou INT (0/1)."
+      ],
+      "niveau": 3,
+      "motsClés": "type date jour format"
     },
     {
       "type": "TIME",
       "définition": "Temps.",
-      "exemple": "CREATE TABLE horaires (\n  heure_debut TIME,\n  heure_fin TIME\n);\nINSERT INTO horaires VALUES ('08:30:00', '17:00:00');\n-- Format: HH:MM:SS"
+      "exemple": "CREATE TABLE Exemple (\n  heureDebut TIME       -- 'HH:MM:SS'\n);",
+      "remarques": [
+        "Format 'HH:MM:SS'."
+      ],
+      "niveau": 3,
+      "motsClés": "type heure temps horaire"
     },
     {
       "type": "DATETIME",
       "définition": "Date et Heure.",
-      "exemple": "CREATE TABLE commandes (\n  date_commande DATETIME\n);\nINSERT INTO commandes VALUES ('2024-11-19 14:30:00');\n-- Format: AAAA-MM-JJ HH:MM:SS"
+      "exemple": "CREATE TABLE Exemple (\n  dateEmprunt DATETIME  -- 'AAAA-MM-JJ HH:MM:SS'\n);",
+      "remarques": [
+        "Date et heure."
+      ],
+      "niveau": 3,
+      "motsClés": "type date heure horodatage"
     }
   ],
   "Opérateurs de comparaison": [
     {
       "opérateur": "=",
       "définition": "Égale à.",
-      "exemple": "SELECT * FROM etudiants\nWHERE age = 20;\n-- Retourne tous les étudiants ayant exactement 20 ans"
+      "exemple": "SELECT nom, prenom FROM Eleve\nWHERE ville = 'Manouba';",
+      "remarques": [
+        "Valeurs texte et dates entre apostrophes : 'Tunis', '2026-10-27'."
+      ],
+      "niveau": 3,
+      "motsClés": "comparaison égal égalité condition where"
     },
     {
       "opérateur": "<>",
       "définition": "Différent de.",
-      "exemple": "SELECT * FROM produits\nWHERE categorie <> 'Alimentaire';\n-- Retourne tous les produits sauf ceux de catégorie 'Alimentaire'"
+      "exemple": "SELECT nom FROM Eleve\nWHERE ville <> 'Tunis';",
+      "remarques": [
+        "!= est accepté par MySQL, mais l'annexe utilise <>."
+      ],
+      "niveau": 3,
+      "motsClés": "comparaison différent condition where"
     },
     {
       "opérateur": ">",
       "définition": "Supérieur à.",
-      "exemple": "SELECT * FROM etudiants\nWHERE note > 15;\n-- Retourne les étudiants ayant une note supérieure à 15"
+      "exemple": "SELECT nom, moyenne FROM Eleve\nWHERE moyenne > 15;",
+      "niveau": 3,
+      "motsClés": "comparaison supérieur condition where"
     },
     {
       "opérateur": "<",
       "définition": "Inférieur à.",
-      "exemple": "SELECT * FROM produits\nWHERE prix < 50;\n-- Retourne les produits dont le prix est inférieur à 50"
+      "exemple": "SELECT titre FROM Livre\nWHERE annee < 2000;",
+      "niveau": 3,
+      "motsClés": "comparaison inférieur condition where"
     },
     {
       "opérateur": ">=",
       "définition": "Supérieur ou égal à.",
-      "exemple": "SELECT * FROM etudiants\nWHERE age >= 18;\n-- Retourne les étudiants de 18 ans et plus"
+      "exemple": "SELECT nom FROM Eleve\nWHERE moyenne >= 10;",
+      "niveau": 3,
+      "motsClés": "comparaison supérieur ou égal condition where"
     },
     {
       "opérateur": "<=",
       "définition": "Inférieur ou égal à.",
-      "exemple": "SELECT * FROM commandes\nWHERE montant <= 100;\n-- Retourne les commandes de 100 dinars ou moins"
+      "exemple": "SELECT titre, prix FROM Livre\nWHERE prix <= 20;",
+      "niveau": 3,
+      "motsClés": "comparaison inférieur ou égal condition where"
     },
     {
       "opérateur": "IN",
       "définition": "Dans.",
-      "exemple": "SELECT * FROM etudiants\nWHERE ville IN ('Tunis', 'Sousse', 'Sfax');\n-- Retourne les étudiants de Tunis, Sousse ou Sfax"
+      "exemple": "SELECT nom, ville FROM Eleve\nWHERE ville IN ('Tunis', 'Ariana', 'Manouba');",
+      "paramètres": [
+        {
+          "nom": "liste",
+          "rôle": "Valeurs entre parenthèses, séparées par des virgules (ou une sous-requête en 4ème)"
+        }
+      ],
+      "remarques": [
+        "Équivaut à plusieurs conditions reliées par OR. NOT IN : aucune des valeurs."
+      ],
+      "niveau": 3,
+      "motsClés": "liste valeurs parmi appartient"
     },
     {
       "opérateur": "BETWEEN",
       "définition": "Entre deux valeurs d'un intervalle.",
-      "exemple": "SELECT * FROM produits\nWHERE prix BETWEEN 20 AND 50;\n-- Retourne les produits dont le prix est entre 20 et 50 (inclus)"
+      "exemple": "SELECT nom, moyenne FROM Eleve\nWHERE moyenne BETWEEN 10 AND 12;\n\nSELECT * FROM Emprunt\nWHERE dateEmprunt BETWEEN '2026-10-01' AND '2026-10-31';",
+      "paramètres": [
+        {
+          "nom": "min",
+          "rôle": "Borne inférieure (incluse)"
+        },
+        {
+          "nom": "max",
+          "rôle": "Borne supérieure (incluse)"
+        }
+      ],
+      "remarques": [
+        "Les deux bornes sont incluses."
+      ],
+      "niveau": 3,
+      "motsClés": "intervalle entre bornes plage"
     },
     {
       "opérateur": "LIKE",
       "définition": "Recherche de motif/valeur.",
-      "exemple": "SELECT * FROM etudiants\nWHERE nom LIKE 'Ben%';\n-- Retourne les étudiants dont le nom commence par 'Ben'\nSELECT * FROM etudiants\nWHERE nom LIKE '%Ali%';\n-- Retourne les étudiants dont le nom contient 'Ali'"
+      "exemple": "SELECT nom FROM Eleve WHERE nom LIKE 'Ben%';     -- commence par Ben\nSELECT nom FROM Eleve WHERE nom LIKE '%a';       -- se termine par a\nSELECT nom FROM Eleve WHERE nom LIKE '_a%';      -- 2e lettre : a\nSELECT titre FROM Livre WHERE titre LIKE '%info%'; -- contient info",
+      "paramètres": [
+        {
+          "nom": "motif",
+          "rôle": "% : n'importe quelle suite de caractères (même vide) ; _ : exactement un caractère"
+        }
+      ],
+      "niveau": 3,
+      "motsClés": "motif commence par contient se termine filtre texte joker %"
     },
     {
       "opérateur": "IS NULL",
       "définition": "Filtre les résultats contenant la valeur NULL.",
-      "exemple": "SELECT * FROM etudiants\nWHERE email IS NULL;\n-- Retourne les étudiants n'ayant pas d'email"
+      "exemple": "SELECT idLivre FROM Emprunt\nWHERE dateRetour IS NULL;     -- livres non rendus\n\nSELECT nom FROM Eleve\nWHERE idClasse IS NOT NULL;",
+      "remarques": [
+        "On n'écrit jamais = NULL : la comparaison avec NULL n'est jamais vraie."
+      ],
+      "niveau": 3,
+      "motsClés": "vide null absent non renseigné manquant"
     }
   ],
   "Opérateurs logiques": [
     {
       "opérateur": "AND",
       "définition": "ET.",
-      "exemple": "SELECT * FROM etudiants\nWHERE age >= 18 AND ville = 'Tunis';\n-- Retourne les étudiants de 18 ans ou plus ET habitant à Tunis"
+      "exemple": "SELECT nom FROM Eleve\nWHERE moyenne >= 10 AND ville = 'Manouba';",
+      "niveau": 3,
+      "motsClés": "et les deux conditions"
     },
     {
       "opérateur": "OR",
       "définition": "OU.",
-      "exemple": "SELECT * FROM produits\nWHERE categorie = 'Électronique' OR categorie = 'Informatique';\n-- Retourne les produits de catégorie Électronique OU Informatique"
+      "exemple": "SELECT nom FROM Eleve\nWHERE ville = 'Tunis' OR ville = 'Ariana';",
+      "remarques": [
+        "Mélange AND / OR : mettre des parenthèses, AND étant prioritaire."
+      ],
+      "niveau": 3,
+      "motsClés": "ou une des conditions"
     },
     {
       "opérateur": "NOT",
       "définition": "NON.",
-      "exemple": "SELECT * FROM etudiants\nWHERE NOT ville = 'Tunis';\n-- Retourne les étudiants qui ne sont pas de Tunis"
+      "exemple": "SELECT nom FROM Eleve\nWHERE NOT (ville = 'Tunis');\n\nSELECT titre FROM Livre\nWHERE idLivre NOT IN (SELECT idLivre FROM Emprunt);",
+      "niveau": 3,
+      "motsClés": "non négation sauf"
     }
   ],
   "Fonctions définies sur le type date": [
     {
       "fonction": "DATE()",
       "définition": "Retourne une date extraite à partir d'une chaîne contenant une valeur au format DATE ou DATETIME.",
-      "exemple": "SELECT DATE(date_commande) FROM commandes;\n-- Si date_commande = '2024-11-19 14:30:00', retourne '2024-11-19'"
+      "exemple": "SELECT DATE(dateEmprunt) FROM Emprunt;\nSELECT * FROM Emprunt WHERE DATE(dateEmprunt) = DATE(NOW());",
+      "paramètres": [
+        {
+          "nom": "d",
+          "rôle": "Valeur de type DATETIME ou date sous forme de chaîne"
+        }
+      ],
+      "retour": "La partie date (AAAA-MM-JJ).",
+      "remarques": [
+        "Date du jour : DATE(NOW()). CURDATE() n'est pas dans l'annexe."
+      ],
+      "niveau": 4,
+      "motsClés": "date du jour extraire aujourd'hui curdate"
     },
     {
       "fonction": "DAY()",
       "définition": "Retourne le jour.",
-      "exemple": "SELECT nom, DAY(date_naissance) FROM etudiants;\n-- Si date_naissance = '2000-11-19', retourne 19"
+      "exemple": "SELECT nom, DAY(dateNais) AS jour FROM Eleve;",
+      "paramètres": [
+        {
+          "nom": "d",
+          "rôle": "Date"
+        }
+      ],
+      "retour": "Le jour du mois (1 à 31).",
+      "niveau": 4,
+      "motsClés": "jour du mois"
     },
     {
       "fonction": "MONTH()",
       "définition": "Retourne le mois.",
-      "exemple": "SELECT * FROM commandes\nWHERE MONTH(date_commande) = 11;\n-- Retourne les commandes du mois de novembre"
+      "exemple": "SELECT nom FROM Eleve\nWHERE MONTH(dateNais) = MONTH(NOW());   -- anniversaires du mois",
+      "paramètres": [
+        {
+          "nom": "d",
+          "rôle": "Date"
+        }
+      ],
+      "retour": "Le mois (1 à 12).",
+      "niveau": 4,
+      "motsClés": "mois"
     },
     {
       "fonction": "YEAR()",
       "définition": "Retourne l'année.",
-      "exemple": "SELECT * FROM etudiants\nWHERE YEAR(date_naissance) = 2000;\n-- Retourne les étudiants nés en 2000"
+      "exemple": "SELECT nom, YEAR(NOW()) - YEAR(dateNais) AS age FROM Eleve;",
+      "paramètres": [
+        {
+          "nom": "d",
+          "rôle": "Date"
+        }
+      ],
+      "retour": "L'année (4 chiffres).",
+      "niveau": 4,
+      "motsClés": "année âge"
     },
     {
       "fonction": "NOW()",
       "définition": "Retourne la date et l'heure courantes.",
-      "exemple": "INSERT INTO logs (message, date_log)\nVALUES ('Connexion', NOW());\n-- Insère la date et l'heure actuelles, exemple: '2024-11-19 14:30:45'"
+      "exemple": "INSERT INTO Emprunt (idLivre, idEleve, dateEmprunt)\nVALUES (12, 25, NOW());",
+      "retour": "La date et l'heure courantes (DATETIME).",
+      "remarques": [
+        "Pour la date seule : DATE(NOW())."
+      ],
+      "niveau": 4,
+      "motsClés": "maintenant date heure actuelle aujourd'hui"
     },
     {
       "fonction": "ADDDATE()",
       "définition": "Ajoute un nombre de jours ou un intervalle de temps à une date.",
-      "exemple": "SELECT ADDDATE(date_commande, 30) AS date_livraison\nFROM commandes;\n-- Si date_commande = '2024-11-19', retourne '2024-12-19'"
+      "exemple": "SELECT idLivre, ADDDATE(dateEmprunt, 15) AS retourPrevu FROM Emprunt;\nSELECT ADDDATE('2026-10-27', INTERVAL 1 MONTH);   -- 2026-11-27",
+      "paramètres": [
+        {
+          "nom": "d",
+          "rôle": "Date de départ"
+        },
+        {
+          "nom": "n",
+          "rôle": "Nombre de jours à ajouter (négatif pour retrancher), ou INTERVAL n DAY / MONTH / YEAR"
+        }
+      ],
+      "retour": "La nouvelle date.",
+      "niveau": 4,
+      "motsClés": "ajouter jours date échéance retour prévu"
     },
     {
       "fonction": "DATEDIFF()",
       "définition": "Retourne la différence entre deux dates en jours.",
-      "exemple": "SELECT DATEDIFF(date_fin, date_debut) AS duree\nFROM projets;\n-- Si date_debut = '2024-11-19' et date_fin = '2024-11-29', retourne 10"
+      "exemple": "SELECT idLivre, DATEDIFF(DATE(NOW()), dateEmprunt) AS joursEmprunt\nFROM Emprunt\nWHERE dateRetour IS NULL;",
+      "paramètres": [
+        {
+          "nom": "d1",
+          "rôle": "Date la plus récente"
+        },
+        {
+          "nom": "d2",
+          "rôle": "Date la plus ancienne"
+        }
+      ],
+      "retour": "Le nombre de jours d1 - d2 (négatif si d1 < d2).",
+      "remarques": [
+        "L'ordre compte : DATEDIFF(fin, début)."
+      ],
+      "niveau": 4,
+      "motsClés": "différence jours entre deux dates durée retard"
     }
   ],
   "Fonctions d'agrégation": [
     {
       "fonction": "AVG()",
       "définition": "Retourne la moyenne.",
-      "exemple": "SELECT AVG(note) AS moyenne FROM etudiants;\n-- Si les notes sont 12, 15, 18, retourne 15.00"
+      "exemple": "SELECT AVG(moyenne) AS moyenneGenerale FROM Eleve;\nSELECT idClasse, AVG(moyenne) FROM Eleve GROUP BY idClasse;",
+      "paramètres": [
+        {
+          "nom": "colonne",
+          "rôle": "Colonne numérique"
+        }
+      ],
+      "retour": "La moyenne des valeurs non nulles.",
+      "remarques": [
+        "Une condition sur un agrégat s'écrit dans HAVING, jamais dans WHERE.",
+        "Niveau 4ème."
+      ],
+      "niveau": 4,
+      "motsClés": "agrégation statistique moyenne"
     },
     {
       "fonction": "COUNT()",
       "définition": "Retourne le nombre d'enregistrements.",
-      "exemple": "SELECT COUNT(*) AS nombre_etudiants FROM etudiants;\n-- Retourne le nombre total d'étudiants, exemple: 50\nSELECT COUNT(DISTINCT ville) FROM etudiants;\n-- Retourne le nombre de villes différentes, exemple: 8"
+      "exemple": "SELECT COUNT(*) AS effectif FROM Eleve;\nSELECT COUNT(DISTINCT ville) FROM Eleve;   -- nombre de villes différentes",
+      "paramètres": [
+        {
+          "nom": "colonne",
+          "rôle": "Colonne, ou * pour COUNT"
+        }
+      ],
+      "retour": "Le nombre de lignes (COUNT(*)) ou de valeurs non nulles (COUNT(colonne)).",
+      "remarques": [
+        "Une condition sur un agrégat s'écrit dans HAVING, jamais dans WHERE.",
+        "Niveau 4ème."
+      ],
+      "niveau": 4,
+      "motsClés": "agrégation statistique compter nombre effectif"
     },
     {
       "fonction": "MAX()",
       "définition": "Retourne le maximum.",
-      "exemple": "SELECT MAX(prix) AS prix_max FROM produits;\n-- Si les prix sont 10, 25, 50, 30, retourne 50"
+      "exemple": "SELECT MAX(moyenne) AS meilleure FROM Eleve;",
+      "paramètres": [
+        {
+          "nom": "colonne",
+          "rôle": "Colonne, ou * pour COUNT"
+        }
+      ],
+      "retour": "La plus grande valeur.",
+      "remarques": [
+        "Une condition sur un agrégat s'écrit dans HAVING, jamais dans WHERE.",
+        "Niveau 4ème."
+      ],
+      "niveau": 4,
+      "motsClés": "agrégation statistique maximum plus grand meilleure"
     },
     {
       "fonction": "MIN()",
       "définition": "Retourne le minimum.",
-      "exemple": "SELECT MIN(age) AS age_min FROM etudiants;\n-- Si les âges sont 18, 20, 22, 25, retourne 18"
+      "exemple": "SELECT MIN(prix) FROM Livre;",
+      "paramètres": [
+        {
+          "nom": "colonne",
+          "rôle": "Colonne, ou * pour COUNT"
+        }
+      ],
+      "retour": "La plus petite valeur.",
+      "remarques": [
+        "Une condition sur un agrégat s'écrit dans HAVING, jamais dans WHERE.",
+        "Niveau 4ème."
+      ],
+      "niveau": 4,
+      "motsClés": "agrégation statistique minimum plus petit"
     },
     {
       "fonction": "SUM()",
       "définition": "Retourne la somme.",
-      "exemple": "SELECT SUM(quantite) AS total FROM ventes;\n-- Si les quantités sont 5, 10, 15, retourne 30"
+      "exemple": "SELECT SUM(prix) AS valeurStock FROM Livre;",
+      "paramètres": [
+        {
+          "nom": "colonne",
+          "rôle": "Colonne numérique"
+        }
+      ],
+      "retour": "La somme des valeurs.",
+      "remarques": [
+        "Une condition sur un agrégat s'écrit dans HAVING, jamais dans WHERE.",
+        "Niveau 4ème."
+      ],
+      "niveau": 4,
+      "motsClés": "agrégation statistique somme total additionner"
     }
   ],
   "Manipulation des données": [
@@ -179,72 +425,218 @@
       "commande": "SELECT",
       "définition": "Spécification des colonnes du résultat.",
       "syntaxe": "SELECT [DISTINCT] expression [, col, ... ou *] [[AS] alias] FROM table1 [[AS] alias] [, table2, ...] [WHERE condition] [GROUP BY critère] [HAVING condition] [ORDER BY expression [ASC/DESC]]",
-      "exemple": "SELECT nom, prenom, age\nFROM etudiants\nWHERE age > 18\nORDER BY nom ASC;\n-- Retourne: Ahmed Ali 20, Ahmed Ben Ali 22, Fatma Said 19...\n\nSELECT ville, COUNT(*) AS nombre\nFROM etudiants\nGROUP BY ville\nHAVING COUNT(*) > 5;\n-- Retourne: Tunis 15, Sousse 8, Sfax 7..."
+      "exemple": "-- Une table (3ème)\nSELECT DISTINCT ville FROM Eleve ORDER BY ville ASC;\n\n-- Jointure, regroupement, filtre sur groupe (4ème)\nSELECT C.niveau, COUNT(*) AS effectif, AVG(E.moyenne) AS moy\nFROM Eleve E, Classe C\nWHERE E.idClasse = C.idClasse\nGROUP BY C.niveau\nHAVING COUNT(*) > 20\nORDER BY moy DESC;",
+      "paramètres": [
+        {
+          "nom": "DISTINCT",
+          "rôle": "Supprime les lignes en double"
+        },
+        {
+          "nom": "AS alias",
+          "rôle": "Renomme une colonne ou une table"
+        },
+        {
+          "nom": "FROM",
+          "rôle": "Table(s) interrogée(s), séparées par des virgules"
+        },
+        {
+          "nom": "WHERE",
+          "rôle": "Conditions sur les lignes, et conditions de jointure"
+        },
+        {
+          "nom": "GROUP BY",
+          "rôle": "Regroupement des lignes"
+        },
+        {
+          "nom": "HAVING",
+          "rôle": "Conditions sur les groupes"
+        },
+        {
+          "nom": "ORDER BY … ASC / DESC",
+          "rôle": "Tri croissant ou décroissant"
+        }
+      ],
+      "remarques": [
+        "Ordre obligatoire des clauses : SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY.",
+        "Jointure en syntaxe classique : tables dans FROM, condition dans WHERE. JOIN … ON n'est pas dans l'annexe.",
+        "3ème : une seule table, sans GROUP BY ni HAVING. 4ème : jointures, agrégats, sous-requêtes non corrélées."
+      ],
+      "niveau": 3,
+      "motsClés": "sélectionner consulter afficher requête jointure jointures relier tables join tri trier group by having order by distinct sous-requête"
     },
     {
       "commande": "INSERT INTO",
       "définition": "Insertion des données dans une table.",
       "syntaxe": "INSERT INTO table [[liste colonnes]] VALUES [[liste valeurs]]",
-      "exemple": "INSERT INTO etudiants (nom, prenom, age)\nVALUES ('Ben Ali', 'Ahmed', 20);\n-- Insère un nouvel étudiant\n\nINSERT INTO etudiants\nVALUES (1, 'Ben Ali', 'Ahmed', 20, 'Tunis');\n-- Insère en spécifiant toutes les colonnes dans l'ordre"
+      "exemple": "INSERT INTO Eleve (idEleve, nom, prenom, ville)\nVALUES (25, 'Ben Salah', 'Rim', 'Manouba');\n\nINSERT INTO Classe\nVALUES ('4SI1', 4);   -- toutes les colonnes, dans l'ordre",
+      "paramètres": [
+        {
+          "nom": "table",
+          "rôle": "Table qui reçoit la ligne"
+        },
+        {
+          "nom": "(colonnes)",
+          "rôle": "Liste des colonnes renseignées (facultative si toutes le sont, dans l'ordre)"
+        },
+        {
+          "nom": "VALUES (…)",
+          "rôle": "Valeurs dans le même ordre que les colonnes"
+        }
+      ],
+      "remarques": [
+        "Les colonnes omises prennent leur valeur DEFAULT ou NULL.",
+        "La clé primaire est saisie explicitement (pas d'AUTO_INCREMENT)."
+      ],
+      "niveau": 3,
+      "motsClés": "ajouter insérer nouvelle ligne enregistrement"
     },
     {
       "commande": "UPDATE",
       "définition": "Modification des valeurs d'une colonne.",
       "syntaxe": "UPDATE table1 SET colonne = expression [WHERE condition]",
-      "exemple": "UPDATE etudiants\nSET age = 21\nWHERE nom = 'Ben Ali';\n-- Met à jour l'âge de Ben Ali à 21\n\nUPDATE produits\nSET prix = prix * 1.1\nWHERE categorie = 'Électronique';\n-- Augmente les prix de 10% pour les produits électroniques"
+      "exemple": "UPDATE Eleve\nSET ville = 'Ariana', idClasse = '4SI2'\nWHERE idEleve = 25;\n\nUPDATE Livre SET prix = prix * 1.1;   -- toutes les lignes",
+      "paramètres": [
+        {
+          "nom": "table",
+          "rôle": "Table modifiée"
+        },
+        {
+          "nom": "SET col = valeur, …",
+          "rôle": "Nouvelles valeurs"
+        },
+        {
+          "nom": "WHERE",
+          "rôle": "Lignes concernées"
+        }
+      ],
+      "remarques": [
+        "Sans WHERE, toutes les lignes de la table sont modifiées."
+      ],
+      "niveau": 3,
+      "motsClés": "modifier mettre à jour changer valeur"
     },
     {
       "commande": "DELETE FROM",
       "définition": "Suppression des enregistrements d'une table.",
       "syntaxe": "DELETE FROM table1 [WHERE condition]",
-      "exemple": "DELETE FROM etudiants\nWHERE age < 18;\n-- Supprime tous les étudiants de moins de 18 ans\n\nDELETE FROM commandes\nWHERE date_commande < '2024-01-01';\n-- Supprime toutes les commandes avant 2024"
+      "exemple": "DELETE FROM Emprunt\nWHERE dateRetour IS NOT NULL\n  AND YEAR(dateRetour) < 2025;",
+      "paramètres": [
+        {
+          "nom": "table",
+          "rôle": "Table concernée"
+        },
+        {
+          "nom": "WHERE",
+          "rôle": "Lignes à supprimer"
+        }
+      ],
+      "remarques": [
+        "Sans WHERE, toute la table est vidée.",
+        "Une ligne référencée par une clé étrangère ne peut être supprimée que si la contrainte prévoit ON DELETE CASCADE."
+      ],
+      "niveau": 3,
+      "motsClés": "supprimer effacer ligne enregistrement"
     }
   ],
   "Contraintes d'intégrité": [
     {
       "contrainte": "NOT NULL",
       "définition": "Interdit une valeur nulle.",
-      "exemple": "CREATE TABLE etudiants (\n  nom VARCHAR(50) NOT NULL,\n  prenom VARCHAR(50) NOT NULL\n);\n-- nom et prenom sont obligatoires"
+      "exemple": "CREATE TABLE Eleve (\n  idEleve INT PRIMARY KEY,\n  nom VARCHAR(30) NOT NULL\n);",
+      "remarques": [
+        "La valeur est obligatoire.",
+        "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
+      ],
+      "niveau": 3,
+      "motsClés": "contrainte intégrité obligatoire non vide"
     },
     {
       "contrainte": "DEFAULT",
       "définition": "Attribue une valeur par défaut.",
-      "exemple": "CREATE TABLE produits (\n  nom VARCHAR(100),\n  stock INT DEFAULT 0,\n  actif BOOLEAN DEFAULT TRUE\n);\n-- Si non spécifié: stock = 0, actif = TRUE"
+      "exemple": "CREATE TABLE Eleve (\n  idEleve INT PRIMARY KEY,\n  ville VARCHAR(30) DEFAULT 'Manouba'\n);",
+      "remarques": [
+        "Valeur utilisée si rien n'est fourni à l'insertion.",
+        "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
+      ],
+      "niveau": 3,
+      "motsClés": "contrainte intégrité valeur par défaut"
     },
     {
       "contrainte": "CHECK",
       "définition": "Spécifie que les valeurs de la colonne doivent respecter une condition.",
-      "exemple": "CREATE TABLE etudiants (\n  age INT CHECK (age >= 0 AND age <= 150),\n  note DECIMAL(4,2) CHECK (note >= 0 AND note <= 20)\n);\n-- age doit être entre 0 et 150, note entre 0 et 20"
+      "exemple": "CREATE TABLE Eleve (\n  idEleve INT PRIMARY KEY,\n  moyenne DECIMAL(4,2) CHECK (moyenne BETWEEN 0 AND 20)\n);",
+      "remarques": [
+        "Condition que chaque valeur doit respecter.",
+        "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
+      ],
+      "niveau": 3,
+      "motsClés": "contrainte intégrité vérifier condition domaine intervalle"
     },
     {
       "contrainte": "PRIMARY KEY",
       "définition": "Définit une clé primaire.",
-      "exemple": "CREATE TABLE etudiants (\n  id INT PRIMARY KEY,\n  nom VARCHAR(50)\n);\n-- Ou\nCREATE TABLE etudiants (\n  id INT,\n  nom VARCHAR(50),\n  PRIMARY KEY (id)\n);\n-- id doit être unique et non NULL"
+      "exemple": "CREATE TABLE Eleve (\n  idEleve INT,\n  idClasse VARCHAR(10),\n  CONSTRAINT pk_eleve PRIMARY KEY (idEleve),\n  CONSTRAINT fk_eleve_classe FOREIGN KEY (idClasse) REFERENCES Classe(idClasse)\n);",
+      "remarques": [
+        "Identifiant unique et non nul ; une seule par table, éventuellement sur plusieurs colonnes : PRIMARY KEY (idLivre, idEleve, dateEmprunt).",
+        "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
+      ],
+      "niveau": 3,
+      "motsClés": "contrainte intégrité clé primaire identifiant unique"
     },
     {
       "contrainte": "UNIQUE",
       "définition": "Spécifie l'unicité des valeurs d'une colonne.",
-      "exemple": "CREATE TABLE utilisateurs (\n  email VARCHAR(100) UNIQUE,\n  telephone VARCHAR(20) UNIQUE\n);\n-- Chaque email et téléphone doit être unique"
+      "exemple": "CREATE TABLE Eleve (\n  idEleve INT PRIMARY KEY,\n  email VARCHAR(60) UNIQUE\n);",
+      "remarques": [
+        "Interdit les doublons (NULL autorisé).",
+        "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
+      ],
+      "niveau": 3,
+      "motsClés": "contrainte intégrité unique sans doublon"
     },
     {
       "contrainte": "FOREIGN KEY",
       "définition": "Définit une clé étrangère.",
-      "exemple": "CREATE TABLE commandes (\n  id INT PRIMARY KEY,\n  client_id INT,\n  FOREIGN KEY (client_id) REFERENCES clients(id)\n);\n-- client_id doit exister dans la table clients"
+      "exemple": "CREATE TABLE Eleve (\n  idEleve INT,\n  idClasse VARCHAR(10),\n  CONSTRAINT pk_eleve PRIMARY KEY (idEleve),\n  CONSTRAINT fk_eleve_classe FOREIGN KEY (idClasse) REFERENCES Classe(idClasse)\n);",
+      "remarques": [
+        "La valeur doit exister comme clé primaire dans la table référencée.",
+        "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
+      ],
+      "niveau": 3,
+      "motsClés": "contrainte intégrité clé étrangère lien relation référence"
     },
     {
       "contrainte": "REFERENCES",
       "définition": "Fait référence à une clé primaire d'une autre table.",
-      "exemple": "CREATE TABLE inscriptions (\n  etudiant_id INT REFERENCES etudiants(id),\n  cours_id INT REFERENCES cours(id)\n);\n-- etudiant_id et cours_id doivent exister dans leurs tables respectives"
+      "exemple": "CREATE TABLE Eleve (\n  idEleve INT,\n  idClasse VARCHAR(10),\n  CONSTRAINT pk_eleve PRIMARY KEY (idEleve),\n  FOREIGN KEY (idClasse) REFERENCES Classe(idClasse)\n);",
+      "remarques": [
+        "Désigne la table et la colonne référencées par la clé étrangère.",
+        "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
+      ],
+      "niveau": 3,
+      "motsClés": "contrainte intégrité référence table liée"
     },
     {
       "contrainte": "ON UPDATE CASCADE",
       "définition": "Met à jour la clé étrangère en cas de mise à jour de la clé primaire.",
-      "exemple": "CREATE TABLE commandes (\n  client_id INT,\n  FOREIGN KEY (client_id) REFERENCES clients(id)\n  ON UPDATE CASCADE\n);\n-- Si l'id d'un client change, client_id est automatiquement mis à jour"
+      "exemple": "CREATE TABLE Eleve (\n  idEleve INT,\n  idClasse VARCHAR(10),\n  CONSTRAINT pk_eleve PRIMARY KEY (idEleve),\n  FOREIGN KEY (idClasse) REFERENCES Classe(idClasse)\n    ON UPDATE CASCADE\n);",
+      "remarques": [
+        "Si la clé référencée change, la clé étrangère est mise à jour automatiquement.",
+        "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
+      ],
+      "niveau": 4,
+      "motsClés": "contrainte intégrité cascade modification propagation"
     },
     {
       "contrainte": "ON DELETE CASCADE",
       "définition": "Supprime automatiquement tous les enregistrements de la table fille suite à la suppression de l'enregistrement correspondant de la table mère.",
-      "exemple": "CREATE TABLE commandes (\n  client_id INT,\n  FOREIGN KEY (client_id) REFERENCES clients(id)\n  ON DELETE CASCADE\n);\n-- Si un client est supprimé, toutes ses commandes sont supprimées"
+      "exemple": "CREATE TABLE Eleve (\n  idEleve INT,\n  idClasse VARCHAR(10),\n  CONSTRAINT pk_eleve PRIMARY KEY (idEleve),\n  FOREIGN KEY (idClasse) REFERENCES Classe(idClasse)\n    ON DELETE CASCADE\n);",
+      "remarques": [
+        "Si la ligne référencée est supprimée, les lignes qui en dépendent le sont aussi.",
+        "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
+      ],
+      "niveau": 4,
+      "motsClés": "contrainte intégrité cascade suppression propagation"
     }
   ],
   "Définition des données": [
@@ -252,61 +644,188 @@
       "commande": "CREATE DATABASE",
       "définition": "Crée une base de données.",
       "syntaxe": "CREATE DATABASE nom",
-      "exemple": "CREATE DATABASE ecole;\n-- Crée une base de données nommée 'ecole'\nCREATE DATABASE IF NOT EXISTS entreprise;\n-- Crée seulement si elle n'existe pas déjà"
+      "exemple": "CREATE DATABASE ecole;",
+      "paramètres": [
+        {
+          "nom": "nom",
+          "rôle": "Nom de la base"
+        }
+      ],
+      "remarques": [
+        "IF NOT EXISTS n'est pas dans l'annexe."
+      ],
+      "niveau": 4,
+      "motsClés": "créer base de données"
     },
     {
       "commande": "DROP DATABASE",
       "définition": "Supprime une base de données.",
       "syntaxe": "DROP DATABASE nom",
-      "exemple": "DROP DATABASE ecole;\n-- Supprime la base de données 'ecole'\nDROP DATABASE IF EXISTS test_db;\n-- Supprime seulement si elle existe"
+      "exemple": "DROP DATABASE ecole;",
+      "paramètres": [
+        {
+          "nom": "nom",
+          "rôle": "Nom de la base"
+        }
+      ],
+      "remarques": [
+        "Supprime la base, ses tables et toutes les données, sans confirmation."
+      ],
+      "niveau": 4,
+      "motsClés": "supprimer base de données"
     },
     {
       "commande": "CREATE TABLE",
       "définition": "Crée une table.",
       "syntaxe": "CREATE TABLE table1 (colonne1 type [contrainte], colonne2 type [contrainte], ... [[CONSTRAINT] [nom] [contrainte], ... ]",
-      "exemple": "CREATE TABLE etudiants (\n  id INT PRIMARY KEY AUTO_INCREMENT,\n  nom VARCHAR(50) NOT NULL,\n  prenom VARCHAR(50),\n  age INT CHECK (age >= 0),\n  email VARCHAR(100) UNIQUE\n);\n-- Crée une table avec id auto-incrémenté, nom obligatoire, age positif, email unique"
+      "exemple": "CREATE TABLE Eleve (\n  idEleve  INT,\n  nom      VARCHAR(30) NOT NULL,\n  prenom   VARCHAR(30) NOT NULL,\n  dateNais DATE,\n  moyenne  DECIMAL(4,2) CHECK (moyenne BETWEEN 0 AND 20),\n  ville    VARCHAR(30) DEFAULT 'Manouba',\n  idClasse VARCHAR(10),\n  CONSTRAINT pk_eleve PRIMARY KEY (idEleve),\n  CONSTRAINT fk_eleve_classe FOREIGN KEY (idClasse)\n    REFERENCES Classe(idClasse)\n    ON DELETE CASCADE\n);",
+      "paramètres": [
+        {
+          "nom": "table",
+          "rôle": "Nom de la table"
+        },
+        {
+          "nom": "colonne type [contrainte]",
+          "rôle": "Une ligne par colonne"
+        },
+        {
+          "nom": "[CONSTRAINT nom] contrainte",
+          "rôle": "Contraintes de table : clé primaire, clé étrangère, UNIQUE, CHECK"
+        }
+      ],
+      "remarques": [
+        "AUTO_INCREMENT n'est pas dans l'annexe : la clé primaire est saisie explicitement.",
+        "Créer d'abord les tables référencées (Classe) puis celles qui les référencent (Eleve)."
+      ],
+      "niveau": 4,
+      "motsClés": "créer table structure colonnes"
     },
     {
       "commande": "ALTER TABLE ADD",
       "définition": "Ajoute une colonne à une table.",
       "syntaxe": "ALTER TABLE table1 ADD colonne type [contrainte]",
-      "exemple": "ALTER TABLE etudiants\nADD telephone VARCHAR(20);\n-- Ajoute une colonne 'telephone' à la table\n\nALTER TABLE etudiants\nADD date_naissance DATE NOT NULL;\n-- Ajoute une colonne 'date_naissance' obligatoire"
+      "exemple": "ALTER TABLE Eleve ADD tel VARCHAR(8);\nALTER TABLE Eleve ADD email VARCHAR(60) UNIQUE;",
+      "paramètres": [
+        {
+          "nom": "colonne type [contrainte]",
+          "rôle": "Définition de la nouvelle colonne"
+        }
+      ],
+      "niveau": 4,
+      "motsClés": "ajouter colonne modifier structure"
     },
     {
       "commande": "ALTER TABLE DROP",
       "définition": "Supprime une colonne.",
       "syntaxe": "ALTER TABLE table1 DROP colonne",
-      "exemple": "ALTER TABLE etudiants\nDROP COLUMN telephone;\n-- Supprime la colonne 'telephone' de la table"
+      "exemple": "ALTER TABLE Eleve DROP tel;",
+      "paramètres": [
+        {
+          "nom": "colonne",
+          "rôle": "Colonne à supprimer"
+        }
+      ],
+      "remarques": [
+        "Syntaxe de l'annexe : DROP colonne (le mot COLUMN est facultatif sous MySQL)."
+      ],
+      "niveau": 4,
+      "motsClés": "supprimer colonne"
     },
     {
       "commande": "ALTER TABLE ALTER",
       "définition": "Modifie le type d'une colonne.",
       "syntaxe": "ALTER TABLE table1 ALTER colonne type",
-      "exemple": "ALTER TABLE etudiants\nMODIFY COLUMN nom VARCHAR(100);\n-- Change la longueur maximale de 'nom' à 100 caractères"
+      "exemple": "-- Syntaxe de l'annexe :\n-- ALTER TABLE Eleve ALTER nom VARCHAR(50);\n\n-- Forme exécutable sous MySQL :\nALTER TABLE Eleve CHANGE nom nom VARCHAR(50);",
+      "paramètres": [
+        {
+          "nom": "colonne",
+          "rôle": "Colonne dont on change le type"
+        },
+        {
+          "nom": "type",
+          "rôle": "Nouveau type"
+        }
+      ],
+      "remarques": [
+        "Sous MySQL, ALTER colonne ne permet pas de changer le type : on utilise CHANGE ancien_nom nouveau_nom type.",
+        "MODIFY n'est pas dans l'annexe."
+      ],
+      "niveau": 4,
+      "motsClés": "modifier type colonne changer taille change modify"
     },
     {
       "commande": "ALTER TABLE RENAME",
       "définition": "Modifie le nom d'une colonne.",
       "syntaxe": "ALTER TABLE table1 RENAME nom1 TO nom2",
-      "exemple": "ALTER TABLE etudiants\nRENAME COLUMN prenom TO first_name;\n-- Renomme la colonne 'prenom' en 'first_name'"
+      "exemple": "-- Renommer la table :\nALTER TABLE Eleve RENAME TO Eleves;\n\n-- Renommer une colonne (MySQL) :\nALTER TABLE Eleve CHANGE prenom prenomEleve VARCHAR(30);",
+      "paramètres": [
+        {
+          "nom": "nom1",
+          "rôle": "Ancien nom"
+        },
+        {
+          "nom": "nom2",
+          "rôle": "Nouveau nom"
+        }
+      ],
+      "remarques": [
+        "Pour une colonne, on enseigne CHANGE (ancien nom, nouveau nom, type). RENAME COLUMN n'est pas dans l'annexe."
+      ],
+      "niveau": 4,
+      "motsClés": "renommer colonne table nom change"
     },
     {
       "commande": "ALTER TABLE ADD CONSTRAINT",
       "définition": "Ajoute une contrainte sur une colonne d'une table.",
       "syntaxe": "ALTER TABLE table1 ADD CONSTRAINT [nom] contrainte",
-      "exemple": "ALTER TABLE etudiants\nADD CONSTRAINT fk_classe\nFOREIGN KEY (classe_id) REFERENCES classes(id);\n-- Ajoute une clé étrangère nommée 'fk_classe'"
+      "exemple": "ALTER TABLE Eleve\nADD CONSTRAINT fk_eleve_classe\nFOREIGN KEY (idClasse) REFERENCES Classe(idClasse);\n\nALTER TABLE Eleve ADD CONSTRAINT ck_moy CHECK (moyenne BETWEEN 0 AND 20);",
+      "paramètres": [
+        {
+          "nom": "nom",
+          "rôle": "Nom donné à la contrainte (pour pouvoir la supprimer)"
+        },
+        {
+          "nom": "contrainte",
+          "rôle": "PRIMARY KEY, FOREIGN KEY, UNIQUE ou CHECK"
+        }
+      ],
+      "niveau": 4,
+      "motsClés": "ajouter contrainte clé étrangère"
     },
     {
       "commande": "ALTER TABLE DROP CONSTRAINT",
       "définition": "Supprime une contrainte.",
       "syntaxe": "ALTER TABLE table1 DROP CONSTRAINT nom",
-      "exemple": "ALTER TABLE etudiants\nDROP CONSTRAINT fk_classe;\n-- Supprime la contrainte 'fk_classe'"
+      "exemple": "ALTER TABLE Eleve DROP CONSTRAINT ck_moy;",
+      "paramètres": [
+        {
+          "nom": "nom",
+          "rôle": "Nom de la contrainte"
+        }
+      ],
+      "remarques": [
+        "D'où l'intérêt de nommer les contraintes avec CONSTRAINT nom."
+      ],
+      "niveau": 4,
+      "motsClés": "supprimer contrainte"
     },
     {
       "commande": "DROP TABLE",
       "définition": "Supprime une table.",
       "syntaxe": "DROP TABLE table1",
-      "exemple": "DROP TABLE etudiants;\n-- Supprime la table 'etudiants' et toutes ses données\nDROP TABLE IF EXISTS temp_table;\n-- Supprime seulement si elle existe"
+      "exemple": "DROP TABLE Emprunt;",
+      "paramètres": [
+        {
+          "nom": "table",
+          "rôle": "Table à supprimer"
+        }
+      ],
+      "remarques": [
+        "Supprimer d'abord les tables qui référencent celle-ci.",
+        "IF EXISTS n'est pas dans l'annexe."
+      ],
+      "niveau": 4,
+      "motsClés": "supprimer table"
     }
   ]
 }

@@ -3,328 +3,801 @@
     {
       "type": "int",
       "définition": "Entier.",
-      "exemple": "<?php\n  $age = 25;\n  $nombre = -10;\n  echo $age; // 25\n?>"
+      "exemple": "<?php\n  $age = 17;\n  $nbEleves = 32;\n  echo $age + 1;   // 18\n?>",
+      "niveau": 4,
+      "motsClés": "entier type nombre integer"
     },
     {
       "type": "float",
       "définition": "Réel.",
-      "exemple": "<?php\n  $prix = 19.99;\n  $temperature = -5.5;\n  echo $prix; // 19.99\n?>"
+      "exemple": "<?php\n  $moyenne = 14.75;\n  $prix = 2.5;\n  echo $moyenne;   // 14.75\n?>",
+      "remarques": [
+        "Le séparateur décimal est le point."
+      ],
+      "niveau": 4,
+      "motsClés": "réel décimal type double"
     },
     {
       "type": "string",
       "définition": "Chaîne de caractères.",
-      "exemple": "<?php\n  $nom = 'Ahmed';\n  $prenom = \"Ali\";\n  echo $nom . ' ' . $prenom; // Ahmed Ali\n?>"
+      "exemple": "<?php\n  $ville = \"Manouba\";\n  $msg = 'Bonjour';\n  echo $msg . \" \" . $ville;   // Bonjour Manouba\n?>",
+      "niveau": 4,
+      "motsClés": "chaîne texte type guillemets"
     },
     {
       "type": "bool",
       "définition": "Booléen.",
-      "exemple": "<?php\n  $estConnecte = true;\n  $estValide = false;\n  if ($estConnecte) {\n    echo 'Connecté'; // Affiche: Connecté\n  }\n?>"
+      "exemple": "<?php\n  $admis = true;\n  if ($admis) {\n    echo \"Félicitations\";\n  }\n?>",
+      "niveau": 4,
+      "motsClés": "booléen vrai faux true false"
     },
     {
       "type": "array",
       "définition": "Tableau.",
-      "exemple": "<?php\n  $fruits = array('Pomme', 'Banane', 'Orange');\n  echo $fruits[0]; // Pomme\n  $notes = array('Math' => 15, 'Info' => 18);\n  echo $notes['Math']; // 15\n?>"
+      "exemple": "<?php\n  $jours = array(\"Lundi\", \"Mardi\", \"Mercredi\");\n  echo $jours[0];          // Lundi\n  echo count($jours);       // 3\n?>",
+      "remarques": [
+        "En STI, les tableaux sont indicés de 0 à count($t) - 1."
+      ],
+      "niveau": 4,
+      "motsClés": "tableau liste indice"
     }
   ],
   "Opérateurs de transtypage": [
     {
       "opérateur": "(int)",
       "définition": "Convertit une variable en entier.",
-      "exemple": "<?php\n  $texte = '42';\n  $nombre = (int)$texte;\n  echo $nombre + 8; // 50\n?>"
+      "exemple": "<?php\n  $n = (int) \"42\";      // 42\n  $m = (int) 7.9;        // 7 : partie entière\n  echo (int) \"12abc\";   // 12\n?>",
+      "niveau": 4,
+      "motsClés": "convertir entier transtypage cast partie entière"
     },
     {
       "opérateur": "(float)",
       "définition": "Convertit une variable en réel.",
-      "exemple": "<?php\n  $texte = '19.99';\n  $prix = (float)$texte;\n  echo $prix; // 19.99\n?>"
+      "exemple": "<?php\n  $x = (float) \"19.5\";   // 19.5\n  echo $x * 2;            // 39\n?>",
+      "niveau": 4,
+      "motsClés": "convertir réel transtypage cast"
     },
     {
       "opérateur": "(string)",
       "définition": "Convertit une variable en chaîne.",
-      "exemple": "<?php\n  $nombre = 123;\n  $texte = (string)$nombre;\n  echo $texte . ' euros'; // 123 euros\n?>"
+      "exemple": "<?php\n  $annee = 2026;\n  $ch = (string) $annee;\n  echo strlen($ch);   // 4 : nombre de chiffres\n?>",
+      "niveau": 4,
+      "motsClés": "convertir chaîne transtypage cast"
     },
     {
       "opérateur": "(bool)",
       "définition": "Convertit une variable en booléen.",
-      "exemple": "<?php\n  $nombre = 0;\n  $booleen = (bool)$nombre;\n  var_dump($booleen); // bool(false)\n?>"
+      "exemple": "<?php\n  $b = (bool) 0;     // false\n  $c = (bool) \"STI\"; // true\n  if (!$b) {\n    echo \"0 est converti en false\";\n  }\n?>",
+      "remarques": [
+        "var_dump() n'est pas dans l'annexe : on teste la valeur avec if et on affiche avec echo."
+      ],
+      "niveau": 4,
+      "motsClés": "convertir booléen transtypage"
     },
     {
       "opérateur": "(array)",
       "définition": "Convertit une variable en tableau.",
-      "exemple": "<?php\n  $valeur = 'test';\n  $tableau = (array)$valeur;\n  print_r($tableau); // Array ( [0] => test )\n?>"
+      "exemple": "<?php\n  $t = (array) \"Sousse\";\n  echo $t[0];         // Sousse\n  echo count($t);      // 1\n?>",
+      "remarques": [
+        "print_r() et var_dump() ne sont pas dans l'annexe."
+      ],
+      "niveau": 4,
+      "motsClés": "convertir tableau transtypage"
     }
   ],
   "Opérateurs logiques": [
     {
       "opérateur": "&&",
       "définition": "ET logique.",
-      "exemple": "<?php\n  $age = 20;\n  if ($age >= 18 && $age < 65) {\n    echo 'Adulte'; // Affiche: Adulte\n  }\n?>"
+      "exemple": "<?php\n  if ($moyenne >= 10 && $absences < 5) {\n    echo \"Admis\";\n  }\n?>",
+      "niveau": 4,
+      "motsClés": "et logique and"
     },
     {
       "opérateur": "||",
       "définition": "OU logique.",
-      "exemple": "<?php\n  $jour = 'samedi';\n  if ($jour == 'samedi' || $jour == 'dimanche') {\n    echo 'Weekend'; // Affiche: Weekend\n  }\n?>"
+      "exemple": "<?php\n  if ($ville == \"Tunis\" || $ville == \"Ariana\") {\n    echo \"Grand Tunis\";\n  }\n?>",
+      "niveau": 4,
+      "motsClés": "ou logique or"
     },
     {
       "opérateur": "!",
       "définition": "NON logique.",
-      "exemple": "<?php\n  $connecte = false;\n  if (!$connecte) {\n    echo 'Veuillez vous connecter'; // Affiche: Veuillez vous connecter\n  }\n?>"
+      "exemple": "<?php\n  if (!isset($_POST[\"nom\"])) {\n    echo \"Formulaire non envoyé\";\n  }\n?>",
+      "niveau": 4,
+      "motsClés": "non logique négation not"
     }
   ],
   "Opérateurs de comparaison": [
     {
       "opérateur": "==",
       "définition": "Égal à.",
-      "exemple": "<?php\n  $age = 18;\n  if ($age == 18) {\n    echo 'Vous avez exactement 18 ans'; // Affiche: Vous avez exactement 18 ans\n  }\n?>"
+      "exemple": "<?php\n  if ($login == \"admin\") {\n    echo \"Accès administrateur\";\n  }\n?>",
+      "remarques": [
+        "=== et !== ne sont pas dans l'annexe."
+      ],
+      "niveau": 4,
+      "motsClés": "comparaison égal comparer condition"
     },
     {
       "opérateur": "!=",
       "définition": "Différent de.",
-      "exemple": "<?php\n  $nom = 'Ahmed';\n  if ($nom != 'Ali') {\n    echo 'Nom différent'; // Affiche: Nom différent\n  }\n?>"
+      "exemple": "<?php\n  if ($mdp != $confirmation) {\n    echo \"Les mots de passe ne correspondent pas\";\n  }\n?>",
+      "remarques": [
+        "=== et !== ne sont pas dans l'annexe."
+      ],
+      "niveau": 4,
+      "motsClés": "comparaison différent comparer condition"
     },
     {
       "opérateur": "<",
       "définition": "Inférieur à.",
-      "exemple": "<?php\n  $note = 8;\n  if ($note < 10) {\n    echo 'Non admis'; // Affiche: Non admis\n  }\n?>"
+      "exemple": "<?php\n  if ($note < 10) {\n    echo \"Ajourné\";\n  }\n?>",
+      "niveau": 4,
+      "motsClés": "comparaison inférieur comparer condition"
     },
     {
       "opérateur": "<=",
       "définition": "Inférieur ou égal à.",
-      "exemple": "<?php\n  $stock = 5;\n  if ($stock <= 10) {\n    echo 'Stock faible'; // Affiche: Stock faible\n  }\n?>"
+      "exemple": "<?php\n  if ($stock <= 5) {\n    echo \"Stock faible\";\n  }\n?>",
+      "niveau": 4,
+      "motsClés": "comparaison inférieur ou égal comparer condition"
     },
     {
       "opérateur": ">",
       "définition": "Supérieur à.",
-      "exemple": "<?php\n  $temperature = 35;\n  if ($temperature > 30) {\n    echo 'Il fait chaud'; // Affiche: Il fait chaud\n  }\n?>"
+      "exemple": "<?php\n  if ($age > 18) {\n    echo \"Majeur\";\n  }\n?>",
+      "niveau": 4,
+      "motsClés": "comparaison supérieur comparer condition"
     },
     {
       "opérateur": ">=",
       "définition": "Supérieur ou égal à.",
-      "exemple": "<?php\n  $score = 50;\n  if ($score >= 50) {\n    echo 'Réussi'; // Affiche: Réussi\n  }\n?>"
+      "exemple": "<?php\n  if ($moyenne >= 10) {\n    echo \"Admis\";\n  }\n?>",
+      "niveau": 4,
+      "motsClés": "comparaison supérieur ou égal comparer condition"
     }
   ],
   "Opérateurs arithmétiques": [
     {
       "opérateur": "+",
       "définition": "Addition.",
-      "exemple": "<?php\n  $a = 10;\n  $b = 5;\n  $somme = $a + $b;\n  echo $somme; // 15\n?>"
+      "exemple": "<?php\n  $total = $prixHT + $tva;\n?>",
+      "niveau": 4,
+      "motsClés": "addition somme plus"
     },
     {
       "opérateur": "-",
       "définition": "Soustraction.",
-      "exemple": "<?php\n  $difference = 20 - 7;\n  echo $difference; // 13\n?>"
+      "exemple": "<?php\n  $reste = 100 - $depense;\n?>",
+      "niveau": 4,
+      "motsClés": "soustraction moins"
     },
     {
       "opérateur": "*",
       "définition": "Multiplication.",
-      "exemple": "<?php\n  $produit = 6 * 8;\n  echo $produit; // 48\n?>"
+      "exemple": "<?php\n  $ttc = $prix * 1.19;\n?>",
+      "niveau": 4,
+      "motsClés": "multiplication produit"
     },
     {
       "opérateur": "/",
       "définition": "Division.",
-      "exemple": "<?php\n  $quotient = 20 / 4;\n  echo $quotient; // 5\n?>"
+      "exemple": "<?php\n  $moyenne = $somme / $nb;\n  $q = (int) (17 / 5);   // 3 : quotient entier\n?>",
+      "remarques": [
+        "Quotient entier : (int) ($a / $b)."
+      ],
+      "niveau": 4,
+      "motsClés": "division quotient"
     },
     {
       "opérateur": "%",
       "définition": "Modulo (reste de la division euclidienne).",
-      "exemple": "<?php\n  $reste = 17 % 5;\n  echo $reste; // 2\n  // Vérifier si pair\n  $nombre = 8;\n  if ($nombre % 2 == 0) {\n    echo 'Pair'; // Affiche: Pair\n  }\n?>"
+      "exemple": "<?php\n  if ($n % 2 == 0) {\n    echo \"$n est pair\";\n  }\n?>",
+      "niveau": 4,
+      "motsClés": "modulo reste pair impair"
     }
   ],
   "Autres opérateurs": [
     {
       "opérateur": "=",
       "définition": "Affectation.",
-      "exemple": "<?php\n  $nom = 'Ahmed';\n  $age = 25;\n  $actif = true;\n?>"
+      "exemple": "<?php\n  $nom = $_POST[\"nom\"];\n  $total = 0;\n?>",
+      "remarques": [
+        "Ne pas confondre = (affectation) et == (comparaison) dans un if."
+      ],
+      "niveau": 4,
+      "motsClés": "affectation affecter variable assigner"
     },
     {
       "opérateur": ".",
       "définition": "Concaténation.",
-      "exemple": "<?php\n  $prenom = 'Ahmed';\n  $nom = 'Ben Ali';\n  $complet = $prenom . ' ' . $nom;\n  echo $complet; // Ahmed Ben Ali\n?>"
+      "exemple": "<?php\n  $prenom = \"Rim\";\n  echo \"Bonjour \" . $prenom . \" !\";   // Bonjour Rim !\n  $ligne = \"<td>\" . $nom . \"</td>\";\n?>",
+      "niveau": 4,
+      "motsClés": "concaténation concaténer point assembler chaînes"
     }
   ],
   "Fonctions mathématiques": [
     {
       "fonction": "abs()",
       "définition": "Retourne la valeur absolue.",
-      "exemple": "<?php\n  $resultat = abs(-15);\n  echo $resultat; // 15\n?>"
+      "exemple": "<?php\n  echo abs(-12);   // 12\n?>",
+      "paramètres": [
+        {
+          "nom": "nombre",
+          "rôle": "Valeur numérique"
+        }
+      ],
+      "retour": "La valeur absolue.",
+      "niveau": 4,
+      "motsClés": "valeur absolue"
     },
     {
       "fonction": "sqrt()",
       "définition": "Retourne la racine carrée.",
-      "exemple": "<?php\n  $racine = sqrt(16);\n  echo $racine; // 4\n?>"
+      "exemple": "<?php\n  echo sqrt(81);   // 9\n?>",
+      "paramètres": [
+        {
+          "nom": "nombre",
+          "rôle": "Valeur positive ou nulle"
+        }
+      ],
+      "retour": "La racine carrée (réel).",
+      "niveau": 4,
+      "motsClés": "racine carrée"
     },
     {
       "fonction": "round()",
       "définition": "Retourne la valeur arrondie.",
-      "exemple": "<?php\n  $arrondi = round(4.7);\n  echo $arrondi; // 5\n?>"
+      "exemple": "<?php\n  echo round(14.567);      // 15\n  echo round(14.567, 2);   // 14.57\n?>",
+      "paramètres": [
+        {
+          "nom": "nombre",
+          "rôle": "Valeur à arrondir"
+        },
+        {
+          "nom": "précision (facultatif)",
+          "rôle": "Nombre de décimales conservées (0 par défaut)"
+        }
+      ],
+      "retour": "La valeur arrondie (réel).",
+      "niveau": 4,
+      "motsClés": "arrondir arrondi décimales"
     },
     {
       "fonction": "rand()",
       "définition": "Retourne un nombre aléatoire.",
-      "exemple": "<?php\n  // Nombre aléatoire entre 1 et 10\n  $nombre = rand(1, 10);\n  echo $nombre; // Exemple: 7 (valeur aléatoire)\n?>"
+      "exemple": "<?php\n  $de = rand(1, 6);         // entier de 1 à 6\n  $code = rand(1000, 9999);  // code à 4 chiffres\n?>",
+      "paramètres": [
+        {
+          "nom": "min",
+          "rôle": "Plus petite valeur possible"
+        },
+        {
+          "nom": "max",
+          "rôle": "Plus grande valeur possible (incluse)"
+        }
+      ],
+      "retour": "Un entier aléatoire entre min et max inclus.",
+      "niveau": 4,
+      "motsClés": "aléatoire hasard tirage random"
     }
   ],
   "Fonctions sur les chaînes de caractères": [
     {
       "fonction": "chr()",
       "définition": "Retourne le caractère dont le code ASCII est passé comme argument.",
-      "exemple": "<?php\n  $caractere = chr(65);\n  echo $caractere; // A\n?>"
+      "exemple": "<?php\n  echo chr(65);   // A\n  $lettre = chr(rand(65, 90));   // majuscule aléatoire\n?>",
+      "paramètres": [
+        {
+          "nom": "code",
+          "rôle": "Code ASCII (0 à 255)"
+        }
+      ],
+      "retour": "Le caractère correspondant.",
+      "niveau": 4,
+      "motsClés": "caractère code ascii lettre"
     },
     {
       "fonction": "ord()",
       "définition": "Retourne le code ASCII du 1er caractère de l'argument.",
-      "exemple": "<?php\n  $code = ord('A');\n  echo $code; // 65\n?>"
+      "exemple": "<?php\n  echo ord(\"A\");   // 65\n  echo ord(\"a\");   // 97\n?>",
+      "paramètres": [
+        {
+          "nom": "caractère",
+          "rôle": "Chaîne dont on prend le premier caractère"
+        }
+      ],
+      "retour": "Le code ASCII du premier caractère.",
+      "niveau": 4,
+      "motsClés": "code ascii valeur caractère"
     },
     {
       "fonction": "strlen()",
       "définition": "Retourne la longueur d'une chaîne.",
-      "exemple": "<?php\n  $texte = 'Bonjour';\n  $longueur = strlen($texte);\n  echo $longueur; // 7\n?>"
+      "exemple": "<?php\n  echo strlen(\"Kairouan\");   // 8\n  if (strlen($mdp) < 6) {\n    echo \"Mot de passe trop court\";\n  }\n?>",
+      "paramètres": [
+        {
+          "nom": "chaîne",
+          "rôle": "Chaîne à mesurer"
+        }
+      ],
+      "retour": "Le nombre de caractères (octets).",
+      "remarques": [
+        "Un caractère accentué (é, à) compte pour 2 en UTF-8."
+      ],
+      "niveau": 4,
+      "motsClés": "longueur taille nombre caractères"
     },
     {
       "fonction": "substr()",
       "définition": "Retourne une sous-chaîne.",
-      "exemple": "<?php\n  $texte = 'Bonjour';\n  $sous = substr($texte, 0, 3);\n  echo $sous; // Bon\n?>"
+      "exemple": "<?php\n  echo substr(\"Oued Ellil\", 0, 4);   // Oued\n  echo substr(\"Oued Ellil\", 5);      // Ellil\n  echo substr(\"2026-10-27\", 0, 4);   // 2026\n?>",
+      "paramètres": [
+        {
+          "nom": "chaîne",
+          "rôle": "Chaîne source"
+        },
+        {
+          "nom": "début",
+          "rôle": "Position du premier caractère (0 = début)"
+        },
+        {
+          "nom": "longueur (facultatif)",
+          "rôle": "Nombre de caractères extraits ; sans ce paramètre, jusqu'à la fin"
+        }
+      ],
+      "retour": "La sous-chaîne extraite.",
+      "remarques": [
+        "En PHP le 3e paramètre est une longueur, alors qu'en JavaScript substring(d, f) prend une position de fin."
+      ],
+      "niveau": 4,
+      "motsClés": "sous-chaîne extraire partie couper"
     },
     {
       "fonction": "strpos()",
       "définition": "Retourne la position de la première occurrence du 2ème argument dans le 1er.",
-      "exemple": "<?php\n  $texte = 'Bonjour le monde';\n  $position = strpos($texte, 'monde');\n  echo $position; // 11\n?>"
+      "exemple": "<?php\n  echo strpos(\"Bonjour\", \"jour\");   // 3\n  if (strpos($email, \"@\") == false) {\n    echo \"Adresse invalide\";   // @ absent ou en 1re position\n  }\n?>",
+      "paramètres": [
+        {
+          "nom": "chaîne",
+          "rôle": "Chaîne où l'on cherche"
+        },
+        {
+          "nom": "recherche",
+          "rôle": "Chaîne recherchée"
+        }
+      ],
+      "retour": "La position de la première occurrence (à partir de 0), ou false si elle est absente.",
+      "remarques": [
+        "Avec ==, une position 0 est évaluée comme false : le test ci-dessus refuse aussi un @ en première position, ce qui convient pour une adresse e-mail.",
+        "=== n'est pas dans l'annexe."
+      ],
+      "niveau": 4,
+      "motsClés": "position chercher trouver occurrence contient"
     },
     {
       "fonction": "strcmp()",
       "définition": "Retourne le résultat de comparaison de deux chaînes (<0, 0, >0).",
-      "exemple": "<?php\n  $resultat = strcmp('abc', 'def');\n  echo $resultat; // -3 (négatif car 'abc' < 'def')\n  echo strcmp('hello', 'hello'); // 0 (égaux)\n?>"
+      "exemple": "<?php\n  $r = strcmp(\"abc\", \"abd\");   // valeur négative\n  if (strcmp($login, \"admin\") == 0) {\n    echo \"Identiques\";\n  }\n?>",
+      "paramètres": [
+        {
+          "nom": "chaîne1",
+          "rôle": "Première chaîne"
+        },
+        {
+          "nom": "chaîne2",
+          "rôle": "Seconde chaîne"
+        }
+      ],
+      "retour": "0 si les chaînes sont égales, un nombre négatif si chaîne1 < chaîne2, positif sinon.",
+      "remarques": [
+        "Comparaison sensible à la casse et à l'ordre alphabétique (codes ASCII)."
+      ],
+      "niveau": 4,
+      "motsClés": "comparer chaînes ordre alphabétique égalité"
     },
     {
       "fonction": "str_replace()",
       "définition": "Remplace, dans une chaîne, toutes les occurrences d'un motif par un autre.",
-      "exemple": "<?php\n  $texte = 'Bonjour le monde';\n  $nouveau = str_replace('monde', 'tous', $texte);\n  echo $nouveau; // Bonjour le tous\n?>"
+      "exemple": "<?php\n  echo str_replace(\" \", \"_\", \"mon fichier.txt\");   // mon_fichier.txt\n?>",
+      "paramètres": [
+        {
+          "nom": "recherche",
+          "rôle": "Chaîne à remplacer"
+        },
+        {
+          "nom": "remplacement",
+          "rôle": "Nouvelle chaîne"
+        },
+        {
+          "nom": "chaîne",
+          "rôle": "Chaîne dans laquelle on remplace"
+        }
+      ],
+      "retour": "Une nouvelle chaîne où toutes les occurrences sont remplacées.",
+      "remarques": [
+        "Remplace toutes les occurrences, contrairement à replace() en JavaScript."
+      ],
+      "niveau": 4,
+      "motsClés": "remplacer substituer"
     },
     {
       "fonction": "strtolower()",
       "définition": "Convertit tous les caractères d'une chaîne en minuscule.",
-      "exemple": "<?php\n  $texte = 'BONJOUR';\n  $minuscule = strtolower($texte);\n  echo $minuscule; // bonjour\n?>"
+      "exemple": "<?php\n  echo strtolower(\"SOUSSE\");   // sousse\n?>",
+      "paramètres": [
+        {
+          "nom": "chaîne",
+          "rôle": "Chaîne à convertir"
+        }
+      ],
+      "retour": "La chaîne en minuscules.",
+      "niveau": 4,
+      "motsClés": "minuscules casse"
     },
     {
       "fonction": "strtoupper()",
       "définition": "Convertit tous les caractères d'une chaîne en majuscule.",
-      "exemple": "<?php\n  $texte = 'bonjour';\n  $majuscule = strtoupper($texte);\n  echo $majuscule; // BONJOUR\n?>"
+      "exemple": "<?php\n  echo strtoupper(\"sousse\");   // SOUSSE\n?>",
+      "paramètres": [
+        {
+          "nom": "chaîne",
+          "rôle": "Chaîne à convertir"
+        }
+      ],
+      "retour": "La chaîne en majuscules.",
+      "niveau": 4,
+      "motsClés": "majuscules casse"
     },
     {
       "fonction": "trim()",
       "définition": "Supprime tous les espaces existants au début et à la fin de la chaîne.",
-      "exemple": "<?php\n  $texte = '  Bonjour  ';\n  $nettoye = trim($texte);\n  echo $nettoye; // Bonjour\n  echo strlen($nettoye); // 7\n?>"
+      "exemple": "<?php\n  $nom = trim($_POST[\"nom\"]);\n  if (strlen($nom) == 0) {\n    echo \"Nom obligatoire\";\n  }\n?>",
+      "paramètres": [
+        {
+          "nom": "chaîne",
+          "rôle": "Chaîne à nettoyer"
+        }
+      ],
+      "retour": "La chaîne sans espaces au début et à la fin.",
+      "niveau": 4,
+      "motsClés": "espaces nettoyer supprimer vide"
     }
   ],
   "Fonctions de Date/Heure": [
     {
       "fonction": "checkdate()",
       "définition": "Vérifie la validité d'une date.",
-      "exemple": "<?php\n  if (checkdate(12, 31, 2024)) {\n    echo 'Date valide'; // Affiche: Date valide\n  }\n  if (!checkdate(2, 30, 2024)) {\n    echo 'Date invalide'; // Affiche: Date invalide\n  }\n?>"
+      "exemple": "<?php\n  if (checkdate(2, 29, 2028)) {\n    echo \"Date valide\";      // 2028 est bissextile\n  }\n  if (!checkdate(2, 30, 2026)) {\n    echo \"Date invalide\";\n  }\n?>",
+      "paramètres": [
+        {
+          "nom": "mois",
+          "rôle": "Mois de 1 à 12"
+        },
+        {
+          "nom": "jour",
+          "rôle": "Jour du mois"
+        },
+        {
+          "nom": "année",
+          "rôle": "Année sur 4 chiffres"
+        }
+      ],
+      "retour": "true si la date existe, false sinon.",
+      "remarques": [
+        "Ordre des paramètres : mois, jour, année (et non jour, mois, année)."
+      ],
+      "niveau": 4,
+      "motsClés": "vérifier date valide existe bissextile"
     },
     {
       "fonction": "date()",
       "définition": "Formate une date et la retourne sous forme de chaîne.",
-      "exemple": "<?php\n  echo date('d/m/Y'); // Exemple: 19/11/2024\n  echo date('H:i:s'); // Exemple: 14:30:45\n  echo date('l, F j, Y'); // Exemple: Tuesday, November 19, 2024\n?>"
+      "exemple": "<?php\n  echo date(\"d/m/Y\");          // 27/10/2026\n  echo date(\"H:i\");            // 10:45\n  echo date(\"Y\");              // 2026\n  echo date(\"d/m/Y\", $timestamp);\n?>",
+      "paramètres": [
+        {
+          "nom": "format",
+          "rôle": "d jour, m mois, Y année sur 4 chiffres, H heure, i minutes, s secondes"
+        },
+        {
+          "nom": "timestamp (facultatif)",
+          "rôle": "Date à formater ; date du jour par défaut"
+        }
+      ],
+      "retour": "La date formatée (chaîne).",
+      "niveau": 4,
+      "motsClés": "date du jour aujourd'hui formater format heure année"
     },
     {
       "fonction": "time()",
       "définition": "Retourne l'heure actuelle en nombre de secondes.",
-      "exemple": "<?php\n  $timestamp = time();\n  echo $timestamp; // Exemple: 1700400000\n?>"
+      "exemple": "<?php\n  $t = time();\n  echo date(\"d/m/Y\", $t + 7 * 24 * 3600);   // dans une semaine\n?>",
+      "retour": "Le timestamp actuel : nombre de secondes depuis le 1er janvier 1970.",
+      "niveau": 4,
+      "motsClés": "timestamp maintenant secondes heure actuelle"
     },
     {
       "fonction": "strtotime()",
       "définition": "Transforme une chaîne contenant une date en timestamp.",
-      "exemple": "<?php\n  $timestamp = strtotime('2024-11-19');\n  echo date('d/m/Y', $timestamp); // 19/11/2024\n  echo strtotime('+1 week'); // Timestamp dans 1 semaine\n?>"
+      "exemple": "<?php\n  $t = strtotime(\"2026-12-31\");\n  echo date(\"d/m/Y\", $t);   // 31/12/2026\n  $jours = (strtotime(\"2026-12-31\") - time()) / 86400;\n?>",
+      "paramètres": [
+        {
+          "nom": "texte",
+          "rôle": "Date en anglais ou au format AAAA-MM-JJ (ex. \"2026-12-31\", \"+1 week\")"
+        }
+      ],
+      "retour": "Le timestamp correspondant, ou false si le texte n'est pas une date.",
+      "remarques": [
+        "Différence en jours entre deux dates : (t2 - t1) / 86400."
+      ],
+      "niveau": 4,
+      "motsClés": "convertir date timestamp différence jours"
     }
   ],
   "Fonctions sur les tableaux": [
     {
       "fonction": "array()",
       "définition": "Crée un tableau à partir d'une liste de valeurs.",
-      "exemple": "<?php\n  $fruits = array('Pomme', 'Banane', 'Orange');\n  print_r($fruits); // Array ( [0] => Pomme [1] => Banane [2] => Orange )\n?>"
+      "exemple": "<?php\n  $notes = array(12, 15.5, 9);\n  for ($i = 0; $i < count($notes); $i++) {\n    echo $notes[$i] . \"<br>\";\n  }\n?>",
+      "paramètres": [
+        {
+          "nom": "valeurs",
+          "rôle": "Éléments du tableau, séparés par des virgules"
+        }
+      ],
+      "retour": "Un tableau indicé à partir de 0.",
+      "niveau": 4,
+      "motsClés": "tableau créer liste éléments"
     },
     {
       "fonction": "count()",
       "définition": "Retourne le nombre d'éléments d'un tableau.",
-      "exemple": "<?php\n  $fruits = array('Pomme', 'Banane', 'Orange');\n  $nombre = count($fruits);\n  echo $nombre; // 3\n?>"
+      "exemple": "<?php\n  $t = array(\"Tunis\", \"Sfax\", \"Sousse\");\n  echo count($t);   // 3\n?>",
+      "paramètres": [
+        {
+          "nom": "tableau",
+          "rôle": "Tableau dont on compte les éléments"
+        }
+      ],
+      "retour": "Le nombre d'éléments.",
+      "niveau": 4,
+      "motsClés": "nombre éléments taille tableau compter"
     }
   ],
   "Structures de langage": [
     {
       "fonction": "echo",
       "définition": "Affiche une ou plusieurs expressions.",
-      "exemple": "<?php\n  echo 'Bonjour le monde!'; // Bonjour le monde!\n  echo '<h1>Titre</h1>'; // Affiche un titre HTML\n  $nom = 'Ahmed';\n  echo 'Bonjour ' . $nom; // Bonjour Ahmed\n?>"
+      "exemple": "<?php\n  echo \"Bonjour\";\n  echo \"<p>Moyenne : \" . $moy . \"</p>\";\n?>",
+      "paramètres": [
+        {
+          "nom": "expression",
+          "rôle": "Chaîne ou valeur à afficher"
+        }
+      ],
+      "retour": "—",
+      "remarques": [
+        "Structure du langage : les parenthèses sont facultatives."
+      ],
+      "niveau": 4,
+      "motsClés": "afficher écrire sortie print"
     }
   ],
   "Fonctions PHP pour MySQL": [
     {
       "fonction": "mysqli_connect()",
       "définition": "Établir une connexion à une base de données MySQL.",
-      "exemple": "<?php\n  $conn = mysqli_connect('localhost', 'user', 'password', 'database');\n  if (!$conn) {\n    die('Connexion échouée: ' . mysqli_connect_error());\n  }\n  echo 'Connecté'; // Affiche: Connecté\n?>"
+      "exemple": "<?php\n  // connexion.php\n  $cnx = mysqli_connect(\"localhost\", \"root\", \"\", \"ecole\")\n         or die(\"Connexion impossible\");\n?>",
+      "paramètres": [
+        {
+          "nom": "serveur",
+          "rôle": "Nom du serveur MySQL : \"localhost\""
+        },
+        {
+          "nom": "utilisateur",
+          "rôle": "Compte MySQL : \"root\" sous XAMPP"
+        },
+        {
+          "nom": "mot de passe",
+          "rôle": "Mot de passe du compte : \"\" sous XAMPP"
+        },
+        {
+          "nom": "base",
+          "rôle": "Nom de la base de données"
+        }
+      ],
+      "retour": "Un identifiant de connexion, ou false en cas d'échec.",
+      "remarques": [
+        "Écrite une seule fois dans connexion.php, importée par require dans chaque page.",
+        "PDO, new mysqli() et mysqli_connect_error() ne sont pas dans l'annexe."
+      ],
+      "niveau": 4,
+      "motsClés": "connexion connecter base mysql serveur pdo"
     },
     {
       "fonction": "mysqli_query()",
       "définition": "Envoie une requête SQL à la base de données.",
-      "exemple": "<?php\n  $sql = 'SELECT * FROM etudiants';\n  $result = mysqli_query($conn, $sql);\n  // $result contient le résultat de la requête\n?>"
+      "exemple": "<?php\n  $req = \"SELECT nom, moyenne FROM Eleve WHERE moyenne >= 10\";\n  $res = mysqli_query($cnx, $req) or die(mysqli_error($cnx));\n?>",
+      "paramètres": [
+        {
+          "nom": "connexion",
+          "rôle": "Identifiant renvoyé par mysqli_connect"
+        },
+        {
+          "nom": "requête",
+          "rôle": "Requête SQL (chaîne)"
+        }
+      ],
+      "retour": "Pour SELECT : un résultat à parcourir. Pour INSERT, UPDATE, DELETE : true, ou false en cas d'erreur.",
+      "remarques": [
+        "Tester d'abord la requête dans l'onglet SQL de phpMyAdmin.",
+        "Les valeurs texte sont entourées d'apostrophes dans la requête : '$nom'."
+      ],
+      "niveau": 4,
+      "motsClés": "exécuter requête sql envoyer"
     },
     {
       "fonction": "mysqli_close()",
       "définition": "Ferme la connexion à la base de données.",
-      "exemple": "<?php\n  mysqli_close($conn);\n  echo 'Connexion fermée'; // Affiche: Connexion fermée\n?>"
+      "exemple": "<?php\n  mysqli_close($cnx);\n?>",
+      "paramètres": [
+        {
+          "nom": "connexion",
+          "rôle": "Identifiant de connexion"
+        }
+      ],
+      "retour": "true si la fermeture réussit.",
+      "niveau": 4,
+      "motsClés": "fermer connexion déconnecter"
     },
     {
       "fonction": "mysqli_fetch_array()",
       "définition": "Retourne une ligne de résultat sous forme de tableau associatif et numérique.",
-      "exemple": "<?php\n  while ($row = mysqli_fetch_array($result)) {\n    echo $row['nom'] . ' ' . $row['prenom']; // Affiche: Ahmed Ali\n    // Ou: echo $row[0] . ' ' . $row[1];\n  }\n?>"
+      "exemple": "<?php\n  while ($ligne = mysqli_fetch_array($res)) {\n    echo \"<tr><td>\" . $ligne[\"nom\"] . \"</td><td>\" . $ligne[1] . \"</td></tr>\";\n  }\n?>",
+      "paramètres": [
+        {
+          "nom": "résultat",
+          "rôle": "Résultat renvoyé par mysqli_query (SELECT)"
+        }
+      ],
+      "retour": "La ligne suivante, accessible par nom de colonne ou par indice ; null quand il n'y a plus de ligne.",
+      "remarques": [
+        "mysqli_fetch_assoc() n'est pas dans l'annexe."
+      ],
+      "niveau": 4,
+      "motsClés": "parcourir lignes résultat afficher tableau lire"
     },
     {
       "fonction": "mysqli_fetch_row()",
       "définition": "Retourne une ligne de résultat sous forme de tableau indexé numériquement.",
-      "exemple": "<?php\n  while ($row = mysqli_fetch_row($result)) {\n    echo $row[0] . ' ' . $row[1]; // Affiche les 2 premières colonnes\n  }\n?>"
+      "exemple": "<?php\n  $ligne = mysqli_fetch_row($res);\n  echo $ligne[0];   // première colonne\n?>",
+      "paramètres": [
+        {
+          "nom": "résultat",
+          "rôle": "Résultat renvoyé par mysqli_query (SELECT)"
+        }
+      ],
+      "retour": "La ligne suivante, accessible uniquement par indice (0, 1, 2…) ; null s'il n'y en a plus.",
+      "niveau": 4,
+      "motsClés": "lire ligne indice résultat"
     },
     {
       "fonction": "mysqli_num_rows()",
       "définition": "Retourne le nombre de lignes dans un résultat de requête.",
-      "exemple": "<?php\n  $nombre = mysqli_num_rows($result);\n  echo 'Nombre de résultats: ' . $nombre; // Exemple: Nombre de résultats: 15\n?>"
+      "exemple": "<?php\n  if (mysqli_num_rows($res) == 0) {\n    echo \"Aucun résultat\";\n  }\n?>",
+      "paramètres": [
+        {
+          "nom": "résultat",
+          "rôle": "Résultat d'un SELECT"
+        }
+      ],
+      "retour": "Le nombre de lignes du résultat.",
+      "remarques": [
+        "Usage type : authentification (== 1) ou vérifier qu'un élément existe déjà avant un ajout."
+      ],
+      "niveau": 4,
+      "motsClés": "nombre lignes résultat existe compter authentification"
     },
     {
       "fonction": "mysqli_affected_rows()",
       "définition": "Retourne le nombre de lignes affectées par la dernière requête SQL exécutée.",
-      "exemple": "<?php\n  $sql = 'UPDATE etudiants SET age = 21 WHERE id = 1';\n  mysqli_query($conn, $sql);\n  echo mysqli_affected_rows($conn) . ' lignes modifiées'; // Exemple: 1 lignes modifiées\n?>"
+      "exemple": "<?php\n  mysqli_query($cnx, \"DELETE FROM Eleve WHERE idEleve = $id\");\n  if (mysqli_affected_rows($cnx) == 0) {\n    echo \"Aucun élève supprimé\";\n  }\n?>",
+      "paramètres": [
+        {
+          "nom": "connexion",
+          "rôle": "Identifiant de connexion (et non le résultat)"
+        }
+      ],
+      "retour": "Le nombre de lignes touchées par le dernier INSERT, UPDATE ou DELETE.",
+      "niveau": 4,
+      "motsClés": "lignes modifiées supprimées insérées affectées"
     },
     {
       "fonction": "mysqli_error()",
       "définition": "Retourne un message d'erreur généré par la dernière requête SQL exécutée.",
-      "exemple": "<?php\n  $result = mysqli_query($conn, $sql);\n  if (!$result) {\n    echo 'Erreur: ' . mysqli_error($conn); // Affiche le message d'erreur\n  }\n?>"
+      "exemple": "<?php\n  $res = mysqli_query($cnx, $req) or die(mysqli_error($cnx));\n?>",
+      "paramètres": [
+        {
+          "nom": "connexion",
+          "rôle": "Identifiant de connexion"
+        }
+      ],
+      "retour": "Le message de la dernière erreur MySQL (chaîne vide s'il n'y en a pas).",
+      "niveau": 4,
+      "motsClés": "erreur message déboguer"
     }
   ],
   "Variables superglobales": [
     {
       "variable": "$_GET",
       "définition": "Tableau associatif des valeurs passées au script courant via les paramètres d'URL.",
-      "exemple": "<?php\n  // URL: page.php?nom=Ahmed&age=25\n  $nom = $_GET['nom']; // $nom = 'Ahmed'\n  $age = $_GET['age']; // $age = '25'\n  echo 'Bonjour ' . $nom . ', vous avez ' . $age . ' ans'; // Bonjour Ahmed, vous avez 25 ans\n?>"
+      "exemple": "<?php\n  // liste.php : <a href=\"fiche.php?id=12\">Voir</a>\n  // fiche.php\n  if (isset($_GET[\"id\"])) {\n    $id = $_GET[\"id\"];\n  }\n?>",
+      "remarques": [
+        "Les données sont visibles dans l'URL : réservé aux identifiants et aux filtres."
+      ],
+      "niveau": 4,
+      "motsClés": "url paramètre lien get transmettre"
     },
     {
       "variable": "$_POST",
       "définition": "Tableau associatif des valeurs passées au script courant via le protocole HTTP et la méthode POST.",
-      "exemple": "<?php\n  if (isset($_POST['nom'])) {\n    $nom = $_POST['nom'];\n    $email = $_POST['email'];\n    echo 'Bonjour ' . $nom; // Affiche le nom soumis\n  }\n?>"
+      "exemple": "<?php\n  // <form action=\"ajout.php\" method=\"post\"> … <input name=\"nom\"> …\n  if (isset($_POST[\"nom\"])) {\n    $nom = $_POST[\"nom\"];\n  }\n?>",
+      "remarques": [
+        "La clé est l'attribut name du champ, pas son id."
+      ],
+      "niveau": 4,
+      "motsClés": "formulaire post récupérer données envoyer"
     }
   ],
   "Fonctions diverses": [
     {
       "fonction": "die()",
       "définition": "Affiche un message et termine le script courant.",
-      "exemple": "<?php\n  if (!$conn) {\n    die('Erreur de connexion'); // Affiche le message et arrête le script\n  }\n?>"
+      "exemple": "<?php\n  $cnx = mysqli_connect(\"localhost\", \"root\", \"\", \"ecole\") or die(\"Connexion impossible\");\n?>",
+      "paramètres": [
+        {
+          "nom": "message (facultatif)",
+          "rôle": "Texte affiché avant l'arrêt"
+        }
+      ],
+      "retour": "—",
+      "remarques": [
+        "Arrête immédiatement l'exécution du script."
+      ],
+      "niveau": 4,
+      "motsClés": "arrêter stopper erreur quitter exit"
     },
     {
       "fonction": "isset()",
       "définition": "Vérifie si une variable est définie.",
-      "exemple": "<?php\n  if (isset($_POST['nom'])) {\n    $nom = $_POST['nom'];\n    echo $nom; // Affiche le nom si défini\n  } else {\n    echo 'Nom non défini';\n  }\n?>"
+      "exemple": "<?php\n  if (isset($_POST[\"login\"]) && isset($_POST[\"mdp\"])) {\n    // traitement\n  } else {\n    echo \"Formulaire incomplet\";\n  }\n?>",
+      "paramètres": [
+        {
+          "nom": "variable",
+          "rôle": "Variable ou élément de tableau à tester"
+        }
+      ],
+      "retour": "true si la variable existe et n'est pas null.",
+      "niveau": 4,
+      "motsClés": "tester existe défini formulaire envoyé"
     },
     {
       "fonction": "require()",
       "définition": "Inclut et exécute le fichier spécifié en argument.",
-      "exemple": "<?php\n  require('config.php'); // Inclut le fichier config.php\n  require('functions.php'); // Inclut le fichier functions.php\n?>"
+      "exemple": "<?php\n  require(\"connexion.php\");\n?>",
+      "paramètres": [
+        {
+          "nom": "fichier",
+          "rôle": "Chemin du fichier PHP à importer"
+        }
+      ],
+      "retour": "—",
+      "remarques": [
+        "Si le fichier est introuvable, le script s'arrête (erreur fatale)."
+      ],
+      "niveau": 4,
+      "motsClés": "importer inclure fichier connexion include"
     }
   ]
 }

@@ -87,7 +87,7 @@ def generer(ecrire):
     data = donnees()
     ecrire("assets/annexe-data.js", "window.ANNEXE = " + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n")
     contenu = f"""<div class="page pleine">
-{enc("info", "<p>Chaque élément de l'annexe officielle, avec sa définition et le <b>niveau d'introduction</b> retenu par ce guide. Un élément introduit en 3ème reste utilisable en 4ème. En cas de doute, l'annexe officielle fait foi.</p>")}
+{enc("info", "<p>Chaque élément de l'annexe officielle, avec sa définition et le <b>niveau d'introduction</b> retenu par ce guide. Un élément introduit en 3ème reste utilisable en 4ème. Cliquez sur un élément pour ouvrir sa fiche détaillée (paramètres, exemple conforme, remarques) dans l'<a href=\"https://mo7amedzouaghi.github.io/annexe4STITN/\" target=\"_blank\" rel=\"noopener\">assistant de l'annexe</a>. En cas de doute, l'annexe officielle fait foi.</p>")}
 <div class="filtres" role="search">
   <input type="search" id="ref-q" placeholder="Rechercher : float, substring, GROUP BY, mysqli…" aria-label="Rechercher dans l'annexe">
   <div class="puces" id="ref-langue" aria-label="Langage">
