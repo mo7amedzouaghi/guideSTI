@@ -1,4 +1,5 @@
 /* Pages de connexion et d'inscription */
+[hidden] { display: none !important; }
 .page-compte { background: linear-gradient(140deg, var(--marine-3), var(--marine) 55%, var(--marine-2)); min-height: 100vh; }
 .compte-fond { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 16px; }
 .compte-marque { display: flex; align-items: center; gap: 12px; color: #fff; margin-bottom: 20px; }
