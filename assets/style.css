@@ -368,3 +368,6 @@ dl.glossaire dt:first-of-type, dl.glossaire dt:first-of-type + dd { border-top: 
   .page { display: block; }
   .notion, .retenir { break-inside: avoid; }
 }
+
+/* Pas de ligatures dans le code : != et == restent lisibles tels qu'ils se tapent */
+code, pre, .syntaxe, .ref-ex, .puce.mono, .fiche-tete h2 { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
