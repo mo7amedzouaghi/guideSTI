@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Créer un compte — STI, l'annexe en pratique</title>
+<meta name="description" content="Connexion à l'espace STI : élèves et enseignants.">
+<link rel="icon" href="../prof/assets/flag.png">
+<link rel="stylesheet" href="../prof/assets/vendor/fonts.css">
+<link rel="stylesheet" href="../prof/assets/style.css">
+<link rel="stylesheet" href="connexion.css">
+<script src="compte.js"></script>
+</head>
+<body class="page-compte">
+<main class="compte-fond">
+  <div class="compte-marque"><span class="marque-logo">STI</span><div><b>STI · L'annexe en pratique</b><small>Sciences et Technologies de l'Informatique</small></div></div>
+  <section class="compte-carte">
+    <nav class="compte-onglets" aria-label="Connexion ou inscription">
+      <a href="index.html">Se connecter</a><a href="inscription.html" aria-current="page">Créer un compte</a>
+    </nav>
+    <div id="deja" class="deja" hidden></div>
+    <h1>Créer un compte</h1>
+    <form id="f-inscription" novalidate>
+      <fieldset class="role-choix">
+        <legend>Je suis</legend>
+        <label class="role"><input type="radio" name="role" value="eleve" checked><span><b>Élève</b><small>Cours, exercices, bac à sable</small></span></label>
+        <label class="role"><input type="radio" name="role" value="prof"><span><b>Enseignant</b><small>Espace Prof, vérificateur, ressources</small></span></label>
+      </fieldset>
+      <div class="deux">
+        <div><label for="i-prenom">Prénom</label><input type="text" id="i-prenom" autocomplete="given-name" required></div>
+        <div><label for="i-nom">Nom</label><input type="text" id="i-nom" autocomplete="family-name" required></div>
+      </div>
+      <div class="deux" id="bloc-eleve">
+        <div><label for="i-niveau">Niveau</label>
+          <select id="i-niveau"><option value="">-- Choisir --</option><option value="2">2ème année</option><option value="3">3ème année</option><option value="4">4ème année</option></select></div>
+        <div><label for="i-classe">Classe <span class="facultatif">(facultatif)</span></label><input type="text" id="i-classe" placeholder="Ex. : 3SI1"></div>
+      </div>
+      <div id="bloc-prof" hidden>
+        <label for="i-code">Code enseignant</label>
+        <input type="password" id="i-code" autocomplete="off">
+        <p class="aide">Code communiqué par le responsable du site.</p>
+      </div>
+      <label for="i-id">Identifiant</label>
+      <input type="text" id="i-id" autocomplete="username" autocapitalize="off" spellcheck="false" placeholder="Ex. : rim.bensalah" required>
+      <div class="deux">
+        <div><label for="i-mdp">Mot de passe</label><input type="password" id="i-mdp" autocomplete="new-password" required></div>
+        <div><label for="i-mdp2">Confirmation</label><input type="password" id="i-mdp2" autocomplete="new-password" required></div>
+      </div>
+      <p class="aide">6 caractères au minimum.</p>
+      <p class="erreur" id="i-erreur" role="alert" hidden></p>
+      <button type="submit" class="btn-compte">Créer mon compte</button>
+    </form>
+    <p class="compte-bas">Déjà inscrit ? <a href="index.html">Se connecter</a></p>
+  </section>
+  <p class="compte-note">Les comptes sont enregistrés dans le navigateur de cet appareil. Sur un ordinateur partagé, pensez à vous déconnecter.</p>
+</main>
+<script src="connexion-ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion — STI, l'annexe en pratique</title>
+<meta name="description" content="Connexion à l'espace STI : élèves et enseignants.">
+<link rel="icon" href="../prof/assets/flag.png">
+<link rel="stylesheet" href="../prof/assets/vendor/fonts.css">
+<link rel="stylesheet" href="../prof/assets/style.css">
+<link rel="stylesheet" href="connexion.css">
+<script src="compte.js"></script>
+</head>
+<body class="page-compte">
+<main class="compte-fond">
+  <div class="compte-marque"><span class="marque-logo">STI</span><div><b>STI · L'annexe en pratique</b><small>Sciences et Technologies de l'Informatique</small></div></div>
+  <section class="compte-carte">
+    <nav class="compte-onglets" aria-label="Connexion ou inscription">
+      <a href="index.html" aria-current="page">Se connecter</a><a href="inscription.html">Créer un compte</a>
+    </nav>
+    <div id="deja" class="deja" hidden></div>
+    <h1>Connexion</h1>
+    <p class="compte-intro">Élève ou enseignant, connectez-vous pour retrouver votre espace.</p>
+    <form id="f-connexion" novalidate>
+      <label for="c-id">Identifiant</label>
+      <input type="text" id="c-id" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+      <label for="c-mdp">Mot de passe</label>
+      <input type="password" id="c-mdp" autocomplete="current-password" required>
+      <p class="erreur" id="c-erreur" role="alert" hidden></p>
+      <button type="submit" class="btn-compte">Se connecter</button>
+    </form>
+    <p class="compte-bas">Pas encore de compte ? <a href="inscription.html">Créer un compte</a></p>
+  </section>
+  <p class="compte-note">Les comptes sont enregistrés dans le navigateur de cet appareil. Sur un ordinateur partagé, pensez à vous déconnecter.</p>
+</main>
+<script src="connexion-ui.js"></script>
+</body>
+</html>

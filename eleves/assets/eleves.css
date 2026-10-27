@@ -351,3 +351,11 @@ div.tuile:hover { border-color: var(--ligne); }
 .q-choix, .q-lignes { min-width: 0; }
 .q-opt { min-width: 0; }
 .q-opt code { word-break: break-word; min-width: 0; }
+
+/* Compte connecté (en-tête) */
+.compte-bloc { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
+.compte-nom { color: #fff; font-weight: 600; font-size: 14px; white-space: nowrap; max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+.compte-sortir { background: transparent; border: 1.5px solid rgba(255,255,255,.55); color: #fff; border-radius: 8px; padding: 5px 10px; font: 600 13px var(--corps); cursor: pointer; }
+.compte-sortir:hover { background: var(--or); border-color: var(--or); color: var(--marine); }
+@media (max-width: 720px) { .compte-nom { display: none; } }
+@media print { .compte-bloc { display: none; } }

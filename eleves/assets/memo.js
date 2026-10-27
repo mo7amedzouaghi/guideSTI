@@ -1,10 +1,12 @@
+/* cleSTI : clé de stockage propre au compte connecté (défini dans connexion/compte.js) */
+window.cleSTI = window.cleSTI || function (k) { return k; };
 /* Aide-mémoire : éléments de l'annexe jusqu'au niveau de l'élève, fiches dépliables. */
 (function () {
   "use strict";
   var F = window.FicheSTI, DATA = F.data;
   var champ = document.getElementById("ref-q"), liste = document.getElementById("ref-liste"), compte = document.getElementById("ref-compte");
   var niveau = 3;
-  try { niveau = Number(localStorage.getItem("sti-niveau-eleve")) || 3; } catch (e) { niveau = 3; }
+  try { niveau = Number(localStorage.getItem(cleSTI("sti-niveau-eleve"))) || 3; } catch (e) { niveau = 3; }
   var etat = { l: "" };
   function norm(s) { return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
   DATA.forEach(function (it, i) { it._i = i; it._txt = norm(it.e + " " + it.d + " " + it.c + " " + (it.k || "")); });
@@ -47,7 +49,7 @@
   bn.addEventListener("click", function (e) {
     var x = e.target.closest("button"); if (!x) return;
     niveau = Number(x.dataset.v);
-    try { localStorage.setItem("sti-niveau-eleve", String(niveau)); } catch (er) { /* ignoré */ }
+    try { localStorage.setItem(cleSTI("sti-niveau-eleve"), String(niveau)); } catch (er) { /* ignoré */ }
     majN(); rendre();
   });
   champ.addEventListener("input", rendre);

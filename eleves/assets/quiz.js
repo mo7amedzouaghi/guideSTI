@@ -1,3 +1,5 @@
+/* cleSTI : clé de stockage propre au compte connecté (défini dans connexion/compte.js) */
+window.cleSTI = window.cleSTI || function (k) { return k; };
 /* Exercices auto-corrigés : QCM, vrai/faux, code à compléter, trouver l'erreur. */
 (function () {
   "use strict";
@@ -5,7 +7,7 @@
   var zone = document.getElementById("quiz");
   var chap = document.querySelector("[data-chap]");
   if (!zone || !chap) return;
-  var cle = "sti-score-" + chap.dataset.niveau + "-" + chap.dataset.chap;
+  var cle = cleSTI("sti-score-" + chap.dataset.niveau + "-" + chap.dataset.chap);
   var TYPES = { qcm: "Choix multiple", vf: "Vrai ou faux", code: "Complète le code", erreur: "Trouve l'erreur" };
   var reponses = {};
 

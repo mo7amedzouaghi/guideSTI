@@ -1,3 +1,5 @@
+/* cleSTI : clé de stockage propre au compte connecté (défini dans connexion/compte.js) */
+window.cleSTI = window.cleSTI || function (k) { return k; };
 /* Bac à sable : HTML, CSS, JS avec rendu en direct, vérification de conformité et téléchargement. */
 (function () {
   "use strict";
@@ -16,15 +18,15 @@
   };
 
   var sauve = null;
-  try { sauve = JSON.parse(lire("sti-bac") || "null"); } catch (e) { sauve = null; }
+  try { sauve = JSON.parse(lire(cleSTI("sti-bac")) || "null"); } catch (e) { sauve = null; }
   ["html", "css", "js"].forEach(function (p) { Z[p].value = sauve && typeof sauve[p] === "string" ? sauve[p] : DEPART[p]; });
-  var niv = lire("sti-niveau-eleve");
+  var niv = lire(cleSTI("sti-niveau-eleve"));
   if (niv) selN.value = niv;
 
   /* import d'un exemple depuis un chapitre */
   if (/import=1/.test(location.search)) {
     var imp = null;
-    try { imp = JSON.parse(lire("sti-bac-import") || "null"); } catch (e) { imp = null; }
+    try { imp = JSON.parse(lire(cleSTI("sti-bac-import")) || "null"); } catch (e) { imp = null; }
     if (imp && Z[imp.p]) {
       if (imp.p === "html") { Z.html.value = imp.code; Z.css.value = ""; Z.js.value = ""; }
       else if (imp.p === "css") {
@@ -32,7 +34,7 @@
         if (!/<body/i.test(Z.html.value)) Z.html.value = DEPART.html;
       } else { Z.js.value = imp.code; }
       onglet(imp.p);
-      try { localStorage.removeItem("sti-bac-import"); } catch (e) { /* ignoré */ }
+      try { localStorage.removeItem(cleSTI("sti-bac-import")); } catch (e) { /* ignoré */ }
       history.replaceState(null, "", location.pathname);
     }
   }
@@ -52,7 +54,7 @@
     clearTimeout(minuteur);
     minuteur = setTimeout(function () {
       apercu.srcdoc = documentComplet();
-      ecrire("sti-bac", JSON.stringify({ html: Z.html.value, css: Z.css.value, js: Z.js.value }));
+      ecrire(cleSTI("sti-bac"), JSON.stringify({ html: Z.html.value, css: Z.css.value, js: Z.js.value }));
     }, 350);
   }
 
@@ -73,7 +75,7 @@
   /* vérification de conformité, onglet par onglet */
   document.getElementById("b-verifier").addEventListener("click", function () {
     var n = Number(selN.value);
-    ecrire("sti-niveau-eleve", String(n));
+    ecrire(cleSTI("sti-niveau-eleve"), String(n));
     var noms = { html: "HTML", css: "CSS", js: "JavaScript" }, tous = [];
     ["html", "css", "js"].forEach(function (p) {
       if (!Z[p].value.trim()) return;

@@ -51,6 +51,7 @@ def gabarit(fichier, titre, description, haut, contenu, classe="", scripts="", a
 <title>{titre} — STI Espace Élèves</title>
 <meta name="description" content="{esc(description)}">
 <link rel="icon" href="assets/flag.png">
+<script src="../connexion/compte.js" data-acces="eleve"></script>
 <link rel="stylesheet" href="assets/vendor/fonts.css">
 <link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
 <link rel="stylesheet" href="assets/style.css">
@@ -81,7 +82,7 @@ def gabarit(fichier, titre, description, haut, contenu, classe="", scripts="", a
     </div>
     <div>
       <h4>Outils</h4>
-      <a href="bac.html">Bac à sable</a><a href="memo.html">Aide-mémoire</a><a href="erreurs.html">Erreurs à éviter</a><a href="../prof/">Espace Prof</a>
+      <a href="bac.html">Bac à sable</a><a href="memo.html">Aide-mémoire</a><a href="erreurs.html">Erreurs à éviter</a>
     </div>
   </div>
   <div class="pied-bas">Ta progression est enregistrée sur cet appareil uniquement.</div>
