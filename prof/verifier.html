@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vérifier un code — STI Espace Prof</title>
+<meta name="description" content="Collez un code HTML, CSS, JavaScript, SQL ou PHP : chaque élément hors annexe ou d'un niveau supérieur est signalé, avec l'alternative conforme.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/v2.css">
+</head>
+<body class="" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">STI · Espace Prof<small>L'annexe en pratique</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="verifier.html" class="cle" aria-current="page">Vérifier un code</a><a href="n2.html" class="m2">2ème</a><a href="n3.html" class="m3">3ème</a><a href="n4.html" class="m4">4ème</a><a href="annexe.html" class="">Annexe</a><a href="index.html#ressources" class="">Ressources</a><a href="../eleves/" class="vers-eleves">Espace élèves</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><h1>Vérifier un code</h1><p class="chapeau">Collez un support, un sujet ou une copie d'élève. Chaque élément hors annexe ou au-dessus du niveau choisi est signalé avec sa ligne et l'alternative conforme. Rien n'est envoyé sur Internet.</p></div></section>
+<div class="page pleine verif">
+<div class="verif-zone">
+  <div class="verif-reglages">
+    <label>Niveau
+      <select id="v-niveau"><option value="2">2ème année</option><option value="3" selected>3ème année</option><option value="4">4ème année</option></select>
+    </label>
+    <label>Langage
+      <select id="v-langue"><option value="auto" selected>Détection automatique</option><option value="html">Page HTML (avec CSS, JS, PHP)</option><option value="css">CSS seul</option><option value="js">JavaScript seul</option><option value="sql">SQL seul</option><option value="php">PHP seul</option></select>
+    </label>
+    <span class="verif-exemples">Essayer :
+      <button type="button" data-exemple="html">Page HTML/CSS/JS</button>
+      <button type="button" data-exemple="sql">Requêtes SQL</button>
+      <button type="button" data-exemple="php">Script PHP</button>
+    </span>
+  </div>
+  <textarea id="v-code" spellcheck="false" placeholder="Collez ici votre code (page HTML complète, feuille CSS, script JS, requêtes SQL ou script PHP)…" aria-label="Code à vérifier"></textarea>
+  <div class="verif-actions">
+    <button type="button" class="btn-principal" id="v-lancer">Vérifier la conformité</button>
+    <button type="button" class="btn-sec" id="v-effacer">Effacer</button>
+    <span class="verif-info">Analyse faite dans votre navigateur : le code n'est envoyé nulle part.</span>
+  </div>
+</div>
+<div id="v-resultat" aria-live="polite"></div>
+</div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI · Espace Prof</h4>
+      <p>Ressources pour les enseignants de Sciences et Technologies de l'Informatique, conformes à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a><a href="annexe.html">Annexe complète</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="verifier.html">Vérifier un code</a><a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Logiciels et glossaire</a>
+    </div>
+  </div>
+  <div class="pied-bas">Espace Prof · octobre 2026 · <a href="../eleves/">Espace élèves</a> · <a href="../">Version 1 du guide</a> · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/verificateur.js"></script>
+<script src="assets/verifier-ui.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

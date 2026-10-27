@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS en ligne et interne — STI Espace Élèves</title>
+<meta name="description" content="Mettre en forme sans fichier externe : texte, bordures et arrière-plans.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/eleves.css">
+</head>
+<body class="niv-2" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">Espace Élèves<small>Apprendre le Web pas à pas</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="index.html" class="">Accueil</a><a href="n2.html" class="m2" aria-current="page">2ème</a><a href="n3.html" class="m3">3ème</a><a href="n4.html" class="m4">4ème</a><a href="bac.html" class="cle">Bac à sable</a><a href="memo.html" class="">Aide-mémoire</a><a href="erreurs.html" class="">Erreurs à éviter</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><nav class="ariane-v2" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> › <a href="n2.html">2ème année</a> › Chapitre 5</nav><span class="pastille-niveau">2ème année · Chapitre 5</span><br><h1>CSS en ligne et interne</h1><p class="chapeau">Mettre en forme sans fichier externe : texte, bordures et arrière-plans.</p></div></section>
+<div class="page pleine chap" data-niveau="2" data-chap="5">
+<nav class="etapes-chap" aria-label="Étapes du chapitre"><a href="#comprendre"><b>1</b>Je comprends</a><a href="#entrainer"><b>2</b>Je m'entraîne</a><a href="#retenir"><b>3</b>Je retiens</a></nav>
+<section id="comprendre" class="etape"><h2 class="etape-titre"><b>1</b> Je comprends</h2>
+<p class="etape-aide">Lis chaque notion, observe le rendu, puis clique sur <strong>« Essayer »</strong> sous un code pour le modifier dans le bac à sable.</p>
+<article class="notion" id="m5-deux-facons-d-ecrire-le-css-en-2eme"><div class="notion-tete"><h3>Deux façons d'écrire le CSS en 2ème</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p>En 2ème année, le CSS s'écrit <b>en ligne</b> (attribut <code>style</code>, pour un seul élément) ou <b>en interne</b> (balise <code>&lt;style&gt;</code> dans le <code>&lt;head&gt;</code>, pour toute la page). La syntaxe est toujours : <code>sélecteur { propriété: valeur; }</code>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Club&lt;/title&gt;
+  &lt;style&gt;
+    h1 {
+      color: navy;
+      text-align: center;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Club informatique&lt;/h1&gt;
+  &lt;p style="color: green;"&gt;Inscriptions ouvertes&lt;/p&gt;
+&lt;/body&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:120px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;h1{color:navy;text-align:center}&lt;/style&gt;&lt;h1&gt;Club informatique&lt;/h1&gt;&lt;p style=&quot;color: green;&quot;&gt;Inscriptions ouvertes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc info"><b class="ico" aria-hidden="true">i</b><div><p>Sélecteurs utilisés en 2ème : le nom de l'élément (<code>h1</code>, <code>p</code>, <code>table</code>…). Les sélecteurs <code>#id</code> et <code>.classe</code> arrivent en 3ème.</p></div></div>
+</div></article><article class="notion" id="m5-mettre-en-forme-le-texte"><div class="notion-tete"><h3>Mettre en forme le texte</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">&lt;style&gt;
+  h2 {
+    font-family: Georgia, serif;
+    font-size: 26px;
+    color: darkred;
+  }
+  p {
+    font-weight: bold;
+    font-style: italic;
+    text-align: justify;
+  }
+&lt;/style&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:140px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;h2{font-family:Georgia,serif;font-size:26px;color:darkred}p{font-weight:bold;font-style:italic;text-align:justify}&lt;/style&gt;&lt;h2&gt;Le patrimoine de Carthage&lt;/h2&gt;&lt;p&gt;Carthage, fondée au IXe siècle avant J.-C., est inscrite au patrimoine mondial de l&#x27;UNESCO depuis 1979.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc astuce"><b class="ico" aria-hidden="true">★</b><div><p>La propriété abrégée <code>font</code> regroupe style, graisse, taille et police : <code>font: italic bold 18px Arial;</code></p></div></div>
+</div></article><article class="notion" id="m5-bordures"><div class="notion-tete"><h3>Bordures</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">&lt;style&gt;
+  table {
+    border-width: 2px;
+    border-style: solid;
+    border-color: navy;
+  }
+  td {
+    border: 1px dashed gray;
+  }
+&lt;/style&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:110px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;table{border-width:2px;border-style:solid;border-color:navy}td{border:1px dashed gray;padding:6px}&lt;/style&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Lundi&lt;/td&gt;&lt;td&gt;Informatique&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Mardi&lt;/td&gt;&lt;td&gt;Physique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><article class="notion" id="m5-arriere-plans"><div class="notion-tete"><h3>Arrière-plans</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">&lt;style&gt;
+  body {
+    background-color: lightyellow;
+  }
+  h1 {
+    background-image: url("motif.png");
+    background-repeat: repeat-x;
+  }
+&lt;/style&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:110px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;body{background-color:lightyellow}h1{background-color:#cfe3ff}&lt;/style&gt;&lt;h1&gt;Bienvenue&lt;/h1&gt;&lt;p&gt;Fond de page jaune clair.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">L'image de fond est remplacée ici par une couleur.</div></div></div>
+</div></article></section>
+<section id="entrainer" class="etape"><h2 class="etape-titre"><b>2</b> Je m'entraîne</h2>
+<p class="etape-aide">7 questions corrigées immédiatement. Ton meilleur score est enregistré sur cet appareil.</p>
+<div id="quiz"></div></section>
+<section id="retenir" class="etape"><h2 class="etape-titre"><b>3</b> Je retiens</h2>
+<div class="outils-retenir"><button type="button" class="btn-imp" data-imprimer="retenir">Imprimer ma fiche « À retenir »</button></div>
+<div id="m5-a-retenir-css-2eme"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>CSS en ligne : attribut <code>style</code> ; CSS interne : <code>&lt;style&gt;</code> dans le <code>head</code>.</li><li>Syntaxe : <code>sélecteur { propriété: valeur; }</code>, chaque déclaration se termine par <code>;</code>.</li><li>Gras et italique se font en CSS : <code>font-weight</code>, <code>font-style</code>.</li><li>Pas de fichier .css externe en 2ème année.</li></ul><h4>Nouvelles propriétés CSS</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Propriété</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Définition</th></tr></thead><tbody><tr><td><code>font-family</code></td><td>nom(s) de police par ordre de préférence</td><td><code>Georgia, serif</code></td><td>Police du texte</td></tr><tr><td><code>font-size</code></td><td>taille en px</td><td><code>26px</code></td><td>Taille des caractères</td></tr><tr><td><code>font-weight</code></td><td>bold, bolder, lighter</td><td><code>bold</code></td><td>Graisse du texte</td></tr><tr><td><code>font-style</code></td><td>italic</td><td><code>italic</code></td><td>Style du texte</td></tr><tr><td><code>font</code></td><td>combine style, graisse, taille, police</td><td><code>italic bold 18px Arial</code></td><td>Propriété abrégée du texte</td></tr><tr><td><code>text-align</code></td><td>left, center, right, justify</td><td><code>justify</code></td><td>Alignement horizontal</td></tr><tr><td><code>color</code></td><td>nom, #hexadécimal, rgb()</td><td><code>darkred</code></td><td>Couleur du texte</td></tr><tr><td><code>border-width</code></td><td>medium, thin, thick, valeur en px</td><td><code>2px</code></td><td>Épaisseur de la bordure</td></tr><tr><td><code>border-style</code></td><td>solid, dashed, dotted…</td><td><code>solid</code></td><td>Style du trait</td></tr><tr><td><code>border-color</code></td><td>nom, #hexadécimal, rgb()</td><td><code>navy</code></td><td>Couleur de la bordure</td></tr><tr><td><code>border</code></td><td>combine largeur, style, couleur</td><td><code>1px dashed gray</code></td><td>Propriété abrégée</td></tr><tr><td><code>background-color</code></td><td>nom, #hexadécimal, rgb()</td><td><code>lightyellow</code></td><td>Couleur de fond</td></tr><tr><td><code>background-image</code></td><td>url("fichier")</td><td><code>url("motif.png")</code></td><td>Image de fond</td></tr><tr><td><code>background-repeat</code></td><td>repeat, repeat-x, repeat-y</td><td><code>repeat-x</code></td><td>Répétition de l'image de fond</td></tr><tr><td><code>background</code></td><td>combine les propriétés de fond</td><td><code>—</code></td><td>Propriété abrégée</td></tr></tbody></table></div></div></div></section>
+<nav class="suite" aria-label="Chapitres voisins"><a href="n2-c4.html">← Formulaires</a><a href="n2.html">Tous les chapitres →</a></nav>
+</div>
+<script>window.EXOS = [{"type": "qcm", "q": "Où s'écrit le CSS interne ?", "choix": ["Dans l'attribut style", "Dans <style> dans le <head>", "Dans un fichier .css", "Dans <body>"], "bonne": 1, "expl": "CSS interne : balise <style> dans le <head>. Le fichier .css externe arrive en 3ème."}, {"type": "code", "q": "Complète pour mettre les paragraphes en gras.", "code": "p {\n  font-weight: ___;\n}", "attendu": ["bold"], "expl": "Valeurs de l'annexe : bold, bolder, lighter."}, {"type": "qcm", "q": "Quelle propriété aligne un texte au centre ?", "choix": ["align: center", "text-align: center", "center: true", "font-align: center"], "bonne": 1, "expl": "text-align : left, center, right, justify."}, {"type": "code", "q": "Complète pour un fond jaune clair sur toute la page.", "code": "body {\n  ___: lightyellow;\n}", "attendu": ["background-color"], "expl": "background-color = couleur de fond."}, {"type": "vf", "q": "La syntaxe CSS est : sélecteur { propriété: valeur; }", "rep": true, "expl": "Chaque déclaration se termine par un point-virgule."}, {"type": "qcm", "q": "Quelles valeurs de background-repeat sont dans l'annexe ?", "choix": ["repeat, repeat-x, repeat-y", "no-repeat seulement", "cover, contain", "left, right"], "bonne": 0, "expl": "L'annexe liste repeat, repeat-x et repeat-y."}, {"type": "erreur", "q": "Quelle déclaration contient une erreur ?", "lignes": ["color: navy;", "font-size: 18px;", "border: 2px dashed gray", "text-align: justify;"], "bonne": 2, "expl": "Il manque le point-virgule à la fin de la déclaration."}];</script>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI · Espace Élèves</h4>
+      <p>Cours, exercices corrigés et bac à sable pour les élèves de Sciences et Technologies de l'Informatique, conformes au programme officiel tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Mon niveau</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="bac.html">Bac à sable</a><a href="memo.html">Aide-mémoire</a><a href="erreurs.html">Erreurs à éviter</a><a href="../prof/">Espace Prof</a>
+    </div>
+  </div>
+  <div class="pied-bas">Ta progression est enregistrée sur cet appareil uniquement.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/plan.js"></script>
+<script src="assets/quiz.js"></script>
+<script src="assets/eleve.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

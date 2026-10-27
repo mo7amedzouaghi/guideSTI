@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bases de données — STI Espace Élèves</title>
+<meta name="description" content="Comprendre le modèle relationnel, créer une base en mode assisté et l'interroger en SQL sur une seule table.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/eleves.css">
+</head>
+<body class="niv-3" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">Espace Élèves<small>Apprendre le Web pas à pas</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="index.html" class="">Accueil</a><a href="n2.html" class="m2">2ème</a><a href="n3.html" class="m3" aria-current="page">3ème</a><a href="n4.html" class="m4">4ème</a><a href="bac.html" class="cle">Bac à sable</a><a href="memo.html" class="">Aide-mémoire</a><a href="erreurs.html" class="">Erreurs à éviter</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><nav class="ariane-v2" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> › <a href="n3.html">3ème année</a> › Chapitre 6</nav><span class="pastille-niveau">3ème année · Chapitre 6</span><br><h1>Bases de données</h1><p class="chapeau">Comprendre le modèle relationnel, créer une base en mode assisté et l'interroger en SQL sur une seule table.</p></div></section>
+<div class="page pleine chap" data-niveau="3" data-chap="6">
+<nav class="etapes-chap" aria-label="Étapes du chapitre"><a href="#comprendre"><b>1</b>Je comprends</a><a href="#entrainer"><b>2</b>Je m'entraîne</a><a href="#retenir"><b>3</b>Je retiens</a></nav>
+<section id="comprendre" class="etape"><h2 class="etape-titre"><b>1</b> Je comprends</h2>
+<p class="etape-aide">Lis chaque notion, observe le rendu, puis clique sur <strong>« Essayer »</strong> sous un code pour le modifier dans le bac à sable.</p>
+<article class="notion" id="m6-vocabulaire-du-modele-relationnel"><div class="notion-tete"><h3>Vocabulaire du modèle relationnel</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Terme</th><th>Définition</th><th>Exemple</th></tr></thead><tbody><tr><td>Base de données relationnelle (BDR)</td><td>Ensemble de tables liées entre elles</td><td>bibliotheque</td></tr><tr><td>SGBDR</td><td>Logiciel qui gère la base</td><td>MySQL (via phpMyAdmin)</td></tr><tr><td>Table</td><td>Ensemble d'enregistrements de même structure</td><td>Livre</td></tr><tr><td>Champ (colonne)</td><td>Information élémentaire</td><td>titre</td></tr><tr><td>Enregistrement (ligne)</td><td>Une occurrence complète</td><td>(12, 'Le Prophète', …)</td></tr><tr><td>Clé primaire</td><td>Champ qui identifie chaque ligne de façon unique</td><td>idLivre</td></tr><tr><td>Clé étrangère</td><td>Champ qui fait référence à la clé primaire d'une autre table</td><td>idAuteur#</td></tr></tbody></table></div>
+</div></article><article class="notion" id="m6-representation-textuelle-et-relations"><div class="notion-tete"><h3>Représentation textuelle et relations</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>La clé primaire est <b>soulignée</b>, la clé étrangère est suivie de <b>#</b>.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">Schéma</span>bibliotheque</span></div><pre class="language-none"><code class="language-none">Auteur (<span class="pk">idAuteur</span>, nom, nationalite)
+Livre  (<span class="pk">idLivre</span>, titre, annee, idAuteur#)
+Eleve  (<span class="pk">idEleve</span>, nom, prenom, classe)
+Emprunt (<span class="pk">idLivre#</span>, <span class="pk">idEleve#</span>, <span class="pk">dateEmprunt</span>, dateRetour)</code></pre></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Relation</th><th>Signification</th><th>Exemple</th></tr></thead><tbody><tr><td>1:1</td><td>une ligne de A correspond à une seule ligne de B</td><td>Lycée — Directeur</td></tr><tr><td>1:∞</td><td>une ligne de A correspond à plusieurs lignes de B</td><td>Auteur — Livre</td></tr><tr><td>∞:∞</td><td>plusieurs lignes de A pour plusieurs lignes de B : table intermédiaire</td><td>Livre — Élève (via Emprunt)</td></tr></tbody></table></div>
+</div></article><article class="notion" id="m6-types-et-contraintes"><div class="notion-tete"><h3>Types et contraintes</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Type</th><th>Usage</th></tr></thead><tbody><tr><td><code>INT</code></td><td>Entier</td></tr><tr><td><code>DECIMAL(p,d)</code></td><td>Réel : p chiffres dont d après la virgule</td></tr><tr><td><code>CHAR(n)</code></td><td>Chaîne de longueur fixe</td></tr><tr><td><code>VARCHAR(n)</code></td><td>Chaîne de longueur variable (n max)</td></tr><tr><td><code>TEXT</code></td><td>Texte long</td></tr><tr><td><code>DATE</code></td><td>Date AAAA-MM-JJ</td></tr><tr><td><code>TIME</code></td><td>Heure</td></tr><tr><td><code>DATETIME</code></td><td>Date et heure</td></tr></tbody></table></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Contrainte</th><th>Rôle</th></tr></thead><tbody><tr><td><code>PRIMARY KEY</code></td><td>Identifiant unique et non vide</td></tr><tr><td><code>FOREIGN KEY … REFERENCES</code></td><td>Lien vers une autre table</td></tr><tr><td><code>NOT NULL</code></td><td>Valeur obligatoire</td></tr><tr><td><code>UNIQUE</code></td><td>Pas de doublon</td></tr><tr><td><code>DEFAULT</code></td><td>Valeur par défaut</td></tr><tr><td><code>CHECK</code></td><td>Condition à respecter</td></tr></tbody></table></div>
+</div></article><article class="notion" id="m6-creer-la-base-en-mode-assiste-phpmyadmin"><div class="notion-tete"><h3>Créer la base en mode assisté (phpMyAdmin)</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>En 3ème, la base et ses tables se créent <b>avec l'interface graphique</b> : aucune instruction CREATE, ALTER ou DROP n'est écrite à la main.</p>
+<ol class="etapes">
+<li><h4>Démarrer XAMPP</h4><p>Lancer Apache et MySQL, puis ouvrir <code>localhost/phpmyadmin</code>.</p></li>
+<li><h4>Créer la base</h4><p>Onglet <i>Bases de données</i> : saisir <code>bibliotheque</code>, interclassement <code>utf8mb4_general_ci</code>.</p></li>
+<li><h4>Créer chaque table</h4><p>Nom, nombre de colonnes, puis pour chaque champ : nom, type, taille, Null ou non, index <i>PRIMARY</i>.</p></li>
+<li><h4>Relier les tables</h4><p>Onglet <i>Structure</i> → <i>Vue relationnelle</i> : choisir la table et le champ référencés (moteur InnoDB).</p></li>
+<li><h4>Saisir des données</h4><p>Onglet <i>Insérer</i>, puis vérifier dans <i>Parcourir</i>.</p></li>
+</ol>
+</div></article><article class="notion" id="m6-interroger-une-table-en-sql"><div class="notion-tete"><h3>Interroger une table en SQL</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">-- Sélection, condition, tri
+SELECT titre, annee FROM Livre
+WHERE annee &gt;= 2000
+ORDER BY annee DESC;
+
+-- Sans doublons
+SELECT DISTINCT nationalite FROM Auteur;
+
+-- Opérateurs
+SELECT * FROM Livre WHERE annee BETWEEN 1990 AND 2010;
+SELECT * FROM Livre WHERE titre LIKE 'Le%';
+SELECT * FROM Eleve WHERE classe IN ('3SI1', '3SI2');
+SELECT * FROM Livre WHERE idAuteur IS NULL;
+
+-- Mise à jour des données
+INSERT INTO Eleve (idEleve, nom, prenom, classe)
+VALUES (25, 'Ben Salah', 'Rim', '3SI1');
+
+UPDATE Eleve SET classe = '3SI2' WHERE idEleve = 25;
+
+DELETE FROM Eleve WHERE idEleve = 25;</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p>En 3ème : une seule table par requête. Jointures, fonctions d'agrégation, GROUP BY et sous-requêtes sont réservés à la 4ème.</p></div></div>
+</div></article></section>
+<section id="entrainer" class="etape"><h2 class="etape-titre"><b>2</b> Je m'entraîne</h2>
+<p class="etape-aide">7 questions corrigées immédiatement. Ton meilleur score est enregistré sur cet appareil.</p>
+<div id="quiz"></div></section>
+<section id="retenir" class="etape"><h2 class="etape-titre"><b>3</b> Je retiens</h2>
+<div class="outils-retenir"><button type="button" class="btn-imp" data-imprimer="retenir">Imprimer ma fiche « À retenir »</button></div>
+<div id="m6-a-retenir-bases-de-donnees"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Clé primaire soulignée, clé étrangère suivie de #.</li><li>Relation ∞:∞ = table intermédiaire.</li><li>Création de la base et des tables : mode assisté uniquement.</li><li>Requêtes SQL sur une seule table.</li></ul><h4>Instructions SQL de 3ème</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Instruction</th><th>Rôle</th></tr></thead><tbody><tr><td><code>SELECT … FROM … WHERE … ORDER BY</code></td><td>Consulter, filtrer, trier</td></tr><tr><td><code>DISTINCT</code></td><td>Supprimer les doublons</td></tr><tr><td><code>BETWEEN / LIKE / IN / IS NULL</code></td><td>Intervalle, motif, liste, valeur absente</td></tr><tr><td><code>AND / OR / NOT</code></td><td>Combiner des conditions</td></tr><tr><td><code>INSERT INTO … VALUES</code></td><td>Ajouter une ligne</td></tr><tr><td><code>UPDATE … SET … WHERE</code></td><td>Modifier des lignes</td></tr><tr><td><code>DELETE FROM … WHERE</code></td><td>Supprimer des lignes</td></tr></tbody></table></div></div></div></section>
+<nav class="suite" aria-label="Chapitres voisins"><a href="n3-c5.html">← JavaScript</a><a href="n3.html">Tous les chapitres →</a></nav>
+</div>
+<script>window.EXOS = [{"type": "qcm", "q": "Dans la représentation textuelle, comment repère-t-on la clé primaire ?", "choix": ["Elle est suivie de #", "Elle est soulignée", "Elle est en majuscules", "Elle est entre parenthèses"], "bonne": 1, "expl": "Clé primaire soulignée, clé étrangère suivie de #."}, {"type": "qcm", "q": "Une relation ∞:∞ entre Livre et Élève nécessite :", "choix": ["une clé étrangère dans Livre", "une table intermédiaire", "rien de plus", "une seule table"], "bonne": 1, "expl": "Exemple : Emprunt(idLivre#, idEleve#, dateEmprunt)."}, {"type": "code", "q": "Complète pour trier par nom croissant.", "code": "SELECT nom FROM Eleve ___ BY nom ASC;", "attendu": ["order"], "expl": "ORDER BY … ASC (croissant) ou DESC (décroissant)."}, {"type": "code", "q": "Complète pour les noms qui commencent par « Ben ».", "code": "SELECT nom FROM Eleve WHERE nom LIKE '___';", "attendu": ["ben%"], "expl": "% remplace n'importe quelle suite de caractères."}, {"type": "qcm", "q": "Quel opérateur teste une valeur absente ?", "choix": ["= NULL", "IS NULL", "== NULL", "EMPTY"], "bonne": 1, "expl": "On écrit IS NULL, jamais = NULL."}, {"type": "vf", "q": "En 3ème, on écrit les CREATE TABLE à la main.", "rep": false, "expl": "En 3ème, la base se crée en mode assisté dans phpMyAdmin."}, {"type": "erreur", "q": "Quelle requête n'est pas au programme de 3ème ?", "lignes": ["SELECT * FROM Livre WHERE annee > 2000;", "SELECT nom FROM Eleve, Classe WHERE Eleve.idClasse = Classe.idClasse;", "DELETE FROM Eleve WHERE idEleve = 25;"], "bonne": 1, "expl": "Une requête sur plusieurs tables (jointure) est au programme de 4ème."}];</script>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI · Espace Élèves</h4>
+      <p>Cours, exercices corrigés et bac à sable pour les élèves de Sciences et Technologies de l'Informatique, conformes au programme officiel tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Mon niveau</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="bac.html">Bac à sable</a><a href="memo.html">Aide-mémoire</a><a href="erreurs.html">Erreurs à éviter</a><a href="../prof/">Espace Prof</a>
+    </div>
+  </div>
+  <div class="pied-bas">Ta progression est enregistrée sur cet appareil uniquement.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/plan.js"></script>
+<script src="assets/quiz.js"></script>
+<script src="assets/eleve.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

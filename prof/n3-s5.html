@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript (3ème année) — STI Espace Prof</title>
+<meta name="description" content="Rendre la page interactive : lire les saisies, calculer, contrôler un formulaire et afficher un résultat.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/v2.css">
+</head>
+<body class="niv-3" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">STI · Espace Prof<small>L'annexe en pratique</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="verifier.html" class="cle">Vérifier un code</a><a href="n2.html" class="m2">2ème</a><a href="n3.html" class="m3" aria-current="page">3ème</a><a href="n4.html" class="m4">4ème</a><a href="annexe.html" class="">Annexe</a><a href="index.html#ressources" class="">Ressources</a><a href="../eleves/" class="vers-eleves">Espace élèves</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><nav class="ariane-v2" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> › <a href="n3.html">3ème année</a> › Chapitre 5</nav><nav class="choix-niveau" aria-label="Changer de niveau"><span>Niveau :</span><a href="n2.html" class="cn-2">2ème année</a><a href="n3.html" class="cn-3" aria-current="page">3ème année</a><a href="n4.html" class="cn-4">4ème année</a></nav><br><span class="pastille-niveau">3ème année · Chapitre 5</span><br><h1>JavaScript</h1><p class="chapeau">Rendre la page interactive : lire les saisies, calculer, contrôler un formulaire et afficher un résultat.</p></div></section>
+<div class="page"><nav class="sommaire" aria-label="Chapitres"><h2>3ème année</h2><ol><li><a href="n3-s1.html">1. HTML5 avancé</a></li><li><a href="n3-s2.html">2. CSS3 : feuille externe et sélecteurs</a></li><li><a href="n3-s3.html">3. Mise en page : boîtes et positionnement</a></li><li><a href="n3-s4.html">4. Effets : transitions, transformations, animations</a></li><li><a href="n3-s5.html" class="actif" aria-current="page">5. JavaScript</a><ol><li><a href="#m5-entrees-sorties-et-acces-aux-elements">Entrées, sorties et accès aux éléments</a></li><li><a href="#m5-variables-conditions-et-boucles">Variables, conditions et boucles</a></li><li><a href="#m5-fonctions">Fonctions</a></li><li><a href="#m5-chaines-de-caracteres">Chaînes de caractères</a></li><li><a href="#m5-conversions-math-et-date">Conversions, Math et Date</a></li><li><a href="#m5-controler-un-formulaire">Contrôler un formulaire</a></li><li><a href="#m5-a-retenir-javascript">À retenir — JavaScript</a></li></ol></li><li><a href="n3-s6.html">6. Bases de données</a></li><li><a href="n3.html#progression">Limites et progression</a></li></ol></nav><div class="contenu"><section class="ressources-chap" aria-label="Ressources du chapitre"><h2>Ressources du chapitre</h2><div class="rc-grille"><button type="button" class="rc" data-imprimer="retenir"><b>🖨</b><span>Imprimer la fiche « À retenir »<small>La synthèse seule, pour la classe</small></span></button><button type="button" class="rc" data-imprimer="tout"><b>📄</b><span>Imprimer le chapitre<small>Notions, exemples et synthèse</small></span></button><button type="button" class="rc" data-telecharger="n3-s5"><b>⬇</b><span>Télécharger les exemples<small>Tous les codes du chapitre, en un fichier</small></span></button><a class="rc" href="pedagogie.html#seance"><b>🧭</b><span>Modèle de séance<small>Les 7 étapes d'une séance conforme</small></span></a><a class="rc" href="erreurs.html#js"><b>⚠</b><span>Erreurs fréquentes<small>Code incorrect et version conforme</small></span></a><a class="rc" href="verifier.html?niveau=3"><b>✔</b><span>Vérifier un code<small>Conformité au programme de 3ème année</small></span></a></div></section><article class="notion" id="m5-entrees-sorties-et-acces-aux-elements"><div class="notion-tete"><h3>Entrées, sorties et accès aux éléments</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">JS</span>js/script.js</span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">// Entrée
+let prenom = prompt("Votre prénom ?");
+
+// Sorties
+alert("Bienvenue " + prenom);
+document.write("Bonjour");
+
+// Lire un champ et écrire dans la page
+let nom = document.getElementById("nom").value;
+document.getElementById("res").innerHTML = "Merci " + nom;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:90px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;input id=&quot;nom&quot; value=&quot;Amine&quot;&gt; &lt;input type=&quot;button&quot; value=&quot;Afficher&quot; onclick=&quot;document.getElementById(&#x27;res&#x27;).innerHTML=&#x27;Merci &#x27;+document.getElementById(&#x27;nom&#x27;).value&quot;&gt;&lt;p id=&quot;res&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Cliquez sur « Afficher ».</div></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Instruction</th><th>Rôle</th></tr></thead><tbody><tr><td><code>prompt(message)</code></td><td>Affiche une boîte de saisie et renvoie le texte tapé</td></tr><tr><td><code>alert(message)</code></td><td>Affiche un message dans une boîte</td></tr><tr><td><code>document.write(texte)</code></td><td>Écrit dans la page pendant son chargement</td></tr><tr><td><code>document.getElementById(id)</code></td><td>Renvoie l'élément ayant cet id</td></tr><tr><td><code>element.value</code></td><td>Valeur saisie dans un champ</td></tr><tr><td><code>element.innerHTML</code></td><td>Contenu HTML d'un élément (lecture ou écriture)</td></tr></tbody></table></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p><code>console.log()</code> n'est pas au programme : on affiche avec <code>alert()</code> ou <code>innerHTML</code>.</p></div></div>
+</div></article><article class="notion" id="m5-variables-conditions-et-boucles"><div class="notion-tete"><h3>Variables, conditions et boucles</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">JS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">let moyenne = 13.5;        // variable
+const SEUIL = 10;          // constante
+let mention;
+
+if (moyenne &gt;= 15) {
+  mention = "Très bien";
+} else if (moyenne &gt;= SEUIL) {
+  mention = "Admis";
+} else {
+  mention = "Ajourné";
+}
+
+let somme = 0;
+for (let i = 1; i &lt;= 10; i++) {
+  somme = somme + i;
+}
+
+let n = 0;
+while (n &lt; 3) {
+  n++;
+}</code></pre></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Opérateurs</th><th>Symboles (annexe)</th></tr></thead><tbody><tr><td>Arithmétiques</td><td><code>+ - * / %</code></td></tr><tr><td>Comparaison</td><td><code>== != &gt; &lt; &gt;= &lt;=</code></td></tr><tr><td>Logiques</td><td><code>&amp;&amp; || !</code></td></tr></tbody></table></div>
+</div></article><article class="notion" id="m5-fonctions"><div class="notion-tete"><h3>Fonctions</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>Une fonction regroupe des instructions réutilisables. Elle est appelée par un événement HTML ou par une autre fonction.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">JS</span>js/script.js</span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">function surface(longueur, largeur) {
+  return longueur * largeur;
+}
+
+function calculer() {
+  let L = Number(document.getElementById("L").value);
+  let l = Number(document.getElementById("l").value);
+  document.getElementById("res").innerHTML =
+    "Surface : " + surface(L, l) + " m²";
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:90px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;script&gt;function surface(a,b){return a*b}function calculer(){let L=Number(document.getElementById(&quot;L&quot;).value);let l=Number(document.getElementById(&quot;l&quot;).value);document.getElementById(&quot;res&quot;).innerHTML=&quot;Surface : &quot;+surface(L,l)+&quot; m²&quot;}&lt;/script&gt;Longueur &lt;input id=&quot;L&quot; type=&quot;number&quot; value=&quot;8&quot; style=&quot;width:60px&quot;&gt; Largeur &lt;input id=&quot;l&quot; type=&quot;number&quot; value=&quot;6&quot; style=&quot;width:60px&quot;&gt; &lt;input type=&quot;button&quot; value=&quot;Calculer&quot; onclick=&quot;calculer()&quot;&gt;&lt;p id=&quot;res&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><article class="notion" id="m5-chaines-de-caracteres"><div class="notion-tete"><h3>Chaînes de caractères</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>On accède à un caractère par son indice : <code>ch[i]</code> (le premier est <code>ch[0]</code>). Les méthodes ci-dessous sont les seules de l'annexe.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">JS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">let ch = "Oued Ellil";
+ch.length;               // 10
+ch[0];                   // "O"   (jamais charAt)
+ch.indexOf("E");         // 5
+ch.lastIndexOf("l");     // 9
+ch.substring(0, 4);      // "Oued" (jamais substr)
+ch.replace("Oued", "Wed");
+ch.toUpperCase();        // "OUED ELLIL"
+ch.toLowerCase();
+"  ok  ".trim();          // "ok"
+String.fromCharCode(65); // "A"</code></pre></div>
+<div class="enc prof"><b class="ico" aria-hidden="true">✎</b><div><p>Fonction type à faire construire : tester qu'une chaîne ne contient que des chiffres (téléphone, code postal, CAPTCHA).</p></div></div>
+<div class="code"><div class="code-tete"><span><span class="lang">JS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">function estChiffres(ch) {
+  if (ch.length == 0) {
+    return false;              // chaîne vide refusée
+  }
+  for (let i = 0; i &lt; ch.length; i++) {
+    if (ch[i] &lt; "0" || ch[i] &gt; "9") {
+      return false;
+    }
+  }
+  return true;
+}</code></pre></div>
+</div></article><article class="notion" id="m5-conversions-math-et-date"><div class="notion-tete"><h3>Conversions, Math et Date</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">JS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">Number("12.5");          // 12.5
+parseInt("42", 10);      // 42
+parseFloat("3.14");      // 3.14
+String(2026);            // "2026"
+isNaN("abc");            // true
+
+Math.abs(-4);            // 4
+Math.sqrt(25);           // 5
+Math.round(2.6);         // 3
+Math.trunc(7.9);         // 7   (jamais floor / ceil)
+let de = Math.trunc(Math.random() * 6) + 1;   // entier de 1 à 6
+
+let d = new Date();               // date du jour
+let n = new Date("2026-10-27");
+d.getDate();                       // jour du mois
+d.getMonth() + 1;                  // mois (getMonth renvoie 0 à 11)
+d.getFullYear();                   // année
+d.toString().substring(0, 3);      // jour de la semaine en anglais : "Tue"</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p><code>getDay()</code> n'est pas dans l'annexe : le jour de la semaine s'obtient par <code>d.toString().substring(0, 3)</code>.</p></div></div>
+</div></article><article class="notion" id="m5-controler-un-formulaire"><div class="notion-tete"><h3>Contrôler un formulaire</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>Schéma attendu à l'examen : un bouton <code>type="button"</code> appelle <code>verifier()</code> ; chaque erreur affiche un <code>alert()</code> puis <code>return</code> ; si tout est correct, le message de succès s'écrit avec <code>innerHTML</code>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">JS</span>js/controle.js</span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">function verifier() {
+  let nom = document.getElementById("nom").value;
+  let tel = document.getElementById("tel").value;
+
+  if (nom.length &lt; 3) {
+    alert("Le nom doit contenir au moins 3 lettres");
+    return;
+  }
+  if (tel.length != 8 || !estChiffres(tel)) {
+    alert("Le téléphone doit contenir 8 chiffres");
+    return;
+  }
+  document.getElementById("msg").innerHTML =
+    "Inscription enregistrée pour " + nom;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/inscription.html</span></div><iframe title="Aperçu : localhost/inscription.html" style="height:150px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;script&gt;function estChiffres(ch){if(ch.length==0)return false;for(let i=0;i&lt;ch.length;i++){if(ch[i]&lt;&quot;0&quot;||ch[i]&gt;&quot;9&quot;)return false}return true}
+function verifier(){let nom=document.getElementById(&quot;nom&quot;).value;let tel=document.getElementById(&quot;tel&quot;).value;if(nom.length&lt;3){alert(&quot;Le nom doit contenir au moins 3 lettres&quot;);return}if(tel.length!=8||!estChiffres(tel)){alert(&quot;Le téléphone doit contenir 8 chiffres&quot;);return}document.getElementById(&quot;msg&quot;).innerHTML=&quot;Inscription enregistrée pour &quot;+nom}&lt;/script&gt;
+&lt;style&gt;body{font:14px Arial}input{margin:3px 0}#msg{color:#1E7B3C;font-weight:bold}&lt;/style&gt;
+Nom : &lt;input id=&quot;nom&quot; value=&quot;Sami&quot;&gt;&lt;br&gt;Téléphone : &lt;input id=&quot;tel&quot; value=&quot;9876543&quot;&gt;&lt;br&gt;&lt;input type=&quot;button&quot; value=&quot;Valider&quot; onclick=&quot;verifier()&quot;&gt;&lt;p id=&quot;msg&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Le numéro n'a que 7 chiffres : cliquez sur Valider, corrigez, recommencez.</div></div></div>
+</div></article><div id="m5-a-retenir-javascript"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Lire : <code>getElementById(id).value</code> ; écrire : <code>innerHTML</code>.</li><li>Bouton : <code>input type="button"</code> + <code>onclick</code>.</li><li>Erreur : <code>alert()</code> puis <code>return</code>.</li><li>Caractère : <code>ch[i]</code> ; extraction : <code>substring</code>.</li><li>Arrondis : <code>Math.trunc</code> et <code>Math.round</code> seulement.</li><li>Mois affiché : <code>getMonth() + 1</code>.</li></ul><h4>Méthodes et fonctions</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Méthode / fonction</th><th>Définition</th></tr></thead><tbody><tr><td><code>alert(msg)</code></td><td>Affiche un message</td></tr><tr><td><code>prompt(msg)</code></td><td>Saisie d'une valeur</td></tr><tr><td><code>document.write(t)</code></td><td>Écrit dans la page</td></tr><tr><td><code>document.getElementById(id)</code></td><td>Accède à un élément</td></tr><tr><td><code>innerHTML</code></td><td>Lit ou modifie le contenu d'un élément</td></tr><tr><td><code>Number(ch) / parseInt(ch, b) / parseFloat(ch)</code></td><td>Convertit une chaîne en nombre</td></tr><tr><td><code>String(x)</code></td><td>Convertit en chaîne</td></tr><tr><td><code>isNaN(ch)</code></td><td>Vrai si la valeur n'est pas un nombre</td></tr><tr><td><code>ch.length</code></td><td>Longueur de la chaîne</td></tr><tr><td><code>ch.indexOf(ch1) / lastIndexOf(ch1)</code></td><td>Première / dernière position</td></tr><tr><td><code>ch.substring(d, f)</code></td><td>Sous-chaîne de d à f exclu</td></tr><tr><td><code>ch.replace(ch1, ch2)</code></td><td>Remplace ch1 par ch2</td></tr><tr><td><code>toUpperCase() / toLowerCase()</code></td><td>Majuscules / minuscules</td></tr><tr><td><code>ch.trim()</code></td><td>Supprime les espaces aux extrémités</td></tr><tr><td><code>String.fromCharCode(n)</code></td><td>Caractère de code n</td></tr><tr><td><code>Math.abs / sqrt / round / trunc</code></td><td>Valeur absolue, racine, arrondi, partie entière</td></tr><tr><td><code>Math.random()</code></td><td>Réel aléatoire dans [0, 1[</td></tr><tr><td><code>new Date() / new Date(ch)</code></td><td>Date du jour / date donnée</td></tr><tr><td><code>getDate() / getMonth() / getFullYear()</code></td><td>Jour, mois (0 à 11), année</td></tr><tr><td><code>d.toString()</code></td><td>Date complète sous forme de chaîne</td></tr></tbody></table></div></div></div><nav class="suite" aria-label="Chapitres voisins"><a href="n3-s4.html">← 4. Effets : transitions, transformations, animations</a><a href="n3-s6.html">6. Bases de données →</a></nav></div></div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI · Espace Prof</h4>
+      <p>Ressources pour les enseignants de Sciences et Technologies de l'Informatique, conformes à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a><a href="annexe.html">Annexe complète</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="verifier.html">Vérifier un code</a><a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Logiciels et glossaire</a>
+    </div>
+  </div>
+  <div class="pied-bas">Espace Prof · octobre 2026 · <a href="../eleves/">Espace élèves</a> · <a href="../">Version 1 du guide</a> · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/sequence.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

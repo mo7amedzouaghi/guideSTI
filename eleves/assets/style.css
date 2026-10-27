@@ -371,3 +371,10 @@ dl.glossaire dt:first-of-type, dl.glossaire dt:first-of-type + dd { border-top: 
 
 /* Pas de ligatures dans le code : != et == restent lisibles tels qu'ils se tapent */
 code, pre, .syntaxe, .ref-ex, .puce.mono, .fiche-tete h2 { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+
+/* les blocs de code défilent dans leur cadre au lieu d'élargir la page */
+.notion, .notion-corps, .etape, .retenir, .duo > *, .versus > * { min-width: 0; }
+.code { max-width: 100%; }
+.code pre[class*="language-"] { max-width: 100%; }
+.tableau-wrap { max-width: 100%; }
+table.t td code { word-break: break-word; }

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHP et MySQL (4ème année) — STI Espace Prof</title>
+<meta name="description" content="Produire des pages dynamiques : recevoir les données d'un formulaire et dialoguer avec la base en mysqli procédural.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/v2.css">
+</head>
+<body class="niv-4" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">STI · Espace Prof<small>L'annexe en pratique</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="verifier.html" class="cle">Vérifier un code</a><a href="n2.html" class="m2">2ème</a><a href="n3.html" class="m3">3ème</a><a href="n4.html" class="m4" aria-current="page">4ème</a><a href="annexe.html" class="">Annexe</a><a href="index.html#ressources" class="">Ressources</a><a href="../eleves/" class="vers-eleves">Espace élèves</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><nav class="ariane-v2" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> › <a href="n4.html">4ème année</a> › Chapitre 5</nav><nav class="choix-niveau" aria-label="Changer de niveau"><span>Niveau :</span><a href="n2.html" class="cn-2">2ème année</a><a href="n3.html" class="cn-3">3ème année</a><a href="n4.html" class="cn-4" aria-current="page">4ème année</a></nav><br><span class="pastille-niveau">4ème année · Chapitre 5</span><br><h1>PHP et MySQL</h1><p class="chapeau">Produire des pages dynamiques : recevoir les données d'un formulaire et dialoguer avec la base en mysqli procédural.</p></div></section>
+<div class="page"><nav class="sommaire" aria-label="Chapitres"><h2>4ème année</h2><ol><li><a href="n4-s1.html">1. Compléments HTML5 et CSS3</a></li><li><a href="n4-s2.html">2. JavaScript avancé</a></li><li><a href="n4-s3.html">3. SQL : définition des données</a></li><li><a href="n4-s4.html">4. SQL : interrogation avancée</a></li><li><a href="n4-s5.html" class="actif" aria-current="page">5. PHP et MySQL</a><ol><li><a href="#m5-bases-du-langage-php">Bases du langage PHP</a></li><li><a href="#m5-fonctions-php-de-l-annexe">Fonctions PHP de l'annexe</a></li><li><a href="#m5-recevoir-des-donnees-get-post-isset">Recevoir des données : $_GET, $_POST, isset</a></li><li><a href="#m5-cycle-mysqli-connexion-requete-fermeture">Cycle mysqli : connexion, requête, fermeture</a></li><li><a href="#m5-ajouter-modifier-supprimer">Ajouter, modifier, supprimer</a></li><li><a href="#m5-authentification">Authentification</a></li><li><a href="#m5-a-retenir-php-et-mysql">À retenir — PHP et MySQL</a></li></ol></li><li><a href="n4.html#progression">Limites et progression</a></li></ol></nav><div class="contenu"><section class="ressources-chap" aria-label="Ressources du chapitre"><h2>Ressources du chapitre</h2><div class="rc-grille"><button type="button" class="rc" data-imprimer="retenir"><b>🖨</b><span>Imprimer la fiche « À retenir »<small>La synthèse seule, pour la classe</small></span></button><button type="button" class="rc" data-imprimer="tout"><b>📄</b><span>Imprimer le chapitre<small>Notions, exemples et synthèse</small></span></button><button type="button" class="rc" data-telecharger="n4-s5"><b>⬇</b><span>Télécharger les exemples<small>Tous les codes du chapitre, en un fichier</small></span></button><a class="rc" href="pedagogie.html#seance"><b>🧭</b><span>Modèle de séance<small>Les 7 étapes d'une séance conforme</small></span></a><a class="rc" href="erreurs.html#php"><b>⚠</b><span>Erreurs fréquentes<small>Code incorrect et version conforme</small></span></a><a class="rc" href="verifier.html?niveau=4"><b>✔</b><span>Vérifier un code<small>Conformité au programme de 4ème année</small></span></a></div></section><article class="notion" id="m5-bases-du-langage-php"><div class="notion-tete"><h3>Bases du langage PHP</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span>bases.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  $nom = "Yassine";             // string
+  $age = 17;                    // int
+  $moyenne = 14.75;             // float
+  $admis = true;                // bool
+  $notes = array(12, 15, 9);    // array
+
+  $n = (int) "42";              // transtypage : (int) (float) (string) (bool) (array)
+
+  echo "Bonjour " . $nom;       // concaténation avec le point
+
+  if ($moyenne &gt;= 10 &amp;&amp; $age &lt; 20) {
+    echo "Admis";
+  } else {
+    echo "Ajourné";
+  }
+
+  for ($i = 0; $i &lt; count($notes); $i++) {
+    echo $notes[$i] . " ";
+  }
+?&gt;</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p>Pas de <code>switch</code> ni de <code>var_dump()</code> en PHP : on utilise <code>if / else if</code> et <code>echo</code>.</p></div></div>
+</div></article><article class="notion" id="m5-fonctions-php-de-l-annexe"><div class="notion-tete"><h3>Fonctions PHP de l'annexe</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span></span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  abs(-3);  sqrt(16);  round(2.567, 2);  rand(1, 6);
+
+  strlen("Tunis");                  // 5
+  substr("Oued Ellil", 0, 4);       // "Oued"
+  strpos("Oued Ellil", "E");        // 5
+  strcmp("abc", "abd");             // &lt; 0
+  str_replace("Oued", "Wed", $ch);
+  strtoupper($ch);  strtolower($ch);  trim($ch);
+  ord("A");  chr(65);
+
+  date("d/m/Y");                    // 27/10/2026
+  time();                           // timestamp actuel
+  strtotime("2026-12-31");
+  checkdate(2, 30, 2026);           // false
+?&gt;</code></pre></div>
+</div></article><article class="notion" id="m5-recevoir-des-donnees-get-post-isset"><div class="notion-tete"><h3>Recevoir des données : $_GET, $_POST, isset</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">PHP</span>inscription.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  if (isset($_POST["nom"])) {
+    $nom = $_POST["nom"];
+    $classe = $_POST["classe"];
+    echo "Bienvenue " . $nom . " (" . $classe . ")";
+  } else {
+    echo "Formulaire non envoyé";
+  }
+?&gt;</code></pre></div><div class="code"><div class="code-tete"><span><span class="lang">PHP</span>liste.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;!-- Lien avec paramètre --&gt;
+&lt;a href="fiche.php?id=12"&gt;Voir la fiche&lt;/a&gt;
+
+&lt;?php
+  // fiche.php
+  $id = $_GET["id"];
+?&gt;</code></pre></div></div>
+</div></article><article class="notion" id="m5-cycle-mysqli-connexion-requete-fermeture"><div class="notion-tete"><h3>Cycle mysqli : connexion, requête, fermeture</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<p>La connexion est écrite une fois dans <code>connexion.php</code>, puis importée par <code>require</code> dans chaque page.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span>connexion.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  $cnx = mysqli_connect("localhost", "root", "", "ecole")
+         or die("Connexion impossible");
+?&gt;</code></pre></div>
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span>liste.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  require("connexion.php");
+
+  $req = "SELECT nom, prenom, moyenne FROM Eleve ORDER BY moyenne DESC";
+  $res = mysqli_query($cnx, $req) or die(mysqli_error($cnx));
+
+  echo "&lt;p&gt;" . mysqli_num_rows($res) . " élève(s)&lt;/p&gt;";
+  echo "&lt;table border='1'&gt;";
+  while ($ligne = mysqli_fetch_array($res)) {
+    echo "&lt;tr&gt;&lt;td&gt;" . $ligne["nom"] . "&lt;/td&gt;&lt;td&gt;" . $ligne["prenom"]
+       . "&lt;/td&gt;&lt;td&gt;" . $ligne["moyenne"] . "&lt;/td&gt;&lt;/tr&gt;";
+  }
+  echo "&lt;/table&gt;";
+
+  mysqli_close($cnx);
+?&gt;</code></pre></div>
+</div></article><article class="notion" id="m5-ajouter-modifier-supprimer"><div class="notion-tete"><h3>Ajouter, modifier, supprimer</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span>ajout.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  require("connexion.php");
+
+  $id = $_POST["id"];
+  $nom = $_POST["nom"];
+  $prenom = $_POST["prenom"];
+
+  $req = "INSERT INTO Eleve (idEleve, nom, prenom) VALUES ($id, '$nom', '$prenom')";
+  mysqli_query($cnx, $req) or die(mysqli_error($cnx));
+
+  if (mysqli_affected_rows($cnx) == 1) {
+    echo "Élève ajouté";
+  }
+
+  // UPDATE Eleve SET nom = '$nom' WHERE idEleve = $id
+  // DELETE FROM Eleve WHERE idEleve = $id
+
+  mysqli_close($cnx);
+?&gt;</code></pre></div>
+</div></article><article class="notion" id="m5-authentification"><div class="notion-tete"><h3>Authentification</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<p>Le mot de passe saisi est comparé <b>tel quel</b> à celui de la base, sans hachage. On vérifie qu'exactement une ligne correspond.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span>connexion_utilisateur.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  require("connexion.php");
+
+  $login = $_POST["login"];
+  $mdp = $_POST["mdp"];
+
+  $req = "SELECT nom FROM Utilisateur WHERE login = '$login' AND mdp = '$mdp'";
+  $res = mysqli_query($cnx, $req) or die(mysqli_error($cnx));
+
+  if (mysqli_num_rows($res) == 1) {
+    $ligne = mysqli_fetch_row($res);
+    echo "Bienvenue " . $ligne[0];
+  } else {
+    echo "Login ou mot de passe incorrect";
+  }
+  mysqli_close($cnx);
+?&gt;</code></pre></div>
+</div></article><div id="m5-a-retenir-php-et-mysql"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>mysqli procédural uniquement : jamais PDO ni <code>new mysqli()</code>.</li><li>Connexion centralisée dans <code>connexion.php</code>, importée par <code>require</code>.</li><li>Toujours tester <code>isset()</code> avant de lire <code>$_POST</code>.</li><li>Mot de passe comparé tel quel, sans hachage.</li></ul><h4>Méthodes et fonctions</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Méthode / fonction</th><th>Définition</th></tr></thead><tbody><tr><td><code>mysqli_connect(h, u, p, b)</code></td><td>Ouvre la connexion au serveur et à la base</td></tr><tr><td><code>mysqli_query(cnx, req)</code></td><td>Exécute une requête SQL</td></tr><tr><td><code>mysqli_fetch_array(res)</code></td><td>Ligne suivante (indices numériques et noms de colonnes)</td></tr><tr><td><code>mysqli_fetch_row(res)</code></td><td>Ligne suivante (indices numériques)</td></tr><tr><td><code>mysqli_num_rows(res)</code></td><td>Nombre de lignes d'un SELECT</td></tr><tr><td><code>mysqli_affected_rows(cnx)</code></td><td>Lignes touchées par INSERT, UPDATE, DELETE</td></tr><tr><td><code>mysqli_error(cnx)</code></td><td>Message de la dernière erreur</td></tr><tr><td><code>mysqli_close(cnx)</code></td><td>Ferme la connexion</td></tr><tr><td><code>die(msg)</code></td><td>Affiche un message et arrête le script</td></tr><tr><td><code>isset($var)</code></td><td>Vrai si la variable existe</td></tr><tr><td><code>require(fichier)</code></td><td>Importe un fichier PHP</td></tr></tbody></table></div></div></div><nav class="suite" aria-label="Chapitres voisins"><a href="n4-s4.html">← 4. SQL : interrogation avancée</a><a href="n4.html#progression">Limites et progression →</a></nav></div></div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI · Espace Prof</h4>
+      <p>Ressources pour les enseignants de Sciences et Technologies de l'Informatique, conformes à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a><a href="annexe.html">Annexe complète</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="verifier.html">Vérifier un code</a><a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Logiciels et glossaire</a>
+    </div>
+  </div>
+  <div class="pied-bas">Espace Prof · octobre 2026 · <a href="../eleves/">Espace élèves</a> · <a href="../">Version 1 du guide</a> · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/sequence.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

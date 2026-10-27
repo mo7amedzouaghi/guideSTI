@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL : définition des données — STI Espace Élèves</title>
+<meta name="description" content="Écrire soi-même la création de la base, des tables, des contraintes et leurs modifications.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/eleves.css">
+</head>
+<body class="niv-4" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">Espace Élèves<small>Apprendre le Web pas à pas</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="index.html" class="">Accueil</a><a href="n2.html" class="m2">2ème</a><a href="n3.html" class="m3">3ème</a><a href="n4.html" class="m4" aria-current="page">4ème</a><a href="bac.html" class="cle">Bac à sable</a><a href="memo.html" class="">Aide-mémoire</a><a href="erreurs.html" class="">Erreurs à éviter</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><nav class="ariane-v2" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> › <a href="n4.html">4ème année</a> › Chapitre 3</nav><span class="pastille-niveau">4ème année · Chapitre 3</span><br><h1>SQL : définition des données</h1><p class="chapeau">Écrire soi-même la création de la base, des tables, des contraintes et leurs modifications.</p></div></section>
+<div class="page pleine chap" data-niveau="4" data-chap="3">
+<nav class="etapes-chap" aria-label="Étapes du chapitre"><a href="#comprendre"><b>1</b>Je comprends</a><a href="#entrainer"><b>2</b>Je m'entraîne</a><a href="#retenir"><b>3</b>Je retiens</a></nav>
+<section id="comprendre" class="etape"><h2 class="etape-titre"><b>1</b> Je comprends</h2>
+<p class="etape-aide">Lis chaque notion, observe le rendu, puis clique sur <strong>« Essayer »</strong> sous un code pour le modifier dans le bac à sable.</p>
+<article class="notion" id="m3-creer-et-supprimer-une-base"><div class="notion-tete"><h3>Créer et supprimer une base</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">CREATE DATABASE ecole;
+DROP DATABASE ecole;</code></pre></div>
+</div></article><article class="notion" id="m3-creer-une-table-avec-ses-contraintes"><div class="notion-tete"><h3>Créer une table avec ses contraintes</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">CREATE TABLE Classe (
+  idClasse VARCHAR(10) PRIMARY KEY,
+  niveau   INT NOT NULL
+);
+
+CREATE TABLE Eleve (
+  idEleve   INT,
+  nom       VARCHAR(30) NOT NULL,
+  prenom    VARCHAR(30) NOT NULL,
+  dateNais  DATE,
+  moyenne   DECIMAL(4,2) CHECK (moyenne BETWEEN 0 AND 20),
+  ville     VARCHAR(30) DEFAULT 'Manouba',
+  email     VARCHAR(60) UNIQUE,
+  idClasse  VARCHAR(10),
+  CONSTRAINT pk_eleve PRIMARY KEY (idEleve),
+  CONSTRAINT fk_eleve_classe FOREIGN KEY (idClasse)
+    REFERENCES Classe(idClasse)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p><code>AUTO_INCREMENT</code> n'est pas dans l'annexe : la clé primaire est saisie explicitement.</p></div></div>
+</div></article><article class="notion" id="m3-modifier-la-structure-alter-table"><div class="notion-tete"><h3>Modifier la structure : ALTER TABLE</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">-- Ajouter une colonne
+ALTER TABLE Eleve ADD tel VARCHAR(8);
+
+-- Supprimer une colonne
+ALTER TABLE Eleve DROP tel;
+
+-- Renommer une colonne / changer son type (MySQL)
+ALTER TABLE Eleve CHANGE prenom prenomEleve VARCHAR(40);
+
+-- Ajouter / supprimer une contrainte
+ALTER TABLE Eleve ADD CONSTRAINT uq_nom UNIQUE (nom, prenomEleve);
+ALTER TABLE Eleve DROP CONSTRAINT uq_nom;
+
+-- Supprimer une table
+DROP TABLE Eleve;</code></pre></div>
+<div class="enc info"><b class="ico" aria-hidden="true">i</b><div><p>L'annexe mentionne aussi <code>ALTER TABLE t ALTER colonne type</code> et <code>ALTER TABLE t RENAME nom1 TO nom2</code>. Sous MySQL, ces formes ne s'exécutent pas pour modifier une colonne : on enseigne <code>CHANGE</code> (ancien nom, nouveau nom, type).</p></div></div>
+</div></article></section>
+<section id="entrainer" class="etape"><h2 class="etape-titre"><b>2</b> Je m'entraîne</h2>
+<p class="etape-aide">6 questions corrigées immédiatement. Ton meilleur score est enregistré sur cet appareil.</p>
+<div id="quiz"></div></section>
+<section id="retenir" class="etape"><h2 class="etape-titre"><b>3</b> Je retiens</h2>
+<div class="outils-retenir"><button type="button" class="btn-imp" data-imprimer="retenir">Imprimer ma fiche « À retenir »</button></div>
+<div id="m3-a-retenir-definition-des-donnees"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Clé primaire et clé étrangère se déclarent avec <code>CONSTRAINT nom</code>.</li><li><code>ON DELETE / ON UPDATE CASCADE</code> propage les suppressions et modifications.</li><li>Renommer ou retyper une colonne : <code>CHANGE</code>.</li><li>Pas d'<code>AUTO_INCREMENT</code>.</li></ul><h4>Instructions de définition</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Instruction</th><th>Syntaxe (annexe)</th></tr></thead><tbody><tr><td><code>CREATE DATABASE</code></td><td><code>CREATE DATABASE nom</code></td></tr><tr><td><code>DROP DATABASE</code></td><td><code>DROP DATABASE nom</code></td></tr><tr><td><code>CREATE TABLE</code></td><td><code>CREATE TABLE t (col type [contrainte], …, [CONSTRAINT nom] contrainte)</code></td></tr><tr><td><code>ALTER TABLE … ADD</code></td><td><code>ALTER TABLE t ADD col type [contrainte]</code></td></tr><tr><td><code>ALTER TABLE … DROP</code></td><td><code>ALTER TABLE t DROP col</code></td></tr><tr><td><code>ALTER TABLE … ADD CONSTRAINT</code></td><td><code>ALTER TABLE t ADD CONSTRAINT nom contrainte</code></td></tr><tr><td><code>ALTER TABLE … DROP CONSTRAINT</code></td><td><code>ALTER TABLE t DROP CONSTRAINT nom</code></td></tr><tr><td><code>DROP TABLE</code></td><td><code>DROP TABLE t</code></td></tr></tbody></table></div></div></div></section>
+<nav class="suite" aria-label="Chapitres voisins"><a href="n4-c2.html">← JavaScript avancé</a><a href="n4-c4.html">SQL : interrogation avancée →</a></nav>
+</div>
+<script>window.EXOS = [{"type": "qcm", "q": "Quelle instruction ajoute une colonne à une table ?", "choix": ["ALTER TABLE t ADD col type;", "UPDATE TABLE t ADD col;", "INSERT COLUMN col INTO t;", "CREATE COLUMN col;"], "bonne": 0, "expl": "ALTER TABLE … ADD."}, {"type": "code", "q": "Complète pour renommer prenom en prenomEleve (MySQL).", "code": "ALTER TABLE Eleve ___ prenom prenomEleve VARCHAR(30);", "attendu": ["change"], "expl": "CHANGE : ancien nom, nouveau nom, type."}, {"type": "vf", "q": "AUTO_INCREMENT fait partie de l'annexe.", "rep": false, "expl": "La clé primaire est saisie explicitement."}, {"type": "qcm", "q": "Que fait ON DELETE CASCADE ?", "choix": ["Empêche toute suppression", "Supprime aussi les lignes qui dépendent de la ligne supprimée", "Supprime la table", "Rien"], "bonne": 1, "expl": "La suppression se propage aux lignes liées."}, {"type": "code", "q": "Complète la contrainte de clé étrangère.", "code": "CONSTRAINT fk_e FOREIGN KEY (idClasse) ___ Classe(idClasse)", "attendu": ["references"], "expl": "FOREIGN KEY (col) REFERENCES table(col)."}, {"type": "erreur", "q": "Quelle ligne est hors annexe ?", "lignes": ["CREATE TABLE Eleve (", "  idEleve INT PRIMARY KEY AUTO_INCREMENT,", "  nom VARCHAR(30) NOT NULL", ");"], "bonne": 1, "expl": "AUTO_INCREMENT n'est pas dans l'annexe."}];</script>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI · Espace Élèves</h4>
+      <p>Cours, exercices corrigés et bac à sable pour les élèves de Sciences et Technologies de l'Informatique, conformes au programme officiel tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Mon niveau</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="bac.html">Bac à sable</a><a href="memo.html">Aide-mémoire</a><a href="erreurs.html">Erreurs à éviter</a><a href="../prof/">Espace Prof</a>
+    </div>
+  </div>
+  <div class="pied-bas">Ta progression est enregistrée sur cet appareil uniquement.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/plan.js"></script>
+<script src="assets/quiz.js"></script>
+<script src="assets/eleve.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

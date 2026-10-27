@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compléments HTML5 et CSS3 — STI Espace Élèves</title>
+<meta name="description" content="Suggestions de saisie, nouveaux événements, sélecteurs avancés et filtres d'images.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/eleves.css">
+</head>
+<body class="niv-4" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">Espace Élèves<small>Apprendre le Web pas à pas</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="index.html" class="">Accueil</a><a href="n2.html" class="m2">2ème</a><a href="n3.html" class="m3">3ème</a><a href="n4.html" class="m4" aria-current="page">4ème</a><a href="bac.html" class="cle">Bac à sable</a><a href="memo.html" class="">Aide-mémoire</a><a href="erreurs.html" class="">Erreurs à éviter</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><nav class="ariane-v2" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> › <a href="n4.html">4ème année</a> › Chapitre 1</nav><span class="pastille-niveau">4ème année · Chapitre 1</span><br><h1>Compléments HTML5 et CSS3</h1><p class="chapeau">Suggestions de saisie, nouveaux événements, sélecteurs avancés et filtres d'images.</p></div></section>
+<div class="page pleine chap" data-niveau="4" data-chap="1">
+<nav class="etapes-chap" aria-label="Étapes du chapitre"><a href="#comprendre"><b>1</b>Je comprends</a><a href="#entrainer"><b>2</b>Je m'entraîne</a><a href="#retenir"><b>3</b>Je retiens</a></nav>
+<section id="comprendre" class="etape"><h2 class="etape-titre"><b>1</b> Je comprends</h2>
+<p class="etape-aide">Lis chaque notion, observe le rendu, puis clique sur <strong>« Essayer »</strong> sous un code pour le modifier dans le bac à sable.</p>
+<article class="notion" id="m1-liste-de-suggestions-datalist"><div class="notion-tete"><h3>Liste de suggestions : datalist</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<p><code>&lt;datalist&gt;</code> propose des valeurs pendant la saisie, tout en laissant l'utilisateur taper autre chose. Il est relié au champ par l'attribut <code>list</code>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;label for="ville"&gt;Ville :&lt;/label&gt;
+&lt;input type="text" id="ville" name="ville" list="villes"&gt;
+&lt;datalist id="villes"&gt;
+  &lt;option value="Tunis"&gt;
+  &lt;option value="Sousse"&gt;
+  &lt;option value="Sfax"&gt;
+&lt;/datalist&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:90px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;label for=&quot;ville&quot;&gt;Ville :&lt;/label&gt; &lt;input type=&quot;text&quot; id=&quot;ville&quot; list=&quot;villes&quot;&gt;&lt;datalist id=&quot;villes&quot;&gt;&lt;option value=&quot;Tunis&quot;&gt;&lt;option value=&quot;Sousse&quot;&gt;&lt;option value=&quot;Sfax&quot;&gt;&lt;/datalist&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Cliquez dans le champ pour voir les suggestions.</div></div></div>
+</div></article><article class="notion" id="m1-nouveaux-evenements"><div class="notion-tete"><h3>Nouveaux événements</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Événement</th><th>Se déclenche quand…</th></tr></thead><tbody><tr><td><code>onmouseover / onmouseout</code></td><td>le pointeur entre dans l'élément / en sort</td></tr><tr><td><code>onkeydown / onkeyup</code></td><td>une touche est enfoncée / relâchée</td></tr><tr><td><code>onplay / onpause</code></td><td>la lecture d'un média démarre / est suspendue</td></tr><tr><td><code>onsubmit</code></td><td>le formulaire est envoyé (sur &lt;form&gt;, avec <code>return</code>)</td></tr></tbody></table></div>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;img id="carte" src="carte.png" alt="Carte"
+     onmouseover="agrandir()" onmouseout="reduire()"&gt;
+
+&lt;input id="cin" onkeyup="compter()"&gt;
+&lt;span id="nb"&gt;0&lt;/span&gt; / 8 chiffres</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:70px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;script&gt;function compter(){document.getElementById(&quot;nb&quot;).innerHTML=document.getElementById(&quot;cin&quot;).value.length}&lt;/script&gt;CIN : &lt;input id=&quot;cin&quot; onkeyup=&quot;compter()&quot; maxlength=&quot;8&quot;&gt; &lt;span id=&quot;nb&quot;&gt;0&lt;/span&gt; / 8 chiffres&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Tapez dans le champ.</div></div></div>
+</div></article><article class="notion" id="m1-pseudo-classes-et-selecteurs-avances"><div class="notion-tete"><h3>Pseudo-classes et sélecteurs avancés</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">a:link    { color: #1D4ED8; }  /* non visité   */
+a:visited { color: #5B2C9F; }  /* visité       */
+a:hover   { color: #D35400; }  /* survolé      */
+a:active  { color: #C62828; }  /* au clic      */
+input:focus { border: 2px solid #F5B800; }
+
+input[required]     { border-left: 4px solid red; }
+input[type="email"] { width: 250px; }
+p.note              { color: gray; }</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:120px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;a:link{color:#1D4ED8}a:visited{color:#5B2C9F}a:hover{color:#D35400}a:active{color:#C62828}input:focus{border:2px solid #F5B800;outline:none}input[required]{border-left:4px solid red}input[type=&quot;email&quot;]{width:200px}p.note{color:gray}body{font:14px Arial}&lt;/style&gt;&lt;a href=&quot;#&quot;&gt;Lien du menu&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;input required placeholder=&quot;obligatoire&quot;&gt; &lt;input type=&quot;email&quot; placeholder=&quot;e-mail&quot;&gt;&lt;p class=&quot;note&quot;&gt;Les champs bordés de rouge sont obligatoires.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc info"><b class="ico" aria-hidden="true">i</b><div><p>Ordre conseillé des pseudo-classes de lien : <b>link, visited, hover, active</b>.</p></div></div>
+</div></article><article class="notion" id="m1-filtres-et-transformations"><div class="notion-tete"><h3>Filtres et transformations</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">.photo {
+  filter: grayscale(100%);
+  transition: filter 1s;
+}
+.photo:hover {
+  filter: blur(2px);
+}
+.negatif {
+  filter: invert(100%);
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:100px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;.p{width:110px;height:70px;display:inline-grid;place-items:center;margin:4px;font:bold 13px Arial;color:#fff;background:linear-gradient(135deg,#1D4ED8,#F5B800,#C62828);border-radius:6px}.photo{filter:grayscale(100%);transition:filter 1s}.photo:hover{filter:blur(2px)}.negatif{filter:invert(100%)}&lt;/style&gt;&lt;div class=&quot;p&quot;&gt;original&lt;/div&gt;&lt;div class=&quot;p photo&quot;&gt;grayscale&lt;/div&gt;&lt;div class=&quot;p negatif&quot;&gt;invert&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Survolez l'image grise pour le flou.</div></div></div>
+</div></article></section>
+<section id="entrainer" class="etape"><h2 class="etape-titre"><b>2</b> Je m'entraîne</h2>
+<p class="etape-aide">6 questions corrigées immédiatement. Ton meilleur score est enregistré sur cet appareil.</p>
+<div id="quiz"></div></section>
+<section id="retenir" class="etape"><h2 class="etape-titre"><b>3</b> Je retiens</h2>
+<div class="outils-retenir"><button type="button" class="btn-imp" data-imprimer="retenir">Imprimer ma fiche « À retenir »</button></div>
+<div id="m1-a-retenir-complements-html-css"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li><code>datalist</code> se relie au champ par <code>list</code> = <code>id</code> du datalist.</li><li><code>onsubmit</code> s'écrit sur la balise <code>form</code>, avec <code>return</code>.</li><li>Pseudo-classes de lien dans l'ordre link, visited, hover, active.</li></ul><h4>Nouvelles propriétés CSS</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Propriété</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Définition</th></tr></thead><tbody><tr><td><code>filter</code></td><td>blur(), grayscale(), invert()</td><td><code>grayscale(100%)</code></td><td>Filtre graphique appliqué à l'élément</td></tr><tr><td><code>transform</code></td><td>rotate(), scale(), translate(), skew()</td><td><code>—</code></td><td>Transformation 2D (sur une seule ligne)</td></tr></tbody></table></div><h4>Sélecteurs de 4ème</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Sélecteur</th><th>Cible</th></tr></thead><tbody><tr><td><code>a:link / a:visited</code></td><td>Liens non visités / visités</td></tr><tr><td><code>a:hover / a:active</code></td><td>Survol / clic</td></tr><tr><td><code>:focus</code></td><td>Élément ayant le focus</td></tr><tr><td><code>element[attr]</code></td><td>Éléments possédant l'attribut</td></tr><tr><td><code>element[attr=valeur]</code></td><td>Éléments dont l'attribut a cette valeur</td></tr><tr><td><code>element.class</code></td><td>Éléments de ce type avec cette classe</td></tr></tbody></table></div></div></div></section>
+<nav class="suite" aria-label="Chapitres voisins"><a href="n4.html">← 4ème année</a><a href="n4-c2.html">JavaScript avancé →</a></nav>
+</div>
+<script>window.EXOS = [{"type": "code", "q": "Complète pour relier le champ à la liste de suggestions d'id « villes ».", "code": "<input type=\"text\" ___=\"villes\">", "attendu": ["list"], "expl": "list = id du <datalist>."}, {"type": "qcm", "q": "Quel événement se déclenche quand une touche est relâchée ?", "choix": ["onkeydown", "onkeyup", "onkeypress", "oninput"], "bonne": 1, "expl": "onkeyup : touche relâchée."}, {"type": "qcm", "q": "Dans quel ordre écrire les pseudo-classes de lien ?", "choix": ["hover, link, active, visited", "link, visited, hover, active", "active, hover, visited, link", "n'importe lequel"], "bonne": 1, "expl": "link, visited, hover, active."}, {"type": "code", "q": "Complète pour afficher l'image en noir et blanc.", "code": "img {\n  filter: ___(100%);\n}", "attendu": ["grayscale"], "expl": "Fonctions de l'annexe : blur(), grayscale(), invert()."}, {"type": "qcm", "q": "Quel sélecteur cible les champs obligatoires ?", "choix": ["input:required", "input[required]", "input.required", "#required"], "bonne": 1, "expl": "Sélecteur d'attribut : element[attr]."}, {"type": "vf", "q": "onsubmit s'écrit sur la balise <form>, avec return.", "rep": true, "expl": "<form action=\"ajout.php\" method=\"post\" onsubmit=\"return verifier()\">"}];</script>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI · Espace Élèves</h4>
+      <p>Cours, exercices corrigés et bac à sable pour les élèves de Sciences et Technologies de l'Informatique, conformes au programme officiel tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Mon niveau</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="bac.html">Bac à sable</a><a href="memo.html">Aide-mémoire</a><a href="erreurs.html">Erreurs à éviter</a><a href="../prof/">Espace Prof</a>
+    </div>
+  </div>
+  <div class="pied-bas">Ta progression est enregistrée sur cet appareil uniquement.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/plan.js"></script>
+<script src="assets/quiz.js"></script>
+<script src="assets/eleve.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

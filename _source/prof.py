@@ -12,7 +12,7 @@ sys.path.insert(0, ICI)
 import lib  # noqa: E402
 from lib import esc, tableau, enc, interdits, carte, page_sections  # noqa: E402
 
-SORTIE = os.path.join(os.path.dirname(ICI), "v2")
+SORTIE = os.path.join(os.path.dirname(ICI), "prof")
 CHATBOT = "https://mo7amedzouaghi.github.io/annexe4STITN/"
 
 NIVEAUX = {
@@ -22,7 +22,7 @@ NIVEAUX = {
 }
 
 MENU = [("verifier.html", "Vérifier un code", "cle"), ("n2.html", "2ème", "m2"), ("n3.html", "3ème", "m3"), ("n4.html", "4ème", "m4"),
-        ("annexe.html", "Annexe", ""), ("index.html#ressources", "Ressources", "")]
+        ("annexe.html", "Annexe", ""), ("index.html#ressources", "Ressources", ""), ("../eleves/", "Espace élèves", "vers-eleves")]
 
 INDEX_NOTIONS = []
 
@@ -40,7 +40,7 @@ def gabarit(fichier, titre, description, haut, contenu, classe="", scripts="", a
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{titre} — STI, l'annexe en pratique</title>
+<title>{titre} — STI Espace Prof</title>
 <meta name="description" content="{esc(description)}">
 <link rel="icon" href="assets/flag.png">
 <link rel="stylesheet" href="assets/vendor/fonts.css">
@@ -51,7 +51,7 @@ def gabarit(fichier, titre, description, haut, contenu, classe="", scripts="", a
 <body class="{classe}" id="haut">
 <header class="barre">
   <div class="barre-in">
-    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">L'annexe en pratique<small>Guide de l'enseignant STI</small></span></a>
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">STI · Espace Prof<small>L'annexe en pratique</small></span></a>
     <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
     <nav class="menu" aria-label="Navigation principale">{menu}</nav>
   </div>
@@ -63,7 +63,7 @@ def gabarit(fichier, titre, description, haut, contenu, classe="", scripts="", a
 <footer class="pied">
   <div class="pied-in">
     <div>
-      <h4>STI, l'annexe en pratique</h4>
+      <h4>STI · Espace Prof</h4>
       <p>Ressources pour les enseignants de Sciences et Technologies de l'Informatique, conformes à l'annexe officielle du programme tunisien.</p>
       <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
     </div>
@@ -76,7 +76,7 @@ def gabarit(fichier, titre, description, haut, contenu, classe="", scripts="", a
       <a href="verifier.html">Vérifier un code</a><a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Logiciels et glossaire</a>
     </div>
   </div>
-  <div class="pied-bas">Version 2 · octobre 2026 · <a href="../">Version 1 du guide</a> · En cas de doute, l'annexe officielle fait foi.</div>
+  <div class="pied-bas">Espace Prof · octobre 2026 · <a href="../eleves/">Espace élèves</a> · <a href="../">Version 1 du guide</a> · En cas de doute, l'annexe officielle fait foi.</div>
 </footer>
 <script src="assets/vendor/prism.js"></script>
 {scripts}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL : interrogation avancée — STI Espace Élèves</title>
+<meta name="description" content="Calculer des statistiques, regrouper, relier plusieurs tables et imbriquer des requêtes.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/eleves.css">
+</head>
+<body class="niv-4" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">Espace Élèves<small>Apprendre le Web pas à pas</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="index.html" class="">Accueil</a><a href="n2.html" class="m2">2ème</a><a href="n3.html" class="m3">3ème</a><a href="n4.html" class="m4" aria-current="page">4ème</a><a href="bac.html" class="cle">Bac à sable</a><a href="memo.html" class="">Aide-mémoire</a><a href="erreurs.html" class="">Erreurs à éviter</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><nav class="ariane-v2" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> › <a href="n4.html">4ème année</a> › Chapitre 4</nav><span class="pastille-niveau">4ème année · Chapitre 4</span><br><h1>SQL : interrogation avancée</h1><p class="chapeau">Calculer des statistiques, regrouper, relier plusieurs tables et imbriquer des requêtes.</p></div></section>
+<div class="page pleine chap" data-niveau="4" data-chap="4">
+<nav class="etapes-chap" aria-label="Étapes du chapitre"><a href="#comprendre"><b>1</b>Je comprends</a><a href="#entrainer"><b>2</b>Je m'entraîne</a><a href="#retenir"><b>3</b>Je retiens</a></nav>
+<section id="comprendre" class="etape"><h2 class="etape-titre"><b>1</b> Je comprends</h2>
+<p class="etape-aide">Lis chaque notion, observe le rendu, puis clique sur <strong>« Essayer »</strong> sous un code pour le modifier dans le bac à sable.</p>
+<article class="notion" id="m4-fonctions-d-agregation-group-by-et-havin"><div class="notion-tete"><h3>Fonctions d'agrégation, GROUP BY et HAVING</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">-- Statistiques globales
+SELECT COUNT(*) AS nbEleves, AVG(moyenne) AS moyClasse,
+       MIN(moyenne), MAX(moyenne)
+FROM Eleve;
+
+-- Par groupe
+SELECT idClasse, COUNT(*) AS effectif
+FROM Eleve
+GROUP BY idClasse
+HAVING COUNT(*) &gt; 25
+ORDER BY effectif DESC;</code></pre></div>
+<div class="enc astuce"><b class="ico" aria-hidden="true">★</b><div><p><code>WHERE</code> filtre les lignes <b>avant</b> le regroupement, <code>HAVING</code> filtre les groupes <b>après</b>.</p></div></div>
+</div></article><article class="notion" id="m4-jointures-syntaxe-classique"><div class="notion-tete"><h3>Jointures (syntaxe classique)</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<p>Les tables sont listées dans <code>FROM</code>, la condition de jointure s'écrit dans <code>WHERE</code>. Pas de mot-clé <code>JOIN</code>.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">SELECT E.nom, E.prenom, C.niveau
+FROM Eleve E, Classe C
+WHERE E.idClasse = C.idClasse
+  AND C.niveau = 4;
+
+-- Trois tables
+SELECT L.titre, E.nom, P.dateEmprunt
+FROM Livre L, Eleve E, Emprunt P
+WHERE P.idLivre = L.idLivre
+  AND P.idEleve = E.idEleve;</code></pre></div>
+</div></article><article class="notion" id="m4-sous-requetes-non-correlees"><div class="notion-tete"><h3>Sous-requêtes non corrélées</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">-- Élèves dont la moyenne dépasse la moyenne générale
+SELECT nom, moyenne
+FROM Eleve
+WHERE moyenne &gt; (SELECT AVG(moyenne) FROM Eleve);
+
+-- Livres jamais empruntés
+SELECT titre FROM Livre
+WHERE idLivre NOT IN (SELECT idLivre FROM Emprunt);</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p>La sous-requête doit pouvoir s'exécuter seule : les sous-requêtes corrélées (qui utilisent une colonne de la requête principale) sont hors programme.</p></div></div>
+</div></article><article class="notion" id="m4-fonctions-sur-les-dates"><div class="notion-tete"><h3>Fonctions sur les dates</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">SELECT nom, YEAR(dateNais) FROM Eleve;
+SELECT * FROM Emprunt WHERE MONTH(dateEmprunt) = 10;
+SELECT DAY(NOW());
+SELECT * FROM Emprunt WHERE dateEmprunt = DATE(NOW());          -- aujourd'hui
+SELECT idLivre, ADDDATE(dateEmprunt, 15) AS retourPrevu FROM Emprunt;
+SELECT idLivre, DATEDIFF(DATE(NOW()), dateEmprunt) AS jours FROM Emprunt;</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p><code>CURDATE()</code> n'est pas dans l'annexe : la date du jour s'écrit <code>DATE(NOW())</code>.</p></div></div>
+</div></article></section>
+<section id="entrainer" class="etape"><h2 class="etape-titre"><b>2</b> Je m'entraîne</h2>
+<p class="etape-aide">6 questions corrigées immédiatement. Ton meilleur score est enregistré sur cet appareil.</p>
+<div id="quiz"></div></section>
+<section id="retenir" class="etape"><h2 class="etape-titre"><b>3</b> Je retiens</h2>
+<div class="outils-retenir"><button type="button" class="btn-imp" data-imprimer="retenir">Imprimer ma fiche « À retenir »</button></div>
+<div id="m4-a-retenir-interrogation"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Ordre des clauses : SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY.</li><li>Jointure : tables dans FROM, condition dans WHERE.</li><li>Sous-requête non corrélée seulement.</li><li>Date du jour : <code>DATE(NOW())</code>.</li></ul><h4>Fonctions SQL</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Fonction</th><th>Rôle</th></tr></thead><tbody><tr><td><code>COUNT()</code></td><td>Nombre de lignes</td></tr><tr><td><code>SUM()</code></td><td>Somme</td></tr><tr><td><code>AVG()</code></td><td>Moyenne</td></tr><tr><td><code>MIN() / MAX()</code></td><td>Minimum / maximum</td></tr><tr><td><code>DATE()</code></td><td>Partie date d'un DATETIME</td></tr><tr><td><code>DAY() / MONTH() / YEAR()</code></td><td>Jour, mois, année</td></tr><tr><td><code>NOW()</code></td><td>Date et heure courantes</td></tr><tr><td><code>ADDDATE(d, n)</code></td><td>Ajoute n jours (ou un INTERVAL)</td></tr><tr><td><code>DATEDIFF(d1, d2)</code></td><td>Nombre de jours entre deux dates</td></tr></tbody></table></div></div></div></section>
+<nav class="suite" aria-label="Chapitres voisins"><a href="n4-c3.html">← SQL : définition des données</a><a href="n4-c5.html">PHP et MySQL →</a></nav>
+</div>
+<script>window.EXOS = [{"type": "qcm", "q": "Une condition sur COUNT(*) s'écrit dans :", "choix": ["WHERE", "HAVING", "ORDER BY", "FROM"], "bonne": 1, "expl": "WHERE filtre les lignes, HAVING filtre les groupes."}, {"type": "code", "q": "Complète la jointure classique.", "code": "SELECT E.nom, C.niveau\nFROM Eleve E, Classe C\n___ E.idClasse = C.idClasse;", "attendu": ["where"], "expl": "Tables dans FROM, condition de jointure dans WHERE. JOIN n'est pas dans l'annexe."}, {"type": "code", "q": "Complète pour la date du jour.", "code": "SELECT * FROM Emprunt WHERE dateEmprunt = DATE(___());", "attendu": ["now"], "expl": "CURDATE() n'est pas dans l'annexe : DATE(NOW())."}, {"type": "qcm", "q": "Quel est l'ordre correct des clauses ?", "choix": ["SELECT FROM WHERE GROUP BY HAVING ORDER BY", "SELECT WHERE FROM ORDER BY GROUP BY", "FROM SELECT WHERE HAVING", "SELECT FROM HAVING WHERE"], "bonne": 0, "expl": "SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY."}, {"type": "qcm", "q": "DATEDIFF('2026-10-27', '2026-10-20') renvoie :", "choix": ["7", "-7", "27", "une date"], "bonne": 0, "expl": "DATEDIFF(d1, d2) = d1 - d2 en jours."}, {"type": "vf", "q": "Une sous-requête corrélée est au programme de 4ème.", "rep": false, "expl": "Seules les sous-requêtes non corrélées (exécutables seules) sont au programme."}];</script>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI · Espace Élèves</h4>
+      <p>Cours, exercices corrigés et bac à sable pour les élèves de Sciences et Technologies de l'Informatique, conformes au programme officiel tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Mon niveau</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="bac.html">Bac à sable</a><a href="memo.html">Aide-mémoire</a><a href="erreurs.html">Erreurs à éviter</a><a href="../prof/">Espace Prof</a>
+    </div>
+  </div>
+  <div class="pied-bas">Ta progression est enregistrée sur cet appareil uniquement.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/plan.js"></script>
+<script src="assets/quiz.js"></script>
+<script src="assets/eleve.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

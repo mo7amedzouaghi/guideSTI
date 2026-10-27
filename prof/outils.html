@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logiciels et glossaire — STI Espace Prof</title>
+<meta name="description" content="Le laboratoire, la mise en route de XAMPP et le vocabulaire du programme.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/v2.css">
+</head>
+<body class="" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">STI · Espace Prof<small>L'annexe en pratique</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="verifier.html" class="cle">Vérifier un code</a><a href="n2.html" class="m2">2ème</a><a href="n3.html" class="m3">3ème</a><a href="n4.html" class="m4">4ème</a><a href="annexe.html" class="">Annexe</a><a href="index.html#ressources" class="">Ressources</a><a href="../eleves/" class="vers-eleves">Espace élèves</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><h1>Logiciels et glossaire</h1><p class="chapeau">Le laboratoire, la mise en route de XAMPP et le vocabulaire du programme.</p></div></section>
+<div class="page"><nav class="sommaire" aria-label="Sommaire"><h2>Sommaire</h2><ol><li><a href="#logiciels">Logiciels du laboratoire</a></li><li><a href="#xampp">Mettre en route un projet PHP</a></li><li><a href="#glossaire">Glossaire</a></li></ol></nav><div class="contenu"><section class="module" id="logiciels"><div class="module-tete"><div><h2>Logiciels du laboratoire</h2><p>Des outils gratuits, installés une fois sur chaque poste.</p></div></div><div class="tableau-wrap"><table class="t"><thead><tr><th>Outil</th><th>Usage</th><th>Niveau</th></tr></thead><tbody><tr><td>Éditeur de code<br><small>Notepad++, Visual Studio Code</small></td><td>Écrire HTML, CSS, JS, PHP avec coloration syntaxique</td><td>Tous</td></tr><tr><td>Navigateurs<br><small>Firefox, Chrome</small></td><td>Tester les pages ; touche F12 pour inspecter les éléments</td><td>Tous</td></tr><tr><td>Validateur W3C<br><small><a href="https://validator.w3.org/" target="_blank" rel="noopener">validator.w3.org</a></small></td><td>Vérifier qu'une page HTML est conforme</td><td>Tous</td></tr><tr><td>XAMPP</td><td>Serveur local : Apache (pages PHP) et MySQL (bases de données)</td><td>3ème et 4ème</td></tr><tr><td>phpMyAdmin<br><small>localhost/phpmyadmin</small></td><td>Créer et gérer les bases en mode assisté, tester les requêtes SQL</td><td>3ème et 4ème</td></tr></tbody></table></div><div class="enc astuce"><b class="ico" aria-hidden="true">★</b><div><p>Dans l'onglet <i>SQL</i> de phpMyAdmin, l'élève teste chaque requête avant de la placer dans son code PHP : une erreur SQL se corrige bien plus vite à cet endroit.</p></div></div></section><section class="module" id="xampp"><div class="module-tete"><div><h2>Mettre en route un projet PHP</h2><p>Les étapes à suivre à chaque séance de 4ème.</p></div></div><ol class="etapes">
+<li><h4>Lancer XAMPP Control Panel</h4><p>Cliquer sur <i>Start</i> devant Apache et MySQL : les deux lignes passent au vert.</p></li>
+<li><h4>Placer le projet dans htdocs</h4><p>Dossier <code>C:\xampp\htdocs\bibliotheque\</code> contenant les pages et <code>connexion.php</code>.</p></li>
+<li><h4>Créer ou importer la base</h4><p>Dans phpMyAdmin : nouvelle base, ou onglet <i>Importer</i> pour un fichier <code>.sql</code> fourni.</p></li>
+<li><h4>Ouvrir par le serveur</h4><p>Saisir <code>localhost/bibliotheque/</code> dans le navigateur. Un double-clic sur un fichier .php affiche le code au lieu de l'exécuter.</p></li>
+</ol><div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p>Apache ne démarre pas ? Un autre logiciel occupe souvent le port 80 (Skype, IIS). Fermez-le ou changez le port d'Apache dans la configuration de XAMPP.</p></div></div></section><section class="module" id="glossaire"><div class="module-tete"><div><h2>Glossaire</h2><p>Les mots du programme, définis simplement, pour l'enseignant comme pour l'élève.</p></div></div><dl class="glossaire"><dt>Annexe</dt><dd>Document officiel qui liste, pour chaque niveau, les balises, propriétés, méthodes et instructions au programme.</dd><dt>Attribut</dt><dd>Information ajoutée dans une balise HTML : <code>src</code>, <code>href</code>, <code>name</code>…</dd><dt>Balise</dt><dd>Élément de structure HTML délimité par des chevrons : <code>&lt;p&gt;</code>…<code>&lt;/p&gt;</code>.</dd><dt>Balise sémantique</dt><dd>Balise qui indique le rôle d'une zone : <code>header</code>, <code>nav</code>, <code>main</code>, <code>footer</code>…</dd><dt>Clé étrangère</dt><dd>Champ qui fait référence à la clé primaire d'une autre table ; notée avec <b>#</b>.</dd><dt>Clé primaire</dt><dd>Champ (ou groupe de champs) qui identifie chaque enregistrement de façon unique ; <span class="pk">soulignée</span>.</dd><dt>Concaténation</dt><dd>Mise bout à bout de chaînes : <code>+</code> en JavaScript, <code>.</code> en PHP.</dd><dt>CSS externe</dt><dd>Feuille de style dans un fichier .css relié par <code>&lt;link&gt;</code> ; partagée par toutes les pages.</dd><dt>DOM</dt><dd>Représentation de la page que JavaScript manipule (<code>getElementById</code>, <code>innerHTML</code>).</dd><dt>Enregistrement</dt><dd>Une ligne d'une table : toutes les valeurs décrivant un même objet.</dd><dt>Événement</dt><dd>Action qui déclenche du code : clic, saisie, survol, chargement de la page.</dd><dt>Jointure</dt><dd>Mise en relation de plusieurs tables par l'égalité clé étrangère = clé primaire, écrite dans WHERE.</dd><dt>LDD / LMD</dt><dd>Langage de définition des données (CREATE, ALTER, DROP) / de manipulation (SELECT, INSERT, UPDATE, DELETE).</dd><dt>Mode assisté</dt><dd>Création de la base et des tables par l'interface de phpMyAdmin, sans écrire de SQL (3ème).</dd><dt>Modèle de boîte</dt><dd>Découpage d'un élément en contenu, padding, bordure et margin.</dd><dt>mysqli</dt><dd>Ensemble de fonctions PHP procédurales pour dialoguer avec MySQL (seule méthode au programme).</dd><dt>Pseudo-classe</dt><dd>Sélecteur d'un état : <code>:hover</code>, <code>:focus</code>, <code>a:visited</code>…</dd><dt>Requête</dt><dd>Instruction SQL adressée à la base pour lire ou modifier des données.</dd><dt>SGBDR</dt><dd>Système de gestion de bases de données relationnelles, par exemple MySQL.</dd><dt>Sous-requête</dt><dd>Requête SELECT placée dans une autre ; en 4ème, uniquement non corrélée.</dd><dt>Superglobale</dt><dd>Tableau PHP disponible partout : <code>$_GET</code> (paramètres d'URL), <code>$_POST</code> (formulaire).</dd><dt>Transition</dt><dd>Passage progressif d'une valeur CSS à une autre lors d'un changement d'état.</dd><dt>Validation W3C</dt><dd>Contrôle automatique de la conformité d'une page HTML aux normes du Web.</dd></dl></section></div></div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI · Espace Prof</h4>
+      <p>Ressources pour les enseignants de Sciences et Technologies de l'Informatique, conformes à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a><a href="annexe.html">Annexe complète</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="verifier.html">Vérifier un code</a><a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Logiciels et glossaire</a>
+    </div>
+  </div>
+  <div class="pied-bas">Espace Prof · octobre 2026 · <a href="../eleves/">Espace élèves</a> · <a href="../">Version 1 du guide</a> · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

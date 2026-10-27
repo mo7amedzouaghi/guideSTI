@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bac à sable — STI Espace Élèves</title>
+<meta name="description" content="Écris du HTML, du CSS et du JavaScript, vois le résultat en direct et vérifie la conformité de ton code.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/eleves.css">
+</head>
+<body class="bac-page" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">Espace Élèves<small>Apprendre le Web pas à pas</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="index.html" class="">Accueil</a><a href="n2.html" class="m2">2ème</a><a href="n3.html" class="m3">3ème</a><a href="n4.html" class="m4">4ème</a><a href="bac.html" class="cle" aria-current="page">Bac à sable</a><a href="memo.html" class="">Aide-mémoire</a><a href="erreurs.html" class="">Erreurs à éviter</a></nav>
+  </div>
+</header>
+<main>
+
+<div class="bac" id="bac">
+  <div class="bac-barre">
+    <h1>Bac à sable</h1>
+    <label>Mon niveau <select id="b-niveau"><option value="2">2ème</option><option value="3" selected>3ème</option><option value="4">4ème</option></select></label>
+    <button type="button" class="btn-principal" id="b-verifier">Vérifier mon code</button>
+    <button type="button" class="btn-sec" id="b-telecharger">Télécharger ma page</button>
+    <button type="button" class="btn-sec" id="b-vider">Recommencer</button>
+  </div>
+  <div class="bac-grille">
+    <div class="bac-edit">
+      <div class="bac-onglets" role="tablist">
+        <button type="button" role="tab" data-p="html" aria-selected="true">HTML</button>
+        <button type="button" role="tab" data-p="css" aria-selected="false">CSS</button>
+        <button type="button" role="tab" data-p="js" aria-selected="false">JavaScript</button>
+      </div>
+      <textarea id="b-html" class="bac-zone" spellcheck="false" aria-label="Code HTML"></textarea>
+      <textarea id="b-css" class="bac-zone" spellcheck="false" aria-label="Code CSS" hidden></textarea>
+      <textarea id="b-js" class="bac-zone" spellcheck="false" aria-label="Code JavaScript" hidden></textarea>
+    </div>
+    <div class="bac-rendu">
+      <div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/ma-page.html</span></div>
+      <iframe id="b-apercu" title="Rendu de ma page" sandbox="allow-scripts allow-modals"></iframe></div>
+    </div>
+  </div>
+  <div id="b-resultat" aria-live="polite"></div>
+</div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI · Espace Élèves</h4>
+      <p>Cours, exercices corrigés et bac à sable pour les élèves de Sciences et Technologies de l'Informatique, conformes au programme officiel tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Mon niveau</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="bac.html">Bac à sable</a><a href="memo.html">Aide-mémoire</a><a href="erreurs.html">Erreurs à éviter</a><a href="../prof/">Espace Prof</a>
+    </div>
+  </div>
+  <div class="pied-bas">Ta progression est enregistrée sur cet appareil uniquement.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/verificateur.js"></script>
+<script src="assets/bac.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
