@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accueil — STI, l'annexe en pratique</title>
+<meta name="description" content="Ressources STI conformes à l'annexe : recherche, vérificateur de conformité, séquences par niveau, annexe détaillée.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/v2.css">
+</head>
+<body class="accueil" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">L'annexe en pratique<small>Guide de l'enseignant STI</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="verifier.html" class="cle">Vérifier un code</a><a href="n2.html" class="m2">2ème</a><a href="n3.html" class="m3">3ème</a><a href="n4.html" class="m4">4ème</a><a href="annexe.html" class="">Annexe</a><a href="pedagogie.html" class="">Enseigner</a><a href="erreurs.html" class="">Erreurs</a><a href="outils.html" class="">Outils</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau accueil-v2"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in">
+  <h1>Que cherchez-vous ?</h1>
+  <p class="chapeau">Une balise, une propriété, une fonction ou un besoin : « arrondir un nombre », « centrer un titre », « jointure »…</p>
+  <form class="grande-recherche" id="g-form" role="search" autocomplete="off">
+    <input type="search" id="g-q" placeholder="Ex. : substring, float, liste déroulante, date du jour" aria-label="Rechercher">
+    <button type="submit">Rechercher</button>
+  </form>
+  <div class="niveau-filtre" role="group" aria-label="Mon niveau">
+    <span>Mon niveau :</span>
+    <button type="button" data-n="0" aria-pressed="true">Tous</button><button type="button" data-n="2" aria-pressed="false">2ème</button><button type="button" data-n="3" aria-pressed="false">3ème</button><button type="button" data-n="4" aria-pressed="false">4ème</button>
+  </div>
+</div></section>
+<div class="page pleine">
+<div id="g-resultats" aria-live="polite"></div>
+<div id="g-accueil">
+<div class="tuiles"><a class="tuile t-verif" href="verifier.html"><span class="tuile-ic" aria-hidden="true">✔</span><h3>Vérifier un code</h3><p>Collez un support ou une copie : tout ce qui sort de l'annexe est signalé, ligne par ligne, avec la correction.</p></a><a class="tuile t-seq" href="n3.html"><span class="tuile-ic" aria-hidden="true">▤</span><h3>Préparer un cours</h3><p>Une page par chapitre : notions, exemples avec leur rendu, fiche « À retenir » imprimable.</p></a><a class="tuile t-annexe" href="annexe.html"><span class="tuile-ic" aria-hidden="true">§</span><h3>Consulter l'annexe</h3><p>Chaque élément avec ses paramètres, un exemple conforme et les remarques.</p></a></div>
+<h2 class="titre-section">Les chapitres par niveau</h2>
+<div class="niv-cols"><section class="niv-col niv-2"><h3><a href="n2.html"><b>2</b> 2ème année</a></h3><p>Bases du Web</p><ol><li><a href="n2-s1.html">Structure d'une page HTML5</a></li><li><a href="n2-s2.html">Listes et tableaux</a></li><li><a href="n2-s3.html">Liens et multimédia</a></li><li><a href="n2-s4.html">Formulaires</a></li><li><a href="n2-s5.html">CSS en ligne et interne</a></li></ol></section><section class="niv-col niv-3"><h3><a href="n3.html"><b>3</b> 3ème année</a></h3><p>Web interactif et bases de données</p><ol><li><a href="n3-s1.html">HTML5 avancé</a></li><li><a href="n3-s2.html">CSS3 : feuille externe et sélecteurs</a></li><li><a href="n3-s3.html">Mise en page : boîtes et positionnement</a></li><li><a href="n3-s4.html">Effets : transitions, transformations, animations</a></li><li><a href="n3-s5.html">JavaScript</a></li><li><a href="n3-s6.html">Bases de données</a></li></ol></section><section class="niv-col niv-4"><h3><a href="n4.html"><b>4</b> 4ème année</a></h3><p>Bac — sites dynamiques</p><ol><li><a href="n4-s1.html">Compléments HTML5 et CSS3</a></li><li><a href="n4-s2.html">JavaScript avancé</a></li><li><a href="n4-s3.html">SQL : définition des données</a></li><li><a href="n4-s4.html">SQL : interrogation avancée</a></li><li><a href="n4-s5.html">PHP et MySQL</a></li></ol></section></div>
+</div>
+</div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI, l'annexe en pratique</h4>
+      <p>Ressources pour les enseignants de Sciences et Technologies de l'Informatique, conformes à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a><a href="annexe.html">Annexe complète</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="verifier.html">Vérifier un code</a><a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Logiciels et glossaire</a>
+    </div>
+  </div>
+  <div class="pied-bas">Version 2 · octobre 2026 · <a href="../">Version 1 du guide</a> · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/moteur.js"></script>
+<script src="assets/notions.js"></script>
+<script src="assets/fiche.js"></script>
+<script src="assets/recherche.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

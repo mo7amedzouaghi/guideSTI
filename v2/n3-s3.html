@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mise en page : boîtes et positionnement (3ème année) — STI, l'annexe en pratique</title>
+<meta name="description" content="Dimensionner les blocs, les faire flotter et les positionner, sans Flexbox ni Grid.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/v2.css">
+</head>
+<body class="niv-3" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">L'annexe en pratique<small>Guide de l'enseignant STI</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="verifier.html" class="cle">Vérifier un code</a><a href="n2.html" class="m2">2ème</a><a href="n3.html" class="m3" aria-current="page">3ème</a><a href="n4.html" class="m4">4ème</a><a href="annexe.html" class="">Annexe</a><a href="pedagogie.html" class="">Enseigner</a><a href="erreurs.html" class="">Erreurs</a><a href="outils.html" class="">Outils</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><nav class="ariane-v2" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> › <a href="n3.html">3ème année</a> › Chapitre 3</nav><span class="pastille-niveau">3ème année · Chapitre 3</span><br><h1>Mise en page : boîtes et positionnement</h1><p class="chapeau">Dimensionner les blocs, les faire flotter et les positionner, sans Flexbox ni Grid.</p></div></section>
+<div class="page"><nav class="sommaire" aria-label="Chapitres"><h2>3ème année</h2><ol><li><a href="n3-s1.html">1. HTML5 avancé</a></li><li><a href="n3-s2.html">2. CSS3 : feuille externe et sélecteurs</a></li><li><a href="n3-s3.html" class="actif" aria-current="page">3. Mise en page : boîtes et positionnement</a><ol><li><a href="#m3-le-modele-de-boite">Le modèle de boîte</a></li><li><a href="#m3-display-float-et-position">display, float et position</a></li><li><a href="#m3-debordement-et-transparence">Débordement et transparence</a></li><li><a href="#m3-a-retenir-mise-en-page">À retenir — mise en page</a></li></ol></li><li><a href="n3-s4.html">4. Effets : transitions, transformations, animations</a></li><li><a href="n3-s5.html">5. JavaScript</a></li><li><a href="n3-s6.html">6. Bases de données</a></li><li><a href="n3.html#progression">Limites et progression</a></li></ol></nav><div class="contenu"><div class="outils-seq"><button type="button" class="btn-imp" data-imprimer="retenir">Imprimer la fiche « À retenir »</button><button type="button" class="btn-imp" data-imprimer="tout">Imprimer le chapitre</button><a class="btn-imp" href="verifier.html?niveau=3">Vérifier un code de 3ème année</a></div><article class="notion" id="m3-le-modele-de-boite"><div class="notion-tete"><h3>Le modèle de boîte</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>Chaque élément est une boîte : le contenu (<code>width</code>, <code>height</code>), la marge intérieure (<code>padding</code>), la bordure, puis la marge extérieure (<code>margin</code>).</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">.carte {
+  width: 220px;
+  padding: 15px;
+  border: 3px solid #1D4ED8;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px gray;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:140px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;.carte{width:220px;padding:15px;border:3px solid #1D4ED8;margin:20px;border-radius:10px;box-shadow:4px 4px 8px gray;font:14px Arial}&lt;/style&gt;&lt;div class=&quot;carte&quot;&gt;Kairouan — ville sainte, célèbre pour sa Grande Mosquée.&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><article class="notion" id="m3-display-float-et-position"><div class="notion-tete"><h3>display, float et position</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>La mise en page de 3ème repose sur <code>float</code> (blocs côte à côte) et <code>position</code>. Pour une page pleine hauteur : <code>html, body { height: 100%; }</code> puis des hauteurs en % sur les enfants.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">nav {
+  float: left;
+  width: 25%;
+}
+section {
+  float: right;
+  width: 70%;
+}
+footer {
+  clear: both;
+}
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:150px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;body{font:13px Arial;position:relative;margin:6px}nav,section,footer{padding:6px;border-radius:5px}nav{float:left;width:25%;background:#e8efff;height:90px}section{float:right;width:70%;background:#e7f5ec;height:90px}footer{clear:both;background:#e9eef8;margin-top:6px}.badge{position:absolute;top:2px;right:2px;background:#F5B800;padding:2px 8px;border-radius:9px;font-weight:bold}&lt;/style&gt;&lt;nav&gt;nav (float: left)&lt;/nav&gt;&lt;section&gt;section (float: right)&lt;/section&gt;&lt;footer&gt;footer (clear: both)&lt;/footer&gt;&lt;span class=&quot;badge&quot;&gt;Nouveau&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Valeur de position</th><th>Comportement</th></tr></thead><tbody><tr><td><code>static</code></td><td>Placement normal (par défaut)</td></tr><tr><td><code>relative</code></td><td>Décalé par rapport à sa place normale (top, left…)</td></tr><tr><td><code>absolute</code></td><td>Placé par rapport au premier parent positionné</td></tr><tr><td><code>fixed</code></td><td>Fixé à la fenêtre, ne défile pas</td></tr><tr><td><code>sticky</code></td><td>Normal puis collé au bord pendant le défilement</td></tr></tbody></table></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p><code>clear</code> ne figure pas dans l'annexe actuelle ; il reste indispensable pour arrêter un flottement. Les membres du comité de réforme proposent de l'y ajouter.</p></div></div>
+</div></article><article class="notion" id="m3-debordement-et-transparence"><div class="notion-tete"><h3>Débordement et transparence</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">.actualites {
+  height: 70px;
+  overflow: scroll;
+}
+.filigrane {
+  opacity: 0.4;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:140px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;body{font:13px Arial}.actualites{height:70px;overflow:scroll;border:1px solid #ccc;padding:4px}.filigrane{opacity:.4;font-size:20px;font-weight:bold}&lt;/style&gt;&lt;div class=&quot;actualites&quot;&gt;Lundi : réunion des parents.&lt;br&gt;Mardi : sortie à Carthage.&lt;br&gt;Mercredi : club robotique.&lt;br&gt;Jeudi : examen blanc.&lt;/div&gt;&lt;p class=&quot;filigrane&quot;&gt;BROUILLON&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><div id="m3-a-retenir-mise-en-page"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Taille totale d'une boîte = width + padding + border + margin.</li><li><code>float</code> place les blocs côte à côte ; le pied de page arrête le flottement.</li><li><code>top</code>, <code>left</code>… n'agissent que sur un élément positionné.</li><li>Flexbox et Grid ne sont pas au programme.</li></ul><h4>Nouvelles propriétés CSS</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Propriété</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Définition</th></tr></thead><tbody><tr><td><code>width / height</code></td><td>valeur en px ou %</td><td><code>220px</code></td><td>Largeur / hauteur du contenu</td></tr><tr><td><code>padding</code></td><td>1 à 4 valeurs en px</td><td><code>15px</code></td><td>Marge intérieure</td></tr><tr><td><code>margin</code></td><td>1 à 4 valeurs en px</td><td><code>20px</code></td><td>Marge extérieure</td></tr><tr><td><code>border-radius</code></td><td>valeur en px ou %</td><td><code>10px</code></td><td>Coins arrondis</td></tr><tr><td><code>box-shadow</code></td><td>décalage-x décalage-y flou couleur</td><td><code>4px 4px 8px gray</code></td><td>Ombre de la boîte</td></tr><tr><td><code>display</code></td><td>inline, block, inline-block</td><td><code>—</code></td><td>Comportement d'affichage</td></tr><tr><td><code>float</code></td><td>left, right, none</td><td><code>left</code></td><td>Flottement</td></tr><tr><td><code>position</code></td><td>absolute, fixed, relative, static, sticky</td><td><code>absolute</code></td><td>Mode de positionnement</td></tr><tr><td><code>top / bottom / left / right</code></td><td>valeur en px ou %</td><td><code>10px</code></td><td>Décalage d'un élément positionné</td></tr><tr><td><code>overflow</code></td><td>visible, hidden, clip, scroll, auto</td><td><code>scroll</code></td><td>Gestion du débordement</td></tr><tr><td><code>opacity</code></td><td>de 0 (transparent) à 1 (opaque)</td><td><code>0.4</code></td><td>Niveau de transparence</td></tr></tbody></table></div></div></div><nav class="suite" aria-label="Chapitres voisins"><a href="n3-s2.html">← 2. CSS3 : feuille externe et sélecteurs</a><a href="n3-s4.html">4. Effets : transitions, transformations, animations →</a></nav></div></div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI, l'annexe en pratique</h4>
+      <p>Ressources pour les enseignants de Sciences et Technologies de l'Informatique, conformes à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a><a href="annexe.html">Annexe complète</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="verifier.html">Vérifier un code</a><a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Logiciels et glossaire</a>
+    </div>
+  </div>
+  <div class="pied-bas">Version 2 · octobre 2026 · <a href="../">Version 1 du guide</a> · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/sequence.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

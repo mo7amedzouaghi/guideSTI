@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listes et tableaux (2ème année) — STI, l'annexe en pratique</title>
+<meta name="description" content="Organiser l'information : listes à puces, listes numérotées et tableaux de données.">
+<link rel="icon" href="assets/flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/v2.css">
+</head>
+<body class="niv-2" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">L'annexe en pratique<small>Guide de l'enseignant STI</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="verifier.html" class="cle">Vérifier un code</a><a href="n2.html" class="m2" aria-current="page">2ème</a><a href="n3.html" class="m3">3ème</a><a href="n4.html" class="m4">4ème</a><a href="annexe.html" class="">Annexe</a><a href="pedagogie.html" class="">Enseigner</a><a href="erreurs.html" class="">Erreurs</a><a href="outils.html" class="">Outils</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><nav class="ariane-v2" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> › <a href="n2.html">2ème année</a> › Chapitre 2</nav><span class="pastille-niveau">2ème année · Chapitre 2</span><br><h1>Listes et tableaux</h1><p class="chapeau">Organiser l'information : listes à puces, listes numérotées et tableaux de données.</p></div></section>
+<div class="page"><nav class="sommaire" aria-label="Chapitres"><h2>2ème année</h2><ol><li><a href="n2-s1.html">1. Structure d'une page HTML5</a></li><li><a href="n2-s2.html" class="actif" aria-current="page">2. Listes et tableaux</a><ol><li><a href="#m2-listes-a-puces-et-listes-ordonnees">Listes à puces et listes ordonnées</a></li><li><a href="#m2-tableaux-de-donnees">Tableaux de données</a></li><li><a href="#m2-a-retenir-listes-et-tableaux">À retenir — listes et tableaux</a></li></ol></li><li><a href="n2-s3.html">3. Liens et multimédia</a></li><li><a href="n2-s4.html">4. Formulaires</a></li><li><a href="n2-s5.html">5. CSS en ligne et interne</a></li><li><a href="n2.html#progression">Limites et progression</a></li></ol></nav><div class="contenu"><div class="outils-seq"><button type="button" class="btn-imp" data-imprimer="retenir">Imprimer la fiche « À retenir »</button><button type="button" class="btn-imp" data-imprimer="tout">Imprimer le chapitre</button><a class="btn-imp" href="verifier.html?niveau=2">Vérifier un code de 2ème année</a></div><article class="notion" id="m2-listes-a-puces-et-listes-ordonnees"><div class="notion-tete"><h3>Listes à puces et listes ordonnées</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p><code>&lt;ul&gt;</code> crée une liste à puces (l'ordre n'a pas d'importance), <code>&lt;ol&gt;</code> une liste numérotée (l'ordre compte). Chaque élément est dans un <code>&lt;li&gt;</code>. La liste ordonnée accepte trois attributs de l'annexe : <code>type</code>, <code>start</code> et <code>reversed</code>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;h3&gt;Matériel du labo&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Ordinateurs&lt;/li&gt;
+  &lt;li&gt;Imprimante&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Classement du tournoi&lt;/h3&gt;
+&lt;ol type="I" start="1"&gt;
+  &lt;li&gt;3ème Info 1&lt;/li&gt;
+  &lt;li&gt;3ème Info 2&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Compte à rebours&lt;/h3&gt;
+&lt;ol reversed&gt;
+  &lt;li&gt;Prêts&lt;/li&gt;
+  &lt;li&gt;Partez&lt;/li&gt;
+&lt;/ol&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:330px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h3&gt;Matériel du labo&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Ordinateurs&lt;/li&gt;&lt;li&gt;Imprimante&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;Classement du tournoi&lt;/h3&gt;&lt;ol type=&quot;I&quot; start=&quot;1&quot;&gt;&lt;li&gt;3ème Info 1&lt;/li&gt;&lt;li&gt;3ème Info 2&lt;/li&gt;&lt;/ol&gt;&lt;h3&gt;Compte à rebours&lt;/h3&gt;&lt;ol reversed&gt;&lt;li&gt;Prêts&lt;/li&gt;&lt;li&gt;Partez&lt;/li&gt;&lt;/ol&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Attribut de &lt;ol&gt;</th><th>Valeurs</th><th>Effet</th></tr></thead><tbody><tr><td><code>type</code></td><td>1, A, a, I, i</td><td>Style de numérotation</td></tr><tr><td><code>start</code></td><td>un entier</td><td>Numéro du premier élément</td></tr><tr><td><code>reversed</code></td><td>sans valeur</td><td>Numérotation décroissante</td></tr></tbody></table></div>
+</div></article><article class="notion" id="m2-tableaux-de-donnees"><div class="notion-tete"><h3>Tableaux de données</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p>Un tableau se construit <b>ligne par ligne</b> : <code>&lt;tr&gt;</code> (ligne), puis les cellules <code>&lt;th&gt;</code> (en-tête) ou <code>&lt;td&gt;</code> (donnée). <code>&lt;caption&gt;</code> donne un titre au tableau, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> et <code>&lt;tfoot&gt;</code> en délimitent les parties.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;table border="1"&gt;
+  &lt;caption&gt;Emploi du temps — lundi&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Heure&lt;/th&gt;&lt;th&gt;Matière&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;8h&lt;/td&gt;&lt;td&gt;Informatique&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;10h&lt;/td&gt;&lt;td&gt;Mathématiques&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;td&gt;Total&lt;/td&gt;&lt;td&gt;2 séances&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:170px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;table border=&quot;1&quot;&gt;&lt;caption&gt;Emploi du temps — lundi&lt;/caption&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Heure&lt;/th&gt;&lt;th&gt;Matière&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;8h&lt;/td&gt;&lt;td&gt;Informatique&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;10h&lt;/td&gt;&lt;td&gt;Mathématiques&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;tfoot&gt;&lt;tr&gt;&lt;td&gt;Total&lt;/td&gt;&lt;td&gt;2 séances&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc astuce"><b class="ico" aria-hidden="true">★</b><div><p>Faites dessiner le tableau sur papier avant de le coder : l'élève compte les lignes, et chaque ligne devient un <code>&lt;tr&gt;</code>.</p></div></div>
+</div></article><div id="m2-a-retenir-listes-et-tableaux"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li><code>ul</code> : ordre sans importance ; <code>ol</code> : ordre significatif.</li><li>Chaque élément de liste est dans un <code>li</code>.</li><li>Un tableau se lit ligne par ligne : <code>tr</code> puis <code>th</code> / <code>td</code>.</li><li><code>caption</code> se place juste après <code>&lt;table&gt;</code>.</li></ul><h4>Balises de la séquence</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Balise</th><th>Attributs (annexe)</th><th>Définition</th><th>Utilité</th></tr></thead><tbody><tr><td><code>&lt;ul&gt;</code></td><td>—</td><td>Liste non ordonnée (à puces).</td><td>Énumérer des éléments dont l'ordre n'a pas d'importance.</td></tr><tr><td><code>&lt;ol&gt;</code></td><td><code>type, start, reversed</code></td><td>Liste ordonnée (numérotée).</td><td>Énumérer des étapes ou un classement où l'ordre compte.</td></tr><tr><td><code>&lt;li&gt;</code></td><td>—</td><td>Élément d'une liste.</td><td>Contenir chaque item d'un ul ou d'un ol.</td></tr><tr><td><code>&lt;table&gt;</code></td><td>—</td><td>Tableau.</td><td>Présenter des données en lignes et en colonnes.</td></tr><tr><td><code>&lt;caption&gt;</code></td><td>—</td><td>Titre du tableau.</td><td>Annoncer le contenu du tableau ; se place juste après <table>.</td></tr><tr><td><code>&lt;thead&gt;</code></td><td>—</td><td>En-tête du tableau.</td><td>Regrouper la ou les lignes de titres des colonnes.</td></tr><tr><td><code>&lt;tbody&gt;</code></td><td>—</td><td>Corps du tableau.</td><td>Regrouper les lignes de données.</td></tr><tr><td><code>&lt;tfoot&gt;</code></td><td>—</td><td>Pied du tableau.</td><td>Regrouper les lignes de total ou de synthèse.</td></tr><tr><td><code>&lt;tr&gt;</code></td><td>—</td><td>Ligne du tableau.</td><td>Contenir les cellules d'une même ligne.</td></tr><tr><td><code>&lt;th&gt;</code></td><td>—</td><td>Cellule d'en-tête.</td><td>Donner le titre d'une colonne ou d'une ligne (gras et centré par défaut).</td></tr><tr><td><code>&lt;td&gt;</code></td><td>—</td><td>Cellule de donnée.</td><td>Contenir une valeur du tableau.</td></tr></tbody></table></div></div></div><nav class="suite" aria-label="Chapitres voisins"><a href="n2-s1.html">← 1. Structure d'une page HTML5</a><a href="n2-s3.html">3. Liens et multimédia →</a></nav></div></div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>STI, l'annexe en pratique</h4>
+      <p>Ressources pour les enseignants de Sciences et Technologies de l'Informatique, conformes à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="n2.html">2ème année</a><a href="n3.html">3ème année</a><a href="n4.html">4ème année</a><a href="annexe.html">Annexe complète</a>
+    </div>
+    <div>
+      <h4>Outils</h4>
+      <a href="verifier.html">Vérifier un code</a><a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Logiciels et glossaire</a>
+    </div>
+  </div>
+  <div class="pied-bas">Version 2 · octobre 2026 · <a href="../">Version 1 du guide</a> · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/sequence.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
