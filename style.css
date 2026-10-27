@@ -526,3 +526,8 @@ footer p {
         padding: 1rem;
     }
 }
+
+/* Clé primaire soulignée (représentation textuelle des bases) */
+.pk {
+    text-decoration: underline;
+}

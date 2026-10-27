@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <h1>📘 Guide du Programme STI <img src="flag.png" alt="" width="40px" height="40px"></h1>
+        <h1>📘 Guide du Programme STI <img src="flag.png" alt="" width="40" height="40"></h1>
         <p>Sciences et Technologies de l'Informatique - Tunisie</p>
     </header>
 
@@ -68,7 +68,7 @@
                                 <span class="tag">&lt;p&gt; - Paragraphe</span>
                                 <span class="tag">&lt;br&gt; - Retour à la ligne</span>
                                 <span class="tag">&lt;h1&gt; à &lt;h6&gt; - Titres</span>
-                                <span class="tag">&lt;mark&gt; - Texte surligné</span>
+                                <span class="tag">&lt;hr&gt; - Ligne de séparation</span>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                             <strong>Listes :</strong>
                             <div class="tags">
                                 <span class="tag">&lt;ul&gt; - Liste à puces</span>
-                                <span class="tag">&lt;ol&gt; - Liste ordonnée</span>
+                                <span class="tag">&lt;ol&gt; - Liste ordonnée (attributs: type, start, reversed)</span>
                                 <span class="tag">&lt;li&gt; - Élément de liste</span>
                             </div>
                         </div>
@@ -91,6 +91,7 @@
                                 <span class="tag">&lt;td&gt; - Cellule</span>
                                 <span class="tag">&lt;th&gt; - En-tête</span>
                                 <span class="tag">&lt;thead&gt; &lt;tbody&gt; &lt;tfoot&gt;</span>
+                                <span class="tag">&lt;caption&gt; - Titre du tableau</span>
                             </div>
                         </div>
                     </div>
@@ -110,7 +111,7 @@
                         <div class="subsection">
                             <strong>Balise form :</strong>
                             <div class="tags">
-                                <span class="tag">&lt;form&gt; - Attributs: action, method, target</span>
+                                <span class="tag">&lt;form&gt; - Attributs: action, method (get, post), target (_self, _blank, _parent, _top)</span>
                             </div>
                         </div>
                         <div class="subsection">
@@ -127,7 +128,10 @@
                         <div class="subsection">
                             <strong>Autres éléments :</strong>
                             <div class="tags">
-                                <span class="tag">&lt;select&gt; &lt;option&gt;</span>
+                                <span class="tag">&lt;select&gt; - Attributs: name, required, disabled, multiple</span>
+                                <span class="tag">&lt;option&gt; - Attributs: value, selected</span>
+                                <span class="tag">&lt;label&gt; - Attribut: for</span>
+                                <span class="tag">&lt;textarea&gt; - Attributs: name, cols, rows, maxlength, placeholder</span>
                                 <span class="tag">&lt;fieldset&gt; &lt;legend&gt;</span>
                             </div>
                         </div>
@@ -164,6 +168,7 @@
                             <span class="tag">font-style: italic</span>
                             <span class="tag">text-align: left, center, right, justify</span>
                             <span class="tag">color - Couleur du texte</span>
+                            <span class="tag">font - Propriété abrégée</span>
                         </div>
                     </div>
 
@@ -202,6 +207,7 @@
                         <div class="forbidden-item">❌ CSS externe (fichier .css séparé)</div>
                         <div class="forbidden-item">❌ Formulaires avancés (date, time, email)</div>
                         <div class="forbidden-item">❌ Sélecteurs CSS complexes</div>
+                        <div class="forbidden-item">❌ Mise en forme par balises HTML (b, strong, i, em, u) : tout passe par CSS</div>
                     </div>
                 </div>
             </div>
@@ -250,8 +256,7 @@
                             <span class="tag">&lt;footer&gt; - Pied de page</span>
                             <span class="tag">&lt;aside&gt; - Contenu secondaire</span>
                             <span class="tag">&lt;address&gt; - Contact</span>
-                            <span class="tag">&lt;cite&gt; - Citation</span>
-                            <span class="tag">&lt;output&gt; - Sortie de calcul</span>
+                            <span class="tag">&lt;cite&gt; - Titre d'une œuvre citée</span>
                         </div>
                     </div>
 
@@ -269,7 +274,6 @@
                         <div class="tags">
                             <span class="tag">&lt;figure&gt; - Figure</span>
                             <span class="tag">&lt;figcaption&gt; - Légende</span>
-                            <span class="tag">&lt;source&gt; - Source alternative</span>
                         </div>
                     </div>
 
@@ -323,7 +327,7 @@
                             <span class="tag">.class { } - Classe</span>
                             <span class="tag">h1, h2 { } - Groupe</span>
                             <span class="tag">* { } - Universel</span>
-                            <span class="tag">:hover - Pseudo-classe</span>
+                            <span class="tag">a:hover, :hover - Survol (support des transitions)</span>
                         </div>
                     </div>
 
@@ -341,6 +345,7 @@
                             <span class="tag">list-style-type: circle, square, upper-roman, lower-alpha</span>
                             <span class="tag">list-style-position: inside, outside</span>
                             <span class="tag">list-style-image - Image comme puce</span>
+                            <span class="tag">list-style - Propriété abrégée</span>
                         </div>
                     </div>
 
@@ -348,6 +353,14 @@
                         <h4>🎨 CSS3 - Arrière-plan avancé</h4>
                         <div class="tags">
                             <span class="tag">background-size: cover, contain</span>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h4>📊 CSS3 - Tableaux</h4>
+                        <div class="tags">
+                            <span class="tag">border-collapse: collapse, separate</span>
+                            <span class="tag">table-layout: auto, fixed</span>
                         </div>
                     </div>
 
@@ -366,16 +379,20 @@
                             <span class="tag">opacity - Transparence (0 à 1)</span>
                             <span class="tag">border-radius - Coins arrondis</span>
                         </div>
+                        <div class="highlight-box">
+                            <strong>Unités :</strong> px et % uniquement. Hauteur pleine page : html, body { height: 100%; } puis % sur les enfants.
+                        </div>
                     </div>
 
                     <div class="section">
                         <h4>✨ CSS3 - Transitions</h4>
                         <div class="code-example">
-.element {
-  transition: all 0.3s ease;
+.carre {
+  width: 100px;
+  transition: width 2s 0.5s; /* propriété durée délai */
 }
-.element:hover {
-  transform: scale(1.1);
+.carre:hover {
+  width: 200px;
 }
                         </div>
                         <div class="tags">
@@ -384,16 +401,20 @@
                             <span class="tag">transition-property - Propriété ciblée</span>
                             <span class="tag">transition - Abrégée</span>
                         </div>
+                        <div class="highlight-box">
+                            <strong>Règle :</strong> transition se déclare sur l'élément, jamais sur :hover. transition-timing-function (ease, linear…) n'est pas dans l'annexe.
+                        </div>
                     </div>
 
                     <div class="section">
                         <h4>🎬 CSS3 - Animations</h4>
                         <div class="code-example">
 @keyframes monAnimation {
-  0% { left: 0; }
+  0% { left: 0px; }
   100% { left: 100px; }
 }
 .element {
+  position: relative; /* obligatoire pour animer left / top */
   animation: monAnimation 2s infinite;
 }
                         </div>
@@ -415,6 +436,9 @@
                             <span class="tag">transform: scale() - Échelle</span>
                             <span class="tag">transform: translate() - Translation</span>
                             <span class="tag">transform: skew() - Inclinaison</span>
+                        </div>
+                        <div class="highlight-box">
+                            <strong>Règle :</strong> toutes les fonctions sur une seule ligne, translate(x, y) uniquement (pas translateX / translateY).
                         </div>
                     </div>
 
@@ -535,7 +559,7 @@ let resultat = maFonction(valeur1, valeur2);
                         <div class="code-example">
 let maintenant = new Date();
 let jour = maintenant.getDate();
-let mois = maintenant.getMonth();
+let mois = maintenant.getMonth() + 1; // getMonth() renvoie 0 à 11
 let annee = maintenant.getFullYear();
 let dateStr = maintenant.toString();
                         </div>
@@ -546,6 +570,7 @@ let dateStr = maintenant.toString();
                         <div class="code-example">
 let texte = 'Bonjour';
 let longueur = texte.length;
+let premier = texte[0];    // accès à un caractère : ch[i] (pas charAt)
 let sousChaine = texte.substring(0, 3);
 let position = texte.indexOf('jour');
 let dernierePos = texte.lastIndexOf('o');
@@ -576,9 +601,11 @@ let tableau = ['a', 'b', 'c'];
 let longueur = tableau.length;
 
 // Math
-let aleatoire = Math.random();
-let arrondi = Math.round(4.7);
-let tronque = Math.trunc(4.9);
+let absolu = Math.abs(-5);       // 5
+let racine = Math.sqrt(16);      // 4
+let arrondi = Math.round(4.7);   // 5
+let tronque = Math.trunc(4.9);   // 4 (pas Math.floor / Math.ceil)
+let de = Math.trunc(Math.random() * 6) + 1; // entier entre 1 et 6
                         </div>
                     </div>
 
@@ -627,13 +654,13 @@ let tronque = Math.trunc(4.9);
                         <div class="subsection">
                             <strong>Textuelle :</strong>
                             <div class="code-example">
-Étudiants (id, nom, prenom, classe_id#)
-Classes (id, nom, niveau)
+Étudiants (<span class="pk">id</span>, nom, prenom, classe_id#)
+Classes (<span class="pk">id</span>, nom, niveau)
                             </div>
                         </div>
                         <div class="subsection">
                             <strong>Graphique :</strong>
-                            <div class="code-example">Classes (1) ----< (∞) Étudiants</div>
+                            <div class="code-example">Classes (1) ----&lt; (∞) Étudiants</div>
                         </div>
                     </div>
 
@@ -685,7 +712,7 @@ SELECT * FROM etudiants WHERE ville IN ('Tunis', 'Sousse', 'Sfax');
 SELECT * FROM etudiants WHERE email IS NULL;
                         </div>
                         <div class="tags">
-                            <span class="tag">Comparaison: =, <>, >, <, >=, <=</span>
+                            <span class="tag">Comparaison: =, &lt;&gt;, &gt;, &lt;, &gt;=, &lt;=</span>
                             <span class="tag">Logiques: AND, OR, NOT</span>
                             <span class="tag">Spéciaux: BETWEEN, LIKE, IN, IS NULL</span>
                         </div>
@@ -695,8 +722,13 @@ SELECT * FROM etudiants WHERE email IS NULL;
                         <h4>📊 Types de données SQL</h4>
                         <div class="tags">
                             <span class="tag">INT - Entier</span>
+                            <span class="tag">DECIMAL(p,d) - Réel</span>
+                            <span class="tag">CHAR(n) - Chaîne fixe</span>
                             <span class="tag">VARCHAR(n) - Chaîne variable</span>
+                            <span class="tag">TEXT - Texte long</span>
                             <span class="tag">DATE - Date</span>
+                            <span class="tag">TIME - Heure</span>
+                            <span class="tag">DATETIME - Date et heure</span>
                         </div>
                     </div>
 
@@ -704,14 +736,17 @@ SELECT * FROM etudiants WHERE email IS NULL;
                         <h4>⚠️ À NE PAS enseigner en 3ème</h4>
                         <div class="forbidden-item">❌ PHP</div>
                         <div class="forbidden-item">❌ Flexbox et Grid CSS</div>
-                        <div class="forbidden-item">❌ Unités vh, vw</div>
+                        <div class="forbidden-item">❌ Unités vh, vw, em, rem (px et % uniquement)</div>
                         <div class="forbidden-item">❌ console.log() (utiliser alert et innerHTML)</div>
                         <div class="forbidden-item">❌ addEventListener (utiliser onclick, oninput, etc.)</div>
                         <div class="forbidden-item">❌ Jointures SQL</div>
                         <div class="forbidden-item">❌ Fonctions d'agrégation (COUNT, SUM, AVG)</div>
                         <div class="forbidden-item">❌ GROUP BY et HAVING</div>
                         <div class="forbidden-item">❌ getElementsByName</div>
-                        <div class="forbidden-item">❌ CREATE/ALTER TABLE en SQL (utiliser interface graphique)</div>
+                        <div class="forbidden-item">❌ CREATE/ALTER/DROP en SQL (mode assisté phpMyAdmin)</div>
+                        <div class="forbidden-item">❌ Sous-requêtes et requêtes sur plusieurs tables</div>
+                        <div class="forbidden-item">❌ charAt(), substr(), Math.floor(), Math.ceil(), getDay()</div>
+                        <div class="forbidden-item">❌ &lt;button&gt; et onsubmit sur un bouton (utiliser input type="button" + onclick)</div>
                     </div>
                 </div>
             </div>
@@ -748,7 +783,7 @@ SELECT * FROM etudiants WHERE email IS NULL;
                                 <span class="tag">onkeyup - Touche relâchée</span>
                                 <span class="tag">onmouseover - Survol souris</span>
                                 <span class="tag">onmouseout - Sortie souris</span>
-                                <span class="tag">onsubmit - envoi du formulaire</span>
+                                <span class="tag">onsubmit - Envoi du formulaire (sur &lt;form&gt; avec return)</span>
                                 <span class="tag">onplay - Lecture média</span>
                                 <span class="tag">onpause - Pause média</span>
                             </div>
@@ -779,16 +814,18 @@ input[required] { border: 2px solid red; }
 input[type="text"] { width: 100%; }
                             </div>
                         </div>
+                        <div class="subsection">
+                            <strong>Élément avec classe :</strong>
+                            <div class="code-example">p.important { color: red; }</div>
+                        </div>
                     </div>
 
                     <div class="section">
                         <h4>🔄 CSS3 - Transformations</h4>
                         <div class="code-example">
 .element {
-  transform: rotate(45deg);
-  transform: scale(1.5);
-  transform: translate(50px, 100px);
-  transform: skew(10deg, 5deg);
+  /* toutes les fonctions sur une seule ligne */
+  transform: rotate(45deg) scale(1.5) translate(50px, 100px) skew(10deg, 5deg);
 }
                         </div>
                     </div>
@@ -826,7 +863,7 @@ for (let i = 0; i < elements.length; i++) {
 element.value = 'Nouvelle valeur';
 element.checked = true;
 element.disabled = false;
-element.readonly = true;
+element.readOnly = true;  // attention : readOnly (O majuscule) en JS
 element.src = 'nouvelle-image.jpg';
 element.muted = false;
                         </div>
@@ -848,7 +885,7 @@ element.style.height = '100px';
                     </div>
 
                     <div class="section">
-                        <h4>▶️ JavaScript - Méthodes média</h4>
+                        <h4>▶️ JavaScript - Méthodes média et liste déroulante</h4>
                         <div class="highlight-box">
                             <strong>Se limiter à :</strong> play(), pause()
                         </div>
@@ -858,8 +895,9 @@ video.pause();
 
 // Liste déroulante
 let select = document.getElementById('maListe');
-let index = select.selectedIndex;
-let valeur = select.options[index].value;
+if (select.selectedIndex == 0) {
+  alert('Choisir une option');
+}
                         </div>
                     </div>
 
@@ -889,7 +927,7 @@ DROP DATABASE ecole;
                         <h4>📋 SQL - Création de table</h4>
                         <div class="code-example">
 CREATE TABLE etudiants (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+  id INT PRIMARY KEY,
   nom VARCHAR(50) NOT NULL,
   prenom VARCHAR(50),
   age INT CHECK (age >= 0 AND age <= 150),
@@ -909,17 +947,14 @@ CREATE TABLE etudiants (
 ALTER TABLE etudiants ADD telephone VARCHAR(20);
 
 -- Supprimer une colonne
-ALTER TABLE etudiants DROP COLUMN telephone;
+ALTER TABLE etudiants DROP telephone;
 
--- Modifier une colonne
-ALTER TABLE etudiants MODIFY COLUMN nom VARCHAR(100);
-/*avec ALTER
-ALTER TABLE etudiants ALTER COLUMN nom VARCHAR(100);
-                            
--- Renommer une colonne
-ALTER TABLE etudiants RENAME COLUMN prenom TO first_name;
-/*avec CHANGE 
- ALTER TABLE etudiants CHANGE prenom first_name VARCHAR(100);                           
+-- Modifier le type (syntaxe annexe : ALTER TABLE t ALTER col type)
+-- Exécutable sous MySQL :
+ALTER TABLE etudiants CHANGE nom nom VARCHAR(100);
+
+-- Renommer une colonne (CHANGE : ancien nom, nouveau nom, type)
+ALTER TABLE etudiants CHANGE prenom first_name VARCHAR(100);
 
 -- Ajouter une contrainte
 ALTER TABLE etudiants
@@ -1010,6 +1045,9 @@ SELECT ADDDATE('2024-11-19', INTERVAL 1 MONTH);
 
 -- DATEDIFF() : Différence en jours
 SELECT DATEDIFF('2024-11-19', '2024-11-10'); -- 9
+
+-- Date du jour : DATE(NOW()) (CURDATE() hors annexe)
+SELECT * FROM commandes WHERE date_commande = DATE(NOW());
                         </div>
                     </div>
 
@@ -1035,7 +1073,10 @@ $fruits = array('Pomme', 'Banane'); // array
 
 // Transtypage
 $nombre = (int)'42';
+$reel = (float)'3.5';
 $texte = (string)123;
+$vrai = (bool)1;
+$tab = (array)'a';
 ?&gt;
                         </div>
                     </div>
@@ -1091,7 +1132,7 @@ do {
 $absolu = abs(-15);      // 15
 $racine = sqrt(16);      // 4
 $arrondi = round(4.7);   // 5
-$aleatoire = rand(1, 10); // Entre 1 et 10
+$aleatoire = rand(1, 10); // Entre 1 et 10 inclus
 ?&gt;
                         </div>
                     </div>
@@ -1107,6 +1148,9 @@ $sousChaine = substr('Bonjour', 0, 3); // Bon
 $position = strpos('Bonjour', 'jour'); // 3
 $remplace = str_replace('monde', 'tous', 'Bonjour le monde');
 $nettoye = trim('  texte  '); // texte
+$code = ord('A');               // 65
+$lettre = chr(65);              // A
+$compare = strcmp('abc', 'abd'); // &lt; 0
 ?&gt;
                         </div>
                     </div>
@@ -1117,6 +1161,7 @@ $nettoye = trim('  texte  '); // texte
 &lt;?php
 echo date('d/m/Y');     // 19/11/2024
 echo date('H:i:s');     // 14:30:45
+$maintenant = time();           // timestamp actuel
 $timestamp = strtotime('2024-11-19');
 $valide = checkdate(12, 31, 2024); // true
 ?&gt;
@@ -1137,8 +1182,7 @@ $nombre = count($fruits); // 3
                         <h4>📥 PHP - Importer un fichier</h4>
                         <div class="code-example">
 &lt;?php
-require('config.php');
-require('functions.php');
+require('connexion.php'); // connexion réutilisée dans chaque page
 ?&gt;
                         </div>
                     </div>
@@ -1185,12 +1229,9 @@ if (isset($_POST['nom'])) {
                         </div>
                         <div class="code-example">
 &lt;?php
-$conn = mysqli_connect('localhost', 'user', 'password', 'database');
-
-if (!$conn) {
-  die('Connexion échouée: ' . mysqli_connect_error());
-}
-echo 'Connecté avec succès';
+// connexion.php
+$conn = mysqli_connect('localhost', 'root', '', 'ecole')
+        or die('Erreur de connexion au serveur');
 ?&gt;
                         </div>
                     </div>
@@ -1285,11 +1326,14 @@ mysqli_close($conn);
                         <div class="tags">
                             <span class="tag">mysqli_connect() - Connexion</span>
                             <span class="tag">mysqli_query() - Exécuter requête</span>
-                            <span class="tag">mysqli_fetch_array() - Récupérer ligne</span>
+                            <span class="tag">mysqli_fetch_array() - Ligne (indices ou noms)</span>
+                            <span class="tag">mysqli_fetch_row() - Ligne (indices numériques)</span>
                             <span class="tag">mysqli_num_rows() - Nombre de lignes</span>
                             <span class="tag">mysqli_affected_rows() - Lignes affectées</span>
                             <span class="tag">mysqli_error() - Message d'erreur</span>
                             <span class="tag">mysqli_close() - Fermer connexion</span>
+                            <span class="tag">die() - Arrêter le script avec un message</span>
+                            <span class="tag">isset() - Tester l'existence d'une variable</span>
                         </div>
                     </div>
 
@@ -1300,6 +1344,13 @@ mysqli_close($conn);
                         <div class="forbidden-item">❌ Upload de fichiers</div>
                         <div class="forbidden-item">❌ AJAX</div>
                         <div class="forbidden-item">❌ JSON</div>
+                        <div class="forbidden-item">❌ new mysqli(), requêtes préparées</div>
+                        <div class="forbidden-item">❌ Hachage des mots de passe (md5…) : comparaison directe</div>
+                        <div class="forbidden-item">❌ switch en PHP, var_dump()</div>
+                        <div class="forbidden-item">❌ AUTO_INCREMENT, CURDATE() (utiliser DATE(NOW()))</div>
+                        <div class="forbidden-item">❌ JOIN explicite (syntaxe classique avec WHERE)</div>
+                        <div class="forbidden-item">❌ Sous-requêtes corrélées</div>
+                        <div class="forbidden-item">❌ Attribut pattern, console.log(), script JS interne (fichier .js externe)</div>
                     </div>
                 </div>
             </div>
