@@ -172,6 +172,7 @@ apercu('<style>table{border-collapse:collapse;table-layout:fixed;width:100%;font
 
 N.bloc(retenir([
     "Sélecteurs de 3ème : élément, <code>#id</code>, <code>.classe</code>, groupe, universel.",
+    "Pas de sélecteur combiné (<code>.menu a</code>, <code>nav &gt; a</code>) : on donne une classe aux éléments ciblés.",
     "Une seule feuille de style externe pour tout le site.",
     "Unités : <b>px et %</b> uniquement (pas de em, rem, vh, vw).",
 ], css=[

@@ -203,7 +203,16 @@
             if (/^\d+%$|^(from|to)$/i.test(sel) || sel === "") { /* étape de keyframes */ }
             else {
               if (/::|:(nth-|first-|last-|not\(|before|after|checked|disabled)/.test(sel)) { var hs = hors("::before"); ajouter(posS, "hors", hs.x, hs.a, "CSS", "pseudo"); }
-              if (/[>+~]/.test(sel.replace(/\[[^\]]*\]/g, ""))) ajouter(posS, "hors", "Les combinateurs >, + et ~ ne sont pas dans l'annexe : utiliser un sélecteur descendant (espace), une classe ou un id.", "nav a {\n  color: white;\n}", "CSS", "combinateur");
+              // sélecteurs combinés (descendant « .menu a », enfant >, frères + ~) : hors annexe
+              sel.split(",").forEach(function (partie) {
+                var p = partie.replace(/\[[^\]]*\]/g, "[]").trim();
+                if (!p || !/\s|[>+~]/.test(p)) return;
+                var cible = p.split(/[\s>+~]+/).pop().replace(/\[\]/g, "").replace(/:[a-z-]+(\([^)]*\))?/g, "");
+                var balise = (cible.match(/^[a-z][a-z0-9]*/i) || ["a"])[0];
+                var nomC = (partie.trim().split(/[\s>+~]+/)[0].replace(/[^\w-]/g, "") || "zone") + "-" + balise;
+                ajouter(posS, "hors", "Le sélecteur combiné « " + partie.trim() + " » n'est pas dans l'annexe. Sélecteurs autorisés : element, #id, .classe, element.classe, element[attr], element[attr=valeur], a:link, a:visited, a:hover, a:active, :focus. Donner une classe (ou un id) aux éléments ciblés.",
+                  "/* HTML : <" + balise + ' class="' + nomC + '"> */\n.' + nomC + " {\n  color: white;\n}", "CSS", "combine");
+              });
               var pc, rp = /:([a-z-]+)/g;
               while ((pc = rp.exec(sel.replace(/::[a-z-]+/g, "")))) {
                 var nomP = pc[1];

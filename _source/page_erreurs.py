@@ -30,9 +30,13 @@ S.append(("html", "HTML5", "Les erreurs de structure les plus courantes dans les
 
 S.append(("css", "CSS3", "Mise en page et effets : ce qui fonctionne mais sort de l'annexe, et ce qui ne fonctionne pas du tout.", "".join([
     err("Déclarer la transition sur :hover",
-        '.menu a:hover {\n  background-color: gold;\n  transition: background-color 1s;\n}',
-        '.menu a {\n  transition: background-color 1s;\n}\n.menu a:hover {\n  background-color: gold;\n}',
+        '.lien-menu:hover {\n  background-color: gold;\n  transition: background-color 1s;\n}',
+        '.lien-menu {\n  transition: background-color 1s;\n}\n.lien-menu:hover {\n  background-color: gold;\n}',
         "css", "Sur <code>:hover</code>, la transition ne joue qu'à l'aller : le retour est brutal. Elle se déclare sur l'élément.", "3ème"),
+    err("Utiliser un sélecteur combiné",
+        '.menu a {\n  color: white;\n}\nnav > a {\n  text-decoration: none;\n}',
+        '/* HTML : <a href="index.html" class="lien-menu">Accueil</a> */\n.lien-menu {\n  color: white;\n  text-decoration: none;\n}',
+        "css", "Les sélecteurs combinés (descendant <code>.menu a</code>, enfant <code>nav &gt; a</code>, frères <code>h1 + p</code>) ne sont pas dans l'annexe. On donne une classe aux éléments ciblés.", "3ème"),
     err("Écrire plusieurs fois transform",
         '.logo:hover {\n  transform: rotate(10deg);\n  transform: scale(1.2);\n}',
         '.logo:hover {\n  transform: rotate(10deg) scale(1.2);\n}',
