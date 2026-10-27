@@ -1,19 +1,32 @@
 rules_version = '2';
 // Règles de la base Firestore du Guide STI.
-// À coller dans la console Firebase : Firestore Database → Règles → Publier.
+// À coller dans la console Firebase : Firestore Database → Règles → Modifier les règles → Publier.
 // Le code enseignant est vérifié ici (côté serveur) : le changer à la ligne CODE_PROF.
 service cloud.firestore {
   match /databases/{database}/documents {
 
     function connecte() { return request.auth != null; }
-    function estProf() {
-      return connecte()
-        && exists(/databases/$(database)/documents/comptes/$(request.auth.uid))
-        && get(/databases/$(database)/documents/comptes/$(request.auth.uid)).data.role == 'prof';
-    }
+    function monCompte() { return /databases/$(database)/documents/comptes/$(request.auth.uid); }
+    function moi() { return get(monCompte()).data; }
+    function aUnCompte() { return connecte() && exists(monCompte()); }
+    function actif(p) { return p.get('actif', true) == true; }
+    function estProf() { return aUnCompte() && moi().role == 'prof' && actif(moi()); }
     function texte(v, max) { return v is string && v.size() <= max; }
 
-    // Profils : comptes/{uid}
+    // Correspondance identifiant → compte de connexion
+    match /identifiants/{id} {
+      allow get: if true;
+      allow list: if estProf();
+      allow create: if connecte()
+        && request.resource.data.uid == request.auth.uid
+        && texte(request.resource.data.email, 120)
+        && id.matches('[a-z0-9][a-z0-9._-]{2,29}')
+        && getAfter(monCompte()).data.identifiant == id;
+      allow update: if false;
+      allow delete: if estProf() || (connecte() && resource.data.uid == request.auth.uid);
+    }
+
+    // Profils
     match /comptes/{uid} {
       allow read: if connecte() && (request.auth.uid == uid || estProf());
       allow create: if connecte() && request.auth.uid == uid
@@ -21,23 +34,37 @@ service cloud.firestore {
         && texte(request.resource.data.prenom, 40)
         && texte(request.resource.data.nom, 40)
         && texte(request.resource.data.classe, 20)
+        && request.resource.data.actif == true
+        && getAfter(/databases/$(database)/documents/identifiants/$(request.resource.data.identifiant)).data.uid == uid
         && (
           (request.resource.data.role == 'eleve' && request.resource.data.niveau in [2, 3, 4])
           || (request.resource.data.role == 'prof' && request.resource.data.code == 'STI-OUED-ELLIL')   // CODE_PROF
         );
-      allow update: if false;
+      // un enseignant modifie un élève (nom, niveau, classe, activation) ou active/désactive un autre enseignant
+      allow update: if estProf() && request.auth.uid != uid
+        && request.resource.data.actif is bool
+        && (
+          (resource.data.role == 'eleve'
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['prenom', 'nom', 'niveau', 'classe', 'actif'])
+            && texte(request.resource.data.prenom, 40) && texte(request.resource.data.nom, 40)
+            && texte(request.resource.data.classe, 20) && request.resource.data.niveau in [2, 3, 4])
+          || (resource.data.role == 'prof'
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['actif']))
+        );
       allow delete: if connecte() && (request.auth.uid == uid || (estProf() && resource.data.role == 'eleve'));
     }
 
-    // Scores : scores/{uid}_{niveau}_{chapitre}
+    // Scores : scores/{identifiant}_{niveau}_{chapitre}
     match /scores/{id} {
-      allow read: if connecte() && (resource.data.uid == request.auth.uid || estProf());
-      allow create, update: if connecte()
-        && request.resource.data.uid == request.auth.uid
-        && id.matches(request.auth.uid + '_[234]_[0-9]+')
+      allow read: if connecte() && (estProf() || (aUnCompte() && resource.data.identifiant == moi().identifiant));
+      allow create, update: if aUnCompte() && moi().role == 'eleve' && actif(moi())
+        && request.resource.data.identifiant == moi().identifiant
+        && request.resource.data.n in [2, 3, 4]
+        && request.resource.data.c is int
+        && id == moi().identifiant + '_' + string(request.resource.data.n) + '_' + string(request.resource.data.c)
         && request.resource.data.meilleur is int
         && request.resource.data.meilleur >= 0 && request.resource.data.meilleur <= 100;
-      allow delete: if connecte() && (resource.data.uid == request.auth.uid || estProf());
+      allow delete: if estProf();
     }
   }
 }

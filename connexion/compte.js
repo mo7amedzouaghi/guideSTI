@@ -1,12 +1,16 @@
 /* Comptes STI (élèves et enseignants).
    Deux modes :
    - EN LIGNE (Firebase) si connexion/config.js contient la configuration du projet Firebase :
-     comptes valables sur tous les appareils, scores remontés à l'enseignant (page Suivi des élèves).
+     comptes valables sur tous les appareils, scores remontés à l'enseignant, gestion des comptes.
    - LOCAL sinon : comptes enregistrés dans le navigateur de l'appareil.
    Inclus dans le <head> des pages protégées, après config.js :
      <script src="../connexion/config.js"></script>
      <script src="../connexion/compte.js" data-acces="prof"></script>   (Espace Prof : enseignants)
-     <script src="../connexion/compte.js" data-acces="eleve"></script>  (Espace Élèves : élèves et enseignants) */
+     <script src="../connexion/compte.js" data-acces="eleve"></script>  (Espace Élèves : élèves et enseignants)
+   Base Firestore :
+     identifiants/{identifiant}           → { uid, email }  (correspondance identifiant → compte de connexion)
+     comptes/{uid}                        → profil : identifiant, prenom, nom, role, niveau, classe, actif
+     scores/{identifiant}_{niveau}_{chap} → meilleur score (conservé si le mot de passe est réinitialisé) */
 (function () {
   "use strict";
 
@@ -55,10 +59,12 @@
     if (d.role === "prof" && (await empreinte(String(d.code || "").trim())) !== CODE_ENSEIGNANT_SHA256) throw new Error("Code enseignant incorrect.");
   }
   function cleScore(s, n, c) { return "sti-score-" + n + "-" + c + "@" + s.id; }
+  function erreurDesactive() { return new Error("Ce compte a été désactivé par un enseignant. Adressez-vous à votre professeur."); }
 
   /* ================================================== mode en ligne (Firebase) */
-  var fb = null;          // { auth, db, FieldValue }
+  var fb = null;          // { auth, db, FieldValue, EmailAuthProvider }
   var pret;               // promesse : session vérifiée (ou null)
+  var motif = null;       // raison d'une déconnexion forcée
 
   function chargerSDK() {
     return new Promise(function (ok, ko) {
@@ -81,7 +87,8 @@
     if (c === "auth/too-many-requests") return "Trop d'essais. Patientez quelques minutes avant de réessayer.";
     if (c === "auth/network-request-failed" || c === "unavailable") return "Pas de connexion Internet. Vérifiez le réseau et réessayez.";
     if (c === "auth/weak-password") return "Le mot de passe doit contenir au moins 6 caractères.";
-    if (c === "auth/operation-not-allowed") return "La connexion par mot de passe n'est pas activée dans Firebase (Authentication → Sign-in method).";
+    if (c === "auth/requires-recent-login") return "Pour des raisons de sécurité, déconnectez-vous puis reconnectez-vous avant de changer le mot de passe.";
+    if (c === "auth/operation-not-allowed") return "La connexion par mot de passe n'est pas activée dans Firebase (Authentication → Méthode de connexion).";
     if (c === "permission-denied") return role === "prof" ? "Code enseignant incorrect." : "Accès refusé par la base de données (règles Firestore à publier).";
     return (e && e.message) || "Erreur inattendue.";
   }
@@ -90,14 +97,14 @@
     var doc = await fb.db.collection("comptes").doc(u.uid).get();
     if (!doc.exists) return null;
     var p = doc.data();
-    return { id: p.identifiant, uid: u.uid, prenom: p.prenom, nom: p.nom, role: p.role, niveau: p.niveau || null, classe: p.classe || "" };
+    return { id: p.identifiant, uid: u.uid, prenom: p.prenom, nom: p.nom, role: p.role, niveau: p.niveau || null, classe: p.classe || "", actif: p.actif !== false };
   }
 
   // scores du compte : base → appareil (progression retrouvée sur chaque appareil)
   async function rapatrierScores(s) {
     if (s.role !== "eleve") return;
     try {
-      var r = await fb.db.collection("scores").where("uid", "==", s.uid).get();
+      var r = await fb.db.collection("scores").where("identifiant", "==", s.id).get();
       r.forEach(function (d) {
         var x = d.data(), k = cleScore(s, x.n, x.c), local = Number(lire(k));
         if (lire(k) === null || isNaN(local) || x.meilleur > local) ecrire(k, String(x.meilleur));
@@ -105,25 +112,35 @@
     } catch (e) { /* hors ligne : on garde l'appareil */ }
   }
 
+  // comptes créés avant la table des identifiants : on ajoute la correspondance
+  async function assurerIdentifiant(p, email) {
+    try {
+      var ref = fb.db.collection("identifiants").doc(p.id), d = await ref.get();
+      if (!d.exists) await ref.set({ uid: p.uid, email: email });
+    } catch (e) { /* sans gravité */ }
+  }
+
   if (EN_LIGNE) {
     pret = chargerSDK().then(function () {
       var app = firebase.apps.length ? firebase.app() : firebase.initializeApp(CFG);
-      fb = { auth: app.auth(), db: app.firestore(), FieldValue: firebase.firestore.FieldValue };
+      fb = { auth: app.auth(), db: app.firestore(), FieldValue: firebase.firestore.FieldValue, EmailAuthProvider: firebase.auth.EmailAuthProvider };
       return new Promise(function (ok) {
         var fini = false;
         fb.auth.onAuthStateChanged(async function (u) {
           if (fini) return;
           fini = true;
+          var avant = session();
           if (!u) { effacer("sti-session"); ok(null); return; }
-          var s = session();
-          if (s && s.uid === u.uid) { ok(s); return; }
           try {
             var p = await profilDepuisBase(u);
-            if (!p) { await fb.auth.signOut(); effacer("sti-session"); ok(null); return; }
+            if (!p || !p.actif) {
+              motif = p ? "desactive" : "supprime";
+              await fb.auth.signOut(); effacer("sti-session"); ok(null); return;
+            }
             memoriser(p);
-            await rapatrierScores(p);
+            if (!avant || avant.uid !== u.uid) await rapatrierScores(p);
             ok(p);
-          } catch (e) { ok(s); }
+          } catch (e) { ok(avant && avant.uid === u.uid ? avant : null); }   // hors ligne : on garde la session connue
         });
       });
     }).catch(function () { return session(); });
@@ -137,6 +154,7 @@
     pret: pret,
     session: session,
     accueilDe: accueilDe,
+    motif: function () { return motif; },
 
     async inscrire(d) {
       var id = verifierChamps(d);
@@ -151,18 +169,28 @@
         return this.connecter(id, d.mdp);
       }
       await pret;
-      var cred;
-      try { cred = await fb.auth.createUserWithEmailAndPassword(id + "@" + CFG.authDomain, d.mdp); }
+      var refId = fb.db.collection("identifiants").doc(id);
+      try { if ((await refId.get()).exists) throw { code: "auth/email-already-in-use" }; }
       catch (e) { throw new Error(messageFirebase(e, role)); }
+      var email = id + "-" + Date.now().toString(36) + "@" + CFG.authDomain, cred;
+      try { cred = await fb.auth.createUserWithEmailAndPassword(email, d.mdp); }
+      catch (e) { throw new Error(messageFirebase(e, role)); }
+      var uid = cred.user.uid;
       var profil = { identifiant: id, prenom: d.prenom, nom: d.nom, role: role, niveau: role === "prof" ? null : Number(d.niveau),
-                     classe: (d.classe || "").toUpperCase(), cree: fb.FieldValue.serverTimestamp() };
+                     classe: role === "prof" ? "" : (d.classe || "").toUpperCase(), actif: true, cree: fb.FieldValue.serverTimestamp() };
       if (role === "prof") profil.code = String(d.code || "").trim();
-      try { await fb.db.collection("comptes").doc(cred.user.uid).set(profil); }
-      catch (e) {
+      try {
+        var lot = fb.db.batch();
+        lot.set(fb.db.collection("comptes").doc(uid), profil);
+        lot.set(refId, { uid: uid, email: email });
+        await lot.commit();
+      } catch (e) {
         try { await cred.user.delete(); } catch (e2) { await fb.auth.signOut(); }
         throw new Error(messageFirebase(e, role));
       }
-      return memoriser({ id: id, uid: cred.user.uid, prenom: profil.prenom, nom: profil.nom, role: role, niveau: profil.niveau, classe: profil.classe });
+      var s = memoriser({ id: id, uid: uid, prenom: profil.prenom, nom: profil.nom, role: role, niveau: profil.niveau, classe: profil.classe, actif: true });
+      await rapatrierScores(s);   // scores conservés après une réinitialisation
+      return s;
     },
 
     async connecter(identifiant, mdp) {
@@ -170,16 +198,23 @@
       if (!EN_LIGNE) {
         var c = comptesLocaux()[id];
         if (!c || c.h !== (await empreinte(id + ":" + mdp))) throw new Error("Identifiant ou mot de passe incorrect.");
+        if (c.actif === false) throw erreurDesactive();
         return memoriser({ id: id, prenom: c.prenom, nom: c.nom, role: c.role, niveau: c.niveau, classe: c.classe });
       }
       await pret;
-      var cred;
-      try { cred = await fb.auth.signInWithEmailAndPassword(id + "@" + CFG.authDomain, mdp); }
+      if (!/^[a-z0-9][a-z0-9._-]{2,29}$/.test(id)) throw new Error("Identifiant ou mot de passe incorrect.");
+      var email = id + "@" + CFG.authDomain, cred, p;
+      try {
+        var corr = await fb.db.collection("identifiants").doc(id).get();
+        if (corr.exists) email = corr.data().email;
+      } catch (e) { throw new Error(messageFirebase(e)); }
+      try { cred = await fb.auth.signInWithEmailAndPassword(email, mdp); }
       catch (e) { throw new Error(messageFirebase(e)); }
-      var p;
       try { p = await profilDepuisBase(cred.user); } catch (e) { throw new Error(messageFirebase(e)); }
-      if (!p) { await fb.auth.signOut(); throw new Error("Compte incomplet : refaites l'inscription avec un autre identifiant."); }
+      if (!p) { await fb.auth.signOut(); throw new Error("Identifiant ou mot de passe incorrect."); }
+      if (!p.actif) { await fb.auth.signOut(); throw erreurDesactive(); }
       memoriser(p);
+      await assurerIdentifiant(p, email);
       await rapatrierScores(p);
       return p;
     },
@@ -190,37 +225,91 @@
       location.href = BASE;
     },
 
+    async changerMotDePasse(ancien, nouveau) {
+      var s = session();
+      if (!s) throw new Error("Vous n'êtes pas connecté.");
+      if (String(nouveau || "").length < 6) throw new Error("Le nouveau mot de passe doit contenir au moins 6 caractères.");
+      if (!EN_LIGNE) {
+        var c = comptesLocaux();
+        if (!c[s.id] || c[s.id].h !== (await empreinte(s.id + ":" + ancien))) throw new Error("Mot de passe actuel incorrect.");
+        c[s.id].h = await empreinte(s.id + ":" + nouveau);
+        ecrire("sti-comptes", JSON.stringify(c));
+        return;
+      }
+      await pret;
+      var u = fb.auth.currentUser;
+      if (!u) throw new Error("Session expirée : reconnectez-vous.");
+      try {
+        await u.reauthenticateWithCredential(fb.EmailAuthProvider.credential(u.email, ancien));
+      } catch (e) { throw new Error(/credential|password/.test(e.code || "") ? "Mot de passe actuel incorrect." : messageFirebase(e)); }
+      try { await u.updatePassword(nouveau); } catch (e) { throw new Error(messageFirebase(e)); }
+    },
+
     // appelé par les exercices à la fin d'un entraînement
     async enregistrerScore(n, c, pc, meilleur) {
       var s = session();
       if (!EN_LIGNE || !s || s.role !== "eleve") return;
       try {
         await pret;
-        await fb.db.collection("scores").doc(s.uid + "_" + n + "_" + c).set({
-          uid: s.uid, identifiant: s.id, prenom: s.prenom, nom: s.nom, classe: s.classe || "", niveauEleve: s.niveau || null,
+        await fb.db.collection("scores").doc(s.id + "_" + n + "_" + c).set({
+          identifiant: s.id, uid: s.uid, prenom: s.prenom, nom: s.nom, classe: s.classe || "", niveauEleve: s.niveau || null,
           n: Number(n), c: Number(c), dernier: pc, meilleur: Math.max(pc, meilleur || 0),
           essais: fb.FieldValue.increment(1), date: fb.FieldValue.serverTimestamp()
         }, { merge: true });
       } catch (e) { /* hors ligne : le score reste sur l'appareil */ }
     },
 
-    // suivi des élèves (enseignants, mode en ligne)
-    async suivi() {
+    /* ---------------- enseignants : suivi et gestion (mode en ligne) */
+    async comptes() {
       if (!EN_LIGNE) throw new Error("hors-ligne");
       await pret;
-      var res = await Promise.all([fb.db.collection("comptes").where("role", "==", "eleve").get(), fb.db.collection("scores").get()]);
-      var eleves = [], scores = [];
-      res[0].forEach(function (d) { var x = d.data(); x.uid = d.id; eleves.push(x); });
-      res[1].forEach(function (d) { scores.push(d.data()); });
-      return { eleves: eleves, scores: scores };
+      var r = await fb.db.collection("comptes").get(), liste = [];
+      r.forEach(function (d) {
+        var x = d.data();
+        x.uid = d.id;
+        x.actif = x.actif !== false;
+        x.creeLe = x.cree && x.cree.toDate ? x.cree.toDate() : null;
+        delete x.code;
+        liste.push(x);
+      });
+      return liste;
     },
-    async retirerEleve(uid) {
+    async suivi() {
+      var res = await Promise.all([this.comptes(), fb.db.collection("scores").get()]);
+      var scores = [];
+      res[1].forEach(function (d) { scores.push(d.data()); });
+      return { eleves: res[0].filter(function (x) { return x.role === "eleve"; }), scores: scores };
+    },
+    // champs modifiables : prenom, nom, niveau, classe (élèves) ; actif (élèves et enseignants)
+    async modifierComptes(uids, champs) {
       await pret;
-      var r = await fb.db.collection("scores").where("uid", "==", uid).get();
+      for (var i = 0; i < uids.length; i += 400) {
+        var lot = fb.db.batch();
+        uids.slice(i, i + 400).forEach(function (uid) { lot.update(fb.db.collection("comptes").doc(uid), champs); });
+        await lot.commit();
+      }
+    },
+    // le profil et l'identifiant sont libérés, les scores sont gardés :
+    // l'élève refait l'inscription avec le même identifiant et un nouveau mot de passe
+    async reinitialiser(comptes) {
+      await pret;
       var lot = fb.db.batch();
-      r.forEach(function (d) { lot.delete(d.ref); });
-      lot.delete(fb.db.collection("comptes").doc(uid));
+      comptes.forEach(function (c) {
+        lot.delete(fb.db.collection("comptes").doc(c.uid));
+        lot.delete(fb.db.collection("identifiants").doc(c.identifiant));
+      });
       await lot.commit();
+    },
+    async supprimer(comptes) {
+      await pret;
+      for (var i = 0; i < comptes.length; i++) {
+        var c = comptes[i], lot = fb.db.batch();
+        var r = await fb.db.collection("scores").where("identifiant", "==", c.identifiant).get();
+        r.forEach(function (d) { lot.delete(d.ref); });
+        lot.delete(fb.db.collection("comptes").doc(c.uid));
+        lot.delete(fb.db.collection("identifiants").doc(c.identifiant));
+        await lot.commit();
+      }
     }
   };
   // clé de stockage propre au compte (progression, bac à sable…)
@@ -232,9 +321,9 @@
     var suite = "?suite=" + encodeURIComponent(location.pathname + location.search + location.hash);
     if (!s) { location.replace(BASE + suite); return; }
     if (acces === "prof" && s.role !== "prof") { location.replace(accueilDe(s)); return; }
-    // en mode en ligne : confirmation par Firebase (compte supprimé, session expirée…)
+    // en mode en ligne : confirmation par Firebase (compte désactivé ou supprimé, session expirée…)
     pret.then(function (v) {
-      if (!v) location.replace(BASE + suite);
+      if (!v) location.replace(BASE + suite + (motif ? "&motif=" + motif : ""));
       else if (acces === "prof" && v.role !== "prof") location.replace(accueilDe(v));
     });
     document.addEventListener("DOMContentLoaded", function () {
@@ -242,8 +331,10 @@
       if (!barre) return;
       var bloc = document.createElement("div");
       bloc.className = "compte-bloc";
-      bloc.innerHTML = '<span class="compte-nom"></span><button type="button" class="compte-sortir">Déconnexion</button>';
-      bloc.querySelector(".compte-nom").textContent = s.prenom + (s.role === "prof" ? " · Enseignant" : s.classe ? " · " + s.classe : s.niveau ? " · " + s.niveau + "ème" : "");
+      bloc.innerHTML = '<a class="compte-nom" title="Mon compte"></a><button type="button" class="compte-sortir">Déconnexion</button>';
+      var nom = bloc.querySelector(".compte-nom");
+      nom.href = BASE + "mon-compte.html";
+      nom.textContent = s.prenom + (s.role === "prof" ? " · Enseignant" : s.classe ? " · " + s.classe : s.niveau ? " · " + s.niveau + "ème" : "");
       bloc.querySelector(".compte-sortir").addEventListener("click", function () { window.CompteSTI.deconnecter(); });
       barre.appendChild(bloc);
     });

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon compte — STI, l'annexe en pratique</title>
+<meta name="description" content="Connexion à l'espace STI : élèves et enseignants.">
+<link rel="icon" href="../prof/assets/flag.png">
+<link rel="stylesheet" href="../prof/assets/vendor/fonts.css?v=202610271818">
+<link rel="stylesheet" href="../prof/assets/style.css?v=202610271818">
+<link rel="stylesheet" href="connexion.css?v=202610271818">
+<script src="config.js?v=202610271818"></script>
+<script src="compte.js?v=202610271818"></script>
+</head>
+<body class="page-compte">
+<main class="compte-fond">
+  <div class="compte-marque"><span class="marque-logo">STI</span><div><b>STI · L'annexe en pratique</b><small>Sciences et Technologies de l'Informatique</small></div></div>
+  <section class="compte-carte">
+    <h1>Mon compte</h1>
+    <dl class="mc-infos" id="mc-infos"></dl>
+    <h2>Changer mon mot de passe</h2>
+    <form id="f-mdp" novalidate>
+      <input type="text" autocomplete="username" id="mc-user" hidden>
+      <label for="m-ancien">Mot de passe actuel</label>
+      <input type="password" id="m-ancien" autocomplete="current-password" required>
+      <div class="deux">
+        <div><label for="m-nouveau">Nouveau mot de passe</label><input type="password" id="m-nouveau" autocomplete="new-password" required></div>
+        <div><label for="m-nouveau2">Confirmation</label><input type="password" id="m-nouveau2" autocomplete="new-password" required></div>
+      </div>
+      <p class="aide">6 caractères au minimum.</p>
+      <p class="erreur" id="m-erreur" role="alert" hidden></p>
+      <p class="succes" id="m-ok" role="status" hidden>Mot de passe modifié.</p>
+      <button type="submit" class="btn-compte">Changer le mot de passe</button>
+    </form>
+    <p class="compte-bas"><a id="mc-retour" href="#">← Retour à mon espace</a> · <button type="button" class="btn-lien" id="mc-sortir">Déconnexion</button></p>
+  </section>
+  <p class="compte-note" id="note-mode">Les comptes sont enregistrés dans le navigateur de cet appareil. Sur un ordinateur partagé, pensez à vous déconnecter.</p>
+</main>
+<script src="mon-compte.js?v=202610271818"></script>
+</body>
+</html>

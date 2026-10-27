@@ -14,6 +14,12 @@
   }
   function erreur(id, msg) { var p = document.getElementById(id); p.textContent = msg; p.hidden = !msg; }
 
+  var motif = new URLSearchParams(location.search).get("motif");
+  var msgMotif = { desactive: "Votre compte a été désactivé par un enseignant.", supprime: "Votre compte n'existe plus. Refaites l'inscription avec le même identifiant." }[motif];
+  if (msgMotif) {
+    var carte = document.querySelector(".compte-carte h1");
+    if (carte) carte.insertAdjacentHTML("afterend", '<p class="motif" role="alert">' + msgMotif + "</p>");
+  }
   if (C.enLigne) {
     var note = document.getElementById("note-mode");
     if (note) note.textContent = "Votre compte fonctionne sur tous vos appareils : ordinateur du labo, maison, téléphone.";
@@ -49,8 +55,9 @@
   if (fi) {
     var role = function () { return fi.querySelector('input[name="role"]:checked').value; };
     var maj = function () {
-      document.getElementById("bloc-eleve").hidden = role() !== "eleve";
-      document.getElementById("bloc-prof").hidden = role() !== "prof";
+      var be = document.getElementById("bloc-eleve"), bp = document.getElementById("bloc-prof");
+      be.hidden = role() !== "eleve"; be.style.display = role() === "eleve" ? "" : "none";
+      bp.hidden = role() !== "prof"; bp.style.display = role() === "prof" ? "" : "none";
     };
     fi.querySelectorAll('input[name="role"]').forEach(function (r) { r.addEventListener("change", maj); });
     maj();

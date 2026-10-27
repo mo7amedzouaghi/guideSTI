@@ -359,3 +359,5 @@ div.tuile:hover { border-color: var(--ligne); }
 .compte-sortir:hover { background: var(--or); border-color: var(--or); color: var(--marine); }
 @media (max-width: 720px) { .compte-nom { display: none; } }
 @media print { .compte-bloc { display: none; } }
+.compte-bloc a.compte-nom { text-decoration: none; }
+.compte-bloc a.compte-nom:hover { text-decoration: underline; color: var(--or); }

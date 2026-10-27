@@ -51,8 +51,8 @@ def gabarit(fichier, titre, description, haut, contenu, classe="", scripts="", a
 <title>{titre} — STI Espace Élèves</title>
 <meta name="description" content="{esc(description)}">
 <link rel="icon" href="assets/flag.png">
-<script src="../connexion/config.js"></script>
-<script src="../connexion/compte.js" data-acces="eleve"></script>
+<script src="../connexion/config.js?v=20261027"></script>
+<script src="../connexion/compte.js?v=20261027" data-acces="eleve"></script>
 <link rel="stylesheet" href="assets/vendor/fonts.css">
 <link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
 <link rel="stylesheet" href="assets/style.css">
@@ -137,7 +137,7 @@ def main():
 <script>window.EXOS = {json.dumps(exos, ensure_ascii=False)};</script>"""
             ariane = f'<a href="index.html">Accueil</a> › <a href="n{n}.html">{titre_n}</a> › Chapitre {k}'
             ecrire(f, gabarit(f, titre, intro, bandeau(titre, intro, f"{titre_n} · Chapitre {k}", ariane), corps, f"niv-{n}",
-                              '<script src="assets/quiz.js"></script>\n<script src="assets/eleve.js"></script>', actif=f"n{n}.html"))
+                              '<script src="assets/quiz.js?v=20261027"></script>\n<script src="assets/eleve.js"></script>', actif=f"n{n}.html"))
 
         cartes = "".join(
             f'<a class="chap-carte" href="{c["f"]}" data-score="{n}-{c["k"]}"><span class="chap-num">{c["k"]}</span><div class="chap-txt"><h3>{c["t"]}</h3><p>{c["i"]}</p>'

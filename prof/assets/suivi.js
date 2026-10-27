@@ -30,14 +30,14 @@
   function lignes() {
     var n = Number(F.n), chaps = PLAN[F.n] || [];
     var parUid = {};
-    D.scores.forEach(function (x) { if (x.n === n) (parUid[x.uid] = parUid[x.uid] || {})[x.c] = x; });
+    D.scores.forEach(function (x) { if (x.n === n && x.identifiant) (parUid[x.identifiant] = parUid[x.identifiant] || {})[x.c] = x; });
     return D.eleves.filter(function (e) {
-      if (Number(e.niveau) !== n) return false;
+      if (Number(e.niveau) !== n || !e.actif) return false;
       if (F.classe && (e.classe || "") !== F.classe) return false;
       if (F.q && (e.prenom + " " + e.nom + " " + e.identifiant).toLowerCase().indexOf(F.q.toLowerCase()) < 0) return false;
       return true;
     }).map(function (e) {
-      var sc = parUid[e.uid] || {}, faits = 0, somme = 0, maitrises = 0;
+      var sc = parUid[e.identifiant] || {}, faits = 0, somme = 0, maitrises = 0;
       var cases = chaps.map(function (c) {
         var x = sc[c.k], v = x ? x.meilleur : null;
         if (v != null) { faits++; somme += v; if (v >= 80) maitrises++; }
@@ -82,12 +82,11 @@
     } else {
       h += '<div class="tableau-wrap s-wrap"><table class="s-table"><thead><tr><th scope="col">Élève</th><th scope="col">Classe</th>' +
         chaps.map(function (c, i) { return '<th scope="col" class="s-ch" title="' + esc(c.t) + '">C' + c.k + "</th>"; }).join("") +
-        '<th scope="col">Moy.</th><th scope="col">Maîtrisés</th><th scope="col"><span class="sr">Actions</span></th></tr></thead><tbody>' +
+        '<th scope="col">Moy.</th><th scope="col">Maîtrisés</th></tr></thead><tbody>' +
         L.map(function (l) {
           return '<tr><th scope="row">' + esc(l.e.nom) + " " + esc(l.e.prenom) + '<small>' + esc(l.e.identifiant) + "</small></th><td>" + esc(l.e.classe) + "</td>" +
             l.cases.map(function (x) { return '<td class="s-v ' + teinte(x.v) + '"' + (x.essais ? ' title="' + x.essais + ' essai(s)"' : "") + ">" + (x.v == null ? "·" : x.v) + "</td>"; }).join("") +
-            '<td class="s-v ' + teinte(l.moy) + '"><b>' + (l.moy == null ? "–" : l.moy) + "</b></td><td>" + l.maitrises + " / " + chaps.length + "</td>" +
-            '<td><button type="button" class="s-retirer" data-uid="' + esc(l.e.uid) + '" data-nom="' + esc(l.e.prenom + " " + l.e.nom) + '">Retirer</button></td></tr>';
+            '<td class="s-v ' + teinte(l.moy) + '"><b>' + (l.moy == null ? "–" : l.moy) + "</b></td><td>" + l.maitrises + " / " + chaps.length + "</td></tr>";
         }).join("") + "</tbody></table></div>" +
         '<p class="s-legende"><span class="ok">≥ 80 % maîtrisé</span><span class="moyen">50 à 79 %</span><span class="ko">&lt; 50 %</span><span class="vide">· pas encore fait</span></p>' +
         '<ol class="s-chapitres">' + chaps.map(function (c) { return "<li><b>C" + c.k + "</b> " + esc(c.t) + "</li>"; }).join("") + "</ol>";
@@ -100,13 +99,6 @@
     q.addEventListener("input", function () { F.q = q.value; var p = q.selectionStart; rendre(); var nq = document.getElementById("s-q"); nq.focus(); nq.setSelectionRange(p, p); });
     document.getElementById("s-maj").addEventListener("click", charger);
     document.getElementById("s-csv").addEventListener("click", function () { exporter(L, chaps); });
-    zone.querySelectorAll(".s-retirer").forEach(function (b) {
-      b.addEventListener("click", function () {
-        if (!confirm("Retirer " + b.dataset.nom + " de la liste et effacer ses scores ?")) return;
-        b.disabled = true;
-        C.retirerEleve(b.dataset.uid).then(charger).catch(function () { b.disabled = false; alert("Suppression impossible. Réessayez."); });
-      });
-    });
   }
 
   function exporter(L, chaps) {

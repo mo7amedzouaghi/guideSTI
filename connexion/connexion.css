@@ -43,3 +43,9 @@
   .deux, .role-choix { grid-template-columns: minmax(0, 1fr); }
 }
 .btn-compte.attente { opacity: .6; cursor: wait; }
+.compte-carte h2 { font-size: 20px; margin: 22px 0 4px; }
+.mc-infos { display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; margin: 12px 0 4px; background: #f4f7fc; border-radius: 12px; padding: 12px 16px; }
+.mc-infos dt { font-weight: 600; color: var(--texte-2); }
+.mc-infos dd { margin: 0; font-weight: 600; }
+.succes { background: #e7f5ec; border: 1px solid #bfe3cb; color: #14532D; border-radius: 9px; padding: 8px 12px; margin: 12px 0 0; font-weight: 600; }
+.motif { background: #fff4e5; border: 1px solid #f5d3a1; color: #7c4a03; border-radius: 9px; padding: 8px 12px; margin: 0 0 12px; }

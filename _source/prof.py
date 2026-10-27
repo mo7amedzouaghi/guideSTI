@@ -43,8 +43,8 @@ def gabarit(fichier, titre, description, haut, contenu, classe="", scripts="", a
 <title>{titre} — STI Espace Prof</title>
 <meta name="description" content="{esc(description)}">
 <link rel="icon" href="assets/flag.png">
-<script src="../connexion/config.js"></script>
-<script src="../connexion/compte.js" data-acces="prof"></script>
+<script src="../connexion/config.js?v=20261027"></script>
+<script src="../connexion/compte.js?v=20261027" data-acces="prof"></script>
 <link rel="stylesheet" href="assets/vendor/fonts.css">
 <link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
 <link rel="stylesheet" href="assets/style.css">
@@ -224,13 +224,25 @@ def main():
 <div id="v-resultat" aria-live="polite"></div>
 </div>""", "", '<script src="assets/data.js"></script>\n<script src="assets/verificateur.js"></script>\n<script src="assets/verifier-ui.js"></script>'))
 
-    # ------------------------------------------------------------ suivi des élèves
+    # ------------------------------------------------------------ suivi des élèves et gestion des comptes
+    def onglets(actif):
+        return ('<nav class="g-onglets" aria-label="Suivi">' + "".join(
+            f'<a href="{f}"{" aria-current=\"page\"" if f == actif else ""}>{t}</a>'
+            for f, t in (("suivi.html", "Résultats des élèves"), ("comptes.html", "Gestion des comptes"))) + "</nav>")
     ecrire("suivi.html", gabarit("suivi.html", "Suivi des élèves",
         "Les scores des élèves inscrits, par niveau, classe et chapitre.",
         bandeau("Suivi des élèves", "Le meilleur score de chaque élève à l'entraînement de chaque chapitre. Filtrez par niveau et par classe, repérez les chapitres à reprendre, exportez vers Excel."),
-        """<div class="page pleine suivi">
+        f"""<div class="page pleine suivi">
+{onglets("suivi.html")}
 <div id="s-zone" aria-live="polite"><p class="s-chargement">Chargement des résultats…</p></div>
-</div>""", "", '<script src="../eleves/assets/plan.js"></script>\n<script src="assets/suivi.js"></script>'))
+</div>""", "", '<script src="../eleves/assets/plan.js"></script>\n<script src="assets/suivi.js"></script>', actif="suivi.html"))
+    ecrire("comptes.html", gabarit("comptes.html", "Gestion des comptes",
+        "Les comptes des élèves et des enseignants : modifier, désactiver, réinitialiser, supprimer.",
+        bandeau("Gestion des comptes", "Corrigez un nom ou une classe, désactivez un compte, aidez un élève qui a oublié son mot de passe, faites passer une classe au niveau supérieur à la rentrée."),
+        f"""<div class="page pleine suivi">
+{onglets("comptes.html")}
+<div id="g-zone" aria-live="polite"><p class="s-chargement">Chargement des comptes…</p></div>
+</div>""", "", '<script src="assets/comptes.js"></script>', actif="suivi.html"))
 
     # ------------------------------------------------------------ accueil
     tuiles = (
