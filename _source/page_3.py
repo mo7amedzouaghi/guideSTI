@@ -95,7 +95,7 @@ N.notion("Événements HTML", f"""
 <p>Un événement relie une action de l'utilisateur à une fonction JavaScript, directement dans la balise. En 3ème, on n'utilise pas <code>addEventListener</code>.</p>
 {tableau(["Événement", "Se déclenche quand…", "Exemple"], [
     (c("onclick"), "on clique sur l'élément", c('<input type="button" onclick="calculer()">')),
-    (c("oninput"), "la valeur change à chaque frappe", c('<input type="range" oninput="afficher()">')),
+    (c("oninput"), "la valeur change à chaque modification", c('<input type="range" oninput="afficher()">')),
     (c("onchange"), "la valeur change et le champ est quitté", c('<input type="date" onchange="age()">')),
     (c("onfocus"), "le champ reçoit le focus", c('<input onfocus="aide()">')),
     (c("onblur"), "le champ perd le focus", c('<input onblur="verifierNom()">')),
