@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2ème année STI — Guide du Programme STI</title>
+<meta name="description" content="Les fondements du Web : structurer une page en HTML5 et la mettre en forme avec du CSS en ligne et interne.">
+<link rel="icon" href="flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="niv-2" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">Guide du Programme<small>Sciences et Technologies de l'Informatique</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="index.html" class="">Accueil</a><a href="niveau-2.html" class="m2" aria-current="page">2ème année</a><a href="niveau-3.html" class="m3">3ème année</a><a href="niveau-4.html" class="m4">4ème année</a><a href="annexe.html" class="">Annexe</a><a href="pedagogie.html" class="">Enseigner</a><a href="erreurs.html" class="">Erreurs</a><a href="outils.html" class="">Outils</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><span class="pastille-niveau">2ème année · Bases du Web</span><br><h1>2ème année STI</h1><p class="chapeau">Les fondements du Web : structurer une page en HTML5 et la mettre en forme avec du CSS en ligne et interne.</p><div class="bandeau-faits"><span>5 séquences</span><span>HTML5 + CSS en ligne et interne</span><span>Validation W3C</span></div></div></section>
+<div class="page"><nav class="sommaire" aria-label="Sommaire"><h2>Sommaire</h2><ol><li><a href="#m1">1. Structure d'une page HTML5</a><ol><li><a href="#m1-le-squelette-obligatoire">Le squelette obligatoire</a></li><li><a href="#m1-titres-paragraphes-et-separations">Titres, paragraphes et séparations</a></li><li><a href="#m1-valider-sa-page-avec-le-w3c">Valider sa page avec le W3C</a></li><li><a href="#m1-a-retenir-structure">À retenir — structure</a></li></ol></li><li><a href="#m2">2. Listes et tableaux</a><ol><li><a href="#m2-listes-a-puces-et-listes-ordonnees">Listes à puces et listes ordonnées</a></li><li><a href="#m2-tableaux-de-donnees">Tableaux de données</a></li><li><a href="#m2-a-retenir-listes-et-tableaux">À retenir — listes et tableaux</a></li></ol></li><li><a href="#m3">3. Liens et multimédia</a><ol><li><a href="#m3-les-liens-hypertextes">Les liens hypertextes</a></li><li><a href="#m3-images-audio-et-video">Images, audio et vidéo</a></li><li><a href="#m3-a-retenir-liens-et-multimedia">À retenir — liens et multimédia</a></li></ol></li><li><a href="#m4">4. Formulaires</a><ol><li><a href="#m4-la-balise-form-et-les-champs-de-base">La balise form et les champs de base</a></li><li><a href="#m4-listes-deroulantes-et-zones-de-texte">Listes déroulantes et zones de texte</a></li><li><a href="#m4-a-retenir-formulaires">À retenir — formulaires</a></li></ol></li><li><a href="#m5">5. CSS en ligne et interne</a><ol><li><a href="#m5-deux-facons-d-ecrire-le-css-en-2eme">Deux façons d'écrire le CSS en 2ème</a></li><li><a href="#m5-mettre-en-forme-le-texte">Mettre en forme le texte</a></li><li><a href="#m5-bordures">Bordures</a></li><li><a href="#m5-arriere-plans">Arrière-plans</a></li><li><a href="#m5-a-retenir-css-2eme">À retenir — CSS 2ème</a></li></ol></li><li><a href="#m6">6. Limites du programme et progression</a><ol><li><a href="#m6-interdits">Interdits</a></li><li><a href="#m6-progression-suggeree">Progression suggérée</a></li></ol></li></ol></nav><div class="contenu"><section class="module" id="m1"><div class="module-tete"><div class="module-num">01</div><div><h2>Structure d'une page HTML5</h2><p>La charpente de toute page web : le squelette obligatoire, les titres, les paragraphes et la validation W3C.</p></div></div><article class="notion" id="m1-le-squelette-obligatoire"><div class="notion-tete"><h3>Le squelette obligatoire</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p>Toute page commence par le même squelette. L'élève doit savoir l'écrire de mémoire et expliquer le rôle de chaque ligne : le <b>&lt;head&gt;</b> décrit la page (encodage, titre de l'onglet), le <b>&lt;body&gt;</b> contient ce que le visiteur voit.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span>index.html</span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Mon lycée&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Lycée Oued Ellil&lt;/h1&gt;
+  &lt;p&gt;Bienvenue sur le site de notre lycée.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/index.html</span></div><iframe title="Aperçu : localhost/index.html" style="height:130px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Lycée Oued Ellil&lt;/h1&gt;&lt;p&gt;Bienvenue sur le site de notre lycée.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Le titre « Mon lycée » s'affiche dans l'onglet, pas dans la page.</div></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Élément</th><th>Rôle</th></tr></thead><tbody><tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>Déclare un document HTML5. Toujours en première ligne.</td></tr><tr><td><code>&lt;html lang="fr"&gt;</code></td><td>Élément racine ; l'attribut <code>lang</code> indique la langue de la page.</td></tr><tr><td><code>&lt;meta charset="UTF-8"&gt;</code></td><td>Encodage des caractères : indispensable pour les accents (é, à, ç).</td></tr><tr><td><code>&lt;title&gt;</code></td><td>Titre affiché dans l'onglet du navigateur et dans les favoris.</td></tr><tr><td><code>&lt;body&gt;</code></td><td>Contenu visible de la page.</td></tr></tbody></table></div>
+<div class="enc prof"><b class="ico" aria-hidden="true">✎</b><div><p>Faites d'abord retirer la ligne <code>meta charset</code> pour montrer l'effet sur les accents : l'élève retient mieux une erreur qu'il a provoquée lui-même.</p></div></div>
+</div></article><article class="notion" id="m1-titres-paragraphes-et-separations"><div class="notion-tete"><h3>Titres, paragraphes et séparations</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p>Les titres <code>&lt;h1&gt;</code> à <code>&lt;h6&gt;</code> hiérarchisent le contenu (un seul <code>h1</code> par page). Le paragraphe <code>&lt;p&gt;</code> regroupe un bloc de texte, <code>&lt;br&gt;</code> force un retour à la ligne et <code>&lt;hr&gt;</code> trace une ligne de séparation thématique.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;h1&gt;Club informatique&lt;/h1&gt;
+&lt;h2&gt;Nos activités&lt;/h2&gt;
+&lt;p&gt;Programmation, robotique&lt;br&gt;
+et création de sites web.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;Inscriptions&lt;/h2&gt;
+&lt;p&gt;Ouvertes jusqu'au 15 novembre.&lt;/p&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:230px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Club informatique&lt;/h1&gt;&lt;h2&gt;Nos activités&lt;/h2&gt;&lt;p&gt;Programmation, robotique&lt;br&gt;et création de sites web.&lt;/p&gt;&lt;hr&gt;&lt;h2&gt;Inscriptions&lt;/h2&gt;&lt;p&gt;Ouvertes jusqu&#x27;au 15 novembre.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p>La mise en forme (gras, italique, couleur) ne se fait <b>jamais</b> avec des balises HTML comme <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code> ou <code>&lt;strong&gt;</code> : elle passe par le CSS (<code>font-weight</code>, <code>font-style</code>). HTML = structure, CSS = présentation.</p></div></div>
+</div></article><article class="notion" id="m1-valider-sa-page-avec-le-w3c"><div class="notion-tete"><h3>Valider sa page avec le W3C</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p>Une page « qui s'affiche » n'est pas forcément correcte. Le validateur officiel <a href="https://validator.w3.org/#validate_by_input" target="_blank" rel="noopener">validator.w3.org</a> signale les erreurs (balise non fermée, attribut obligatoire manquant) et les avertissements.</p>
+<ol class="etapes">
+<li><h4>Copier le code</h4><p>Sélectionner tout le code de la page dans l'éditeur.</p></li>
+<li><h4>Coller dans « Validate by Direct Input »</h4><p>Puis cliquer sur <i>Check</i>.</p></li>
+<li><h4>Corriger de haut en bas</h4><p>Une seule erreur (une balise non fermée) peut en provoquer plusieurs autres : on corrige la première puis on revalide.</p></li>
+</ol>
+<div class="versus"><div class="faux"><div class="etiq">✗ Incorrect</div><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;img src="lycee.jpg"&gt;
+&lt;p&gt;Notre lycée</code></pre></div></div><div class="juste"><div class="etiq">✔ Conforme</div><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;img src="lycee.jpg" alt="Façade du lycée"&gt;
+&lt;p&gt;Notre lycée&lt;/p&gt;</code></pre></div></div></div><p>Erreurs signalées par le validateur : attribut <code>alt</code> manquant sur l'image et paragraphe non fermé.</p>
+</div></article><div id="m1-a-retenir-structure"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Le squelette HTML5 est toujours le même : DOCTYPE, html, head, body.</li><li><code>meta charset="UTF-8"</code> garantit l'affichage des accents.</li><li>Un seul <code>h1</code> par page, puis h2, h3… dans l'ordre.</li><li>HTML décrit la structure, jamais la mise en forme.</li><li>Une page est terminée quand elle passe le validateur W3C sans erreur.</li></ul><h4>Balises de la séquence</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Balise</th><th>Attributs (annexe)</th><th>Rôle</th></tr></thead><tbody><tr><td><code>&lt;html&gt;</code></td><td><code>lang</code></td><td>Racine du document</td></tr><tr><td><code>&lt;meta&gt;</code></td><td><code>charset, name, content</code></td><td>Métadonnées (encodage, description)</td></tr><tr><td><code>&lt;title&gt;</code></td><td>—</td><td>Titre de l'onglet</td></tr><tr><td><code>&lt;h1&gt; à &lt;h6&gt;</code></td><td>—</td><td>Titres hiérarchisés</td></tr><tr><td><code>&lt;p&gt;</code></td><td>—</td><td>Paragraphe</td></tr><tr><td><code>&lt;br&gt;</code></td><td>—</td><td>Retour à la ligne</td></tr><tr><td><code>&lt;hr&gt;</code></td><td>—</td><td>Séparation thématique</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m2"><div class="module-tete"><div class="module-num">02</div><div><h2>Listes et tableaux</h2><p>Organiser l'information : listes à puces, listes numérotées et tableaux de données.</p></div></div><article class="notion" id="m2-listes-a-puces-et-listes-ordonnees"><div class="notion-tete"><h3>Listes à puces et listes ordonnées</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p><code>&lt;ul&gt;</code> crée une liste à puces (l'ordre n'a pas d'importance), <code>&lt;ol&gt;</code> une liste numérotée (l'ordre compte). Chaque élément est dans un <code>&lt;li&gt;</code>. La liste ordonnée accepte trois attributs de l'annexe : <code>type</code>, <code>start</code> et <code>reversed</code>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;h3&gt;Matériel du labo&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Ordinateurs&lt;/li&gt;
+  &lt;li&gt;Imprimante&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Classement du tournoi&lt;/h3&gt;
+&lt;ol type="I" start="1"&gt;
+  &lt;li&gt;3ème Info 1&lt;/li&gt;
+  &lt;li&gt;3ème Info 2&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3&gt;Compte à rebours&lt;/h3&gt;
+&lt;ol reversed&gt;
+  &lt;li&gt;Prêts&lt;/li&gt;
+  &lt;li&gt;Partez&lt;/li&gt;
+&lt;/ol&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:330px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h3&gt;Matériel du labo&lt;/h3&gt;&lt;ul&gt;&lt;li&gt;Ordinateurs&lt;/li&gt;&lt;li&gt;Imprimante&lt;/li&gt;&lt;/ul&gt;&lt;h3&gt;Classement du tournoi&lt;/h3&gt;&lt;ol type=&quot;I&quot; start=&quot;1&quot;&gt;&lt;li&gt;3ème Info 1&lt;/li&gt;&lt;li&gt;3ème Info 2&lt;/li&gt;&lt;/ol&gt;&lt;h3&gt;Compte à rebours&lt;/h3&gt;&lt;ol reversed&gt;&lt;li&gt;Prêts&lt;/li&gt;&lt;li&gt;Partez&lt;/li&gt;&lt;/ol&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Attribut de &lt;ol&gt;</th><th>Valeurs</th><th>Effet</th></tr></thead><tbody><tr><td><code>type</code></td><td>1, A, a, I, i</td><td>Style de numérotation</td></tr><tr><td><code>start</code></td><td>un entier</td><td>Numéro du premier élément</td></tr><tr><td><code>reversed</code></td><td>sans valeur</td><td>Numérotation décroissante</td></tr></tbody></table></div>
+</div></article><article class="notion" id="m2-tableaux-de-donnees"><div class="notion-tete"><h3>Tableaux de données</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p>Un tableau se construit <b>ligne par ligne</b> : <code>&lt;tr&gt;</code> (ligne), puis les cellules <code>&lt;th&gt;</code> (en-tête) ou <code>&lt;td&gt;</code> (donnée). <code>&lt;caption&gt;</code> donne un titre au tableau, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> et <code>&lt;tfoot&gt;</code> en délimitent les parties.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;table border="1"&gt;
+  &lt;caption&gt;Emploi du temps — lundi&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Heure&lt;/th&gt;&lt;th&gt;Matière&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;8h&lt;/td&gt;&lt;td&gt;Informatique&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;10h&lt;/td&gt;&lt;td&gt;Mathématiques&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;&lt;td&gt;Total&lt;/td&gt;&lt;td&gt;2 séances&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:170px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;table border=&quot;1&quot;&gt;&lt;caption&gt;Emploi du temps — lundi&lt;/caption&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Heure&lt;/th&gt;&lt;th&gt;Matière&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;8h&lt;/td&gt;&lt;td&gt;Informatique&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;10h&lt;/td&gt;&lt;td&gt;Mathématiques&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;tfoot&gt;&lt;tr&gt;&lt;td&gt;Total&lt;/td&gt;&lt;td&gt;2 séances&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc astuce"><b class="ico" aria-hidden="true">★</b><div><p>Faites dessiner le tableau sur papier avant de le coder : l'élève compte les lignes, et chaque ligne devient un <code>&lt;tr&gt;</code>.</p></div></div>
+</div></article><div id="m2-a-retenir-listes-et-tableaux"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li><code>ul</code> : ordre sans importance ; <code>ol</code> : ordre significatif.</li><li>Chaque élément de liste est dans un <code>li</code>.</li><li>Un tableau se lit ligne par ligne : <code>tr</code> puis <code>th</code> / <code>td</code>.</li><li><code>caption</code> se place juste après <code>&lt;table&gt;</code>.</li></ul><h4>Balises de la séquence</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Balise</th><th>Attributs (annexe)</th><th>Rôle</th></tr></thead><tbody><tr><td><code>&lt;ul&gt;</code></td><td>—</td><td>Liste à puces</td></tr><tr><td><code>&lt;ol&gt;</code></td><td><code>type, start, reversed</code></td><td>Liste ordonnée</td></tr><tr><td><code>&lt;li&gt;</code></td><td>—</td><td>Élément de liste</td></tr><tr><td><code>&lt;table&gt;</code></td><td>—</td><td>Tableau</td></tr><tr><td><code>&lt;caption&gt;</code></td><td>—</td><td>Titre du tableau</td></tr><tr><td><code>&lt;thead&gt; &lt;tbody&gt; &lt;tfoot&gt;</code></td><td>—</td><td>En-tête, corps et pied du tableau</td></tr><tr><td><code>&lt;tr&gt; &lt;th&gt; &lt;td&gt;</code></td><td>—</td><td>Ligne, cellule d'en-tête, cellule de donnée</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m3"><div class="module-tete"><div class="module-num">03</div><div><h2>Liens et multimédia</h2><p>Naviguer entre les pages et intégrer images, sons et vidéos.</p></div></div><article class="notion" id="m3-les-liens-hypertextes"><div class="notion-tete"><h3>Les liens hypertextes</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p>La balise <code>&lt;a&gt;</code> crée un lien. <code>href</code> indique la destination, <code>target</code> la fenêtre d'ouverture.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;a href="contact.html"&gt;Nous contacter&lt;/a&gt;
+&lt;a href="https://www.education.tn" target="_blank"&gt;Site du ministère&lt;/a&gt;</code></pre></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Valeur de target</th><th>Effet</th></tr></thead><tbody><tr><td><code>_self</code></td><td>Même onglet (par défaut)</td></tr><tr><td><code>_blank</code></td><td>Nouvel onglet</td></tr><tr><td><code>_parent</code></td><td>Cadre parent</td></tr><tr><td><code>_top</code></td><td>Fenêtre entière</td></tr></tbody></table></div>
+<div class="enc info"><b class="ico" aria-hidden="true">i</b><div><p>Chemins relatifs : <code>contact.html</code> (même dossier), <code>pages/contact.html</code> (sous-dossier), <code>../index.html</code> (dossier parent). C'est la première source d'erreur en TP.</p></div></div>
+</div></article><article class="notion" id="m3-images-audio-et-video"><div class="notion-tete"><h3>Images, audio et vidéo</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p><code>&lt;img&gt;</code> exige <code>src</code> (le fichier) et <code>alt</code> (le texte de remplacement). <code>&lt;audio&gt;</code> et <code>&lt;video&gt;</code> utilisent <code>src</code> et <code>controls</code> pour afficher les boutons de lecture.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;img src="images/lycee.jpg" alt="Façade du lycée"&gt;
+
+&lt;audio src="sons/hymne.mp3" controls&gt;&lt;/audio&gt;
+
+&lt;video src="videos/visite.mp4" controls&gt;&lt;/video&gt;</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p>Sans <code>controls</code>, le lecteur est invisible et l'élève croit que « la vidéo ne marche pas ».</p></div></div>
+</div></article><div id="m3-a-retenir-liens-et-multimedia"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li><code>href</code> = destination, <code>target</code> = où ouvrir.</li><li><code>alt</code> est obligatoire sur chaque image (validation W3C).</li><li><code>controls</code> affiche les commandes audio/vidéo.</li><li>Noms de fichiers sans espace ni accent : <code>photo_classe.jpg</code>.</li></ul><h4>Balises de la séquence</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Balise</th><th>Attributs (annexe)</th><th>Rôle</th></tr></thead><tbody><tr><td><code>&lt;a&gt;</code></td><td><code>href, target</code></td><td>Lien hypertexte</td></tr><tr><td><code>&lt;img&gt;</code></td><td><code>src, alt</code></td><td>Image</td></tr><tr><td><code>&lt;audio&gt;</code></td><td><code>src, controls</code></td><td>Son</td></tr><tr><td><code>&lt;video&gt;</code></td><td><code>src, controls</code></td><td>Vidéo</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m4"><div class="module-tete"><div class="module-num">04</div><div><h2>Formulaires</h2><p>Recueillir des informations : zones de saisie, choix multiples, listes et boutons.</p></div></div><article class="notion" id="m4-la-balise-form-et-les-champs-de-base"><div class="notion-tete"><h3>La balise form et les champs de base</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p>Le formulaire regroupe les champs. <code>&lt;label for="…"&gt;</code> relie un texte à un champ via son <code>id</code> : cliquer sur le texte active le champ. <code>&lt;fieldset&gt;</code> et <code>&lt;legend&gt;</code> regroupent visuellement des champs liés.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span>inscription.html</span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;form action="inscription.php" method="post"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Inscription au club&lt;/legend&gt;
+    &lt;label for="nom"&gt;Nom :&lt;/label&gt;
+    &lt;input type="text" id="nom" name="nom"&gt;&lt;br&gt;
+
+    &lt;label for="age"&gt;Âge :&lt;/label&gt;
+    &lt;input type="number" id="age" name="age"&gt;&lt;br&gt;
+
+    Classe :
+    &lt;input type="radio" name="classe" value="2A"&gt; 2A
+    &lt;input type="radio" name="classe" value="2B"&gt; 2B&lt;br&gt;
+
+    &lt;input type="checkbox" name="photo" value="oui"&gt;
+    J'accepte d'être photographié(e)&lt;br&gt;
+
+    &lt;input type="submit" value="Envoyer"&gt;
+    &lt;input type="reset" value="Effacer"&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/inscription.html</span></div><iframe title="Aperçu : localhost/inscription.html" style="height:230px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;form&gt;&lt;fieldset&gt;&lt;legend&gt;Inscription au club&lt;/legend&gt;&lt;label for=&quot;nom&quot;&gt;Nom :&lt;/label&gt; &lt;input type=&quot;text&quot; id=&quot;nom&quot; name=&quot;nom&quot;&gt;&lt;br&gt;&lt;label for=&quot;age&quot;&gt;Âge :&lt;/label&gt; &lt;input type=&quot;number&quot; id=&quot;age&quot; name=&quot;age&quot;&gt;&lt;br&gt;Classe : &lt;input type=&quot;radio&quot; name=&quot;classe&quot; value=&quot;2A&quot;&gt; 2A &lt;input type=&quot;radio&quot; name=&quot;classe&quot; value=&quot;2B&quot;&gt; 2B&lt;br&gt;&lt;input type=&quot;checkbox&quot; name=&quot;photo&quot; value=&quot;oui&quot;&gt; J&#x27;accepte d&#x27;être photographié(e)&lt;br&gt;&lt;input type=&quot;submit&quot; value=&quot;Envoyer&quot;&gt; &lt;input type=&quot;reset&quot; value=&quot;Effacer&quot;&gt;&lt;/fieldset&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p>Les boutons radio d'un même groupe portent <b>le même <code>name</code></b> : c'est ce qui rend le choix exclusif.</p></div></div>
+</div></article><article class="notion" id="m4-listes-deroulantes-et-zones-de-texte"><div class="notion-tete"><h3>Listes déroulantes et zones de texte</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p><code>&lt;select&gt;</code> propose une liste de <code>&lt;option&gt;</code> ; <code>selected</code> présélectionne une option et <code>multiple</code> autorise plusieurs choix. <code>&lt;textarea&gt;</code> accepte un texte sur plusieurs lignes.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;label for="gouv"&gt;Gouvernorat :&lt;/label&gt;
+&lt;select id="gouv" name="gouv"&gt;
+  &lt;option value=""&gt;-- Choisir --&lt;/option&gt;
+  &lt;option value="Manouba" selected&gt;Manouba&lt;/option&gt;
+  &lt;option value="Tunis"&gt;Tunis&lt;/option&gt;
+&lt;/select&gt;
+&lt;br&gt;
+&lt;label for="msg"&gt;Message :&lt;/label&gt;&lt;br&gt;
+&lt;textarea id="msg" name="msg" rows="3" cols="30"
+  maxlength="200" placeholder="Votre message"&gt;&lt;/textarea&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:150px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;label for=&quot;gouv&quot;&gt;Gouvernorat :&lt;/label&gt; &lt;select id=&quot;gouv&quot; name=&quot;gouv&quot;&gt;&lt;option value=&quot;&quot;&gt;-- Choisir --&lt;/option&gt;&lt;option value=&quot;Manouba&quot; selected&gt;Manouba&lt;/option&gt;&lt;option value=&quot;Tunis&quot;&gt;Tunis&lt;/option&gt;&lt;/select&gt;&lt;br&gt;&lt;label for=&quot;msg&quot;&gt;Message :&lt;/label&gt;&lt;br&gt;&lt;textarea id=&quot;msg&quot; name=&quot;msg&quot; rows=&quot;3&quot; cols=&quot;30&quot; maxlength=&quot;200&quot; placeholder=&quot;Votre message&quot;&gt;&lt;/textarea&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><div id="m4-a-retenir-formulaires"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li><code>method</code> vaut <code>get</code> ou <code>post</code> ; <code>action</code> désigne la page de traitement.</li><li><code>name</code> identifie la donnée envoyée, <code>id</code> sert au <code>label</code>.</li><li>Radio : même <code>name</code> pour un choix unique.</li><li>En 2ème : text, number, radio, checkbox, submit, reset uniquement.</li></ul><h4>Balises et types de la séquence</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Élément</th><th>Attributs (annexe)</th><th>Rôle</th></tr></thead><tbody><tr><td><code>&lt;form&gt;</code></td><td><code>action, method, target</code></td><td>Formulaire</td></tr><tr><td><code>&lt;fieldset&gt; &lt;legend&gt;</code></td><td>—</td><td>Groupe de champs et son titre</td></tr><tr><td><code>&lt;label&gt;</code></td><td><code>for</code></td><td>Étiquette liée à un champ</td></tr><tr><td><code>&lt;input&gt;</code></td><td><code>type, name, value</code></td><td>Champ : text, number, radio, checkbox, submit, reset</td></tr><tr><td><code>&lt;select&gt;</code></td><td><code>name, required, disabled, multiple</code></td><td>Liste déroulante</td></tr><tr><td><code>&lt;option&gt;</code></td><td><code>value, selected</code></td><td>Choix de la liste</td></tr><tr><td><code>&lt;textarea&gt;</code></td><td><code>name, rows, cols, maxlength, placeholder</code></td><td>Texte multiligne</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m5"><div class="module-tete"><div class="module-num">05</div><div><h2>CSS en ligne et interne</h2><p>Mettre en forme sans fichier externe : texte, bordures et arrière-plans.</p></div></div><article class="notion" id="m5-deux-facons-d-ecrire-le-css-en-2eme"><div class="notion-tete"><h3>Deux façons d'écrire le CSS en 2ème</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<p>En 2ème année, le CSS s'écrit <b>en ligne</b> (attribut <code>style</code>, pour un seul élément) ou <b>en interne</b> (balise <code>&lt;style&gt;</code> dans le <code>&lt;head&gt;</code>, pour toute la page). La syntaxe est toujours : <code>sélecteur { propriété: valeur; }</code>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Club&lt;/title&gt;
+  &lt;style&gt;
+    h1 {
+      color: navy;
+      text-align: center;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Club informatique&lt;/h1&gt;
+  &lt;p style="color: green;"&gt;Inscriptions ouvertes&lt;/p&gt;
+&lt;/body&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:120px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;h1{color:navy;text-align:center}&lt;/style&gt;&lt;h1&gt;Club informatique&lt;/h1&gt;&lt;p style=&quot;color: green;&quot;&gt;Inscriptions ouvertes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc info"><b class="ico" aria-hidden="true">i</b><div><p>Sélecteurs utilisés en 2ème : le nom de l'élément (<code>h1</code>, <code>p</code>, <code>table</code>…). Les sélecteurs <code>#id</code> et <code>.classe</code> arrivent en 3ème.</p></div></div>
+</div></article><article class="notion" id="m5-mettre-en-forme-le-texte"><div class="notion-tete"><h3>Mettre en forme le texte</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">&lt;style&gt;
+  h2 {
+    font-family: Georgia, serif;
+    font-size: 26px;
+    color: darkred;
+  }
+  p {
+    font-weight: bold;
+    font-style: italic;
+    text-align: justify;
+  }
+&lt;/style&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:140px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;h2{font-family:Georgia,serif;font-size:26px;color:darkred}p{font-weight:bold;font-style:italic;text-align:justify}&lt;/style&gt;&lt;h2&gt;Le patrimoine de Carthage&lt;/h2&gt;&lt;p&gt;Carthage, fondée au IXe siècle avant J.-C., est inscrite au patrimoine mondial de l&#x27;UNESCO depuis 1979.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc astuce"><b class="ico" aria-hidden="true">★</b><div><p>La propriété abrégée <code>font</code> regroupe style, graisse, taille et police : <code>font: italic bold 18px Arial;</code></p></div></div>
+</div></article><article class="notion" id="m5-bordures"><div class="notion-tete"><h3>Bordures</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">&lt;style&gt;
+  table {
+    border-width: 2px;
+    border-style: solid;
+    border-color: navy;
+  }
+  td {
+    border: 1px dashed gray;
+  }
+&lt;/style&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:110px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;table{border-width:2px;border-style:solid;border-color:navy}td{border:1px dashed gray;padding:6px}&lt;/style&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;Lundi&lt;/td&gt;&lt;td&gt;Informatique&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Mardi&lt;/td&gt;&lt;td&gt;Physique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><article class="notion" id="m5-arriere-plans"><div class="notion-tete"><h3>Arrière-plans</h3><span class="annexe-tag n2">Annexe 2ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">&lt;style&gt;
+  body {
+    background-color: lightyellow;
+  }
+  h1 {
+    background-image: url("motif.png");
+    background-repeat: repeat-x;
+  }
+&lt;/style&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:110px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;body{background-color:lightyellow}h1{background-color:#cfe3ff}&lt;/style&gt;&lt;h1&gt;Bienvenue&lt;/h1&gt;&lt;p&gt;Fond de page jaune clair.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">L'image de fond est remplacée ici par une couleur.</div></div></div>
+</div></article><div id="m5-a-retenir-css-2eme"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>CSS en ligne : attribut <code>style</code> ; CSS interne : <code>&lt;style&gt;</code> dans le <code>head</code>.</li><li>Syntaxe : <code>sélecteur { propriété: valeur; }</code>, chaque déclaration se termine par <code>;</code>.</li><li>Gras et italique se font en CSS : <code>font-weight</code>, <code>font-style</code>.</li><li>Pas de fichier .css externe en 2ème année.</li></ul><h4>Nouvelles propriétés CSS</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Propriété</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Définition</th></tr></thead><tbody><tr><td><code>font-family</code></td><td>nom(s) de police par ordre de préférence</td><td><code>Georgia, serif</code></td><td>Police du texte</td></tr><tr><td><code>font-size</code></td><td>taille en px</td><td><code>26px</code></td><td>Taille des caractères</td></tr><tr><td><code>font-weight</code></td><td>bold, bolder, lighter</td><td><code>bold</code></td><td>Graisse du texte</td></tr><tr><td><code>font-style</code></td><td>italic</td><td><code>italic</code></td><td>Style du texte</td></tr><tr><td><code>font</code></td><td>combine style, graisse, taille, police</td><td><code>italic bold 18px Arial</code></td><td>Propriété abrégée du texte</td></tr><tr><td><code>text-align</code></td><td>left, center, right, justify</td><td><code>justify</code></td><td>Alignement horizontal</td></tr><tr><td><code>color</code></td><td>nom, #hexadécimal, rgb()</td><td><code>darkred</code></td><td>Couleur du texte</td></tr><tr><td><code>border-width</code></td><td>medium, thin, thick, valeur en px</td><td><code>2px</code></td><td>Épaisseur de la bordure</td></tr><tr><td><code>border-style</code></td><td>solid, dashed, dotted…</td><td><code>solid</code></td><td>Style du trait</td></tr><tr><td><code>border-color</code></td><td>nom, #hexadécimal, rgb()</td><td><code>navy</code></td><td>Couleur de la bordure</td></tr><tr><td><code>border</code></td><td>combine largeur, style, couleur</td><td><code>1px dashed gray</code></td><td>Propriété abrégée</td></tr><tr><td><code>background-color</code></td><td>nom, #hexadécimal, rgb()</td><td><code>lightyellow</code></td><td>Couleur de fond</td></tr><tr><td><code>background-image</code></td><td>url("fichier")</td><td><code>url("motif.png")</code></td><td>Image de fond</td></tr><tr><td><code>background-repeat</code></td><td>repeat, repeat-x, repeat-y</td><td><code>repeat-x</code></td><td>Répétition de l'image de fond</td></tr><tr><td><code>background</code></td><td>combine les propriétés de fond</td><td><code>—</code></td><td>Propriété abrégée</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m6"><div class="module-tete"><div class="module-num">06</div><div><h2>Limites du programme et progression</h2><p>Ce qui ne s'enseigne pas en 2ème, et une répartition possible sur l'année.</p></div></div><div id="m6-interdits"><div class="interdits"><h3>À ne pas enseigner en 2ème année</h3><ul><li>Balises sémantiques<small>header, nav, section, article, footer… (3ème)</small></li><li>JavaScript<small>introduit en 3ème</small></li><li>CSS externe<small>fichier .css et balise link (3ème)</small></li><li>Types date, time, email, tel, password, range<small>3ème</small></li><li>Sélecteurs #id, .classe, pseudo-classes<small>3ème et 4ème</small></li><li>Mise en forme par balises<small>b, strong, i, em, u, font, center</small></li></ul></div></div><div id="m6-progression-suggeree"><article class="notion" id="m6-progression"><div class="notion-tete"><h3>Progression suggérée</h3><span class="annexe-tag">Proposition</span></div><div class="notion-corps">
+<p>Fil rouge conseillé : un <b>mini-site du lycée</b> (accueil, emploi du temps, club, inscription) que l'élève enrichit à chaque séance.</p>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Trimestre</th><th>Notions</th><th>Production de l'élève</th></tr></thead><tbody><tr><td>1er</td><td>Squelette, titres, paragraphes, listes, validation W3C</td><td>Page d'accueil du lycée, validée</td></tr><tr><td>2ème</td><td>Tableaux, liens, images, audio, vidéo, CSS en ligne et interne</td><td>Emploi du temps + navigation entre pages</td></tr><tr><td>3ème</td><td>Formulaires, CSS des bordures et arrière-plans</td><td>Fiche d'inscription au club, mise en forme</td></tr></tbody></table></div>
+</div></article></div><a class="haut-page" href="#haut">Retour en haut de page</a></section></div></div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>Guide du Programme STI</h4>
+      <p>Référence pédagogique pour les enseignants de Sciences et Technologies de l'Informatique (2ème, 3ème et 4ème année), conforme à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="niveau-2.html">2ème année</a><a href="niveau-3.html">3ème année</a><a href="niveau-4.html">4ème année</a><a href="annexe.html">Référentiel annexe</a>
+    </div>
+    <div>
+      <h4>Accompagnement</h4>
+      <a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Outils & glossaire</a>
+      <a href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" rel="noopener">Chatbot annexe STI</a>
+    </div>
+  </div>
+  <div class="pied-bas">Guide du Programme STI · Mise à jour : octobre 2026 · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<a class="bouton-chatbot" href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" rel="noopener" aria-label="Chatbot annexe STI">🤖 <span>Chatbot annexe</span></a>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/index-recherche.js"></script>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

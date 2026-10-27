@@ -1,0 +1,330 @@
+{
+  "Types d'objets": [
+    {
+      "type": "int",
+      "définition": "Entier.",
+      "exemple": "<?php\n  $age = 25;\n  $nombre = -10;\n  echo $age; // 25\n?>"
+    },
+    {
+      "type": "float",
+      "définition": "Réel.",
+      "exemple": "<?php\n  $prix = 19.99;\n  $temperature = -5.5;\n  echo $prix; // 19.99\n?>"
+    },
+    {
+      "type": "string",
+      "définition": "Chaîne de caractères.",
+      "exemple": "<?php\n  $nom = 'Ahmed';\n  $prenom = \"Ali\";\n  echo $nom . ' ' . $prenom; // Ahmed Ali\n?>"
+    },
+    {
+      "type": "bool",
+      "définition": "Booléen.",
+      "exemple": "<?php\n  $estConnecte = true;\n  $estValide = false;\n  if ($estConnecte) {\n    echo 'Connecté'; // Affiche: Connecté\n  }\n?>"
+    },
+    {
+      "type": "array",
+      "définition": "Tableau.",
+      "exemple": "<?php\n  $fruits = array('Pomme', 'Banane', 'Orange');\n  echo $fruits[0]; // Pomme\n  $notes = array('Math' => 15, 'Info' => 18);\n  echo $notes['Math']; // 15\n?>"
+    }
+  ],
+  "Opérateurs de transtypage": [
+    {
+      "opérateur": "(int)",
+      "définition": "Convertit une variable en entier.",
+      "exemple": "<?php\n  $texte = '42';\n  $nombre = (int)$texte;\n  echo $nombre + 8; // 50\n?>"
+    },
+    {
+      "opérateur": "(float)",
+      "définition": "Convertit une variable en réel.",
+      "exemple": "<?php\n  $texte = '19.99';\n  $prix = (float)$texte;\n  echo $prix; // 19.99\n?>"
+    },
+    {
+      "opérateur": "(string)",
+      "définition": "Convertit une variable en chaîne.",
+      "exemple": "<?php\n  $nombre = 123;\n  $texte = (string)$nombre;\n  echo $texte . ' euros'; // 123 euros\n?>"
+    },
+    {
+      "opérateur": "(bool)",
+      "définition": "Convertit une variable en booléen.",
+      "exemple": "<?php\n  $nombre = 0;\n  $booleen = (bool)$nombre;\n  var_dump($booleen); // bool(false)\n?>"
+    },
+    {
+      "opérateur": "(array)",
+      "définition": "Convertit une variable en tableau.",
+      "exemple": "<?php\n  $valeur = 'test';\n  $tableau = (array)$valeur;\n  print_r($tableau); // Array ( [0] => test )\n?>"
+    }
+  ],
+  "Opérateurs logiques": [
+    {
+      "opérateur": "&&",
+      "définition": "ET logique.",
+      "exemple": "<?php\n  $age = 20;\n  if ($age >= 18 && $age < 65) {\n    echo 'Adulte'; // Affiche: Adulte\n  }\n?>"
+    },
+    {
+      "opérateur": "||",
+      "définition": "OU logique.",
+      "exemple": "<?php\n  $jour = 'samedi';\n  if ($jour == 'samedi' || $jour == 'dimanche') {\n    echo 'Weekend'; // Affiche: Weekend\n  }\n?>"
+    },
+    {
+      "opérateur": "!",
+      "définition": "NON logique.",
+      "exemple": "<?php\n  $connecte = false;\n  if (!$connecte) {\n    echo 'Veuillez vous connecter'; // Affiche: Veuillez vous connecter\n  }\n?>"
+    }
+  ],
+  "Opérateurs de comparaison": [
+    {
+      "opérateur": "==",
+      "définition": "Égal à.",
+      "exemple": "<?php\n  $age = 18;\n  if ($age == 18) {\n    echo 'Vous avez exactement 18 ans'; // Affiche: Vous avez exactement 18 ans\n  }\n?>"
+    },
+    {
+      "opérateur": "!=",
+      "définition": "Différent de.",
+      "exemple": "<?php\n  $nom = 'Ahmed';\n  if ($nom != 'Ali') {\n    echo 'Nom différent'; // Affiche: Nom différent\n  }\n?>"
+    },
+    {
+      "opérateur": "<",
+      "définition": "Inférieur à.",
+      "exemple": "<?php\n  $note = 8;\n  if ($note < 10) {\n    echo 'Non admis'; // Affiche: Non admis\n  }\n?>"
+    },
+    {
+      "opérateur": "<=",
+      "définition": "Inférieur ou égal à.",
+      "exemple": "<?php\n  $stock = 5;\n  if ($stock <= 10) {\n    echo 'Stock faible'; // Affiche: Stock faible\n  }\n?>"
+    },
+    {
+      "opérateur": ">",
+      "définition": "Supérieur à.",
+      "exemple": "<?php\n  $temperature = 35;\n  if ($temperature > 30) {\n    echo 'Il fait chaud'; // Affiche: Il fait chaud\n  }\n?>"
+    },
+    {
+      "opérateur": ">=",
+      "définition": "Supérieur ou égal à.",
+      "exemple": "<?php\n  $score = 50;\n  if ($score >= 50) {\n    echo 'Réussi'; // Affiche: Réussi\n  }\n?>"
+    }
+  ],
+  "Opérateurs arithmétiques": [
+    {
+      "opérateur": "+",
+      "définition": "Addition.",
+      "exemple": "<?php\n  $a = 10;\n  $b = 5;\n  $somme = $a + $b;\n  echo $somme; // 15\n?>"
+    },
+    {
+      "opérateur": "-",
+      "définition": "Soustraction.",
+      "exemple": "<?php\n  $difference = 20 - 7;\n  echo $difference; // 13\n?>"
+    },
+    {
+      "opérateur": "*",
+      "définition": "Multiplication.",
+      "exemple": "<?php\n  $produit = 6 * 8;\n  echo $produit; // 48\n?>"
+    },
+    {
+      "opérateur": "/",
+      "définition": "Division.",
+      "exemple": "<?php\n  $quotient = 20 / 4;\n  echo $quotient; // 5\n?>"
+    },
+    {
+      "opérateur": "%",
+      "définition": "Modulo (reste de la division euclidienne).",
+      "exemple": "<?php\n  $reste = 17 % 5;\n  echo $reste; // 2\n  // Vérifier si pair\n  $nombre = 8;\n  if ($nombre % 2 == 0) {\n    echo 'Pair'; // Affiche: Pair\n  }\n?>"
+    }
+  ],
+  "Autres opérateurs": [
+    {
+      "opérateur": "=",
+      "définition": "Affectation.",
+      "exemple": "<?php\n  $nom = 'Ahmed';\n  $age = 25;\n  $actif = true;\n?>"
+    },
+    {
+      "opérateur": ".",
+      "définition": "Concaténation.",
+      "exemple": "<?php\n  $prenom = 'Ahmed';\n  $nom = 'Ben Ali';\n  $complet = $prenom . ' ' . $nom;\n  echo $complet; // Ahmed Ben Ali\n?>"
+    }
+  ],
+  "Fonctions mathématiques": [
+    {
+      "fonction": "abs()",
+      "définition": "Retourne la valeur absolue.",
+      "exemple": "<?php\n  $resultat = abs(-15);\n  echo $resultat; // 15\n?>"
+    },
+    {
+      "fonction": "sqrt()",
+      "définition": "Retourne la racine carrée.",
+      "exemple": "<?php\n  $racine = sqrt(16);\n  echo $racine; // 4\n?>"
+    },
+    {
+      "fonction": "round()",
+      "définition": "Retourne la valeur arrondie.",
+      "exemple": "<?php\n  $arrondi = round(4.7);\n  echo $arrondi; // 5\n?>"
+    },
+    {
+      "fonction": "rand()",
+      "définition": "Retourne un nombre aléatoire.",
+      "exemple": "<?php\n  // Nombre aléatoire entre 1 et 10\n  $nombre = rand(1, 10);\n  echo $nombre; // Exemple: 7 (valeur aléatoire)\n?>"
+    }
+  ],
+  "Fonctions sur les chaînes de caractères": [
+    {
+      "fonction": "chr()",
+      "définition": "Retourne le caractère dont le code ASCII est passé comme argument.",
+      "exemple": "<?php\n  $caractere = chr(65);\n  echo $caractere; // A\n?>"
+    },
+    {
+      "fonction": "ord()",
+      "définition": "Retourne le code ASCII du 1er caractère de l'argument.",
+      "exemple": "<?php\n  $code = ord('A');\n  echo $code; // 65\n?>"
+    },
+    {
+      "fonction": "strlen()",
+      "définition": "Retourne la longueur d'une chaîne.",
+      "exemple": "<?php\n  $texte = 'Bonjour';\n  $longueur = strlen($texte);\n  echo $longueur; // 7\n?>"
+    },
+    {
+      "fonction": "substr()",
+      "définition": "Retourne une sous-chaîne.",
+      "exemple": "<?php\n  $texte = 'Bonjour';\n  $sous = substr($texte, 0, 3);\n  echo $sous; // Bon\n?>"
+    },
+    {
+      "fonction": "strpos()",
+      "définition": "Retourne la position de la première occurrence du 2ème argument dans le 1er.",
+      "exemple": "<?php\n  $texte = 'Bonjour le monde';\n  $position = strpos($texte, 'monde');\n  echo $position; // 11\n?>"
+    },
+    {
+      "fonction": "strcmp()",
+      "définition": "Retourne le résultat de comparaison de deux chaînes (<0, 0, >0).",
+      "exemple": "<?php\n  $resultat = strcmp('abc', 'def');\n  echo $resultat; // -3 (négatif car 'abc' < 'def')\n  echo strcmp('hello', 'hello'); // 0 (égaux)\n?>"
+    },
+    {
+      "fonction": "str_replace()",
+      "définition": "Remplace, dans une chaîne, toutes les occurrences d'un motif par un autre.",
+      "exemple": "<?php\n  $texte = 'Bonjour le monde';\n  $nouveau = str_replace('monde', 'tous', $texte);\n  echo $nouveau; // Bonjour le tous\n?>"
+    },
+    {
+      "fonction": "strtolower()",
+      "définition": "Convertit tous les caractères d'une chaîne en minuscule.",
+      "exemple": "<?php\n  $texte = 'BONJOUR';\n  $minuscule = strtolower($texte);\n  echo $minuscule; // bonjour\n?>"
+    },
+    {
+      "fonction": "strtoupper()",
+      "définition": "Convertit tous les caractères d'une chaîne en majuscule.",
+      "exemple": "<?php\n  $texte = 'bonjour';\n  $majuscule = strtoupper($texte);\n  echo $majuscule; // BONJOUR\n?>"
+    },
+    {
+      "fonction": "trim()",
+      "définition": "Supprime tous les espaces existants au début et à la fin de la chaîne.",
+      "exemple": "<?php\n  $texte = '  Bonjour  ';\n  $nettoye = trim($texte);\n  echo $nettoye; // Bonjour\n  echo strlen($nettoye); // 7\n?>"
+    }
+  ],
+  "Fonctions de Date/Heure": [
+    {
+      "fonction": "checkdate()",
+      "définition": "Vérifie la validité d'une date.",
+      "exemple": "<?php\n  if (checkdate(12, 31, 2024)) {\n    echo 'Date valide'; // Affiche: Date valide\n  }\n  if (!checkdate(2, 30, 2024)) {\n    echo 'Date invalide'; // Affiche: Date invalide\n  }\n?>"
+    },
+    {
+      "fonction": "date()",
+      "définition": "Formate une date et la retourne sous forme de chaîne.",
+      "exemple": "<?php\n  echo date('d/m/Y'); // Exemple: 19/11/2024\n  echo date('H:i:s'); // Exemple: 14:30:45\n  echo date('l, F j, Y'); // Exemple: Tuesday, November 19, 2024\n?>"
+    },
+    {
+      "fonction": "time()",
+      "définition": "Retourne l'heure actuelle en nombre de secondes.",
+      "exemple": "<?php\n  $timestamp = time();\n  echo $timestamp; // Exemple: 1700400000\n?>"
+    },
+    {
+      "fonction": "strtotime()",
+      "définition": "Transforme une chaîne contenant une date en timestamp.",
+      "exemple": "<?php\n  $timestamp = strtotime('2024-11-19');\n  echo date('d/m/Y', $timestamp); // 19/11/2024\n  echo strtotime('+1 week'); // Timestamp dans 1 semaine\n?>"
+    }
+  ],
+  "Fonctions sur les tableaux": [
+    {
+      "fonction": "array()",
+      "définition": "Crée un tableau à partir d'une liste de valeurs.",
+      "exemple": "<?php\n  $fruits = array('Pomme', 'Banane', 'Orange');\n  print_r($fruits); // Array ( [0] => Pomme [1] => Banane [2] => Orange )\n?>"
+    },
+    {
+      "fonction": "count()",
+      "définition": "Retourne le nombre d'éléments d'un tableau.",
+      "exemple": "<?php\n  $fruits = array('Pomme', 'Banane', 'Orange');\n  $nombre = count($fruits);\n  echo $nombre; // 3\n?>"
+    }
+  ],
+  "Structures de langage": [
+    {
+      "fonction": "echo",
+      "définition": "Affiche une ou plusieurs expressions.",
+      "exemple": "<?php\n  echo 'Bonjour le monde!'; // Bonjour le monde!\n  echo '<h1>Titre</h1>'; // Affiche un titre HTML\n  $nom = 'Ahmed';\n  echo 'Bonjour ' . $nom; // Bonjour Ahmed\n?>"
+    }
+  ],
+  "Fonctions PHP pour MySQL": [
+    {
+      "fonction": "mysqli_connect()",
+      "définition": "Établir une connexion à une base de données MySQL.",
+      "exemple": "<?php\n  $conn = mysqli_connect('localhost', 'user', 'password', 'database');\n  if (!$conn) {\n    die('Connexion échouée: ' . mysqli_connect_error());\n  }\n  echo 'Connecté'; // Affiche: Connecté\n?>"
+    },
+    {
+      "fonction": "mysqli_query()",
+      "définition": "Envoie une requête SQL à la base de données.",
+      "exemple": "<?php\n  $sql = 'SELECT * FROM etudiants';\n  $result = mysqli_query($conn, $sql);\n  // $result contient le résultat de la requête\n?>"
+    },
+    {
+      "fonction": "mysqli_close()",
+      "définition": "Ferme la connexion à la base de données.",
+      "exemple": "<?php\n  mysqli_close($conn);\n  echo 'Connexion fermée'; // Affiche: Connexion fermée\n?>"
+    },
+    {
+      "fonction": "mysqli_fetch_array()",
+      "définition": "Retourne une ligne de résultat sous forme de tableau associatif et numérique.",
+      "exemple": "<?php\n  while ($row = mysqli_fetch_array($result)) {\n    echo $row['nom'] . ' ' . $row['prenom']; // Affiche: Ahmed Ali\n    // Ou: echo $row[0] . ' ' . $row[1];\n  }\n?>"
+    },
+    {
+      "fonction": "mysqli_fetch_row()",
+      "définition": "Retourne une ligne de résultat sous forme de tableau indexé numériquement.",
+      "exemple": "<?php\n  while ($row = mysqli_fetch_row($result)) {\n    echo $row[0] . ' ' . $row[1]; // Affiche les 2 premières colonnes\n  }\n?>"
+    },
+    {
+      "fonction": "mysqli_num_rows()",
+      "définition": "Retourne le nombre de lignes dans un résultat de requête.",
+      "exemple": "<?php\n  $nombre = mysqli_num_rows($result);\n  echo 'Nombre de résultats: ' . $nombre; // Exemple: Nombre de résultats: 15\n?>"
+    },
+    {
+      "fonction": "mysqli_affected_rows()",
+      "définition": "Retourne le nombre de lignes affectées par la dernière requête SQL exécutée.",
+      "exemple": "<?php\n  $sql = 'UPDATE etudiants SET age = 21 WHERE id = 1';\n  mysqli_query($conn, $sql);\n  echo mysqli_affected_rows($conn) . ' lignes modifiées'; // Exemple: 1 lignes modifiées\n?>"
+    },
+    {
+      "fonction": "mysqli_error()",
+      "définition": "Retourne un message d'erreur généré par la dernière requête SQL exécutée.",
+      "exemple": "<?php\n  $result = mysqli_query($conn, $sql);\n  if (!$result) {\n    echo 'Erreur: ' . mysqli_error($conn); // Affiche le message d'erreur\n  }\n?>"
+    }
+  ],
+  "Variables superglobales": [
+    {
+      "variable": "$_GET",
+      "définition": "Tableau associatif des valeurs passées au script courant via les paramètres d'URL.",
+      "exemple": "<?php\n  // URL: page.php?nom=Ahmed&age=25\n  $nom = $_GET['nom']; // $nom = 'Ahmed'\n  $age = $_GET['age']; // $age = '25'\n  echo 'Bonjour ' . $nom . ', vous avez ' . $age . ' ans'; // Bonjour Ahmed, vous avez 25 ans\n?>"
+    },
+    {
+      "variable": "$_POST",
+      "définition": "Tableau associatif des valeurs passées au script courant via le protocole HTTP et la méthode POST.",
+      "exemple": "<?php\n  if (isset($_POST['nom'])) {\n    $nom = $_POST['nom'];\n    $email = $_POST['email'];\n    echo 'Bonjour ' . $nom; // Affiche le nom soumis\n  }\n?>"
+    }
+  ],
+  "Fonctions diverses": [
+    {
+      "fonction": "die()",
+      "définition": "Affiche un message et termine le script courant.",
+      "exemple": "<?php\n  if (!$conn) {\n    die('Erreur de connexion'); // Affiche le message et arrête le script\n  }\n?>"
+    },
+    {
+      "fonction": "isset()",
+      "définition": "Vérifie si une variable est définie.",
+      "exemple": "<?php\n  if (isset($_POST['nom'])) {\n    $nom = $_POST['nom'];\n    echo $nom; // Affiche le nom si défini\n  } else {\n    echo 'Nom non défini';\n  }\n?>"
+    },
+    {
+      "fonction": "require()",
+      "définition": "Inclut et exécute le fichier spécifié en argument.",
+      "exemple": "<?php\n  require('config.php'); // Inclut le fichier config.php\n  require('functions.php'); // Inclut le fichier functions.php\n?>"
+    }
+  ]
+}

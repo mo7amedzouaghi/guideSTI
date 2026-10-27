@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Référentiel de l'annexe — Guide du Programme STI</title>
+<meta name="description" content="Toutes les balises, propriétés, méthodes, fonctions et instructions de l'annexe officielle STI, filtrables par langage et par niveau.">
+<link rel="icon" href="flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">Guide du Programme<small>Sciences et Technologies de l'Informatique</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="index.html" class="">Accueil</a><a href="niveau-2.html" class="m2">2ème année</a><a href="niveau-3.html" class="m3">3ème année</a><a href="niveau-4.html" class="m4">4ème année</a><a href="annexe.html" class="" aria-current="page">Annexe</a><a href="pedagogie.html" class="">Enseigner</a><a href="erreurs.html" class="">Erreurs</a><a href="outils.html" class="">Outils</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><h1>Référentiel de l'annexe</h1><p class="chapeau">Toutes les balises, propriétés, méthodes, fonctions et instructions autorisées, avec leur niveau d'introduction. Filtrez, cherchez, vérifiez avant de distribuer un support.</p><div class="bandeau-faits"><span>300 éléments</span><span>HTML5 · CSS3 · JavaScript · SQL · PHP</span><span>Filtre par niveau</span></div></div></section>
+<div class="page pleine">
+<div class="enc info"><b class="ico" aria-hidden="true">i</b><div><p>Chaque élément de l'annexe officielle, avec sa définition et le <b>niveau d'introduction</b> retenu par ce guide. Un élément introduit en 3ème reste utilisable en 4ème. En cas de doute, l'annexe officielle fait foi.</p></div></div>
+<div class="filtres" role="search">
+  <input type="search" id="ref-q" placeholder="Rechercher : float, substring, GROUP BY, mysqli…" aria-label="Rechercher dans l'annexe">
+  <div class="puces" id="ref-langue" aria-label="Langage">
+    <button type="button" data-v="" aria-pressed="true">Tous</button>
+    <button type="button" data-v="HTML5" aria-pressed="false">HTML5</button><button type="button" data-v="CSS3" aria-pressed="false">CSS3</button><button type="button" data-v="JavaScript" aria-pressed="false">JavaScript</button><button type="button" data-v="SQL" aria-pressed="false">SQL</button><button type="button" data-v="PHP" aria-pressed="false">PHP</button>
+  </div>
+  <div class="puces" id="ref-niveau" aria-label="Niveau">
+    <button type="button" data-v="" aria-pressed="true">Tous niveaux</button>
+    <button type="button" data-v="2" aria-pressed="false">2ème</button>
+    <button type="button" data-v="3" aria-pressed="false">3ème</button>
+    <button type="button" data-v="4" aria-pressed="false">4ème</button>
+  </div>
+  <span class="compteur" id="ref-compte" aria-live="polite"></span>
+</div>
+<div id="ref-liste"></div>
+</div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>Guide du Programme STI</h4>
+      <p>Référence pédagogique pour les enseignants de Sciences et Technologies de l'Informatique (2ème, 3ème et 4ème année), conforme à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="niveau-2.html">2ème année</a><a href="niveau-3.html">3ème année</a><a href="niveau-4.html">4ème année</a><a href="annexe.html">Référentiel annexe</a>
+    </div>
+    <div>
+      <h4>Accompagnement</h4>
+      <a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Outils & glossaire</a>
+      <a href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" rel="noopener">Chatbot annexe STI</a>
+    </div>
+  </div>
+  <div class="pied-bas">Guide du Programme STI · Mise à jour : octobre 2026 · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<a class="bouton-chatbot" href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" rel="noopener" aria-label="Chatbot annexe STI">🤖 <span>Chatbot annexe</span></a>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/index-recherche.js"></script>
+<script src="assets/annexe-data.js"></script>
+<script src="assets/annexe.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

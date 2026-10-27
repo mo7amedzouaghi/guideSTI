@@ -1,0 +1,338 @@
+{
+  "Sélecteurs": [
+    {
+      "sélecteur": "element",
+      "définition": "Sélectionne tous les éléments de type *element*.",
+      "exemple": "p {\n  font-size: 16px;\n  line-height: 1.5;\n}"
+    },
+    {
+      "sélecteur": "#id",
+      "définition": "Cible un élément en fonction de la valeur de son attribut *id*.",
+      "exemple": "#header {\n  background: linear-gradient(90deg, #667eea, #764ba2);\n  padding: 20px;\n}"
+    },
+    {
+      "sélecteur": ".class",
+      "définition": "Cible les éléments en fonction de la valeur de leur attribut *class*.",
+      "exemple": ".btn {\n  background: #007bff;\n  color: white;\n  padding: 10px 20px;\n  border-radius: 5px;\n}"
+    },
+    {
+      "sélecteur": "element[attr]",
+      "définition": "Cible les éléments qui possèdent l'attribut *attr*.",
+      "exemple": "input[required] {\n  border: 2px solid red;\n}"
+    },
+    {
+      "sélecteur": "element[attr=valeur]",
+      "définition": "Cible les éléments en fonction de la valeur de l'attribut *attr*.",
+      "exemple": "input[type=\"text\"] {\n  width: 100%;\n  padding: 10px;\n}"
+    },
+    {
+      "sélecteur": "element.class",
+      "définition": "Cible tous les éléments de type *element* en fonction de la valeur de leur attribut *class*.",
+      "exemple": "p.important {\n  font-weight: bold;\n  color: red;\n}"
+    },
+    {
+      "sélecteur": "a:link",
+      "définition": "Cible tous les liens non visités.",
+      "exemple": "a:link {\n  color: blue;\n  text-decoration: none;\n}"
+    },
+    {
+      "sélecteur": "a:visited",
+      "définition": "Cible tous les liens visités.",
+      "exemple": "a:visited {\n  color: purple;\n}"
+    },
+    {
+      "sélecteur": "a:hover",
+      "définition": "Cible l'élément au moment où l'utilisateur le survole avec le pointeur de la souris.",
+      "exemple": "a:hover {\n  color: red;\n  text-decoration: underline;\n}"
+    },
+    {"sélecteur": ":focus",
+      "définition": "Cible l'élément lorsqu'il a le focus (par exemple lors d'un clic ou de la navigation au clavier).",
+      "exemple": "input:focus {\n  border-color: #007bff;\n  outline: 2px solid #007bff;\n  box-shadow: 0 0 5px rgba(0,123,255,0.5);\n}"
+    },
+    {
+      "sélecteur": "a:active",
+      "définition": "Cible l'élément au moment où il est activé par l'utilisateur.",
+      "exemple": "a:active {\n  color: orange;\n}"
+    }
+  ],
+  "Propriétés de mise en forme du texte": [
+    {
+      "propriété": "font-family",
+      "définition": "Spécifie les noms de polices possibles par ordre de préférence.",
+      "exemple": "body {\n  font-family: Arial, Helvetica, sans-serif;\n}"
+    },
+    {
+      "propriété": "font-weight",
+      "définition": "Spécifie la manière dont les caractères d'un texte doivent être affichés (bold, bolder, lighter).",
+      "exemple": "h1 {\n  font-weight: bold;\n}\n.light-text {\n  font-weight: 300;\n}"
+    },
+    {
+      "propriété": "font-style",
+      "définition": "Spécifie le style d'un texte (italic).",
+      "exemple": "em {\n  font-style: italic;\n}"
+    },
+    {
+      "propriété": "font-size",
+      "définition": "Spécifie la taille d'une police.",
+      "exemple": "p {\n  font-size: 16px;\n}\nh1 {\n  font-size: 2em;\n}"
+    },
+    {
+      "propriété": "font",
+      "définition": "Super-propriété de font. Combine font-family, font-weight, font-style, font-size.",
+      "exemple": "p {\n  font: italic bold 16px/1.5 Arial, sans-serif;\n}"
+    },
+    {
+      "propriété": "text-align",
+      "définition": "Spécifie l'alignement horizontal d'un texte (left, center, right, justify).",
+      "exemple": "h1 {\n  text-align: center;\n}\np {\n  text-align: justify;\n}"
+    },
+    {
+      "propriété": "text-shadow",
+      "définition": "Définit une ombre au texte.",
+      "exemple": "h1 {\n  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);\n}"
+    },
+    {
+      "propriété": "text-transform",
+      "définition": "Spécifie la façon de transformer les caractères d'un texte en majuscules ou en minuscules (uppercase, lowercase, capitalize).",
+      "exemple": ".uppercase {\n  text-transform: uppercase;\n}\n.capitalize {\n  text-transform: capitalize;\n}"
+    },
+    {
+      "propriété": "color",
+      "définition": "Spécifie la couleur du texte.",
+      "exemple": "h1 {\n  color: #3498db;\n}\np {\n  color: rgb(50, 50, 50);\n}"
+    }
+  ],
+  "Propriétés des listes": [
+    {
+      "propriété": "list-style-type",
+      "définition": "Définit le type de marqueur d'éléments de liste (circle, square, upper-roman, lower-alpha).",
+      "exemple": "ul {\n  list-style-type: square;\n}\nol {\n  list-style-type: upper-roman;\n}"
+    },
+    {
+      "propriété": "list-style-position",
+      "définition": "Spécifie la position des marqueurs d'éléments d'une liste à puces (outside, inside).",
+      "exemple": "ul {\n  list-style-position: inside;\n}"
+    },
+    {
+      "propriété": "list-style-image",
+      "définition": "Spécifie une image comme marqueur d'éléments de liste.",
+      "exemple": "ul {\n  list-style-image: url('bullet.png');\n}"
+    },
+    {
+      "propriété": "list-style",
+      "définition": "Super-propriété de liste. Combine list-style-type, list-style-position, list-style-image.",
+      "exemple": "ul {\n  list-style: square inside url('bullet.png');\n}"
+    }
+  ],
+  "Propriétés d'arrière-plan": [
+    {
+      "propriété": "background-color",
+      "définition": "Définit la couleur d'arrière-plan d'un élément.",
+      "exemple": ".card {\n  background-color: #f0f0f0;\n}"
+    },
+    {
+      "propriété": "background-image",
+      "définition": "Définit une image d'arrière-plan pour un élément.",
+      "exemple": ".hero {\n  background-image: url('background.jpg');\n}"
+    },
+    {
+      "propriété": "background-repeat",
+      "définition": "Définit la façon dont une image d'arrière-plan est répétée (repeat, repeat-x, repeat-y).",
+      "exemple": ".pattern {\n  background-image: url('pattern.png');\n  background-repeat: repeat;\n}"
+    },
+    {
+      "propriété": "background-size",
+      "définition": "Spécifie la taille d'une image d'arrière-plan.",
+      "exemple": ".cover {\n  background-size: cover;\n}\n.contain {\n  background-size: contain;\n}"
+    },
+    {
+      "propriété": "background",
+      "définition": "Super-propriété d'arrière-plan. Combine background-color, background-image, background-repeat, background-size.",
+      "exemple": ".hero {\n  background: #fff url('bg.jpg') no-repeat center/cover;\n}"
+    }
+  ],
+  "Transformation": [
+    {
+      "propriété": "transform",
+      "définition": "Applique un effet de transformation 2D ou 3D à un élément (rotate(), skew(), scale(), translate()).",
+      "exemple": ".rotate {\n  transform: rotate(45deg);\n}\n.scale {\n  transform: scale(1.5);\n}\n.move {\n  transform: translate(50px, 100px);\n}"
+    }
+  ],
+  "Propriétés des images": [
+    {
+      "propriété": "filter",
+      "définition": "Définit des filtres sur un élément (blur(), grayscale(), invert()).",
+      "exemple": "img {\n  filter: grayscale(100%);\n}\n.blurred {\n  filter: blur(5px);\n}"
+    }
+  ],
+  "Propriétés des tableaux": [
+    {
+      "propriété": "table-layout",
+      "définition": "Définit la façon de disposer les cellules, lignes et colonnes d'un tableau.",
+      "exemple": "table {\n  table-layout: fixed;\n  width: 100%;\n}"
+    },
+    {
+      "propriété": "border-collapse",
+      "définition": "Définit si les bordures des cellules sont fusionnées ou séparées (separate, collapse).",
+      "exemple": "table {\n  border-collapse: collapse;\n}"
+    }
+  ],
+  "Propriétés des boîtes": [
+    {
+      "propriété": "width",
+      "définition": "Définit la largeur d'un élément.",
+      "exemple": ".container {\n  width: 1200px;\n}\n.responsive {\n  width: 100%;\n}"
+    },
+    {
+      "propriété": "height",
+      "définition": "Définit la hauteur d'un élément.",
+      "exemple": ".banner {\n  height: 400px;\n}\n.square {\n  height: 200px;\n}"
+    },
+    {
+      "propriété": "position",
+      "définition": "Spécifie le type de la méthode de positionnement utilisée pour un élément (absolute, fixed, relative, static, sticky).",
+      "exemple": ".fixed-nav {\n  position: fixed;\n  top: 0;\n  width: 100%;\n}\n.relative-box {\n  position: relative;\n  left: 20px;\n}"
+    },
+    {
+      "propriété": "float",
+      "définition": "Place/Fait flotter un élément dans un conteneur (left, right, none).",
+      "exemple": ".image-left {\n  float: left;\n  margin-right: 20px;\n}"
+    },
+    {
+      "propriété": "padding",
+      "définition": "Propriété abrégée qui définit la marge intérieure d'un élément des 4 côtés.",
+      "exemple": ".box {\n  padding: 20px;\n}\n.custom {\n  padding: 10px 20px 15px 25px;\n}"
+    },
+    {
+      "propriété": "margin",
+      "définition": "Définit les marges d'un élément.",
+      "exemple": ".container {\n  margin: 0 auto;\n}\n.spaced {\n  margin: 20px 0;\n}"
+    },
+    {
+      "propriété": "box-shadow",
+      "définition": "Ajoute des ombres à la boîte d'un élément.",
+      "exemple": ".card {\n  box-shadow: 0 4px 6px rgba(0,0,0,0.1);\n}\n.elevated {\n  box-shadow: 0 10px 20px rgba(0,0,0,0.2);\n}"
+    },
+    {
+      "propriété": "display",
+      "définition": "Spécifie le comportement d'affichage d'un élément (inline, block, inline-block).",
+      "exemple": ".bloc {\n  display: block;\n}\n.inline {\n  display: inline-block;\n}"
+    },
+    {
+      "propriété": "top",
+      "définition": "Spécifie la position verticale, par rapport au haut, d'un élément positionné.",
+      "exemple": ".absolute-top {\n  position: absolute;\n  top: 10px;\n}"
+    },
+    {
+      "propriété": "bottom",
+      "définition": "Spécifie la position verticale, par rapport au bas, d'un élément positionné.",
+      "exemple": ".footer-fixed {\n  position: fixed;\n  bottom: 0;\n}"
+    },
+    {
+      "propriété": "left",
+      "définition": "Spécifie la position horizontale, par rapport à la gauche, d'un élément positionné.",
+      "exemple": ".sidebar {\n  position: absolute;\n  left: 0;\n}"
+    },
+    {
+      "propriété": "right",
+      "définition": "Spécifie la position horizontale, par rapport à la droite, d'un élément positionné.",
+      "exemple": ".close-btn {\n  position: absolute;\n  right: 10px;\n}"
+    },
+    {
+      "propriété": "overflow",
+      "définition": "Spécifie le comportement du contenu lorsqu'il déborde de la boîte d'un élément (visible, hidden, clip, scroll, auto).",
+      "exemple": ".scrollable {\n  overflow: auto;\n}\n.hidden-overflow {\n  overflow: hidden;\n}"
+    },
+    {
+      "propriété": "opacity",
+      "définition": "Définit le niveau de transparence.",
+      "exemple": ".transparent {\n  opacity: 0.5;\n}\n.fade:hover {\n  opacity: 1;\n}"
+    }
+  ],
+  "Propriétés des bordures": [
+    {
+      "propriété": "border-color",
+      "définition": "Définit la couleur des bordures d'un élément.",
+      "exemple": ".box {\n  border-color: #333;\n}"
+    },
+    {
+      "propriété": "border-style",
+      "définition": "Définit le style des bordures d'un élément.",
+      "exemple": ".dashed {\n  border-style: dashed;\n}\n.solid {\n  border-style: solid;\n}"
+    },
+    {
+      "propriété": "border-radius",
+      "définition": "Définit le rayon des coins arrondis d'un élément.",
+      "exemple": ".rounded {\n  border-radius: 10px;\n}\n.circle {\n  border-radius: 50%;\n}"
+    },
+    {
+      "propriété": "border-width",
+      "définition": "Définit la largeur des bordures d'un élément (medium, thin, thick, valeur en px).",
+      "exemple": ".thick-border {\n  border-width: 5px;\n}\n.thin {\n  border-width: 1px;\n}"
+    },
+    {
+      "propriété": "border",
+      "définition": "Super-propriété de bordure. Combine border-color, border-style, border-width, border-radius.",
+      "exemple": ".card {\n  border: 2px solid #333;\n  border-radius: 10px;\n}"
+    }
+  ],
+  "Transition": [
+    {
+      "propriété": "transition-delay",
+      "définition": "Spécifie le délai nécessaire avant que la transition commence.",
+      "exemple": ".delayed {\n  transition-delay: 0.5s;\n}"
+    },
+    {
+      "propriété": "transition-duration",
+      "définition": "Spécifie la durée de la transition.",
+      "exemple": ".smooth {\n  transition-duration: 0.3s;\n}"
+    },
+    {
+      "propriété": "transition-property",
+      "définition": "Spécifie les propriétés CSS sur lesquelles l'effet de transition sera appliqué.",
+      "exemple": ".btn {\n  transition-property: background-color, transform;\n}"
+    },
+    {
+      "propriété": "transition",
+      "définition": "Super-propriété de transition. Combine transition-property, transition-duration et transition-delay.",
+      "exemple": ".button {\n  transition: all 0.3s ease;\n}\n.button:hover {\n  background: #007bff;\n  transform: scale(1.05);\n}"
+    }
+  ],
+  "Animation": [
+    {
+      "propriété": "@keyframes",
+      "définition": "Spécifie les états clés de l'animation.",
+      "exemple": "@keyframes slide {\n  0% { left: 0; }\n  100% { left: 100px; }\n}\n.animated {\n  animation: slide 2s;\n}"
+    },
+    {
+      "propriété": "animation-name",
+      "définition": "Spécifie le nom de l'animation.",
+      "exemple": ".spin {\n  animation-name: rotate;\n}"
+    },
+    {
+      "propriété": "animation-delay",
+      "définition": "Spécifie le délai nécessaire avant que l'animation commence.",
+      "exemple": ".delayed-animation {\n  animation-delay: 1s;\n}"
+    },
+    {
+      "propriété": "animation-duration",
+      "définition": "Spécifie la durée de l'animation.",
+      "exemple": ".fast {\n  animation-duration: 0.5s;\n}"
+    },
+    {
+      "propriété": "animation-iteration-count",
+      "définition": "Spécifie le nombre de répétitions de l'animation.",
+      "exemple": ".infinite {\n  animation-iteration-count: infinite;\n}\n.twice {\n  animation-iteration-count: 2;\n}"
+    },
+    {
+      "propriété": "animation-direction",
+      "définition": "Définit la direction de l'animation.",
+      "exemple": ".alternate {\n  animation-direction: alternate;\n}"
+    },
+    {
+      "propriété": "animation",
+      "définition": "Super-propriété de l'animation. Combine animation-name, animation-duration, animation-delay, animation-iteration-count et animation-direction.",
+      "exemple": ".spin {\n  animation: rotate 2s infinite linear;\n}\n@keyframes rotate {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}"
+    }
+  ]
+}

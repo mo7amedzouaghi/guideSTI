@@ -1,0 +1,430 @@
+{
+  "Éléments de 1er niveau": [
+    {
+      "balise": "<html>",
+      "définition": "Représente la racine d'un document HTML.",
+      "exemple": "<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <title>Ma page</title>\n  </head>\n  <body>\n    <h1>Bienvenue</h1>\n  </body>\n</html>"
+    },
+    {
+      "balise": "<head>",
+      "définition": "Conteneur de métadonnées placé entre la balise <html> et la balise <body>.",
+      "exemple": "<head>\n  <meta charset=\"UTF-8\">\n  <title>Titre de la page</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>"
+    },
+    {
+      "balise": "<body>",
+      "définition": "Définit le corps du document.",
+      "exemple": "<body>\n  <header>En-tête</header>\n  <main>Contenu principal</main>\n  <footer>Pied de page</footer>\n</body>"
+    }
+  ],
+  "Éléments d'en-tête": [
+    {
+      "balise": "<link>",
+      "définition": "Définit la relation entre le document actuel et une ressource externe.",
+      "attributs": ["href", "rel", "type"],
+      "exemple": "<link rel=\"stylesheet\" href=\"styles.css\">\n<link rel=\"icon\" type=\"image/png\" href=\"favicon.png\">"
+    },
+    {
+      "balise": "<meta>",
+      "définition": "Définit les métadonnées du document.",
+      "attributs": ["charset", "name", "content"],
+      "exemple": "<meta charset=\"UTF-8\">\n<meta name=\"description\" content=\"Description du site\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"
+    },
+    {
+      "balise": "<script>",
+      "définition": "Intègre un script côté client (JavaScript).",
+      "attributs": ["src", "type"],
+      "exemple": "<script src=\"script.js\"></script>\n<script>\n  console.log('Hello World!');\n</script>"
+    },
+    {
+      "balise": "<style>",
+      "définition": "Définit les informations de style (CSS) pour un document.",
+      "attributs": ["type", "media"],
+      "exemple": "<style>\n  body {\n    background-color: #f0f0f0;\n    font-family: Arial, sans-serif;\n  }\n</style>"
+    },
+    {
+      "balise": "<title>",
+      "définition": "Définit le titre du document.",
+      "exemple": "<title>Mon Site Web - Accueil</title>"
+    }
+  ],
+  "Éléments de structuration d'une page web": [
+    {
+      "balise": "<header>",
+      "définition": "Conteneur pour le contenu d'introduction ou un ensemble de liens de navigation.",
+      "exemple": "<header>\n  <h1>Mon Site Web</h1>\n  <nav>\n    <a href=\"#accueil\">Accueil</a>\n    <a href=\"#contact\">Contact</a>\n  </nav>\n</header>"
+    },
+    {
+      "balise": "<nav>",
+      "définition": "Définit un ensemble de liens de navigation.",
+      "exemple": "<nav>\n  <ul>\n    <li><a href=\"/\">Accueil</a></li>\n    <li><a href=\"/produits\">Produits</a></li>\n    <li><a href=\"/contact\">Contact</a></li>\n  </ul>\n</nav>"
+    },
+    {
+      "balise": "<footer>",
+      "définition": "Définit un pied de page pour un document ou une section.",
+      "exemple": "<footer>\n  <p>&copy; 2024 Mon Site. Tous droits réservés.</p>\n  <p>Contact: info@monsite.com</p>\n</footer>"
+    },
+    {
+      "balise": "<section>",
+      "définition": "Définit une section dans un document.",
+      "exemple": "<section>\n  <h2>À propos de nous</h2>\n  <p>Nous sommes une entreprise...</p>\n</section>"
+    },
+    {
+      "balise": "<article>",
+      "définition": "Spécifie un contenu indépendant et autonome.",
+      "exemple": "<article>\n  <h2>Titre de l'article</h2>\n  <p>Contenu de l'article...</p>\n  <footer>Publié le 19/11/2024</footer>\n</article>"
+    },
+    {
+      "balise": "<aside>",
+      "définition": "Définit un contenu en dehors du contenu principal. Souvent placé sous forme de barre latérale.",
+      "exemple": "<aside>\n  <h3>Articles connexes</h3>\n  <ul>\n    <li><a href=\"#\">Article 1</a></li>\n    <li><a href=\"#\">Article 2</a></li>\n  </ul>\n</aside>"
+    },
+    {
+      "balise": "<main>",
+      "définition": "Définit le contenu principal d'un document.",
+      "exemple": "<main>\n  <h1>Contenu Principal</h1>\n  <p>Ceci est le contenu principal de la page.</p>\n</main>"
+    }
+  ],
+  "Éléments de structuration de texte et média": [
+    {
+      "balise": "<cite>",
+      "définition": "Définit le titre d'une œuvre.",
+      "exemple": "<p>Mon livre préféré est <cite>Le Petit Prince</cite>.</p>"
+    },
+    {
+      "balise": "<p>",
+      "définition": "Définit un paragraphe.",
+      "exemple": "<p>Ceci est un paragraphe de texte.</p>"
+    },
+    {
+      "balise": "<h1> à <h6>",
+      "définition": "Définit un titre de niveau n (de 1 à 6).",
+      "exemple": "<h1>Titre principal</h1>\n<h2>Sous-titre</h2>\n<h3>Sous-sous-titre</h3>"
+    },
+    {
+      "balise": "<hr>",
+      "définition": "Définit une rupture thématique sous forme de ligne horizontale.",
+      "exemple": "<p>Première section</p>\n<hr>\n<p>Deuxième section</p>"
+    },
+    {
+      "balise": "<img>",
+      "définition": "Intègre une image.",
+      "attributs": ["src", "alt"],
+      "exemple": "<img src=\"photo.jpg\" alt=\"Description de l'image\" width=\"300\">"
+    },
+    {
+      "balise": "<figure>",
+      "définition": "Spécifie un conteneur autonome qui peut contenir divers éléments.",
+      "exemple": "<figure>\n  <img src=\"graphique.png\" alt=\"Graphique\">\n  <figcaption>Figure 1: Statistiques 2024</figcaption>\n</figure>"
+    },
+    {
+      "balise": "<figcaption>",
+      "définition": "Définit une légende pour un élément <figure>.",
+      "exemple": "<figure>\n  <img src=\"image.jpg\" alt=\"Image\">\n  <figcaption>Légende de l'image</figcaption>\n</figure>"
+    },
+    {
+      "balise": "<audio>",
+      "définition": "Intègre du contenu sonore dans un document.",
+      "attributs": ["controls", "src"],
+      "exemple": "<audio controls>\n  <source src=\"musique.mp3\" type=\"audio/mpeg\">\n  Votre navigateur ne supporte pas l'audio.\n</audio>"
+    },
+    {
+      "balise": "<video>",
+      "définition": "Intègre du contenu vidéo dans un document.",
+      "attributs": ["controls", "src"],
+      "exemple": "<video width=\"320\" height=\"240\" controls>\n  <source src=\"video.mp4\" type=\"video/mp4\">\n  Votre navigateur ne supporte pas la vidéo.\n</video>"
+    },
+    {
+      "balise": "<a>",
+      "définition": "Définit un lien hypertexte via l'attribut href.",
+      "attributs": ["href", "target"],
+      "exemple": "<a href=\"https://www.example.com\" target=\"_blank\">Visitez notre site</a>"
+    },
+    {
+      "balise": "<br>",
+      "définition": "Définit un retour à la ligne.",
+      "exemple": "<p>Première ligne<br>Deuxième ligne</p>"
+    },
+    {
+      "balise": "<address>",
+      "définition": "Définit les coordonnées de l'auteur/propriétaire d'un document ou d'un article.",
+      "exemple": "<address>\n  Écrit par <a href=\"mailto:email@example.com\">Ahmed Ben Ali</a>.<br>\n  Tunis, Tunisie\n</address>"
+    },
+    {
+      "balise": "<details>",
+      "définition": "Spécifie des détails supplémentaires que l'utilisateur peut ouvrir et fermer à la demande.",
+      "attributs": ["open"],
+      "exemple": "<details>\n  <summary>En savoir plus</summary>\n  <p>Contenu détaillé ici...</p>\n</details>"
+    },
+    {
+      "balise": "<summary>",
+      "définition": "Définit un en-tête visible pour l'élément <details>.",
+      "exemple": "<details>\n  <summary>Cliquez pour voir</summary>\n  <p>Informations cachées</p>\n</details>"
+    }
+  ],
+  "Conteneurs": [
+    {
+      "balise": "<span>",
+      "définition": "Regroupe des éléments dans un bloc de contenu.",
+      "exemple": "<p>Ce texte contient <span style=\"color: red;\">un mot en rouge</span>.</p>"
+    },
+    {
+      "balise": "<div>",
+      "définition": "Groupe plusieurs éléments HTML de type block.",
+      "exemple": "<div class=\"container\">\n  <h2>Titre</h2>\n  <p>Contenu du conteneur</p>\n</div>"
+    },
+    {
+      "balise": "<iframe>",
+      "définition": "Définit un cadre en ligne.",
+      "attributs": ["src", "name"],
+      "exemple": "<iframe src=\"https://www.example.com\" width=\"600\" height=\"400\"></iframe>"
+    }
+  ],
+  "Listes": [
+    {
+      "balise": "<ul>",
+      "définition": "Définit une liste à puces.",
+      "exemple": "<ul>\n  <li>Premier élément</li>\n  <li>Deuxième élément</li>\n  <li>Troisième élément</li>\n</ul>"
+    },
+    {
+      "balise": "<ol>",
+      "définition": "Définit une liste ordonnée.",
+      "attributs": ["reversed", "type", "start"],
+      "exemple": "<ol>\n  <li>Première étape</li>\n  <li>Deuxième étape</li>\n  <li>Troisième étape</li>\n</ol>"
+    },
+    {
+      "balise": "<li>",
+      "définition": "Définit un élément dans une liste.",
+      "exemple": "<ul>\n  <li>Élément de liste</li>\n</ul>"
+    }
+  ],
+  "Tableaux": [
+    {
+      "balise": "<table>",
+      "définition": "Définit un tableau.",
+      "exemple": "<table border=\"1\">\n  <thead>\n    <tr>\n      <th>Nom</th>\n      <th>Âge</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>Ali</td>\n      <td>25</td>\n    </tr>\n  </tbody>\n</table>"
+    },
+    {
+      "balise": "<thead>",
+      "définition": "Définit l'entête d'un tableau.",
+      "exemple": "<table>\n  <thead>\n    <tr>\n      <th>Colonne 1</th>\n      <th>Colonne 2</th>\n    </tr>\n  </thead>\n</table>"
+    },
+    {
+      "balise": "<tbody>",
+      "définition": "Définit le corps d'un tableau.",
+      "exemple": "<table>\n  <tbody>\n    <tr>\n      <td>Donnée 1</td>\n      <td>Donnée 2</td>\n    </tr>\n  </tbody>\n</table>"
+    },
+    {
+      "balise": "<tfoot>",
+      "définition": "Définit le pied d'un tableau.",
+      "exemple": "<table>\n  <tfoot>\n    <tr>\n      <td>Total</td>\n      <td>100</td>\n    </tr>\n  </tfoot>\n</table>"
+    },
+    {
+      "balise": "<tr>",
+      "définition": "Définit une ligne dans un tableau.",
+      "exemple": "<tr>\n  <td>Cellule 1</td>\n  <td>Cellule 2</td>\n</tr>"
+    },
+    {
+      "balise": "<th>",
+      "définition": "Définit une cellule d'en-tête dans un tableau.",
+      "exemple": "<tr>\n  <th>En-tête 1</th>\n  <th>En-tête 2</th>\n</tr>"
+    },
+    {
+      "balise": "<td>",
+      "définition": "Définit une cellule dans un tableau.",
+      "exemple": "<tr>\n  <td>Donnée 1</td>\n  <td>Donnée 2</td>\n</tr>"
+    },
+    {
+      "balise": "<caption>",
+      "définition": "Définit une légende de tableau.",
+      "exemple": "<table>\n  <caption>Liste des étudiants</caption>\n  <tr>\n    <th>Nom</th>\n    <th>Note</th>\n  </tr>\n</table>"
+    }
+  ],
+  "Événements": [
+    {
+      "événement": "onblur",
+      "définition": "Se déclenche au moment où l'élément perd le focus.",
+      "exemple": "<input type=\"text\" onblur=\"alert('Vous avez quitté le champ')\">"
+    },
+    {
+      "événement": "onclick",
+      "définition": "Se déclenche lors d'un clic sur l'élément.",
+      "exemple": "<button onclick=\"alert('Bouton cliqué!')\">Cliquez-moi</button>"
+    },
+    {
+      "événement": "onfocus",
+      "définition": "Se déclenche au moment où l'élément obtient le focus.",
+      "exemple": "<input type=\"text\" onfocus=\"this.style.background='yellow'\">"
+    },
+    {
+      "événement": "oninput",
+      "définition": "Se déclenche dès que la valeur d'un élément a changé.",
+      "exemple": "<input type=\"text\" oninput=\"document.getElementById('result').innerHTML = this.value\">\n<p id=\"result\"></p>"
+    },
+    {
+      "événement": "onload",
+      "définition": "Se déclenche lorsque la page est complètement chargée.",
+      "exemple": "<body onload=\"alert('Page chargée!')\">"
+    },
+    {
+      "événement": "onmouseover",
+      "définition": "Se déclenche lorsque le pointeur de la souris survole l'élément.",
+      "exemple": "<div onmouseover=\"this.style.color='red'\">Survolez-moi</div>"
+    },
+    {
+      "événement": "onmouseout",
+      "définition": "Se déclenche lorsque le pointeur de la souris sort de l'élément.",
+      "exemple": "<div onmouseout=\"this.style.color='black'\">Quittez-moi</div>"
+    },
+    {
+      "événement": "onplay",
+      "définition": "Se déclenche lorsque la lecture d'un fichier audio/vidéo commence.",
+      "exemple": "<video onplay=\"console.log('Vidéo en cours')\" controls>\n  <source src=\"video.mp4\">\n</video>"
+    },
+    {
+      "événement": "onpause",
+      "définition": "Se déclenche lorsqu'un élément audio/vidéo est mis en pause.",
+      "exemple": "<audio onpause=\"alert('Audio en pause')\" controls>\n  <source src=\"audio.mp3\">\n</audio>"
+    },
+    {
+      "événement": "onsubmit",
+      "définition": "Se déclenche lorsqu'un formulaire est soumis.",
+      "exemple": "<form onsubmit=\"return validerFormulaire()\">\n  <input type=\"text\" required>\n  <input type=\"submit\" value=\"Envoyer\">\n</form>"
+    },
+    {
+      "événement": "onchange",
+      "définition": "Se déclenche lorsque la valeur d'un élément est modifiée.",
+      "exemple": "<select onchange=\"alert('Sélection changée')\">\n  <option>Option 1</option>\n  <option>Option 2</option>\n</select>"
+    },
+    {
+      "événement": "onkeydown",
+      "définition": "Se déclenche lorsqu'une touche du clavier est pressée.",
+      "exemple": "<input type=\"text\" onkeydown=\"console.log('Touche pressée')\">"
+    },
+    {
+      "événement": "onkeyup",
+      "définition": "Se déclenche lorsqu'une touche est relâchée.",
+      "exemple": "<input type=\"text\" onkeyup=\"console.log('Touche relâchée')\">"
+    }
+  ],
+  "Attributs globaux": [
+    {
+      "attribut": "class",
+      "définition": "Spécifie un nom de classe pour un élément.",
+      "exemple": "<div class=\"container main-content\">Contenu</div>"
+    },
+    {
+      "attribut": "hidden",
+      "définition": "Renseigne la visibilité d'un élément.",
+      "exemple": "<p hidden>Ce paragraphe est caché</p>"
+    },
+    {
+      "attribut": "id",
+      "définition": "Spécifie un identifiant unique pour un élément HTML.",
+      "exemple": "<div id=\"header\">En-tête</div>"
+    },
+    {
+      "attribut": "lang",
+      "définition": "Spécifie la langue du contenu de l'élément.",
+      "exemple": "<p lang=\"ar\">مرحبا</p>"
+    },
+    {
+      "attribut": "style",
+      "définition": "Spécifie un style en ligne.",
+      "exemple": "<p style=\"color: blue; font-size: 18px;\">Texte stylé</p>"
+    },
+    {
+      "attribut": "title",
+      "définition": "Spécifie des informations supplémentaires sur un élément.",
+      "exemple": "<abbr title=\"HyperText Markup Language\">HTML</abbr>"
+    }
+  ],
+  "Éléments de formulaire": [
+    {
+      "balise": "<form>",
+      "définition": "Crée un formulaire HTML.",
+      "attributs": ["action", "method", "target"],
+      "valeurs_attributs": {
+        "method": ["get", "post"],
+        "target": ["_self", "_blank", "_parent", "_top", "iframeName"]
+      },
+      "exemple": "<form action=\"/submit\" method=\"post\">\n  <label for=\"nom\">Nom:</label>\n  <input type=\"text\" id=\"nom\" name=\"nom\">\n  <input type=\"submit\" value=\"Envoyer\">\n</form>"
+    },
+    {
+      "balise": "<fieldset>",
+      "définition": "Regroupe des éléments liés dans un formulaire.",
+      "exemple": "<fieldset>\n  <legend>Informations personnelles</legend>\n  <label for=\"prenom\">Prénom:</label>\n  <input type=\"text\" id=\"prenom\" name=\"prenom\">\n</fieldset>"
+    },
+    {
+      "balise": "<legend>",
+      "définition": "Définit une légende pour l'élément <fieldset>.",
+      "exemple": "<fieldset>\n  <legend>Coordonnées</legend>\n  <input type=\"email\" name=\"email\">\n</fieldset>"
+    },
+    {
+      "balise": "<label>",
+      "définition": "Définit un libellé pour un élément graphique.",
+      "attributs": ["for"],
+      "exemple": "<label for=\"email\">Adresse email:</label>\n<input type=\"email\" id=\"email\" name=\"email\">"
+    },
+    {
+      "balise": "<input>",
+      "définition": "Définit un champ de saisie.",
+      "types": [
+        {
+          "type": "button, reset, submit",
+          "attributs_generiques": ["name", "value", "disabled"],
+          "attributs_specifiques": []
+        },
+        {
+          "type": "text, email, tel",
+          "attributs_generiques": ["name", "value", "placeholder", "readonly", "required", "disabled", "list"],
+          "attributs_specifiques": []
+        },
+        {
+          "type": "password",
+          "attributs_generiques": ["name", "value", "placeholder", "readonly", "required", "disabled"],
+          "attributs_specifiques": []
+        },
+        {
+          "type": "number, range",
+          "attributs_generiques": ["name", "value", "readonly", "required", "disabled"],
+          "attributs_specifiques": ["min", "max"]
+        },
+        {
+          "type": "date, time",
+          "attributs_generiques": ["name", "value", "required", "disabled"],
+          "attributs_specifiques": ["min", "max"]
+        },
+        {
+          "type": "checkbox, radio",
+          "attributs_generiques": ["name", "value", "required", "disabled"],
+          "attributs_specifiques": ["checked"]
+        }
+      ],
+      "exemple": "<input type=\"text\" name=\"username\" placeholder=\"Nom d'utilisateur\" required>\n<input type=\"email\" name=\"email\" placeholder=\"Email\">\n<input type=\"password\" name=\"password\" required>\n<input type=\"number\" name=\"age\" min=\"18\" max=\"100\">\n<input type=\"date\" name=\"date_naissance\">\n<input type=\"checkbox\" name=\"accepter\" checked>\n<input type=\"radio\" name=\"genre\" value=\"homme\">\n<input type=\"submit\" value=\"Envoyer\">"
+    },
+    {
+      "balise": "<textarea>",
+      "définition": "Définit une zone de saisie de texte multilignes.",
+      "attributs": ["name", "cols", "rows", "readonly", "required", "disabled", "placeholder", "maxlength"],
+      "exemple": "<textarea name=\"commentaire\" rows=\"4\" cols=\"50\" placeholder=\"Votre commentaire ici...\" maxlength=\"500\"></textarea>"
+    },
+    {
+      "balise": "<select>",
+      "définition": "Définit une liste déroulante.",
+      "attributs": ["name", "required", "disabled", "multiple"],
+      "exemple": "<select name=\"pays\">\n  <option value=\"tn\">Tunisie</option>\n  <option value=\"fr\">France</option>\n  <option value=\"dz\">Algérie</option>\n</select>"
+    },
+    {
+      "balise": "<datalist>",
+      "définition": "Spécifie une liste d'options prédéfinies connectée à un élément <input>.",
+      "exemple": "<input list=\"villes\" name=\"ville\">\n<datalist id=\"villes\">\n  <option value=\"Tunis\">\n  <option value=\"Sousse\">\n  <option value=\"Sfax\">\n</datalist>"
+    },
+    {
+      "balise": "<option>",
+      "définition": "Définit une option dans une liste de sélection.",
+      "attributs": ["value", "selected"],
+      "exemple": "<select name=\"couleur\">\n  <option value=\"rouge\">Rouge</option>\n  <option value=\"bleu\" selected>Bleu</option>\n  <option value=\"vert\">Vert</option>\n</select>"
+    }
+  ]
+
+}

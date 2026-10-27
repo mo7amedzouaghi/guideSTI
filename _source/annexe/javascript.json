@@ -1,0 +1,274 @@
+{
+  "Opérateurs logiques": [
+    {
+      "opérateur": "&&",
+      "définition": "ET logique.",
+      "exemple": "let age = 18;\nif (age >= 18 && age < 65) {\n  console.log('Vous êtes adulte'); // Affiche: Vous êtes adulte\n}"
+    },
+    {
+      "opérateur": "||",
+      "définition": "OU logique.",
+      "exemple": "let jour = 'samedi';\nif (jour === 'samedi' || jour === 'dimanche') {\n  console.log('C\\'est le weekend!'); // Affiche: C'est le weekend!\n}"
+    },
+    {
+      "opérateur": "!",
+      "définition": "NON logique.",
+      "exemple": "let estConnecte = false;\nif (!estConnecte) {\n  console.log('Veuillez vous connecter'); // Affiche: Veuillez vous connecter\n}"
+    }
+  ],
+  "Opérateurs de comparaison": [
+    {
+      "opérateur": "==",
+      "définition": "Égal à.",
+      "exemple": "let x = 5;\nif (x == '5') {\n  console.log('Égaux (sans vérification de type)'); // Affiche: Égaux (sans vérification de type)\n}"
+    },
+    {
+      "opérateur": "!=",
+      "définition": "Différent de.",
+      "exemple": "let nom = 'Ahmed';\nif (nom != 'Ali') {\n  console.log('Nom différent'); // Affiche: Nom différent\n}"
+    },
+    {
+      "opérateur": ">",
+      "définition": "Supérieur à.",
+      "exemple": "let note = 15;\nif (note > 10) {\n  console.log('Admis'); // Affiche: Admis\n}"
+    },
+    {
+      "opérateur": "<",
+      "définition": "Inférieur à.",
+      "exemple": "let age = 16;\nif (age < 18) {\n  console.log('Mineur'); // Affiche: Mineur\n}"
+    },
+    {
+      "opérateur": ">=",
+      "définition": "Supérieur ou égal à.",
+      "exemple": "let score = 50;\nif (score >= 50) {\n  console.log('Vous avez réussi'); // Affiche: Vous avez réussi\n}"
+    },
+    {
+      "opérateur": "<=",
+      "définition": "Inférieur ou égal à.",
+      "exemple": "let temperature = 25;\nif (temperature <= 30) {\n  console.log('Température agréable'); // Affiche: Température agréable\n}"
+    }
+  ],
+  "Opérateurs arithmétiques": [
+    {
+      "opérateur": "+",
+      "définition": "Addition.",
+      "exemple": "let somme = 5 + 3;\nconsole.log(somme); // 8\n// Concaténation\nlet nom = 'Ahmed' + ' ' + 'Ben Ali'; // nom = 'Ahmed Ben Ali'"
+    },
+    {
+      "opérateur": "-",
+      "définition": "Soustraction.",
+      "exemple": "let difference = 10 - 4;\nconsole.log(difference); // 6"
+    },
+    {
+      "opérateur": "*",
+      "définition": "Multiplication.",
+      "exemple": "let produit = 6 * 7;\nconsole.log(produit); // 42"
+    },
+    {
+      "opérateur": "/",
+      "définition": "Division.",
+      "exemple": "let quotient = 20 / 4;\nconsole.log(quotient); // 5"
+    },
+    {
+      "opérateur": "%",
+      "définition": "Reste de la division euclidienne.",
+      "exemple": "let reste = 17 % 5;\nconsole.log(reste); // 2\n// Vérifier si pair\nlet nombre = 8;\nif (nombre % 2 === 0) {\n  console.log('Pair'); // Affiche: Pair\n}"
+    }
+  ],
+  "Méthodes pour afficher une sortie": [
+    {
+      "méthode": "alert()",
+      "définition": "Affiche un message dans une boîte de dialogue.",
+      "exemple": "alert('Bienvenue sur notre site!'); // Affiche une boîte de dialogue"
+    },
+    {
+      "méthode": "document.write()",
+      "définition": "Affiche directement dans le document HTML.",
+      "exemple": "document.write('<h1>Titre dynamique</h1>');\ndocument.write('Date: ' + new Date()); // Affiche la date courante"
+    },
+    {
+      "méthode": "innerHTML",
+      "définition": "Propriété pour afficher/modifier un contenu dynamique dans un élément HTML.",
+      "exemple": "let element = document.getElementById('resultat');\nelement.innerHTML = '<p>Nouveau contenu</p>'; // Modifie le contenu de l'élément"
+    }
+  ],
+  "Méthode pour saisir une entrée": [
+    {
+      "méthode": "prompt()",
+      "définition": "Affiche une boîte de dialogue avec une zone de saisie.",
+      "exemple": "let nom = prompt('Quel est votre nom?'); // Suppose que l'utilisateur tape 'Ahmed'\nalert('Bonjour ' + nom + '!'); // Affiche: Bonjour Ahmed!"
+    }
+  ],
+  "Fonctions/Méthodes JS": [
+    {
+      "fonction": "isNaN(ch)",
+      "définition": "Retourne true si l'argument ch n'est pas convertible en un nombre, sinon retourne false.",
+      "exemple": "let valeur = 'abc';\nif (isNaN(valeur)) {\n  console.log('Pas un nombre'); // Affiche: Pas un nombre\n}\nconsole.log(isNaN('123')); // false\nconsole.log(isNaN('abc')); // true"
+    },
+    {
+      "fonction": "Number(ch)",
+      "définition": "Convertit une chaîne ch en un nombre. Retourne NaN si la conversion n'est pas possible.",
+      "exemple": "let texte = '123';\nlet nombre = Number(texte);\nconsole.log(nombre + 10); // 133\nconsole.log(Number('abc')); // NaN"
+    },
+    {
+      "fonction": "parseFloat(ch)",
+      "définition": "Convertit une chaîne ch en un réel.",
+      "exemple": "let prix = parseFloat('19.99');\nconsole.log(prix); // 19.99\nconsole.log(parseFloat('3.14abc')); // 3.14"
+    },
+    {
+      "fonction": "parseInt(ch [, b])",
+      "définition": "Convertit une chaîne ch en un entier exprimé dans la base b.",
+      "exemple": "let age = parseInt('25');\nconsole.log(age); // 25\n// Base 2\nlet binaire = parseInt('1010', 2);\nconsole.log(binaire); // 10"
+    },
+    {
+      "fonction": "String(a)",
+      "définition": "Convertit la valeur a en une chaîne.",
+      "exemple": "let nombre = 42;\nlet texte = String(nombre);\nconsole.log(typeof texte); // string\nconsole.log(texte); // '42'"
+    }
+  ],
+  "Méthodes pour sélectionner des éléments HTML": [
+    {
+      "méthode": "document.getElementById()",
+      "définition": "Permet de sélectionner un élément unique en fonction de son identifiant.",
+      "exemple": "let titre = document.getElementById('titre');\ntitre.innerHTML = 'Nouveau titre'; // Modifie le contenu\ntitre.style.color = 'red'; // Change la couleur en rouge"
+    },
+    {
+      "méthode": "document.getElementsByName()",
+      "définition": "Permet de sélectionner tous les éléments ayant le même nom.",
+      "exemple": "let radios = document.getElementsByName('genre');\nfor (let i = 0; i < radios.length; i++) {\n  if (radios[i].checked) {\n    console.log(radios[i].value); // Affiche la valeur du radio sélectionné\n  }\n}"
+    }
+  ],
+  "Méthodes de l'objet Math": [
+    {
+      "méthode": "Math.abs(x)",
+      "définition": "Retourne la valeur absolue.",
+      "exemple": "let resultat = Math.abs(-15);\nconsole.log(resultat); // 15"
+    },
+    {
+      "méthode": "Math.sqrt(x)",
+      "définition": "Retourne la racine carrée.",
+      "exemple": "let racine = Math.sqrt(16);\nconsole.log(racine); // 4"
+    },
+    {
+      "méthode": "Math.round(x)",
+      "définition": "Retourne l'entier le plus proche.",
+      "exemple": "let arrondi = Math.round(4.7);\nconsole.log(arrondi); // 5\nconsole.log(Math.round(4.3)); // 4"
+    },
+    {
+      "méthode": "Math.trunc(x)",
+      "définition": "Retourne la troncature entière d'un nombre en retirant sa partie décimale.",
+      "exemple": "let tronque = Math.trunc(4.9);\nconsole.log(tronque); // 4\nconsole.log(Math.trunc(-4.9)); // -4"
+    },
+    {
+      "méthode": "Math.random()",
+      "définition": "Retourne un réel aléatoire dans [0, 1[.",
+      "exemple": "// Nombre aléatoire entre 1 et 10\nlet nombre = Math.trunc(Math.random() * 10) + 1;\nconsole.log(nombre); // Exemple: 7 (valeur aléatoire entre 1 et 10)"
+    }
+  ],
+  "Les chaînes de caractères": [
+    {
+      "opérateur": "+",
+      "définition": "Opérateur de concaténation.",
+      "exemple": "let prenom = 'Ahmed';\nlet nom = 'Ben Ali';\nlet nomComplet = prenom + ' ' + nom;\nconsole.log(nomComplet); // 'Ahmed Ben Ali'"
+    },
+    {
+      "propriété": "ch.length",
+      "définition": "Retourne la longueur de la chaîne ch.",
+      "exemple": "let texte = 'Bonjour';\nconsole.log(texte.length); // 7"
+    },
+    {
+      "méthode": "ch.indexOf(ch1 [, p])",
+      "définition": "Retourne la position de la 1ère occurrence de ch1 dans ch, en effectuant la recherche à partir de la position p (sinon -1).",
+      "exemple": "let ch = 'Javascript';\nlet p1 = ch.indexOf('a'); // p1 = 1\nlet p2 = ch.indexOf('a', 2); // p2 = 3\nlet p3 = ch.indexOf('z'); // p3 = -1"
+    },
+    {
+      "méthode": "ch.lastIndexOf(ch1 [, p])",
+      "définition": "Retourne la position de la dernière occurrence de ch1 dans ch à partir de la position p.",
+      "exemple": "let texte = 'banana';\nlet derniere = texte.lastIndexOf('a');\nconsole.log(derniere); // 5\nconsole.log(texte.lastIndexOf('a', 3)); // 3"
+    },
+    {
+      "méthode": "ch.substring(d, f)",
+      "définition": "Retourne une sous-chaîne de ch de la position d à la position f (non incluse).",
+      "exemple": "let texte = 'Bonjour';\nlet sousChaine = texte.substring(0, 3);\nconsole.log(sousChaine); // 'Bon'\nconsole.log(texte.substring(3, 7)); // 'jour'"
+    },
+    {
+      "méthode": "ch.replace(ch1, ch2)",
+      "définition": "Retourne une chaîne dans laquelle la 1ère occurrence de ch1 dans ch est remplacée par ch2.",
+      "exemple": "let texte = 'Bonjour le monde';\nlet nouveau = texte.replace('monde', 'tous');\nconsole.log(nouveau); // 'Bonjour le tous'"
+    },
+    {
+      "méthode": "ch.toLowerCase()",
+      "définition": "Convertit tous les caractères de ch en minuscules.",
+      "exemple": "let texte = 'BONJOUR';\nlet minuscule = texte.toLowerCase();\nconsole.log(minuscule); // 'bonjour'"
+    },
+    {
+      "méthode": "ch.toUpperCase()",
+      "définition": "Convertit tous les caractères de ch en majuscules.",
+      "exemple": "let texte = 'bonjour';\nlet majuscule = texte.toUpperCase();\nconsole.log(majuscule); // 'BONJOUR'"
+    },
+    {
+      "méthode": "ch.trim()",
+      "définition": "Supprime tous les espaces existants au début et à la fin de ch.",
+      "exemple": "let texte = '  Bonjour  ';\nlet nettoye = texte.trim();\nconsole.log(nettoye); // 'Bonjour'\nconsole.log(nettoye.length); // 7"
+    },
+    {
+      "méthode": "String.fromCharCode(num, ..., numN)",
+      "définition": "Retourne une chaîne formée par la concaténation des résultats de conversion des codes ASCII passés en paramètres.",
+      "exemple": "let caractere = String.fromCharCode(65, 66, 67);\nconsole.log(caractere); // 'ABC'\nconsole.log(String.fromCharCode(72, 101, 108, 108, 111)); // 'Hello'"
+    }
+  ],
+  "L'objet Date": [
+    {
+      "méthode": "new Date()",
+      "définition": "Retourne la date courante.",
+      "exemple": "let maintenant = new Date();\nconsole.log(maintenant); // Exemple: Wed Nov 20 2024 10:30:45 GMT+0100"
+    },
+    {
+      "méthode": "new Date(ch)",
+      "définition": "Retourne un objet Date à partir d'une chaîne de caractères ch représentant une date.",
+      "exemple": "let date = new Date('2024-11-19');\nconsole.log(date); // Tue Nov 19 2024 00:00:00 GMT+0100"
+    },
+    {
+      "méthode": "d.getDate()",
+      "définition": "Retourne le jour du mois (entre 1 et 31).",
+      "exemple": "let date = new Date('2024-11-19');\nlet jour = date.getDate();\nconsole.log(jour); // 19"
+    },
+    {
+      "méthode": "d.getMonth()",
+      "définition": "Retourne le numéro du mois (entre 0 et 11).",
+      "exemple": "let date = new Date('2024-11-19');\nlet mois = date.getMonth() + 1;\nconsole.log(mois); // 11 (novembre)"
+    },
+    {
+      "méthode": "d.getFullYear()",
+      "définition": "Retourne la valeur de l'année sur 4 chiffres.",
+      "exemple": "let date = new Date('2024-11-19');\nlet annee = date.getFullYear();\nconsole.log(annee); // 2024"
+    },
+    {
+      "méthode": "d.toString()",
+      "définition": "Retourne une chaîne de caractères représentant la date d.",
+      "exemple": "let date = new Date('2024-11-19');\nlet texte = date.toString();\nconsole.log(texte); // 'Tue Nov 19 2024 00:00:00 GMT+0100'"
+    }
+  ],
+  "Modification du contenu, des attributs ou des styles des éléments HTML": [
+    {
+      "propriété": "element.attribute = valeur",
+      "définition": "Change la valeur de l'attribut d'un élément HTML.",
+      "exemple": "let image = document.getElementById('monImage');\nimage.src = 'nouvelle-image.jpg'; // Change la source de l'image\nimage.alt = 'Nouvelle description'; // Change le texte alternatif"
+    },
+    {
+      "propriété": "element.style.propriété = valeur",
+      "définition": "Change le style d'un élément HTML.",
+      "exemple": "let div = document.getElementById('maDiv');\ndiv.style.backgroundColor = 'blue'; // Fond bleu\ndiv.style.fontSize = '20px'; // Taille de police 20px"
+    },
+    {
+      "méthode": "element.méthode()",
+      "définition": "Effectue une action sur un élément HTML (par exemple, play(), pause()).",
+      "exemple": "let video = document.getElementById('maVideo');\nvideo.play(); // Lance la lecture de la vidéo\n// Pour mettre en pause\nvideo.pause(); // Met en pause la vidéo"
+    },
+    {
+      "propriété": "selectedIndex",
+      "définition": "Pour une liste déroulante (<select>), récupère l'indice de l'option sélectionnée.",
+      "exemple": "let select = document.getElementById('maListe');\nlet index = select.selectedIndex; // Exemple: 2\nlet valeur = select.options[index].value;\nconsole.log(valeur); // Affiche la valeur de l'option sélectionnée"
+    }
+  ]
+}

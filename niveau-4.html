@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4ème année — Bac Sciences de l'informatique — Guide du Programme STI</title>
+<meta name="description" content="Le site dynamique : compléments HTML/CSS/JS, SQL complet (définition et manipulation des données) et PHP avec MySQL en mysqli procédural.">
+<link rel="icon" href="flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="niv-4" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">Guide du Programme<small>Sciences et Technologies de l'Informatique</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="index.html" class="">Accueil</a><a href="niveau-2.html" class="m2">2ème année</a><a href="niveau-3.html" class="m3">3ème année</a><a href="niveau-4.html" class="m4" aria-current="page">4ème année</a><a href="annexe.html" class="">Annexe</a><a href="pedagogie.html" class="">Enseigner</a><a href="erreurs.html" class="">Erreurs</a><a href="outils.html" class="">Outils</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><span class="pastille-niveau">4ème année · Sites dynamiques</span><br><h1>4ème année — Bac Sciences de l'informatique</h1><p class="chapeau">Le site dynamique : compléments HTML/CSS/JS, SQL complet (définition et manipulation des données) et PHP avec MySQL en mysqli procédural.</p><div class="bandeau-faits"><span>5 séquences</span><span>SQL LDD + LMD</span><span>PHP + MySQL (mysqli)</span></div></div></section>
+<div class="page"><nav class="sommaire" aria-label="Sommaire"><h2>Sommaire</h2><ol><li><a href="#m1">1. Compléments HTML5 et CSS3</a><ol><li><a href="#m1-liste-de-suggestions-datalist">Liste de suggestions : datalist</a></li><li><a href="#m1-nouveaux-evenements">Nouveaux événements</a></li><li><a href="#m1-pseudo-classes-et-selecteurs-avances">Pseudo-classes et sélecteurs avancés</a></li><li><a href="#m1-filtres-et-transformations">Filtres et transformations</a></li><li><a href="#m1-a-retenir-complements-html-css">À retenir — compléments HTML/CSS</a></li></ol></li><li><a href="#m2">2. JavaScript avancé</a><ol><li><a href="#m2-script-externe-obligatoire">Script externe obligatoire</a></li><li><a href="#m2-groupe-de-boutons-radio-getelementsbynam">Groupe de boutons radio : getElementsByName</a></li><li><a href="#m2-liste-deroulante-selectedindex">Liste déroulante : selectedIndex</a></li><li><a href="#m2-modifier-attributs-styles-et-medias">Modifier attributs, styles et médias</a></li><li><a href="#m2-controler-avant-l-envoi-vers-php">Contrôler avant l'envoi vers PHP</a></li><li><a href="#m2-a-retenir-javascript-avance">À retenir — JavaScript avancé</a></li></ol></li><li><a href="#m3">3. SQL : définition des données</a><ol><li><a href="#m3-creer-et-supprimer-une-base">Créer et supprimer une base</a></li><li><a href="#m3-creer-une-table-avec-ses-contraintes">Créer une table avec ses contraintes</a></li><li><a href="#m3-modifier-la-structure-alter-table">Modifier la structure : ALTER TABLE</a></li><li><a href="#m3-a-retenir-definition-des-donnees">À retenir — définition des données</a></li></ol></li><li><a href="#m4">4. SQL : interrogation avancée</a><ol><li><a href="#m4-fonctions-d-agregation-group-by-et-havin">Fonctions d'agrégation, GROUP BY et HAVING</a></li><li><a href="#m4-jointures-syntaxe-classique">Jointures (syntaxe classique)</a></li><li><a href="#m4-sous-requetes-non-correlees">Sous-requêtes non corrélées</a></li><li><a href="#m4-fonctions-sur-les-dates">Fonctions sur les dates</a></li><li><a href="#m4-a-retenir-interrogation">À retenir — interrogation</a></li></ol></li><li><a href="#m5">5. PHP et MySQL</a><ol><li><a href="#m5-bases-du-langage-php">Bases du langage PHP</a></li><li><a href="#m5-fonctions-php-de-l-annexe">Fonctions PHP de l'annexe</a></li><li><a href="#m5-recevoir-des-donnees-get-post-isset">Recevoir des données : $_GET, $_POST, isset</a></li><li><a href="#m5-cycle-mysqli-connexion-requete-fermeture">Cycle mysqli : connexion, requête, fermeture</a></li><li><a href="#m5-ajouter-modifier-supprimer">Ajouter, modifier, supprimer</a></li><li><a href="#m5-authentification">Authentification</a></li><li><a href="#m5-a-retenir-php-et-mysql">À retenir — PHP et MySQL</a></li></ol></li><li><a href="#m6">6. Limites du programme et progression</a><ol><li><a href="#m6-interdits">Interdits</a></li><li><a href="#m6-progression-suggeree">Progression suggérée</a></li></ol></li></ol></nav><div class="contenu"><section class="module" id="m1"><div class="module-tete"><div class="module-num">01</div><div><h2>Compléments HTML5 et CSS3</h2><p>Suggestions de saisie, nouveaux événements, sélecteurs avancés et filtres d'images.</p></div></div><article class="notion" id="m1-liste-de-suggestions-datalist"><div class="notion-tete"><h3>Liste de suggestions : datalist</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<p><code>&lt;datalist&gt;</code> propose des valeurs pendant la saisie, tout en laissant l'utilisateur taper autre chose. Il est relié au champ par l'attribut <code>list</code>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;label for="ville"&gt;Ville :&lt;/label&gt;
+&lt;input type="text" id="ville" name="ville" list="villes"&gt;
+&lt;datalist id="villes"&gt;
+  &lt;option value="Tunis"&gt;
+  &lt;option value="Sousse"&gt;
+  &lt;option value="Sfax"&gt;
+&lt;/datalist&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:90px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;label for=&quot;ville&quot;&gt;Ville :&lt;/label&gt; &lt;input type=&quot;text&quot; id=&quot;ville&quot; list=&quot;villes&quot;&gt;&lt;datalist id=&quot;villes&quot;&gt;&lt;option value=&quot;Tunis&quot;&gt;&lt;option value=&quot;Sousse&quot;&gt;&lt;option value=&quot;Sfax&quot;&gt;&lt;/datalist&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Cliquez dans le champ pour voir les suggestions.</div></div></div>
+</div></article><article class="notion" id="m1-nouveaux-evenements"><div class="notion-tete"><h3>Nouveaux événements</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Événement</th><th>Se déclenche quand…</th></tr></thead><tbody><tr><td><code>onmouseover / onmouseout</code></td><td>le pointeur entre dans l'élément / en sort</td></tr><tr><td><code>onkeydown / onkeyup</code></td><td>une touche est enfoncée / relâchée</td></tr><tr><td><code>onplay / onpause</code></td><td>la lecture d'un média démarre / est suspendue</td></tr><tr><td><code>onsubmit</code></td><td>le formulaire est envoyé (sur &lt;form&gt;, avec <code>return</code>)</td></tr></tbody></table></div>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;img id="carte" src="carte.png" alt="Carte"
+     onmouseover="agrandir()" onmouseout="reduire()"&gt;
+
+&lt;input id="cin" onkeyup="compter()"&gt;
+&lt;span id="nb"&gt;0&lt;/span&gt; / 8 chiffres</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:70px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;script&gt;function compter(){document.getElementById(&quot;nb&quot;).innerHTML=document.getElementById(&quot;cin&quot;).value.length}&lt;/script&gt;CIN : &lt;input id=&quot;cin&quot; onkeyup=&quot;compter()&quot; maxlength=&quot;8&quot;&gt; &lt;span id=&quot;nb&quot;&gt;0&lt;/span&gt; / 8 chiffres&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Tapez dans le champ.</div></div></div>
+</div></article><article class="notion" id="m1-pseudo-classes-et-selecteurs-avances"><div class="notion-tete"><h3>Pseudo-classes et sélecteurs avancés</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">a:link    { color: #1D4ED8; }  /* non visité   */
+a:visited { color: #5B2C9F; }  /* visité       */
+a:hover   { color: #D35400; }  /* survolé      */
+a:active  { color: #C62828; }  /* au clic      */
+input:focus { border: 2px solid #F5B800; }
+
+input[required]     { border-left: 4px solid red; }
+input[type="email"] { width: 250px; }
+p.note              { color: gray; }</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:120px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;a:link{color:#1D4ED8}a:visited{color:#5B2C9F}a:hover{color:#D35400}a:active{color:#C62828}input:focus{border:2px solid #F5B800;outline:none}input[required]{border-left:4px solid red}input[type=&quot;email&quot;]{width:200px}p.note{color:gray}body{font:14px Arial}&lt;/style&gt;&lt;a href=&quot;#&quot;&gt;Lien du menu&lt;/a&gt;&lt;br&gt;&lt;br&gt;&lt;input required placeholder=&quot;obligatoire&quot;&gt; &lt;input type=&quot;email&quot; placeholder=&quot;e-mail&quot;&gt;&lt;p class=&quot;note&quot;&gt;Les champs bordés de rouge sont obligatoires.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc info"><b class="ico" aria-hidden="true">i</b><div><p>Ordre conseillé des pseudo-classes de lien : <b>link, visited, hover, active</b>.</p></div></div>
+</div></article><article class="notion" id="m1-filtres-et-transformations"><div class="notion-tete"><h3>Filtres et transformations</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">.photo {
+  filter: grayscale(100%);
+  transition: filter 1s;
+}
+.photo:hover {
+  filter: blur(2px);
+}
+.negatif {
+  filter: invert(100%);
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:100px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;.p{width:110px;height:70px;display:inline-grid;place-items:center;margin:4px;font:bold 13px Arial;color:#fff;background:linear-gradient(135deg,#1D4ED8,#F5B800,#C62828);border-radius:6px}.photo{filter:grayscale(100%);transition:filter 1s}.photo:hover{filter:blur(2px)}.negatif{filter:invert(100%)}&lt;/style&gt;&lt;div class=&quot;p&quot;&gt;original&lt;/div&gt;&lt;div class=&quot;p photo&quot;&gt;grayscale&lt;/div&gt;&lt;div class=&quot;p negatif&quot;&gt;invert&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Survolez l'image grise pour le flou.</div></div></div>
+</div></article><div id="m1-a-retenir-complements-html-css"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li><code>datalist</code> se relie au champ par <code>list</code> = <code>id</code> du datalist.</li><li><code>onsubmit</code> s'écrit sur la balise <code>form</code>, avec <code>return</code>.</li><li>Pseudo-classes de lien dans l'ordre link, visited, hover, active.</li></ul><h4>Nouvelles propriétés CSS</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Propriété</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Définition</th></tr></thead><tbody><tr><td><code>filter</code></td><td>blur(), grayscale(), invert()</td><td><code>grayscale(100%)</code></td><td>Filtre graphique appliqué à l'élément</td></tr><tr><td><code>transform</code></td><td>rotate(), scale(), translate(), skew()</td><td><code>—</code></td><td>Transformation 2D (sur une seule ligne)</td></tr></tbody></table></div><h4>Sélecteurs de 4ème</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Sélecteur</th><th>Cible</th></tr></thead><tbody><tr><td><code>a:link / a:visited</code></td><td>Liens non visités / visités</td></tr><tr><td><code>a:hover / a:active</code></td><td>Survol / clic</td></tr><tr><td><code>:focus</code></td><td>Élément ayant le focus</td></tr><tr><td><code>element[attr]</code></td><td>Éléments possédant l'attribut</td></tr><tr><td><code>element[attr=valeur]</code></td><td>Éléments dont l'attribut a cette valeur</td></tr><tr><td><code>element.class</code></td><td>Éléments de ce type avec cette classe</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m2"><div class="module-tete"><div class="module-num">02</div><div><h2>JavaScript avancé</h2><p>Parcourir des groupes de boutons radio, modifier attributs et styles, piloter un média, préparer l'envoi vers PHP.</p></div></div><article class="notion" id="m2-script-externe-obligatoire"><div class="notion-tete"><h3>Script externe obligatoire</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<p>En 4ème, tout le code JavaScript est dans un fichier <code>.js</code> relié par <code>&lt;script src&gt;</code>. Aucun script interne dans la page.</p>
+<div class="versus"><div class="faux"><div class="etiq">✗ Incorrect</div><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;script&gt;
+  function verifier() { … }
+&lt;/script&gt;</code></pre></div></div><div class="juste"><div class="etiq">✔ Conforme</div><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;script src="js/controle.js"&gt;&lt;/script&gt;</code></pre></div></div></div>
+</div></article><article class="notion" id="m2-groupe-de-boutons-radio-getelementsbynam"><div class="notion-tete"><h3>Groupe de boutons radio : getElementsByName</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">JS</span>js/controle.js</span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">function choixFiliere() {
+  let options = document.getElementsByName("filiere");
+  let choix = "";
+  for (let i = 0; i &lt; options.length; i++) {
+    if (options[i].checked) {
+      choix = options[i].value;
+    }
+  }
+  if (choix == "") {
+    alert("Choisissez une filière");
+    return;
+  }
+  document.getElementById("res").innerHTML = "Filière : " + choix;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:100px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;script&gt;function choixFiliere(){let o=document.getElementsByName(&quot;filiere&quot;);let c=&quot;&quot;;for(let i=0;i&lt;o.length;i++){if(o[i].checked){c=o[i].value}}if(c==&quot;&quot;){alert(&quot;Choisissez une filière&quot;);return}document.getElementById(&quot;res&quot;).innerHTML=&quot;Filière : &quot;+c}&lt;/script&gt;&lt;style&gt;body{font:14px Arial}&lt;/style&gt;&lt;input type=&quot;radio&quot; name=&quot;filiere&quot; value=&quot;Informatique&quot;&gt; Informatique &lt;input type=&quot;radio&quot; name=&quot;filiere&quot; value=&quot;Sciences&quot;&gt; Sciences &lt;input type=&quot;radio&quot; name=&quot;filiere&quot; value=&quot;Lettres&quot;&gt; Lettres&lt;br&gt;&lt;input type=&quot;button&quot; value=&quot;Valider&quot; onclick=&quot;choixFiliere()&quot;&gt;&lt;p id=&quot;res&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><article class="notion" id="m2-liste-deroulante-selectedindex"><div class="notion-tete"><h3>Liste déroulante : selectedIndex</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">JS</span>js/controle.js</span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">function verifierGouv() {
+  let liste = document.getElementById("gouv");
+  if (liste.selectedIndex == 0) {
+    alert("Choisissez un gouvernorat");
+    return;
+  }
+  document.getElementById("res").innerHTML =
+    "Choix : " + liste.value;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:90px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;script&gt;function verifierGouv(){let l=document.getElementById(&quot;gouv&quot;);if(l.selectedIndex==0){alert(&quot;Choisissez un gouvernorat&quot;);return}document.getElementById(&quot;res&quot;).innerHTML=&quot;Choix : &quot;+l.value}&lt;/script&gt;&lt;style&gt;body{font:14px Arial}&lt;/style&gt;&lt;select id=&quot;gouv&quot;&gt;&lt;option value=&quot;&quot;&gt;-- Choisir --&lt;/option&gt;&lt;option value=&quot;Manouba&quot;&gt;Manouba&lt;/option&gt;&lt;option value=&quot;Ariana&quot;&gt;Ariana&lt;/option&gt;&lt;/select&gt; &lt;input type=&quot;button&quot; value=&quot;Valider&quot; onclick=&quot;verifierGouv()&quot;&gt;&lt;p id=&quot;res&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc info"><b class="ico" aria-hidden="true">i</b><div><p>L'option 0 (« -- Choisir -- ») sert de message : <code>selectedIndex == 0</code> signifie qu'aucun vrai choix n'a été fait.</p></div></div>
+</div></article><article class="notion" id="m2-modifier-attributs-styles-et-medias"><div class="notion-tete"><h3>Modifier attributs, styles et médias</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<p>Syntaxe générale : <code>element.attribut = valeur</code>, <code>element.style.propriété = valeur</code>, <code>element.méthode()</code>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">JS</span>js/script.js</span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">let v = document.getElementById("video");
+let img = document.getElementById("img");
+let ok = document.getElementById("accord");
+let btn = document.getElementById("envoyer");
+
+ok.checked = true;            // attribut
+btn.disabled = false;
+document.getElementById("cin").readOnly = true;
+img.src = "images/kairouan.jpg";
+v.muted = true;
+
+img.style.width = "200px";    // style
+img.style.border = "3px solid gold";
+
+v.play();                     // méthodes média
+v.pause();</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:120px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;script&gt;function activer(){let b=document.getElementById(&quot;envoyer&quot;);b.disabled=!document.getElementById(&quot;accord&quot;).checked;document.getElementById(&quot;cadre&quot;).style.border=b.disabled?&quot;2px dashed #999&quot;:&quot;3px solid gold&quot;;document.getElementById(&quot;cadre&quot;).style.background=b.disabled?&quot;#fff&quot;:&quot;#fff6d6&quot;}&lt;/script&gt;&lt;style&gt;body{font:14px Arial}#cadre{padding:10px;border:2px dashed #999;border-radius:8px}&lt;/style&gt;&lt;div id=&quot;cadre&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;accord&quot; onclick=&quot;activer()&quot;&gt; J&#x27;accepte le règlement&lt;br&gt;&lt;br&gt;&lt;input type=&quot;button&quot; id=&quot;envoyer&quot; value=&quot;Envoyer&quot; disabled&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Cochez la case : le bouton s'active et le style du cadre change.</div></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Propriété JS</th><th>Effet</th></tr></thead><tbody><tr><td><code>value</code></td><td>Valeur d'un champ</td></tr><tr><td><code>checked</code></td><td>Case cochée ou non</td></tr><tr><td><code>disabled</code></td><td>Élément désactivé</td></tr><tr><td><code>readOnly</code></td><td>Champ en lecture seule (attention à la majuscule O)</td></tr><tr><td><code>src</code></td><td>Source d'une image ou d'un média</td></tr><tr><td><code>muted</code></td><td>Son coupé</td></tr><tr><td><code>style.propriété</code></td><td>Modifie une propriété CSS (color, background, border, font, width, height)</td></tr><tr><td><code>play() / pause()</code></td><td>Lecture / pause d'un média</td></tr></tbody></table></div>
+</div></article><article class="notion" id="m2-controler-avant-l-envoi-vers-php"><div class="notion-tete"><h3>Contrôler avant l'envoi vers PHP</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<p>Quand le formulaire part vers une page PHP, le contrôle se branche sur <code>onsubmit</code> de la balise <code>form</code> : la fonction renvoie <code>false</code> pour bloquer l'envoi, <code>true</code> pour l'autoriser.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">HTML</span>inscription.html</span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;form action="inscription.php" method="post" onsubmit="return verifier()"&gt;
+  &lt;input type="text" id="nom" name="nom"&gt;
+  &lt;input type="submit" value="S'inscrire"&gt;
+&lt;/form&gt;</code></pre></div>
+<div class="code"><div class="code-tete"><span><span class="lang">JS</span>js/controle.js</span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">function verifier() {
+  let nom = document.getElementById("nom").value;
+  if (nom.length &lt; 3) {
+    alert("Nom trop court");
+    return false;
+  }
+  return true;
+}</code></pre></div>
+</div></article><div id="m2-a-retenir-javascript-avance"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Script toujours externe en 4ème.</li><li>Groupe radio : <code>getElementsByName</code> + boucle sur <code>checked</code>.</li><li>Liste déroulante : tester <code>selectedIndex</code>.</li><li><code>onsubmit="return verifier()"</code> pour un envoi vers PHP.</li></ul><h4>Méthodes et fonctions</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Méthode / fonction</th><th>Définition</th></tr></thead><tbody><tr><td><code>document.getElementsByName(n)</code></td><td>Renvoie la liste des éléments ayant ce name</td></tr><tr><td><code>element.attribut = valeur</code></td><td>Modifie un attribut (value, checked, disabled, readOnly, src, muted)</td></tr><tr><td><code>element.style.propriété = valeur</code></td><td>Modifie une propriété CSS de l'élément</td></tr><tr><td><code>element.play() / pause()</code></td><td>Lance / suspend un média</td></tr><tr><td><code>selectedIndex</code></td><td>Indice de l'option choisie dans une liste</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m3"><div class="module-tete"><div class="module-num">03</div><div><h2>SQL : définition des données</h2><p>Écrire soi-même la création de la base, des tables, des contraintes et leurs modifications.</p></div></div><article class="notion" id="m3-creer-et-supprimer-une-base"><div class="notion-tete"><h3>Créer et supprimer une base</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">CREATE DATABASE ecole;
+DROP DATABASE ecole;</code></pre></div>
+</div></article><article class="notion" id="m3-creer-une-table-avec-ses-contraintes"><div class="notion-tete"><h3>Créer une table avec ses contraintes</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">CREATE TABLE Classe (
+  idClasse VARCHAR(10) PRIMARY KEY,
+  niveau   INT NOT NULL
+);
+
+CREATE TABLE Eleve (
+  idEleve   INT,
+  nom       VARCHAR(30) NOT NULL,
+  prenom    VARCHAR(30) NOT NULL,
+  dateNais  DATE,
+  moyenne   DECIMAL(4,2) CHECK (moyenne BETWEEN 0 AND 20),
+  ville     VARCHAR(30) DEFAULT 'Manouba',
+  email     VARCHAR(60) UNIQUE,
+  idClasse  VARCHAR(10),
+  CONSTRAINT pk_eleve PRIMARY KEY (idEleve),
+  CONSTRAINT fk_eleve_classe FOREIGN KEY (idClasse)
+    REFERENCES Classe(idClasse)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p><code>AUTO_INCREMENT</code> n'est pas dans l'annexe : la clé primaire est saisie explicitement.</p></div></div>
+</div></article><article class="notion" id="m3-modifier-la-structure-alter-table"><div class="notion-tete"><h3>Modifier la structure : ALTER TABLE</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">-- Ajouter une colonne
+ALTER TABLE Eleve ADD tel VARCHAR(8);
+
+-- Supprimer une colonne
+ALTER TABLE Eleve DROP tel;
+
+-- Renommer une colonne / changer son type (MySQL)
+ALTER TABLE Eleve CHANGE prenom prenomEleve VARCHAR(40);
+
+-- Ajouter / supprimer une contrainte
+ALTER TABLE Eleve ADD CONSTRAINT uq_nom UNIQUE (nom, prenomEleve);
+ALTER TABLE Eleve DROP CONSTRAINT uq_nom;
+
+-- Supprimer une table
+DROP TABLE Eleve;</code></pre></div>
+<div class="enc info"><b class="ico" aria-hidden="true">i</b><div><p>L'annexe mentionne aussi <code>ALTER TABLE t ALTER colonne type</code> et <code>ALTER TABLE t RENAME nom1 TO nom2</code>. Sous MySQL, ces formes ne s'exécutent pas pour modifier une colonne : on enseigne <code>CHANGE</code> (ancien nom, nouveau nom, type).</p></div></div>
+</div></article><div id="m3-a-retenir-definition-des-donnees"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Clé primaire et clé étrangère se déclarent avec <code>CONSTRAINT nom</code>.</li><li><code>ON DELETE / ON UPDATE CASCADE</code> propage les suppressions et modifications.</li><li>Renommer ou retyper une colonne : <code>CHANGE</code>.</li><li>Pas d'<code>AUTO_INCREMENT</code>.</li></ul><h4>Instructions de définition</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Instruction</th><th>Syntaxe (annexe)</th></tr></thead><tbody><tr><td><code>CREATE DATABASE</code></td><td><code>CREATE DATABASE nom</code></td></tr><tr><td><code>DROP DATABASE</code></td><td><code>DROP DATABASE nom</code></td></tr><tr><td><code>CREATE TABLE</code></td><td><code>CREATE TABLE t (col type [contrainte], …, [CONSTRAINT nom] contrainte)</code></td></tr><tr><td><code>ALTER TABLE … ADD</code></td><td><code>ALTER TABLE t ADD col type [contrainte]</code></td></tr><tr><td><code>ALTER TABLE … DROP</code></td><td><code>ALTER TABLE t DROP col</code></td></tr><tr><td><code>ALTER TABLE … ADD CONSTRAINT</code></td><td><code>ALTER TABLE t ADD CONSTRAINT nom contrainte</code></td></tr><tr><td><code>ALTER TABLE … DROP CONSTRAINT</code></td><td><code>ALTER TABLE t DROP CONSTRAINT nom</code></td></tr><tr><td><code>DROP TABLE</code></td><td><code>DROP TABLE t</code></td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m4"><div class="module-tete"><div class="module-num">04</div><div><h2>SQL : interrogation avancée</h2><p>Calculer des statistiques, regrouper, relier plusieurs tables et imbriquer des requêtes.</p></div></div><article class="notion" id="m4-fonctions-d-agregation-group-by-et-havin"><div class="notion-tete"><h3>Fonctions d'agrégation, GROUP BY et HAVING</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">-- Statistiques globales
+SELECT COUNT(*) AS nbEleves, AVG(moyenne) AS moyClasse,
+       MIN(moyenne), MAX(moyenne)
+FROM Eleve;
+
+-- Par groupe
+SELECT idClasse, COUNT(*) AS effectif
+FROM Eleve
+GROUP BY idClasse
+HAVING COUNT(*) &gt; 25
+ORDER BY effectif DESC;</code></pre></div>
+<div class="enc astuce"><b class="ico" aria-hidden="true">★</b><div><p><code>WHERE</code> filtre les lignes <b>avant</b> le regroupement, <code>HAVING</code> filtre les groupes <b>après</b>.</p></div></div>
+</div></article><article class="notion" id="m4-jointures-syntaxe-classique"><div class="notion-tete"><h3>Jointures (syntaxe classique)</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<p>Les tables sont listées dans <code>FROM</code>, la condition de jointure s'écrit dans <code>WHERE</code>. Pas de mot-clé <code>JOIN</code>.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">SELECT E.nom, E.prenom, C.niveau
+FROM Eleve E, Classe C
+WHERE E.idClasse = C.idClasse
+  AND C.niveau = 4;
+
+-- Trois tables
+SELECT L.titre, E.nom, P.dateEmprunt
+FROM Livre L, Eleve E, Emprunt P
+WHERE P.idLivre = L.idLivre
+  AND P.idEleve = E.idEleve;</code></pre></div>
+</div></article><article class="notion" id="m4-sous-requetes-non-correlees"><div class="notion-tete"><h3>Sous-requêtes non corrélées</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">-- Élèves dont la moyenne dépasse la moyenne générale
+SELECT nom, moyenne
+FROM Eleve
+WHERE moyenne &gt; (SELECT AVG(moyenne) FROM Eleve);
+
+-- Livres jamais empruntés
+SELECT titre FROM Livre
+WHERE idLivre NOT IN (SELECT idLivre FROM Emprunt);</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p>La sous-requête doit pouvoir s'exécuter seule : les sous-requêtes corrélées (qui utilisent une colonne de la requête principale) sont hors programme.</p></div></div>
+</div></article><article class="notion" id="m4-fonctions-sur-les-dates"><div class="notion-tete"><h3>Fonctions sur les dates</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">SELECT nom, YEAR(dateNais) FROM Eleve;
+SELECT * FROM Emprunt WHERE MONTH(dateEmprunt) = 10;
+SELECT DAY(NOW());
+SELECT * FROM Emprunt WHERE dateEmprunt = DATE(NOW());          -- aujourd'hui
+SELECT idLivre, ADDDATE(dateEmprunt, 15) AS retourPrevu FROM Emprunt;
+SELECT idLivre, DATEDIFF(DATE(NOW()), dateEmprunt) AS jours FROM Emprunt;</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p><code>CURDATE()</code> n'est pas dans l'annexe : la date du jour s'écrit <code>DATE(NOW())</code>.</p></div></div>
+</div></article><div id="m4-a-retenir-interrogation"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Ordre des clauses : SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY.</li><li>Jointure : tables dans FROM, condition dans WHERE.</li><li>Sous-requête non corrélée seulement.</li><li>Date du jour : <code>DATE(NOW())</code>.</li></ul><h4>Fonctions SQL</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Fonction</th><th>Rôle</th></tr></thead><tbody><tr><td><code>COUNT()</code></td><td>Nombre de lignes</td></tr><tr><td><code>SUM()</code></td><td>Somme</td></tr><tr><td><code>AVG()</code></td><td>Moyenne</td></tr><tr><td><code>MIN() / MAX()</code></td><td>Minimum / maximum</td></tr><tr><td><code>DATE()</code></td><td>Partie date d'un DATETIME</td></tr><tr><td><code>DAY() / MONTH() / YEAR()</code></td><td>Jour, mois, année</td></tr><tr><td><code>NOW()</code></td><td>Date et heure courantes</td></tr><tr><td><code>ADDDATE(d, n)</code></td><td>Ajoute n jours (ou un INTERVAL)</td></tr><tr><td><code>DATEDIFF(d1, d2)</code></td><td>Nombre de jours entre deux dates</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m5"><div class="module-tete"><div class="module-num">05</div><div><h2>PHP et MySQL</h2><p>Produire des pages dynamiques : recevoir les données d'un formulaire et dialoguer avec la base en mysqli procédural.</p></div></div><article class="notion" id="m5-bases-du-langage-php"><div class="notion-tete"><h3>Bases du langage PHP</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span>bases.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  $nom = "Yassine";             // string
+  $age = 17;                    // int
+  $moyenne = 14.75;             // float
+  $admis = true;                // bool
+  $notes = array(12, 15, 9);    // array
+
+  $n = (int) "42";              // transtypage : (int) (float) (string) (bool) (array)
+
+  echo "Bonjour " . $nom;       // concaténation avec le point
+
+  if ($moyenne &gt;= 10 &amp;&amp; $age &lt; 20) {
+    echo "Admis";
+  } else {
+    echo "Ajourné";
+  }
+
+  for ($i = 0; $i &lt; count($notes); $i++) {
+    echo $notes[$i] . " ";
+  }
+?&gt;</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p>Pas de <code>switch</code> ni de <code>var_dump()</code> en PHP : on utilise <code>if / else if</code> et <code>echo</code>.</p></div></div>
+</div></article><article class="notion" id="m5-fonctions-php-de-l-annexe"><div class="notion-tete"><h3>Fonctions PHP de l'annexe</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span></span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  abs(-3);  sqrt(16);  round(2.567, 2);  rand(1, 6);
+
+  strlen("Tunis");                  // 5
+  substr("Oued Ellil", 0, 4);       // "Oued"
+  strpos("Oued Ellil", "E");        // 5
+  strcmp("abc", "abd");             // &lt; 0
+  str_replace("Oued", "Wed", $ch);
+  strtoupper($ch);  strtolower($ch);  trim($ch);
+  ord("A");  chr(65);
+
+  date("d/m/Y");                    // 27/10/2026
+  time();                           // timestamp actuel
+  strtotime("2026-12-31");
+  checkdate(2, 30, 2026);           // false
+?&gt;</code></pre></div>
+</div></article><article class="notion" id="m5-recevoir-des-donnees-get-post-isset"><div class="notion-tete"><h3>Recevoir des données : $_GET, $_POST, isset</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">PHP</span>inscription.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  if (isset($_POST["nom"])) {
+    $nom = $_POST["nom"];
+    $classe = $_POST["classe"];
+    echo "Bienvenue " . $nom . " (" . $classe . ")";
+  } else {
+    echo "Formulaire non envoyé";
+  }
+?&gt;</code></pre></div><div class="code"><div class="code-tete"><span><span class="lang">PHP</span>liste.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;!-- Lien avec paramètre --&gt;
+&lt;a href="fiche.php?id=12"&gt;Voir la fiche&lt;/a&gt;
+
+&lt;?php
+  // fiche.php
+  $id = $_GET["id"];
+?&gt;</code></pre></div></div>
+</div></article><article class="notion" id="m5-cycle-mysqli-connexion-requete-fermeture"><div class="notion-tete"><h3>Cycle mysqli : connexion, requête, fermeture</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<p>La connexion est écrite une fois dans <code>connexion.php</code>, puis importée par <code>require</code> dans chaque page.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span>connexion.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  $cnx = mysqli_connect("localhost", "root", "", "ecole")
+         or die("Connexion impossible");
+?&gt;</code></pre></div>
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span>liste.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  require("connexion.php");
+
+  $req = "SELECT nom, prenom, moyenne FROM Eleve ORDER BY moyenne DESC";
+  $res = mysqli_query($cnx, $req) or die(mysqli_error($cnx));
+
+  echo "&lt;p&gt;" . mysqli_num_rows($res) . " élève(s)&lt;/p&gt;";
+  echo "&lt;table border='1'&gt;";
+  while ($ligne = mysqli_fetch_array($res)) {
+    echo "&lt;tr&gt;&lt;td&gt;" . $ligne["nom"] . "&lt;/td&gt;&lt;td&gt;" . $ligne["prenom"]
+       . "&lt;/td&gt;&lt;td&gt;" . $ligne["moyenne"] . "&lt;/td&gt;&lt;/tr&gt;";
+  }
+  echo "&lt;/table&gt;";
+
+  mysqli_close($cnx);
+?&gt;</code></pre></div>
+</div></article><article class="notion" id="m5-ajouter-modifier-supprimer"><div class="notion-tete"><h3>Ajouter, modifier, supprimer</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span>ajout.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  require("connexion.php");
+
+  $id = $_POST["id"];
+  $nom = $_POST["nom"];
+  $prenom = $_POST["prenom"];
+
+  $req = "INSERT INTO Eleve (idEleve, nom, prenom) VALUES ($id, '$nom', '$prenom')";
+  mysqli_query($cnx, $req) or die(mysqli_error($cnx));
+
+  if (mysqli_affected_rows($cnx) == 1) {
+    echo "Élève ajouté";
+  }
+
+  // UPDATE Eleve SET nom = '$nom' WHERE idEleve = $id
+  // DELETE FROM Eleve WHERE idEleve = $id
+
+  mysqli_close($cnx);
+?&gt;</code></pre></div>
+</div></article><article class="notion" id="m5-authentification"><div class="notion-tete"><h3>Authentification</h3><span class="annexe-tag n4">Annexe 4ème</span></div><div class="notion-corps">
+<p>Le mot de passe saisi est comparé <b>tel quel</b> à celui de la base, sans hachage. On vérifie qu'exactement une ligne correspond.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">PHP</span>connexion_utilisateur.php</span><button class="copier" type="button">Copier</button></div><pre class="language-php"><code class="language-php">&lt;?php
+  require("connexion.php");
+
+  $login = $_POST["login"];
+  $mdp = $_POST["mdp"];
+
+  $req = "SELECT nom FROM Utilisateur WHERE login = '$login' AND mdp = '$mdp'";
+  $res = mysqli_query($cnx, $req) or die(mysqli_error($cnx));
+
+  if (mysqli_num_rows($res) == 1) {
+    $ligne = mysqli_fetch_row($res);
+    echo "Bienvenue " . $ligne[0];
+  } else {
+    echo "Login ou mot de passe incorrect";
+  }
+  mysqli_close($cnx);
+?&gt;</code></pre></div>
+</div></article><div id="m5-a-retenir-php-et-mysql"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>mysqli procédural uniquement : jamais PDO ni <code>new mysqli()</code>.</li><li>Connexion centralisée dans <code>connexion.php</code>, importée par <code>require</code>.</li><li>Toujours tester <code>isset()</code> avant de lire <code>$_POST</code>.</li><li>Mot de passe comparé tel quel, sans hachage.</li></ul><h4>Méthodes et fonctions</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Méthode / fonction</th><th>Définition</th></tr></thead><tbody><tr><td><code>mysqli_connect(h, u, p, b)</code></td><td>Ouvre la connexion au serveur et à la base</td></tr><tr><td><code>mysqli_query(cnx, req)</code></td><td>Exécute une requête SQL</td></tr><tr><td><code>mysqli_fetch_array(res)</code></td><td>Ligne suivante (indices numériques et noms de colonnes)</td></tr><tr><td><code>mysqli_fetch_row(res)</code></td><td>Ligne suivante (indices numériques)</td></tr><tr><td><code>mysqli_num_rows(res)</code></td><td>Nombre de lignes d'un SELECT</td></tr><tr><td><code>mysqli_affected_rows(cnx)</code></td><td>Lignes touchées par INSERT, UPDATE, DELETE</td></tr><tr><td><code>mysqli_error(cnx)</code></td><td>Message de la dernière erreur</td></tr><tr><td><code>mysqli_close(cnx)</code></td><td>Ferme la connexion</td></tr><tr><td><code>die(msg)</code></td><td>Affiche un message et arrête le script</td></tr><tr><td><code>isset($var)</code></td><td>Vrai si la variable existe</td></tr><tr><td><code>require(fichier)</code></td><td>Importe un fichier PHP</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m6"><div class="module-tete"><div class="module-num">06</div><div><h2>Limites du programme et progression</h2><p>Ce qui ne s'enseigne pas en 4ème, et une organisation possible vers l'épreuve pratique du bac.</p></div></div><div id="m6-interdits"><div class="interdits"><h3>À ne pas enseigner en 4ème année</h3><ul><li>PDO, new mysqli(), requêtes préparées<small>mysqli procédural uniquement</small></li><li>Sessions et cookies</li><li>switch et var_dump() en PHP</li><li>Hachage des mots de passe<small>md5, password_hash…</small></li><li>AUTO_INCREMENT, CURDATE()<small>DATE(NOW())</small></li><li>JOIN explicite<small>syntaxe classique avec WHERE</small></li><li>Sous-requêtes corrélées</li><li>Attribut pattern, console.log()</li><li>Script JavaScript interne<small>fichier .js externe obligatoire</small></li><li>Upload de fichiers, AJAX, JSON</li></ul></div></div><div id="m6-progression-suggeree"><article class="notion" id="m6-progression"><div class="notion-tete"><h3>Progression suggérée</h3><span class="annexe-tag">Proposition</span></div><div class="notion-corps">
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Trimestre</th><th>Contenu</th><th>Production</th></tr></thead><tbody><tr><td>1er</td><td>Rappels HTML/CSS/JS, compléments 4ème, SQL : définition des données</td><td>Formulaire contrôlé + script de création de la base</td></tr><tr><td>2ème</td><td>SQL : agrégats, jointures, sous-requêtes, dates ; PHP : bases, $_GET, $_POST</td><td>Pages de consultation et d'ajout</td></tr><tr><td>3ème</td><td>PHP + MySQL complet, authentification, sujets de bac pratique</td><td>Mini-application complète (liste, ajout, modification, suppression)</td></tr></tbody></table></div>
+</div></article></div><a class="haut-page" href="#haut">Retour en haut de page</a></section></div></div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>Guide du Programme STI</h4>
+      <p>Référence pédagogique pour les enseignants de Sciences et Technologies de l'Informatique (2ème, 3ème et 4ème année), conforme à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="niveau-2.html">2ème année</a><a href="niveau-3.html">3ème année</a><a href="niveau-4.html">4ème année</a><a href="annexe.html">Référentiel annexe</a>
+    </div>
+    <div>
+      <h4>Accompagnement</h4>
+      <a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Outils & glossaire</a>
+      <a href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" rel="noopener">Chatbot annexe STI</a>
+    </div>
+  </div>
+  <div class="pied-bas">Guide du Programme STI · Mise à jour : octobre 2026 · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<a class="bouton-chatbot" href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" rel="noopener" aria-label="Chatbot annexe STI">🤖 <span>Chatbot annexe</span></a>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/index-recherche.js"></script>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

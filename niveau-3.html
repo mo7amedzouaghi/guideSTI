@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3ème année STI — Guide du Programme STI</title>
+<meta name="description" content="Le Web interactif : HTML5 sémantique, CSS3 externe avec mise en page et effets, JavaScript pour contrôler les formulaires, et premières bases de données.">
+<link rel="icon" href="flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="niv-3" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">Guide du Programme<small>Sciences et Technologies de l'Informatique</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="index.html" class="">Accueil</a><a href="niveau-2.html" class="m2">2ème année</a><a href="niveau-3.html" class="m3" aria-current="page">3ème année</a><a href="niveau-4.html" class="m4">4ème année</a><a href="annexe.html" class="">Annexe</a><a href="pedagogie.html" class="">Enseigner</a><a href="erreurs.html" class="">Erreurs</a><a href="outils.html" class="">Outils</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><span class="pastille-niveau">3ème année · Web interactif & bases de données</span><br><h1>3ème année STI</h1><p class="chapeau">Le Web interactif : HTML5 sémantique, CSS3 externe avec mise en page et effets, JavaScript pour contrôler les formulaires, et premières bases de données.</p><div class="bandeau-faits"><span>5 séquences</span><span>HTML5 · CSS3 · JavaScript</span><span>BDR en mode assisté</span></div></div></section>
+<div class="page"><nav class="sommaire" aria-label="Sommaire"><h2>Sommaire</h2><ol><li><a href="#m1">1. HTML5 avancé</a><ol><li><a href="#m1-relier-une-feuille-de-style-et-un-script">Relier une feuille de style et un script</a></li><li><a href="#m1-les-balises-de-structuration-semantique">Les balises de structuration sémantique</a></li><li><a href="#m1-conteneurs-iframe-figure-et-details">Conteneurs, iframe, figure et details</a></li><li><a href="#m1-formulaires-nouveaux-types-et-attributs">Formulaires : nouveaux types et attributs</a></li><li><a href="#m1-evenements-html">Événements HTML</a></li><li><a href="#m1-a-retenir-html5-avance">À retenir — HTML5 avancé</a></li></ol></li><li><a href="#m2">2. CSS3 : feuille externe et sélecteurs</a><ol><li><a href="#m2-selecteurs-de-base">Sélecteurs de base</a></li><li><a href="#m2-texte-listes-et-arriere-plan">Texte, listes et arrière-plan</a></li><li><a href="#m2-tableaux-en-css">Tableaux en CSS</a></li><li><a href="#m2-a-retenir-selecteurs-et-proprietes">À retenir — sélecteurs et propriétés</a></li></ol></li><li><a href="#m3">3. Mise en page : boîtes et positionnement</a><ol><li><a href="#m3-le-modele-de-boite">Le modèle de boîte</a></li><li><a href="#m3-display-float-et-position">display, float et position</a></li><li><a href="#m3-debordement-et-transparence">Débordement et transparence</a></li><li><a href="#m3-a-retenir-mise-en-page">À retenir — mise en page</a></li></ol></li><li><a href="#m4">4. Effets : transitions, transformations, animations</a><ol><li><a href="#m4-transitions">Transitions</a></li><li><a href="#m4-transformations">Transformations</a></li><li><a href="#m4-animations">Animations</a></li><li><a href="#m4-a-retenir-effets">À retenir — effets</a></li></ol></li><li><a href="#m5">5. JavaScript</a><ol><li><a href="#m5-entrees-sorties-et-acces-aux-elements">Entrées, sorties et accès aux éléments</a></li><li><a href="#m5-variables-conditions-et-boucles">Variables, conditions et boucles</a></li><li><a href="#m5-fonctions">Fonctions</a></li><li><a href="#m5-chaines-de-caracteres">Chaînes de caractères</a></li><li><a href="#m5-conversions-math-et-date">Conversions, Math et Date</a></li><li><a href="#m5-controler-un-formulaire">Contrôler un formulaire</a></li><li><a href="#m5-a-retenir-javascript">À retenir — JavaScript</a></li></ol></li><li><a href="#m6">6. Bases de données</a><ol><li><a href="#m6-vocabulaire-du-modele-relationnel">Vocabulaire du modèle relationnel</a></li><li><a href="#m6-representation-textuelle-et-relations">Représentation textuelle et relations</a></li><li><a href="#m6-types-et-contraintes">Types et contraintes</a></li><li><a href="#m6-creer-la-base-en-mode-assiste-phpmyadmin">Créer la base en mode assisté (phpMyAdmin)</a></li><li><a href="#m6-interroger-une-table-en-sql">Interroger une table en SQL</a></li><li><a href="#m6-a-retenir-bases-de-donnees">À retenir — bases de données</a></li></ol></li><li><a href="#m7">7. Limites du programme et progression</a><ol><li><a href="#m7-interdits">Interdits</a></li><li><a href="#m7-progression-suggeree">Progression suggérée</a></li></ol></li></ol></nav><div class="contenu"><section class="module" id="m1"><div class="module-tete"><div class="module-num">01</div><div><h2>HTML5 avancé</h2><p>Relier des fichiers externes, structurer la page avec les balises sémantiques et enrichir les formulaires.</p></div></div><article class="notion" id="m1-relier-une-feuille-de-style-et-un-script"><div class="notion-tete"><h3>Relier une feuille de style et un script</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>À partir de la 3ème, le CSS et le JavaScript vivent dans des <b>fichiers séparés</b>, reliés dans le <code>&lt;head&gt;</code>. Une même feuille de style sert alors à toutes les pages du site.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">HTML</span>index.html</span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Découvrir la Tunisie&lt;/title&gt;
+  &lt;link rel="stylesheet" type="text/css" href="css/style.css"&gt;
+  &lt;script type="text/javascript" src="js/controle.js"&gt;&lt;/script&gt;
+&lt;/head&gt;</code></pre></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Balise</th><th>Attributs (annexe)</th><th>Rôle</th></tr></thead><tbody><tr><td><code>&lt;link&gt;</code></td><td><code>href, rel, type</code></td><td>Relie une ressource externe (feuille de style)</td></tr><tr><td><code>&lt;script&gt;</code></td><td><code>src, type</code></td><td>Relie (ou contient) un script JavaScript</td></tr><tr><td><code>&lt;style&gt;</code></td><td><code>type, media</code></td><td>Feuille de style interne</td></tr></tbody></table></div>
+</div></article><article class="notion" id="m1-les-balises-de-structuration-semantique"><div class="notion-tete"><h3>Les balises de structuration sémantique</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>Les balises sémantiques remplacent les <code>&lt;div&gt;</code> anonymes par des zones qui ont un sens. La page devient lisible comme un plan, par l'élève comme par les moteurs de recherche.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;body&gt;
+  &lt;header&gt;Découvrir la Tunisie&lt;/header&gt;
+  &lt;nav&gt;Accueil | Régions | Contact&lt;/nav&gt;
+  &lt;main&gt;
+    &lt;section&gt;
+      &lt;article&gt;Carthage&lt;/article&gt;
+      &lt;article&gt;Dougga&lt;/article&gt;
+    &lt;/section&gt;
+    &lt;aside&gt;Le saviez-vous ?&lt;/aside&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;address&gt;Lycée Oued Ellil&lt;/address&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:290px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;body{margin:8px;font:13px Arial}header,nav,main,footer,section,article,aside{display:block;border:2px solid;border-radius:6px;padding:6px;margin:5px 0}
+header{border-color:#0D2B6B;background:#e9eef8}nav{border-color:#D35400;background:#fdf0e6}main{border-color:#1D4ED8}section{border-color:#1E7B3C;background:#e7f5ec;width:62%;float:left}
+article{border-color:#1E7B3C;background:#fff}aside{border-color:#5B2C9F;background:#f1eafb;width:28%;float:right}footer{clear:both;border-color:#0D2B6B;background:#e9eef8}main::after{content:&quot;&quot;;display:block;clear:both}
+b{font-size:11px;color:#555}&lt;/style&gt;
+&lt;header&gt;&lt;b&gt;header&lt;/b&gt; Découvrir la Tunisie&lt;/header&gt;&lt;nav&gt;&lt;b&gt;nav&lt;/b&gt; Accueil | Régions | Contact&lt;/nav&gt;&lt;main&gt;&lt;b&gt;main&lt;/b&gt;&lt;section&gt;&lt;b&gt;section&lt;/b&gt;&lt;article&gt;&lt;b&gt;article&lt;/b&gt; Carthage&lt;/article&gt;&lt;article&gt;&lt;b&gt;article&lt;/b&gt; Dougga&lt;/article&gt;&lt;/section&gt;&lt;aside&gt;&lt;b&gt;aside&lt;/b&gt; Le saviez-vous ?&lt;/aside&gt;&lt;/main&gt;&lt;footer&gt;&lt;b&gt;footer&lt;/b&gt; &lt;address style=&quot;display:inline&quot;&gt;Lycée Oued Ellil&lt;/address&gt;&lt;/footer&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Bordures ajoutées uniquement pour visualiser les zones.</div></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Balise</th><th>Contenu attendu</th></tr></thead><tbody><tr><td><code>&lt;header&gt;</code></td><td>En-tête : logo, titre du site</td></tr><tr><td><code>&lt;nav&gt;</code></td><td>Menu de navigation</td></tr><tr><td><code>&lt;main&gt;</code></td><td>Contenu principal (un seul par page)</td></tr><tr><td><code>&lt;section&gt;</code></td><td>Regroupement thématique</td></tr><tr><td><code>&lt;article&gt;</code></td><td>Contenu autonome (fiche, actualité)</td></tr><tr><td><code>&lt;aside&gt;</code></td><td>Contenu annexe, encadré</td></tr><tr><td><code>&lt;footer&gt;</code></td><td>Pied de page</td></tr><tr><td><code>&lt;address&gt;</code></td><td>Coordonnées de contact</td></tr><tr><td><code>&lt;cite&gt;</code></td><td>Titre d'une œuvre citée</td></tr></tbody></table></div>
+</div></article><article class="notion" id="m1-conteneurs-iframe-figure-et-details"><div class="notion-tete"><h3>Conteneurs, iframe, figure et details</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p><code>&lt;div&gt;</code> (bloc) et <code>&lt;span&gt;</code> (en ligne) sont des conteneurs neutres, utiles pour appliquer un style. <code>&lt;iframe&gt;</code> affiche une autre page à l'intérieur de la page ; nommé par <code>name</code>, il peut servir de cible à un lien. <code>&lt;figure&gt;</code> associe une illustration à sa légende <code>&lt;figcaption&gt;</code>, et <code>&lt;details&gt;</code> / <code>&lt;summary&gt;</code> créent un bloc dépliable.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;a href="carthage.html" target="cadre"&gt;Carthage&lt;/a&gt;
+&lt;iframe src="accueil.html" name="cadre"
+        width="300" height="80"&gt;&lt;/iframe&gt;
+
+&lt;figure&gt;
+  &lt;img src="dougga.jpg" alt="Théâtre de Dougga"&gt;
+  &lt;figcaption&gt;Le théâtre romain de Dougga&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;Horaires de visite&lt;/summary&gt;
+  Tous les jours de 8h à 17h.
+&lt;/details&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:250px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;a href=&quot;#&quot; onclick=&quot;return false&quot;&gt;Carthage&lt;/a&gt;&lt;br&gt;&lt;iframe srcdoc=&quot;&lt;p style=&#x27;font:13px Arial&#x27;&gt;Contenu de accueil.html&lt;/p&gt;&quot; width=&quot;300&quot; height=&quot;60&quot; style=&quot;border:1px solid #999&quot;&gt;&lt;/iframe&gt;&lt;figure style=&quot;margin:8px 0&quot;&gt;&lt;div style=&quot;width:160px;height:60px;background:#e8d9b5;display:grid;place-items:center;font:12px Arial&quot;&gt;dougga.jpg&lt;/div&gt;&lt;figcaption&gt;Le théâtre romain de Dougga&lt;/figcaption&gt;&lt;/figure&gt;&lt;details&gt;&lt;summary&gt;Horaires de visite&lt;/summary&gt;Tous les jours de 8h à 17h.&lt;/details&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Cliquez sur « Horaires de visite » pour déplier.</div></div></div>
+</div></article><article class="notion" id="m1-formulaires-nouveaux-types-et-attributs"><div class="notion-tete"><h3>Formulaires : nouveaux types et attributs</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>La 3ème enrichit les formulaires de types spécialisés et d'attributs de contrôle. Le bouton qui déclenche un contrôle JavaScript est un <code>&lt;input type="button"&gt;</code>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">HTML</span></span><button class="copier" type="button">Copier</button></div><pre class="language-markup"><code class="language-markup">&lt;form&gt;
+  &lt;input type="email" placeholder="adresse@mail.tn" required&gt;
+  &lt;input type="tel" placeholder="8 chiffres"&gt;
+  &lt;input type="password" placeholder="Mot de passe"&gt;
+  &lt;input type="date" min="2026-09-15"&gt;
+  &lt;input type="time"&gt;
+  Niveau : &lt;input type="range" min="1" max="10" value="5"&gt;
+  &lt;input type="text" value="Oued Ellil" readonly&gt;
+  &lt;input type="button" value="Valider" onclick="verifier()"&gt;
+&lt;/form&gt;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:280px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;form style=&quot;display:grid;gap:5px;max-width:260px&quot;&gt;&lt;input type=&quot;email&quot; placeholder=&quot;adresse@mail.tn&quot; required&gt;&lt;input type=&quot;tel&quot; placeholder=&quot;8 chiffres&quot;&gt;&lt;input type=&quot;password&quot; placeholder=&quot;Mot de passe&quot;&gt;&lt;input type=&quot;date&quot; min=&quot;2026-09-15&quot;&gt;&lt;input type=&quot;time&quot;&gt;&lt;span&gt;Niveau : &lt;input type=&quot;range&quot; min=&quot;1&quot; max=&quot;10&quot; value=&quot;5&quot;&gt;&lt;/span&gt;&lt;input type=&quot;text&quot; value=&quot;Oued Ellil&quot; readonly&gt;&lt;input type=&quot;button&quot; value=&quot;Valider&quot;&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Types</th><th>Attributs utilisables (annexe)</th></tr></thead><tbody><tr><td>text, email, tel</td><td><code>name, value, placeholder, readonly, required, disabled, list</code></td></tr><tr><td>password</td><td><code>name, value, placeholder, readonly, required, disabled</code></td></tr><tr><td>number, range</td><td><code>name, value, readonly, required, disabled, min, max</code></td></tr><tr><td>date, time</td><td><code>name, value, required, disabled, min, max</code></td></tr><tr><td>checkbox, radio</td><td><code>name, value, required, disabled, checked</code></td></tr><tr><td>button, reset, submit</td><td><code>name, value, disabled</code></td></tr></tbody></table></div>
+</div></article><article class="notion" id="m1-evenements-html"><div class="notion-tete"><h3>Événements HTML</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>Un événement relie une action de l'utilisateur à une fonction JavaScript, directement dans la balise. En 3ème, on n'utilise pas <code>addEventListener</code>.</p>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Événement</th><th>Se déclenche quand…</th><th>Exemple</th></tr></thead><tbody><tr><td><code>onclick</code></td><td>on clique sur l'élément</td><td><code>&lt;input type="button" onclick="calculer()"&gt;</code></td></tr><tr><td><code>oninput</code></td><td>la valeur change à chaque frappe</td><td><code>&lt;input type="range" oninput="afficher()"&gt;</code></td></tr><tr><td><code>onchange</code></td><td>la valeur change et le champ est quitté</td><td><code>&lt;input type="date" onchange="age()"&gt;</code></td></tr><tr><td><code>onfocus</code></td><td>le champ reçoit le focus</td><td><code>&lt;input onfocus="aide()"&gt;</code></td></tr><tr><td><code>onblur</code></td><td>le champ perd le focus</td><td><code>&lt;input onblur="verifierNom()"&gt;</code></td></tr><tr><td><code>onload</code></td><td>la page a fini de charger</td><td><code>&lt;body onload="init()"&gt;</code></td></tr></tbody></table></div>
+</div></article><div id="m1-a-retenir-html5-avance"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>CSS et JS sont dans des fichiers externes reliés par <code>link</code> et <code>script</code>.</li><li>Balises sémantiques : header, nav, main, section, article, aside, footer.</li><li>Un <code>iframe</code> nommé (<code>name</code>) devient la cible d'un lien (<code>target</code>).</li><li>Bouton de contrôle : <code>&lt;input type="button" onclick="…"&gt;</code>, jamais <code>&lt;button&gt;</code>.</li></ul><h4>Balises de la séquence</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Balise</th><th>Attributs (annexe)</th><th>Rôle</th></tr></thead><tbody><tr><td><code>&lt;link&gt;</code></td><td><code>href, rel, type</code></td><td>Ressource externe</td></tr><tr><td><code>&lt;script&gt;</code></td><td><code>src, type</code></td><td>Script JavaScript</td></tr><tr><td><code>&lt;header&gt; &lt;nav&gt; &lt;main&gt; &lt;footer&gt;</code></td><td>—</td><td>Zones de la page</td></tr><tr><td><code>&lt;section&gt; &lt;article&gt; &lt;aside&gt;</code></td><td>—</td><td>Organisation du contenu</td></tr><tr><td><code>&lt;div&gt; &lt;span&gt;</code></td><td>—</td><td>Conteneurs bloc / en ligne</td></tr><tr><td><code>&lt;iframe&gt;</code></td><td><code>src, name</code></td><td>Cadre intégré</td></tr><tr><td><code>&lt;figure&gt; &lt;figcaption&gt;</code></td><td>—</td><td>Illustration et légende</td></tr><tr><td><code>&lt;details&gt; &lt;summary&gt;</code></td><td><code>open</code></td><td>Bloc dépliable</td></tr><tr><td><code>&lt;address&gt; &lt;cite&gt;</code></td><td>—</td><td>Contact, titre d'œuvre</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m2"><div class="module-tete"><div class="module-num">02</div><div><h2>CSS3 : feuille externe et sélecteurs</h2><p>Centraliser la mise en forme dans un fichier .css et cibler précisément les éléments.</p></div></div><article class="notion" id="m2-selecteurs-de-base"><div class="notion-tete"><h3>Sélecteurs de base</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span>css/style.css</span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">/* style.css */
+p { color: #333; }              /* élément   */
+#titre { color: navy; }         /* id        */
+.important { color: crimson; }  /* classe    */
+h2, h3 { font-family: Arial; }  /* groupe    */
+* { margin: 0px; }              /* universel */</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:120px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;*{margin:0}p{color:#333}#titre{color:navy}.important{color:crimson}h2,h3{font-family:Arial}&lt;/style&gt;&lt;h2 id=&quot;titre&quot;&gt;Gouvernorat de Manouba&lt;/h2&gt;&lt;p&gt;Chef-lieu : Manouba.&lt;/p&gt;&lt;p class=&quot;important&quot;&gt;Population : environ 380 000 habitants.&lt;/p&gt;&lt;h3&gt;Délégations&lt;/h3&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="enc info"><b class="ico" aria-hidden="true">i</b><div><p>Un <code>id</code> est unique dans la page ; une <code>class</code> peut être partagée par plusieurs éléments.</p></div></div>
+</div></article><article class="notion" id="m2-texte-listes-et-arriere-plan"><div class="notion-tete"><h3>Texte, listes et arrière-plan</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span>css/style.css</span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">h1 {
+  text-transform: uppercase;
+  text-shadow: 2px 2px 3px gray;
+}
+ul {
+  list-style-type: square;
+  list-style-position: inside;
+}
+header {
+  background-image: url("../images/sahara.jpg");
+  background-size: cover;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:150px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;h1{text-transform:uppercase;text-shadow:2px 2px 3px gray;font:bold 22px Arial}ul{list-style-type:square;list-style-position:inside;padding:0}&lt;/style&gt;&lt;h1&gt;Le Sahara tunisien&lt;/h1&gt;&lt;ul&gt;&lt;li&gt;Douz&lt;/li&gt;&lt;li&gt;Tozeur&lt;/li&gt;&lt;li&gt;Ksar Ghilane&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><article class="notion" id="m2-tableaux-en-css"><div class="notion-tete"><h3>Tableaux en CSS</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+td, th {
+  border: 1px solid #0D2B6B;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:110px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;table{border-collapse:collapse;table-layout:fixed;width:100%;font:14px Arial}td,th{border:1px solid #0D2B6B;padding:5px}th{background:#e9eef8}&lt;/style&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;Site&lt;/th&gt;&lt;th&gt;Région&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Carthage&lt;/td&gt;&lt;td&gt;Tunis&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;El Jem&lt;/td&gt;&lt;td&gt;Mahdia&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><div id="m2-a-retenir-selecteurs-et-proprietes"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Sélecteurs de 3ème : élément, <code>#id</code>, <code>.classe</code>, groupe, universel.</li><li>Une seule feuille de style externe pour tout le site.</li><li>Unités : <b>px et %</b> uniquement (pas de em, rem, vh, vw).</li></ul><h4>Nouvelles propriétés CSS</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Propriété</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Définition</th></tr></thead><tbody><tr><td><code>text-shadow</code></td><td>décalage-x décalage-y flou couleur</td><td><code>2px 2px 3px gray</code></td><td>Ombre du texte</td></tr><tr><td><code>text-transform</code></td><td>uppercase, lowercase, capitalize</td><td><code>uppercase</code></td><td>Casse des caractères</td></tr><tr><td><code>list-style-type</code></td><td>circle, square, upper-roman, lower-alpha</td><td><code>square</code></td><td>Type de puce</td></tr><tr><td><code>list-style-position</code></td><td>outside, inside</td><td><code>inside</code></td><td>Position de la puce</td></tr><tr><td><code>list-style-image</code></td><td>url("image")</td><td><code>—</code></td><td>Image comme puce</td></tr><tr><td><code>list-style</code></td><td>combine type, position, image</td><td><code>—</code></td><td>Propriété abrégée des listes</td></tr><tr><td><code>background-size</code></td><td>cover, contain, valeur en px ou %</td><td><code>cover</code></td><td>Taille de l'image de fond</td></tr><tr><td><code>border-collapse</code></td><td>separate, collapse</td><td><code>collapse</code></td><td>Bordures fusionnées ou séparées</td></tr><tr><td><code>table-layout</code></td><td>auto, fixed</td><td><code>fixed</code></td><td>Disposition des colonnes</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m3"><div class="module-tete"><div class="module-num">03</div><div><h2>Mise en page : boîtes et positionnement</h2><p>Dimensionner les blocs, les faire flotter et les positionner, sans Flexbox ni Grid.</p></div></div><article class="notion" id="m3-le-modele-de-boite"><div class="notion-tete"><h3>Le modèle de boîte</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>Chaque élément est une boîte : le contenu (<code>width</code>, <code>height</code>), la marge intérieure (<code>padding</code>), la bordure, puis la marge extérieure (<code>margin</code>).</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">.carte {
+  width: 220px;
+  padding: 15px;
+  border: 3px solid #1D4ED8;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px gray;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:140px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;.carte{width:220px;padding:15px;border:3px solid #1D4ED8;margin:20px;border-radius:10px;box-shadow:4px 4px 8px gray;font:14px Arial}&lt;/style&gt;&lt;div class=&quot;carte&quot;&gt;Kairouan — ville sainte, célèbre pour sa Grande Mosquée.&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><article class="notion" id="m3-display-float-et-position"><div class="notion-tete"><h3>display, float et position</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>La mise en page de 3ème repose sur <code>float</code> (blocs côte à côte) et <code>position</code>. Pour une page pleine hauteur : <code>html, body { height: 100%; }</code> puis des hauteurs en % sur les enfants.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">nav {
+  float: left;
+  width: 25%;
+}
+section {
+  float: right;
+  width: 70%;
+}
+footer {
+  clear: both;
+}
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:150px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;body{font:13px Arial;position:relative;margin:6px}nav,section,footer{padding:6px;border-radius:5px}nav{float:left;width:25%;background:#e8efff;height:90px}section{float:right;width:70%;background:#e7f5ec;height:90px}footer{clear:both;background:#e9eef8;margin-top:6px}.badge{position:absolute;top:2px;right:2px;background:#F5B800;padding:2px 8px;border-radius:9px;font-weight:bold}&lt;/style&gt;&lt;nav&gt;nav (float: left)&lt;/nav&gt;&lt;section&gt;section (float: right)&lt;/section&gt;&lt;footer&gt;footer (clear: both)&lt;/footer&gt;&lt;span class=&quot;badge&quot;&gt;Nouveau&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Valeur de position</th><th>Comportement</th></tr></thead><tbody><tr><td><code>static</code></td><td>Placement normal (par défaut)</td></tr><tr><td><code>relative</code></td><td>Décalé par rapport à sa place normale (top, left…)</td></tr><tr><td><code>absolute</code></td><td>Placé par rapport au premier parent positionné</td></tr><tr><td><code>fixed</code></td><td>Fixé à la fenêtre, ne défile pas</td></tr><tr><td><code>sticky</code></td><td>Normal puis collé au bord pendant le défilement</td></tr></tbody></table></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p><code>clear</code> ne figure pas dans l'annexe actuelle ; il reste indispensable pour arrêter un flottement. Les membres du comité de réforme proposent de l'y ajouter.</p></div></div>
+</div></article><article class="notion" id="m3-debordement-et-transparence"><div class="notion-tete"><h3>Débordement et transparence</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">.actualites {
+  height: 70px;
+  overflow: scroll;
+}
+.filigrane {
+  opacity: 0.4;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:140px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;body{font:13px Arial}.actualites{height:70px;overflow:scroll;border:1px solid #ccc;padding:4px}.filigrane{opacity:.4;font-size:20px;font-weight:bold}&lt;/style&gt;&lt;div class=&quot;actualites&quot;&gt;Lundi : réunion des parents.&lt;br&gt;Mardi : sortie à Carthage.&lt;br&gt;Mercredi : club robotique.&lt;br&gt;Jeudi : examen blanc.&lt;/div&gt;&lt;p class=&quot;filigrane&quot;&gt;BROUILLON&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><div id="m3-a-retenir-mise-en-page"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Taille totale d'une boîte = width + padding + border + margin.</li><li><code>float</code> place les blocs côte à côte ; le pied de page arrête le flottement.</li><li><code>top</code>, <code>left</code>… n'agissent que sur un élément positionné.</li><li>Flexbox et Grid ne sont pas au programme.</li></ul><h4>Nouvelles propriétés CSS</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Propriété</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Définition</th></tr></thead><tbody><tr><td><code>width / height</code></td><td>valeur en px ou %</td><td><code>220px</code></td><td>Largeur / hauteur du contenu</td></tr><tr><td><code>padding</code></td><td>1 à 4 valeurs en px</td><td><code>15px</code></td><td>Marge intérieure</td></tr><tr><td><code>margin</code></td><td>1 à 4 valeurs en px</td><td><code>20px</code></td><td>Marge extérieure</td></tr><tr><td><code>border-radius</code></td><td>valeur en px ou %</td><td><code>10px</code></td><td>Coins arrondis</td></tr><tr><td><code>box-shadow</code></td><td>décalage-x décalage-y flou couleur</td><td><code>4px 4px 8px gray</code></td><td>Ombre de la boîte</td></tr><tr><td><code>display</code></td><td>inline, block, inline-block</td><td><code>—</code></td><td>Comportement d'affichage</td></tr><tr><td><code>float</code></td><td>left, right, none</td><td><code>left</code></td><td>Flottement</td></tr><tr><td><code>position</code></td><td>absolute, fixed, relative, static, sticky</td><td><code>absolute</code></td><td>Mode de positionnement</td></tr><tr><td><code>top / bottom / left / right</code></td><td>valeur en px ou %</td><td><code>10px</code></td><td>Décalage d'un élément positionné</td></tr><tr><td><code>overflow</code></td><td>visible, hidden, clip, scroll, auto</td><td><code>scroll</code></td><td>Gestion du débordement</td></tr><tr><td><code>opacity</code></td><td>de 0 (transparent) à 1 (opaque)</td><td><code>0.4</code></td><td>Niveau de transparence</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m4"><div class="module-tete"><div class="module-num">04</div><div><h2>Effets : transitions, transformations, animations</h2><p>Donner du mouvement à la page : passer en douceur d'un état à un autre, déformer, animer.</p></div></div><article class="notion" id="m4-transitions"><div class="notion-tete"><h3>Transitions</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>Une transition rend <b>progressif</b> le changement d'une propriété. Elle se déclare sur l'élément lui-même ; le changement est provoqué par <code>:hover</code>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">.carre {
+  width: 100px;
+  background-color: lightblue;
+  transition: width 2s 0.5s;
+}
+.carre:hover {
+  width: 200px;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:90px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;.carre{width:100px;height:60px;background-color:lightblue;transition:width 2s .5s;font:12px Arial;display:grid;place-items:center}.carre:hover{width:200px}&lt;/style&gt;&lt;div class=&quot;carre&quot;&gt;Survolez-moi&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Survolez le carré : sa largeur passe à 200px en 2s, après 0,5s.</div></div></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p><code>transition</code> se place sur l'élément, <b>jamais</b> sur <code>:hover</code>. <code>transition-timing-function</code> (ease, linear…) n'est pas dans l'annexe.</p></div></div>
+</div></article><article class="notion" id="m4-transformations"><div class="notion-tete"><h3>Transformations</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p><code>transform</code> fait tourner, agrandir, déplacer ou incliner un élément. Toutes les fonctions s'écrivent sur <b>une seule ligne</b>, sinon seule la dernière s'applique.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">.logo {
+  transition: transform 1s;
+}
+.logo:hover {
+  transform: rotate(15deg) scale(1.3) translate(20px, 0px);
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:110px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;.logo{width:90px;height:50px;margin:25px;background:#F5B800;border-radius:8px;display:grid;place-items:center;font:bold 13px Arial;transition:transform 1s}.logo:hover{transform:rotate(15deg) scale(1.3) translate(20px,0px)}&lt;/style&gt;&lt;div class=&quot;logo&quot;&gt;STI&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Survolez le logo.</div></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Fonction</th><th>Effet</th><th>Exemple</th></tr></thead><tbody><tr><td><code>rotate()</code></td><td>Rotation</td><td><code>rotate(45deg)</code></td></tr><tr><td><code>scale()</code></td><td>Agrandissement / réduction</td><td><code>scale(1.5)</code></td></tr><tr><td><code>translate()</code></td><td>Déplacement (x, y)</td><td><code>translate(50px, 20px)</code></td></tr><tr><td><code>skew()</code></td><td>Inclinaison</td><td><code>skew(10deg, 5deg)</code></td></tr></tbody></table></div>
+</div></article><article class="notion" id="m4-animations"><div class="notion-tete"><h3>Animations</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>Une animation enchaîne des états définis dans <code>@keyframes</code>, sans action de l'utilisateur. Pour animer <code>left</code> ou <code>top</code>, l'élément doit être <b>positionné</b>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">CSS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-css"><code class="language-css">@keyframes traversee {
+  0%   { left: 0px; }
+  100% { left: 220px; }
+}
+.bateau {
+  position: relative;
+  animation-name: traversee;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:90px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;@keyframes traversee{0%{left:0}100%{left:220px}}.bateau{position:relative;width:70px;text-align:center;font:26px Arial;animation-name:traversee;animation-duration:3s;animation-iteration-count:infinite;animation-direction:alternate}.mer{background:#cfe8ff;padding:10px;border-radius:8px}&lt;/style&gt;&lt;div class=&quot;mer&quot;&gt;&lt;div class=&quot;bateau&quot;&gt;⛵&lt;/div&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><div id="m4-a-retenir-effets"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Transition = changement progressif déclenché par un événement (<code>:hover</code>).</li><li>Animation = enchaînement automatique d'états définis par <code>@keyframes</code>.</li><li><code>transform</code> : toutes les fonctions sur une seule ligne.</li><li><code>translate(x, y)</code> uniquement (pas translateX / translateY).</li></ul><h4>Nouvelles propriétés CSS</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Propriété</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Définition</th></tr></thead><tbody><tr><td><code>transition-property</code></td><td>nom d'une propriété CSS</td><td><code>width</code></td><td>Propriété animée par la transition</td></tr><tr><td><code>transition-duration</code></td><td>durée en s</td><td><code>2s</code></td><td>Durée de la transition</td></tr><tr><td><code>transition-delay</code></td><td>durée en s</td><td><code>0.5s</code></td><td>Délai avant le début</td></tr><tr><td><code>transition</code></td><td>propriété durée délai</td><td><code>width 2s 0.5s</code></td><td>Propriété abrégée</td></tr><tr><td><code>transform</code></td><td>rotate(), scale(), translate(), skew()</td><td><code>rotate(15deg) scale(1.3)</code></td><td>Transformation 2D</td></tr><tr><td><code>@keyframes</code></td><td>étapes de 0% à 100%</td><td><code>traversee</code></td><td>États clés de l'animation</td></tr><tr><td><code>animation-name</code></td><td>nom des @keyframes</td><td><code>traversee</code></td><td>Animation à jouer</td></tr><tr><td><code>animation-duration</code></td><td>durée en s</td><td><code>3s</code></td><td>Durée d'un cycle</td></tr><tr><td><code>animation-delay</code></td><td>durée en s</td><td><code>—</code></td><td>Délai avant le début</td></tr><tr><td><code>animation-iteration-count</code></td><td>nombre entier, infinite</td><td><code>infinite</code></td><td>Nombre de répétitions</td></tr><tr><td><code>animation-direction</code></td><td>normal, reverse, alternate</td><td><code>alternate</code></td><td>Sens de lecture</td></tr><tr><td><code>animation</code></td><td>nom durée délai répétitions direction</td><td><code>—</code></td><td>Propriété abrégée</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m5"><div class="module-tete"><div class="module-num">05</div><div><h2>JavaScript</h2><p>Rendre la page interactive : lire les saisies, calculer, contrôler un formulaire et afficher un résultat.</p></div></div><article class="notion" id="m5-entrees-sorties-et-acces-aux-elements"><div class="notion-tete"><h3>Entrées, sorties et accès aux éléments</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">JS</span>js/script.js</span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">// Entrée
+let prenom = prompt("Votre prénom ?");
+
+// Sorties
+alert("Bienvenue " + prenom);
+document.write("Bonjour");
+
+// Lire un champ et écrire dans la page
+let nom = document.getElementById("nom").value;
+document.getElementById("res").innerHTML = "Merci " + nom;</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:90px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;input id=&quot;nom&quot; value=&quot;Amine&quot;&gt; &lt;input type=&quot;button&quot; value=&quot;Afficher&quot; onclick=&quot;document.getElementById(&#x27;res&#x27;).innerHTML=&#x27;Merci &#x27;+document.getElementById(&#x27;nom&#x27;).value&quot;&gt;&lt;p id=&quot;res&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Cliquez sur « Afficher ».</div></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Instruction</th><th>Rôle</th></tr></thead><tbody><tr><td><code>prompt(message)</code></td><td>Affiche une boîte de saisie et renvoie le texte tapé</td></tr><tr><td><code>alert(message)</code></td><td>Affiche un message dans une boîte</td></tr><tr><td><code>document.write(texte)</code></td><td>Écrit dans la page pendant son chargement</td></tr><tr><td><code>document.getElementById(id)</code></td><td>Renvoie l'élément ayant cet id</td></tr><tr><td><code>element.value</code></td><td>Valeur saisie dans un champ</td></tr><tr><td><code>element.innerHTML</code></td><td>Contenu HTML d'un élément (lecture ou écriture)</td></tr></tbody></table></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p><code>console.log()</code> n'est pas au programme : on affiche avec <code>alert()</code> ou <code>innerHTML</code>.</p></div></div>
+</div></article><article class="notion" id="m5-variables-conditions-et-boucles"><div class="notion-tete"><h3>Variables, conditions et boucles</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">JS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">let moyenne = 13.5;        // variable
+const SEUIL = 10;          // constante
+let mention;
+
+if (moyenne &gt;= 15) {
+  mention = "Très bien";
+} else if (moyenne &gt;= SEUIL) {
+  mention = "Admis";
+} else {
+  mention = "Ajourné";
+}
+
+let somme = 0;
+for (let i = 1; i &lt;= 10; i++) {
+  somme = somme + i;
+}
+
+let n = 0;
+while (n &lt; 3) {
+  n++;
+}</code></pre></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Opérateurs</th><th>Symboles (annexe)</th></tr></thead><tbody><tr><td>Arithmétiques</td><td><code>+ - * / %</code></td></tr><tr><td>Comparaison</td><td><code>== != &gt; &lt; &gt;= &lt;=</code></td></tr><tr><td>Logiques</td><td><code>&amp;&amp; || !</code></td></tr></tbody></table></div>
+</div></article><article class="notion" id="m5-fonctions"><div class="notion-tete"><h3>Fonctions</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>Une fonction regroupe des instructions réutilisables. Elle est appelée par un événement HTML ou par une autre fonction.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">JS</span>js/script.js</span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">function surface(longueur, largeur) {
+  return longueur * largeur;
+}
+
+function calculer() {
+  let L = Number(document.getElementById("L").value);
+  let l = Number(document.getElementById("l").value);
+  document.getElementById("res").innerHTML =
+    "Surface : " + surface(L, l) + " m²";
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/page.html</span></div><iframe title="Aperçu : localhost/page.html" style="height:90px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;script&gt;function surface(a,b){return a*b}function calculer(){let L=Number(document.getElementById(&quot;L&quot;).value);let l=Number(document.getElementById(&quot;l&quot;).value);document.getElementById(&quot;res&quot;).innerHTML=&quot;Surface : &quot;+surface(L,l)+&quot; m²&quot;}&lt;/script&gt;Longueur &lt;input id=&quot;L&quot; type=&quot;number&quot; value=&quot;8&quot; style=&quot;width:60px&quot;&gt; Largeur &lt;input id=&quot;l&quot; type=&quot;number&quot; value=&quot;6&quot; style=&quot;width:60px&quot;&gt; &lt;input type=&quot;button&quot; value=&quot;Calculer&quot; onclick=&quot;calculer()&quot;&gt;&lt;p id=&quot;res&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div></div>
+</div></article><article class="notion" id="m5-chaines-de-caracteres"><div class="notion-tete"><h3>Chaînes de caractères</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>On accède à un caractère par son indice : <code>ch[i]</code> (le premier est <code>ch[0]</code>). Les méthodes ci-dessous sont les seules de l'annexe.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">JS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">let ch = "Oued Ellil";
+ch.length;               // 10
+ch[0];                   // "O"   (jamais charAt)
+ch.indexOf("E");         // 5
+ch.lastIndexOf("l");     // 9
+ch.substring(0, 4);      // "Oued" (jamais substr)
+ch.replace("Oued", "Wed");
+ch.toUpperCase();        // "OUED ELLIL"
+ch.toLowerCase();
+"  ok  ".trim();          // "ok"
+String.fromCharCode(65); // "A"</code></pre></div>
+<div class="enc prof"><b class="ico" aria-hidden="true">✎</b><div><p>Fonction type à faire construire : tester qu'une chaîne ne contient que des chiffres (téléphone, code postal, CAPTCHA).</p></div></div>
+<div class="code"><div class="code-tete"><span><span class="lang">JS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">function estChiffres(ch) {
+  if (ch.length == 0) {
+    return false;              // chaîne vide refusée
+  }
+  for (let i = 0; i &lt; ch.length; i++) {
+    if (ch[i] &lt; "0" || ch[i] &gt; "9") {
+      return false;
+    }
+  }
+  return true;
+}</code></pre></div>
+</div></article><article class="notion" id="m5-conversions-math-et-date"><div class="notion-tete"><h3>Conversions, Math et Date</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">JS</span></span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">Number("12.5");          // 12.5
+parseInt("42", 10);      // 42
+parseFloat("3.14");      // 3.14
+String(2026);            // "2026"
+isNaN("abc");            // true
+
+Math.abs(-4);            // 4
+Math.sqrt(25);           // 5
+Math.round(2.6);         // 3
+Math.trunc(7.9);         // 7   (jamais floor / ceil)
+let de = Math.trunc(Math.random() * 6) + 1;   // entier de 1 à 6
+
+let d = new Date();               // date du jour
+let n = new Date("2026-10-27");
+d.getDate();                       // jour du mois
+d.getMonth() + 1;                  // mois (getMonth renvoie 0 à 11)
+d.getFullYear();                   // année
+d.toString().substring(0, 3);      // jour de la semaine en anglais : "Tue"</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p><code>getDay()</code> n'est pas dans l'annexe : le jour de la semaine s'obtient par <code>d.toString().substring(0, 3)</code>.</p></div></div>
+</div></article><article class="notion" id="m5-controler-un-formulaire"><div class="notion-tete"><h3>Contrôler un formulaire</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>Schéma attendu à l'examen : un bouton <code>type="button"</code> appelle <code>verifier()</code> ; chaque erreur affiche un <code>alert()</code> puis <code>return</code> ; si tout est correct, le message de succès s'écrit avec <code>innerHTML</code>.</p>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">JS</span>js/controle.js</span><button class="copier" type="button">Copier</button></div><pre class="language-javascript"><code class="language-javascript">function verifier() {
+  let nom = document.getElementById("nom").value;
+  let tel = document.getElementById("tel").value;
+
+  if (nom.length &lt; 3) {
+    alert("Le nom doit contenir au moins 3 lettres");
+    return;
+  }
+  if (tel.length != 8 || !estChiffres(tel)) {
+    alert("Le téléphone doit contenir 8 chiffres");
+    return;
+  }
+  document.getElementById("msg").innerHTML =
+    "Inscription enregistrée pour " + nom;
+}</code></pre></div><div class="navigateur"><div class="navigateur-tete"><span class="points"><i></i><i></i><i></i></span><span class="url">localhost/inscription.html</span></div><iframe title="Aperçu : localhost/inscription.html" style="height:150px" sandbox="allow-scripts allow-modals allow-same-origin" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;fr&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;style&gt;body{font-family:Arial,sans-serif;margin:12px;font-size:15px}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;script&gt;function estChiffres(ch){if(ch.length==0)return false;for(let i=0;i&lt;ch.length;i++){if(ch[i]&lt;&quot;0&quot;||ch[i]&gt;&quot;9&quot;)return false}return true}
+function verifier(){let nom=document.getElementById(&quot;nom&quot;).value;let tel=document.getElementById(&quot;tel&quot;).value;if(nom.length&lt;3){alert(&quot;Le nom doit contenir au moins 3 lettres&quot;);return}if(tel.length!=8||!estChiffres(tel)){alert(&quot;Le téléphone doit contenir 8 chiffres&quot;);return}document.getElementById(&quot;msg&quot;).innerHTML=&quot;Inscription enregistrée pour &quot;+nom}&lt;/script&gt;
+&lt;style&gt;body{font:14px Arial}input{margin:3px 0}#msg{color:#1E7B3C;font-weight:bold}&lt;/style&gt;
+Nom : &lt;input id=&quot;nom&quot; value=&quot;Sami&quot;&gt;&lt;br&gt;Téléphone : &lt;input id=&quot;tel&quot; value=&quot;9876543&quot;&gt;&lt;br&gt;&lt;input type=&quot;button&quot; value=&quot;Valider&quot; onclick=&quot;verifier()&quot;&gt;&lt;p id=&quot;msg&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe><div class="legende-apercu">Le numéro n'a que 7 chiffres : cliquez sur Valider, corrigez, recommencez.</div></div></div>
+</div></article><div id="m5-a-retenir-javascript"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Lire : <code>getElementById(id).value</code> ; écrire : <code>innerHTML</code>.</li><li>Bouton : <code>input type="button"</code> + <code>onclick</code>.</li><li>Erreur : <code>alert()</code> puis <code>return</code>.</li><li>Caractère : <code>ch[i]</code> ; extraction : <code>substring</code>.</li><li>Arrondis : <code>Math.trunc</code> et <code>Math.round</code> seulement.</li><li>Mois affiché : <code>getMonth() + 1</code>.</li></ul><h4>Méthodes et fonctions</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Méthode / fonction</th><th>Définition</th></tr></thead><tbody><tr><td><code>alert(msg)</code></td><td>Affiche un message</td></tr><tr><td><code>prompt(msg)</code></td><td>Saisie d'une valeur</td></tr><tr><td><code>document.write(t)</code></td><td>Écrit dans la page</td></tr><tr><td><code>document.getElementById(id)</code></td><td>Accède à un élément</td></tr><tr><td><code>innerHTML</code></td><td>Lit ou modifie le contenu d'un élément</td></tr><tr><td><code>Number(ch) / parseInt(ch, b) / parseFloat(ch)</code></td><td>Convertit une chaîne en nombre</td></tr><tr><td><code>String(x)</code></td><td>Convertit en chaîne</td></tr><tr><td><code>isNaN(ch)</code></td><td>Vrai si la valeur n'est pas un nombre</td></tr><tr><td><code>ch.length</code></td><td>Longueur de la chaîne</td></tr><tr><td><code>ch.indexOf(ch1) / lastIndexOf(ch1)</code></td><td>Première / dernière position</td></tr><tr><td><code>ch.substring(d, f)</code></td><td>Sous-chaîne de d à f exclu</td></tr><tr><td><code>ch.replace(ch1, ch2)</code></td><td>Remplace ch1 par ch2</td></tr><tr><td><code>toUpperCase() / toLowerCase()</code></td><td>Majuscules / minuscules</td></tr><tr><td><code>ch.trim()</code></td><td>Supprime les espaces aux extrémités</td></tr><tr><td><code>String.fromCharCode(n)</code></td><td>Caractère de code n</td></tr><tr><td><code>Math.abs / sqrt / round / trunc</code></td><td>Valeur absolue, racine, arrondi, partie entière</td></tr><tr><td><code>Math.random()</code></td><td>Réel aléatoire dans [0, 1[</td></tr><tr><td><code>new Date() / new Date(ch)</code></td><td>Date du jour / date donnée</td></tr><tr><td><code>getDate() / getMonth() / getFullYear()</code></td><td>Jour, mois (0 à 11), année</td></tr><tr><td><code>d.toString()</code></td><td>Date complète sous forme de chaîne</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m6"><div class="module-tete"><div class="module-num">06</div><div><h2>Bases de données</h2><p>Comprendre le modèle relationnel, créer une base en mode assisté et l'interroger en SQL sur une seule table.</p></div></div><article class="notion" id="m6-vocabulaire-du-modele-relationnel"><div class="notion-tete"><h3>Vocabulaire du modèle relationnel</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Terme</th><th>Définition</th><th>Exemple</th></tr></thead><tbody><tr><td>Base de données relationnelle (BDR)</td><td>Ensemble de tables liées entre elles</td><td>bibliotheque</td></tr><tr><td>SGBDR</td><td>Logiciel qui gère la base</td><td>MySQL (via phpMyAdmin)</td></tr><tr><td>Table</td><td>Ensemble d'enregistrements de même structure</td><td>Livre</td></tr><tr><td>Champ (colonne)</td><td>Information élémentaire</td><td>titre</td></tr><tr><td>Enregistrement (ligne)</td><td>Une occurrence complète</td><td>(12, 'Le Prophète', …)</td></tr><tr><td>Clé primaire</td><td>Champ qui identifie chaque ligne de façon unique</td><td>idLivre</td></tr><tr><td>Clé étrangère</td><td>Champ qui fait référence à la clé primaire d'une autre table</td><td>idAuteur#</td></tr></tbody></table></div>
+</div></article><article class="notion" id="m6-representation-textuelle-et-relations"><div class="notion-tete"><h3>Représentation textuelle et relations</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>La clé primaire est <b>soulignée</b>, la clé étrangère est suivie de <b>#</b>.</p>
+<div class="code"><div class="code-tete"><span><span class="lang">Schéma</span>bibliotheque</span></div><pre class="language-none"><code class="language-none">Auteur (<span class="pk">idAuteur</span>, nom, nationalite)
+Livre  (<span class="pk">idLivre</span>, titre, annee, idAuteur#)
+Eleve  (<span class="pk">idEleve</span>, nom, prenom, classe)
+Emprunt (<span class="pk">idLivre#</span>, <span class="pk">idEleve#</span>, <span class="pk">dateEmprunt</span>, dateRetour)</code></pre></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Relation</th><th>Signification</th><th>Exemple</th></tr></thead><tbody><tr><td>1:1</td><td>une ligne de A correspond à une seule ligne de B</td><td>Lycée — Directeur</td></tr><tr><td>1:∞</td><td>une ligne de A correspond à plusieurs lignes de B</td><td>Auteur — Livre</td></tr><tr><td>∞:∞</td><td>plusieurs lignes de A pour plusieurs lignes de B : table intermédiaire</td><td>Livre — Élève (via Emprunt)</td></tr></tbody></table></div>
+</div></article><article class="notion" id="m6-types-et-contraintes"><div class="notion-tete"><h3>Types et contraintes</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Type</th><th>Usage</th></tr></thead><tbody><tr><td><code>INT</code></td><td>Entier</td></tr><tr><td><code>DECIMAL(p,d)</code></td><td>Réel : p chiffres dont d après la virgule</td></tr><tr><td><code>CHAR(n)</code></td><td>Chaîne de longueur fixe</td></tr><tr><td><code>VARCHAR(n)</code></td><td>Chaîne de longueur variable (n max)</td></tr><tr><td><code>TEXT</code></td><td>Texte long</td></tr><tr><td><code>DATE</code></td><td>Date AAAA-MM-JJ</td></tr><tr><td><code>TIME</code></td><td>Heure</td></tr><tr><td><code>DATETIME</code></td><td>Date et heure</td></tr></tbody></table></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Contrainte</th><th>Rôle</th></tr></thead><tbody><tr><td><code>PRIMARY KEY</code></td><td>Identifiant unique et non vide</td></tr><tr><td><code>FOREIGN KEY … REFERENCES</code></td><td>Lien vers une autre table</td></tr><tr><td><code>NOT NULL</code></td><td>Valeur obligatoire</td></tr><tr><td><code>UNIQUE</code></td><td>Pas de doublon</td></tr><tr><td><code>DEFAULT</code></td><td>Valeur par défaut</td></tr><tr><td><code>CHECK</code></td><td>Condition à respecter</td></tr></tbody></table></div>
+</div></article><article class="notion" id="m6-creer-la-base-en-mode-assiste-phpmyadmin"><div class="notion-tete"><h3>Créer la base en mode assisté (phpMyAdmin)</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<p>En 3ème, la base et ses tables se créent <b>avec l'interface graphique</b> : aucune instruction CREATE, ALTER ou DROP n'est écrite à la main.</p>
+<ol class="etapes">
+<li><h4>Démarrer XAMPP</h4><p>Lancer Apache et MySQL, puis ouvrir <code>localhost/phpmyadmin</code>.</p></li>
+<li><h4>Créer la base</h4><p>Onglet <i>Bases de données</i> : saisir <code>bibliotheque</code>, interclassement <code>utf8mb4_general_ci</code>.</p></li>
+<li><h4>Créer chaque table</h4><p>Nom, nombre de colonnes, puis pour chaque champ : nom, type, taille, Null ou non, index <i>PRIMARY</i>.</p></li>
+<li><h4>Relier les tables</h4><p>Onglet <i>Structure</i> → <i>Vue relationnelle</i> : choisir la table et le champ référencés (moteur InnoDB).</p></li>
+<li><h4>Saisir des données</h4><p>Onglet <i>Insérer</i>, puis vérifier dans <i>Parcourir</i>.</p></li>
+</ol>
+</div></article><article class="notion" id="m6-interroger-une-table-en-sql"><div class="notion-tete"><h3>Interroger une table en SQL</h3><span class="annexe-tag n3">Annexe 3ème</span></div><div class="notion-corps">
+<div class="code"><div class="code-tete"><span><span class="lang">SQL</span></span><button class="copier" type="button">Copier</button></div><pre class="language-sql"><code class="language-sql">-- Sélection, condition, tri
+SELECT titre, annee FROM Livre
+WHERE annee &gt;= 2000
+ORDER BY annee DESC;
+
+-- Sans doublons
+SELECT DISTINCT nationalite FROM Auteur;
+
+-- Opérateurs
+SELECT * FROM Livre WHERE annee BETWEEN 1990 AND 2010;
+SELECT * FROM Livre WHERE titre LIKE 'Le%';
+SELECT * FROM Eleve WHERE classe IN ('3SI1', '3SI2');
+SELECT * FROM Livre WHERE idAuteur IS NULL;
+
+-- Mise à jour des données
+INSERT INTO Eleve (idEleve, nom, prenom, classe)
+VALUES (25, 'Ben Salah', 'Rim', '3SI1');
+
+UPDATE Eleve SET classe = '3SI2' WHERE idEleve = 25;
+
+DELETE FROM Eleve WHERE idEleve = 25;</code></pre></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p>En 3ème : une seule table par requête. Jointures, fonctions d'agrégation, GROUP BY et sous-requêtes sont réservés à la 4ème.</p></div></div>
+</div></article><div id="m6-a-retenir-bases-de-donnees"><div class="retenir"><h3>À retenir</h3><ul class="coches"><li>Clé primaire soulignée, clé étrangère suivie de #.</li><li>Relation ∞:∞ = table intermédiaire.</li><li>Création de la base et des tables : mode assisté uniquement.</li><li>Requêtes SQL sur une seule table.</li></ul><h4>Instructions SQL de 3ème</h4><div class="tableau-wrap"><table class="t"><thead><tr><th>Instruction</th><th>Rôle</th></tr></thead><tbody><tr><td><code>SELECT … FROM … WHERE … ORDER BY</code></td><td>Consulter, filtrer, trier</td></tr><tr><td><code>DISTINCT</code></td><td>Supprimer les doublons</td></tr><tr><td><code>BETWEEN / LIKE / IN / IS NULL</code></td><td>Intervalle, motif, liste, valeur absente</td></tr><tr><td><code>AND / OR / NOT</code></td><td>Combiner des conditions</td></tr><tr><td><code>INSERT INTO … VALUES</code></td><td>Ajouter une ligne</td></tr><tr><td><code>UPDATE … SET … WHERE</code></td><td>Modifier des lignes</td></tr><tr><td><code>DELETE FROM … WHERE</code></td><td>Supprimer des lignes</td></tr></tbody></table></div></div></div><a class="haut-page" href="#haut">Retour en haut de page</a></section><section class="module" id="m7"><div class="module-tete"><div class="module-num">07</div><div><h2>Limites du programme et progression</h2><p>Ce qui ne s'enseigne pas en 3ème, et une organisation possible en cinq séquences.</p></div></div><div id="m7-interdits"><div class="interdits"><h3>À ne pas enseigner en 3ème année</h3><ul><li>PHP<small>réservé à la 4ème</small></li><li>Flexbox et Grid<small>mise en page par float et position</small></li><li>Unités em, rem, vh, vw<small>px et % uniquement</small></li><li>console.log() et addEventListener<small>alert, innerHTML, événements HTML</small></li><li>getElementsByName<small>4ème</small></li><li>charAt, substr, Math.floor, Math.ceil, getDay<small>ch[i], substring, Math.trunc</small></li><li>&lt;button&gt;, onsubmit sur un bouton<small>input type="button" + onclick</small></li><li>CREATE, ALTER, DROP écrits<small>mode assisté phpMyAdmin</small></li><li>Jointures, agrégats, GROUP BY, sous-requêtes<small>4ème</small></li><li>transition-timing-function, translateX/Y<small>hors annexe</small></li></ul></div></div><div id="m7-progression-suggeree"><article class="notion" id="m7-progression"><div class="notion-tete"><h3>Progression suggérée</h3><span class="annexe-tag">Proposition</span></div><div class="notion-corps">
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Séquence</th><th>Projet fil rouge</th><th>Notions</th></tr></thead><tbody><tr><td>1. HTML5 / CSS3 avancés</td><td>Site « Découvrir la Tunisie »</td><td>Sémantique, CSS externe, boîte, float, position, effets</td></tr><tr><td>2. Systèmes et réseaux</td><td>Le réseau du laboratoire</td><td>Système d'exploitation, adressage, partage</td></tr><tr><td>3. JavaScript</td><td>Espace élève du lycée</td><td>E/S, conditions, boucles, fonctions, String, Math, Date, formulaires</td></tr><tr><td>4. Bases de données</td><td>Bibliothèque du lycée</td><td>Modèle relationnel, phpMyAdmin, SQL une table</td></tr><tr><td>5. Objets connectés</td><td>Station météo du lycée</td><td>Capteurs, carte programmable</td></tr></tbody></table></div>
+</div></article></div><a class="haut-page" href="#haut">Retour en haut de page</a></section></div></div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>Guide du Programme STI</h4>
+      <p>Référence pédagogique pour les enseignants de Sciences et Technologies de l'Informatique (2ème, 3ème et 4ème année), conforme à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="niveau-2.html">2ème année</a><a href="niveau-3.html">3ème année</a><a href="niveau-4.html">4ème année</a><a href="annexe.html">Référentiel annexe</a>
+    </div>
+    <div>
+      <h4>Accompagnement</h4>
+      <a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Outils & glossaire</a>
+      <a href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" rel="noopener">Chatbot annexe STI</a>
+    </div>
+  </div>
+  <div class="pied-bas">Guide du Programme STI · Mise à jour : octobre 2026 · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<a class="bouton-chatbot" href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" rel="noopener" aria-label="Chatbot annexe STI">🤖 <span>Chatbot annexe</span></a>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/index-recherche.js"></script>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

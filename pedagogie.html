@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enseigner pas à pas — Guide du Programme STI</title>
+<meta name="description" content="Guide pratique pour l'enseignant STI débutant : préparer l'année, construire une séance, concevoir un TP, évaluer et gérer le laboratoire.">
+<link rel="icon" href="flag.png">
+<link rel="stylesheet" href="assets/vendor/fonts.css">
+<link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="" id="haut">
+<header class="barre">
+  <div class="barre-in">
+    <a class="marque" href="index.html"><span class="marque-logo">STI</span><span class="marque-txt">Guide du Programme<small>Sciences et Technologies de l'Informatique</small></span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+    <nav class="menu" aria-label="Navigation principale"><a href="index.html" class="">Accueil</a><a href="niveau-2.html" class="m2">2ème année</a><a href="niveau-3.html" class="m3">3ème année</a><a href="niveau-4.html" class="m4">4ème année</a><a href="annexe.html" class="">Annexe</a><a href="pedagogie.html" class="" aria-current="page">Enseigner</a><a href="erreurs.html" class="">Erreurs</a><a href="outils.html" class="">Outils</a></nav>
+  </div>
+</header>
+<main>
+<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in"><span class="pastille-niveau">Accompagnement</span><br><h1>Enseigner pas à pas</h1><p class="chapeau">Pour l'enseignant qui débute en STI : de la préparation de la rentrée à la correction des devoirs, une méthode éprouvée et conforme à l'annexe.</p><div class="bandeau-faits"><span>Pédagogie par projet</span><span>Modèles de séance et de TP</span><span>Grilles d'évaluation</span></div></div></section>
+<div class="page"><nav class="sommaire" aria-label="Sommaire"><h2>Sommaire</h2><ol><li><a href="#rentree">Préparer sa rentrée</a></li><li><a href="#regle">La règle d'or : l'annexe</a></li><li><a href="#seance">Construire une séance</a></li><li><a href="#tp">Concevoir un TP</a></li><li><a href="#evaluer">Évaluer</a></li><li><a href="#labo">Gérer le laboratoire</a></li><li><a href="#verifier">Avant de distribuer un support</a></li></ol></nav><div class="contenu"><section class="module" id="rentree"><div class="module-tete"><div class="module-num">01</div><div><h2>Préparer sa rentrée</h2><p>Les cinq choses à régler avant la première séance.</p></div></div>
+<article class="notion"><div class="notion-tete"><h3>Liste de préparation</h3></div><div class="notion-corps"><ul class="coches" style="columns:1">
+<li><b>Télécharger l'annexe officielle</b> de chaque niveau enseigné et la garder ouverte en permanence : c'est la seule référence de ce qui s'enseigne et se note.</li>
+<li><b>Établir la progression annuelle</b> : répartir les séquences par trimestre en tenant compte des congés et des semaines de devoirs (modèles dans les pages <a href="niveau-2.html#m6">2ème</a>, <a href="niveau-3.html#m7">3ème</a>, <a href="niveau-4.html#m6">4ème</a>).</li>
+<li><b>Tester le laboratoire</b> : éditeur de code, navigateurs, XAMPP (Apache + MySQL) et phpMyAdmin sur chaque poste.</li>
+<li><b>Créer l'arborescence de travail</b> : un dossier par classe et par élève sur le serveur ou le poste (voir la section Laboratoire).</li>
+<li><b>Choisir un projet fil rouge</b> par séquence, ancré dans la vie de l'élève : lycée, région, club, patrimoine tunisien.</li>
+</ul></div></article>
+</section><section class="module" id="regle"><div class="module-tete"><div class="module-num">02</div><div><h2>La règle d'or : l'annexe</h2><p>Ce qui n'est pas dans l'annexe ne s'enseigne pas et ne se note pas, même si cela fonctionne.</p></div></div>
+<div class="enc att"><b class="ico" aria-hidden="true">!</b><div><p>Beaucoup de tutoriels en ligne utilisent Flexbox, <code>addEventListener</code>, <code>charAt</code>, <code>JOIN</code> ou PDO. Ces techniques fonctionnent, mais elles sont <b>hors programme</b> : un élève qui les utilise à l'épreuve pratique s'éloigne du corrigé officiel.</p></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Si vous voulez…</th><th>Hors annexe</th><th>Conforme à l'annexe</th></tr></thead><tbody><tr><td>Mettre un texte en gras</td><td><code>&lt;b&gt;, &lt;strong&gt;</code></td><td><code>font-weight: bold;</code></td></tr><tr><td>Créer un bouton de contrôle</td><td><code>&lt;button&gt;</code></td><td><code>&lt;input type="button" onclick="verifier()"&gt;</code></td></tr><tr><td>Lire le 3e caractère</td><td><code>ch.charAt(2)</code></td><td><code>ch[2]</code></td></tr><tr><td>Extraire une sous-chaîne</td><td><code>ch.substr(0, 3)</code></td><td><code>ch.substring(0, 3)</code></td></tr><tr><td>Partie entière</td><td><code>Math.floor(x)</code></td><td><code>Math.trunc(x)</code></td></tr><tr><td>Afficher un résultat</td><td><code>console.log(x)</code></td><td><code>alert(x) ou innerHTML</code></td></tr><tr><td>Disposer deux blocs côte à côte</td><td><code>display: flex</code></td><td><code>float: left / right</code></td></tr><tr><td>Relier deux tables</td><td><code>JOIN … ON</code></td><td><code>FROM A, B WHERE A.id = B.id</code></td></tr><tr><td>Date du jour en SQL</td><td><code>CURDATE()</code></td><td><code>DATE(NOW())</code></td></tr><tr><td>Se connecter à MySQL en PHP</td><td><code>new PDO(…)</code></td><td><code>mysqli_connect(…)</code></td></tr></tbody></table></div>
+<div class="enc astuce"><b class="ico" aria-hidden="true">★</b><div><p>Un doute sur un élément ? Cherchez-le dans le <a href="annexe.html">référentiel</a> ou interrogez le <a href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" rel="noopener">chatbot de l'annexe</a>.</p></div></div>
+</section><section class="module" id="seance"><div class="module-tete"><div class="module-num">03</div><div><h2>Construire une séance</h2><p>La pédagogie par projet : chaque séance fait avancer un projet concret que l'élève construit lui-même.</p></div></div>
+<ol class="etapes">
+<li><h4>En-tête</h4><p>Niveau, séquence, numéro de séance, durée, projet fil rouge.</p></li>
+<li><h4>Objectifs et prérequis</h4><p>Deux ou trois objectifs avec des verbes d'action observables : <i>créer</i>, <i>appliquer</i>, <i>contrôler</i>, <i>corriger</i>. Jamais « comprendre » ou « connaître ».</p></li>
+<li><h4>Situation de départ</h4><p>Un besoin réel du projet : « Le menu du site touristique doit changer de couleur au survol. » L'élève comprend pourquoi il apprend.</p></li>
+<li><h4>Activités</h4><p>Découverte (l'élève essaie et observe), construction guidée (le professeur structure), application autonome (l'élève réinvestit seul). Consignes numérotées, fichiers à créer, aperçu attendu.</p></li>
+<li><h4>À retenir</h4><p>Synthèse courte, puis <b>tableau des nouvelles propriétés CSS</b> (valeurs possibles selon l'annexe, valeur utilisée, définition) et <b>tableau des méthodes JS</b> (définition). Ajouter les erreurs fréquentes.</p></li>
+<li><h4>Évaluation formative</h4><p>Une partie théorique (QCM, vrai/faux justifié, repérer l'erreur) et une partie pratique courte sur le projet.</p></li>
+<li><h4>Corrigé</h4><p>Rédigé avant la séance : il révèle souvent une consigne ambiguë.</p></li>
+</ol>
+<article class="notion"><div class="notion-tete"><h3>Exemple : 3ème année, séquence 1, séance 9 (2 h)</h3><span class="annexe-tag">Modèle</span></div><div class="notion-corps"><div class="tableau-wrap"><table class="t"><thead><tr><th>Rubrique</th><th>Contenu</th></tr></thead><tbody><tr><td>Projet</td><td>Site « Découvrir la Tunisie »</td></tr><tr><td>Objectifs</td><td>Appliquer une transition à un bouton du menu ; régler sa durée et son délai.</td></tr><tr><td>Prérequis</td><td>Sélecteurs, :hover, propriétés de couleur et de taille.</td></tr><tr><td>Situation de départ</td><td>Le changement de couleur du menu est brutal : le client veut un effet progressif.</td></tr><tr><td>Découverte</td><td>Survoler le menu fourni, observer, puis ajouter <code>transition: background-color 1s;</code> et comparer.</td></tr><tr><td>Construction</td><td>Rôle de transition-property, -duration, -delay ; pourquoi la transition se déclare sur l'élément.</td></tr><tr><td>Application</td><td>Agrandir les vignettes des régions au survol (largeur 150px → 200px en 0,8 s).</td></tr><tr><td>Évaluation formative</td><td>QCM sur l'emplacement de la transition + modification de la durée sur le projet.</td></tr></tbody></table></div></div></article>
+</section><section class="module" id="tp"><div class="module-tete"><div class="module-num">04</div><div><h2>Concevoir un TP</h2><p>Un bon TP se fait en autonomie : l'élève sait quoi produire, où l'enregistrer et comment il sera noté.</p></div></div>
+<ol class="etapes">
+<li><h4>Contexte</h4><p>Deux ou trois lignes qui situent le projet (ex. : « Le club robotique ouvre les inscriptions en ligne. »).</p></li>
+<li><h4>Fichiers fournis</h4><p>Un dossier de départ (<code>index.html</code>, <code>css/style.css</code>, <code>js/controle.js</code>, images) pour que la séance porte sur les notions visées, pas sur la saisie.</p></li>
+<li><h4>Travail demandé</h4><p>Questions numérotées, une notion par question, du plus simple au plus difficile, avec un aperçu attendu.</p></li>
+<li><h4>Consignes de sauvegarde</h4><p>Dossier à créer (<code>D:\Bac2027\NomPrenom</code>), noms de fichiers imposés, enregistrement régulier.</p></li>
+<li><h4>Corrigé et barème</h4><p>Code conforme, indenté et commenté, plus une grille critère par critère.</p></li>
+</ol>
+<div class="enc prof"><b class="ico" aria-hidden="true">✎</b><div><p>Testez toujours le TP sur un poste du labo, avec les fichiers fournis aux élèves, avant la séance. Un chemin d'image erroné peut bloquer toute une classe.</p></div></div>
+</section><section class="module" id="evaluer"><div class="module-tete"><div class="module-num">05</div><div><h2>Évaluer</h2><p>Formative à chaque séance, sommative chaque trimestre : deux contrôles d'une heure et un devoir de synthèse de deux heures.</p></div></div>
+<div class="tableau-wrap"><table class="t"><thead><tr><th>Évaluation</th><th>Durée</th><th>Contenu</th><th>Livrables</th></tr></thead><tbody><tr><td>Formative</td><td>10 à 20 min</td><td>Théorie (QCM, vrai/faux) + petite tâche pratique</td><td>Énoncé + corrigé</td></tr><tr><td>Contrôle n°1 et n°2</td><td>1 h</td><td>Partie théorique + partie pratique, sur 20</td><td>Énoncé, corrigé commenté, grille</td></tr><tr><td>Devoir de synthèse</td><td>2 h</td><td>Partie théorique + partie pratique sur un projet complet</td><td>Énoncé, fichiers de départ, corrigé, grille détaillée</td></tr><tr><td>Bac pratique (4ème)</td><td>1 h</td><td>Application Web : HTML, CSS, JS, PHP, MySQL</td><td>Format proche du sujet officiel</td></tr></tbody></table></div>
+<article class="notion"><div class="notion-tete"><h3>Exemple de grille de correction — contrôle de formulaire en JavaScript</h3><span class="annexe-tag">Barème</span></div><div class="notion-corps"><div class="tableau-wrap"><table class="t"><thead><tr><th>Critère</th><th>Points</th></tr></thead><tbody><tr><td>Bouton <code>input type="button"</code> appelant <code>verifier()</code></td><td>1</td></tr><tr><td>Lecture correcte des champs (<code>getElementById(…).value</code>)</td><td>2</td></tr><tr><td>Contrôle du nom (longueur minimale) avec <code>alert</code> + <code>return</code></td><td>3</td></tr><tr><td>Contrôle du téléphone : 8 caractères, chiffres uniquement (<code>estChiffres</code>)</td><td>4</td></tr><tr><td>Message de succès écrit avec <code>innerHTML</code></td><td>2</td></tr><tr><td>Mise en forme CSS demandée (externe, propriétés de l'annexe)</td><td>5</td></tr><tr><td>Code indenté, commenté, fichiers bien nommés et enregistrés</td><td>3</td></tr><tr><td>Total</td><td>20</td></tr></tbody></table></div></div></article>
+</section><section class="module" id="labo"><div class="module-tete"><div class="module-num">06</div><div><h2>Gérer le laboratoire</h2><p>Des habitudes simples qui évitent la perte de travail et font gagner du temps à chaque séance.</p></div></div>
+<div class="duo"><div class="code"><div class="code-tete"><span><span class="lang">Texte</span>Arborescence type</span><button class="copier" type="button">Copier</button></div><pre class="language-none"><code class="language-none">D:\STI\
+└── 3SI1\
+    └── BenSalah_Rim\
+        └── tunisie\
+            ├── index.html
+            ├── regions.html
+            ├── css\
+            │   └── style.css
+            ├── js\
+            │   └── controle.js
+            └── images\
+                └── carthage.jpg</code></pre></div><article class="notion"><div class="notion-tete"><h3>Bonnes pratiques</h3></div><div class="notion-corps"><ul class="coches" style="columns:1">
+<li>Noms de fichiers en minuscules, sans espace ni accent.</li>
+<li>Un dossier <code>css</code>, un dossier <code>js</code>, un dossier <code>images</code>.</li>
+<li>Pour PHP : projets dans <code>C:\xampp\htdocs</code>, page ouverte par <code>localhost/projet/</code>, jamais par double-clic.</li>
+<li>Démarrer Apache et MySQL au début de la séance, pas pendant.</li>
+<li>Sauvegarde sur clé ou sur le serveur en fin de séance.</li>
+</ul></div></article></div>
+</section><section class="module" id="verifier"><div class="module-tete"><div class="module-num">07</div><div><h2>Avant de distribuer un support</h2><p>La vérification finale, à faire pour chaque cours, TP ou devoir.</p></div></div>
+<article class="notion"><div class="notion-tete"><h3>Contrôle de conformité</h3></div><div class="notion-corps"><ul class="coches" style="columns:1">
+<li>Chaque balise, propriété, valeur, méthode et requête figure dans l'annexe du niveau.</li>
+<li>Aucune notion n'est utilisée avant d'avoir été enseignée.</li>
+<li>Le « À retenir » contient le tableau des propriétés CSS et le tableau des méthodes JS.</li>
+<li>L'évaluation formative a une partie théorique et une partie pratique, avec son corrigé.</li>
+<li>Le code a été exécuté : rendu vérifié dans le navigateur, page validée par le W3C.</li>
+<li>Le code est indenté et commenté ; les noms de fichiers sont ceux de l'énoncé.</li>
+<li>Aucune mise en forme par balise HTML ; boutons en <code>input type="button"</code>.</li>
+</ul></div></article>
+</section></div></div>
+</main>
+<footer class="pied">
+  <div class="pied-in">
+    <div>
+      <h4>Guide du Programme STI</h4>
+      <p>Référence pédagogique pour les enseignants de Sciences et Technologies de l'Informatique (2ème, 3ème et 4ème année), conforme à l'annexe officielle du programme tunisien.</p>
+      <p>Conçu par <span class="signature">Zouaghi Mohamed</span>, professeur d'informatique au Lycée Oued Ellil.</p>
+    </div>
+    <div>
+      <h4>Programme</h4>
+      <a href="niveau-2.html">2ème année</a><a href="niveau-3.html">3ème année</a><a href="niveau-4.html">4ème année</a><a href="annexe.html">Référentiel annexe</a>
+    </div>
+    <div>
+      <h4>Accompagnement</h4>
+      <a href="pedagogie.html">Enseigner pas à pas</a><a href="erreurs.html">Erreurs fréquentes</a><a href="outils.html">Outils & glossaire</a>
+      <a href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" rel="noopener">Chatbot annexe STI</a>
+    </div>
+  </div>
+  <div class="pied-bas">Guide du Programme STI · Mise à jour : octobre 2026 · En cas de doute, l'annexe officielle fait foi.</div>
+</footer>
+<a class="bouton-chatbot" href="https://mo7amedzouaghi.github.io/annexe4STITN/" target="_blank" rel="noopener" aria-label="Chatbot annexe STI">🤖 <span>Chatbot annexe</span></a>
+<script src="assets/vendor/prism.js"></script>
+<script src="assets/index-recherche.js"></script>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
