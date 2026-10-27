@@ -14,16 +14,23 @@
   }
   function erreur(id, msg) { var p = document.getElementById(id); p.textContent = msg; p.hidden = !msg; }
 
+  if (C.enLigne) {
+    var note = document.getElementById("note-mode");
+    if (note) note.textContent = "Votre compte fonctionne sur tous vos appareils : ordinateur du labo, maison, téléphone.";
+  }
+  function bouton(f, actif) { var b = f && f.querySelector('button[type="submit"]'); if (b) { b.disabled = !actif; b.classList.toggle("attente", !actif); } }
+
   /* déjà connecté */
-  var s = C.session();
+  C.pret.then(function (s) {
   if (s) {
     var d = document.getElementById("deja");
     d.hidden = false;
     d.innerHTML = '<p>Vous êtes connecté en tant que <strong></strong>.</p><a class="btn-compte" href="#">Continuer</a> <button type="button" class="btn-lien">Changer de compte</button>';
     d.querySelector("strong").textContent = s.prenom + " " + s.nom + (s.role === "prof" ? " (enseignant)" : " (élève)");
     d.querySelector("a").href = destination(s);
-    d.querySelector("button").addEventListener("click", function () { localStorage.removeItem("sti-session"); location.reload(); });
+    d.querySelector("button").addEventListener("click", function () { C.deconnecter(); });
   }
+  });
 
   /* connexion */
   var fc = document.getElementById("f-connexion");
@@ -32,8 +39,9 @@
     erreur("c-erreur", "");
     var id = document.getElementById("c-id").value, mdp = document.getElementById("c-mdp").value;
     if (!id.trim() || !mdp) { erreur("c-erreur", "Saisissez votre identifiant et votre mot de passe."); return; }
+    bouton(fc, false);
     try { location.href = destination(await C.connecter(id, mdp)); }
-    catch (er) { erreur("c-erreur", er.message); }
+    catch (er) { erreur("c-erreur", er.message); bouton(fc, true); }
   });
 
   /* inscription */
@@ -66,8 +74,9 @@
       if (d.role === "eleve" && !d.niveau) { erreur("i-erreur", "Choisissez votre niveau."); return; }
       if (d.role === "prof" && !d.code.trim()) { erreur("i-erreur", "Saisissez le code enseignant."); return; }
       if (d.mdp !== document.getElementById("i-mdp2").value) { erreur("i-erreur", "Les deux mots de passe ne sont pas identiques."); return; }
+      bouton(fi, false);
       try { location.href = destination(await C.inscrire(d)); }
-      catch (er) { erreur("i-erreur", er.message); }
+      catch (er) { erreur("i-erreur", er.message); bouton(fi, true); }
     });
   }
 })();

@@ -51,6 +51,7 @@ def gabarit(fichier, titre, description, haut, contenu, classe="", scripts="", a
 <title>{titre} — STI Espace Élèves</title>
 <meta name="description" content="{esc(description)}">
 <link rel="icon" href="assets/flag.png">
+<script src="../connexion/config.js"></script>
 <script src="../connexion/compte.js" data-acces="eleve"></script>
 <link rel="stylesheet" href="assets/vendor/fonts.css">
 <link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">

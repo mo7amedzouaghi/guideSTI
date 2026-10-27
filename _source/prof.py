@@ -22,7 +22,7 @@ NIVEAUX = {
 }
 
 MENU = [("verifier.html", "Vérifier un code", "cle"), ("n2.html", "2ème", "m2"), ("n3.html", "3ème", "m3"), ("n4.html", "4ème", "m4"),
-        ("annexe.html", "Annexe", ""), ("index.html#ressources", "Ressources", ""), ("../eleves/", "Espace élèves", "vers-eleves")]
+        ("annexe.html", "Annexe", ""), ("index.html#ressources", "Ressources", ""), ("suivi.html", "Suivi", ""), ("../eleves/", "Espace élèves", "vers-eleves")]
 
 INDEX_NOTIONS = []
 
@@ -43,6 +43,7 @@ def gabarit(fichier, titre, description, haut, contenu, classe="", scripts="", a
 <title>{titre} — STI Espace Prof</title>
 <meta name="description" content="{esc(description)}">
 <link rel="icon" href="assets/flag.png">
+<script src="../connexion/config.js"></script>
 <script src="../connexion/compte.js" data-acces="prof"></script>
 <link rel="stylesheet" href="assets/vendor/fonts.css">
 <link rel="stylesheet" href="assets/vendor/prism-tomorrow.css">
@@ -222,6 +223,14 @@ def main():
 </div>
 <div id="v-resultat" aria-live="polite"></div>
 </div>""", "", '<script src="assets/data.js"></script>\n<script src="assets/verificateur.js"></script>\n<script src="assets/verifier-ui.js"></script>'))
+
+    # ------------------------------------------------------------ suivi des élèves
+    ecrire("suivi.html", gabarit("suivi.html", "Suivi des élèves",
+        "Les scores des élèves inscrits, par niveau, classe et chapitre.",
+        bandeau("Suivi des élèves", "Le meilleur score de chaque élève à l'entraînement de chaque chapitre. Filtrez par niveau et par classe, repérez les chapitres à reprendre, exportez vers Excel."),
+        """<div class="page pleine suivi">
+<div id="s-zone" aria-live="polite"><p class="s-chargement">Chargement des résultats…</p></div>
+</div>""", "", '<script src="../eleves/assets/plan.js"></script>\n<script src="assets/suivi.js"></script>'))
 
     # ------------------------------------------------------------ accueil
     tuiles = (

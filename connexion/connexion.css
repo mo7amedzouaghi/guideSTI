@@ -41,3 +41,4 @@
   .compte-carte { padding: 6px 18px 20px; }
   .deux, .role-choix { grid-template-columns: minmax(0, 1fr); }
 }
+.btn-compte.attente { opacity: .6; cursor: wait; }

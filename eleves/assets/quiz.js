@@ -99,6 +99,7 @@ window.cleSTI = window.cleSTI || function (k) { return k; };
     try { var brut = localStorage.getItem(cle); ancien = brut === null ? null : Number(brut); } catch (e) { ancien = null; }
     var record = ancien === null || isNaN(ancien) || pc > ancien;
     try { if (record) localStorage.setItem(cle, String(pc)); } catch (e) { /* stockage indisponible */ }
+    if (window.CompteSTI && window.CompteSTI.enregistrerScore) window.CompteSTI.enregistrerScore(chap.dataset.niveau, chap.dataset.chap, pc, record ? pc : ancien);
     var msg = pc >= 80 ? "Chapitre maîtrisé ! Passe à la fiche « À retenir » puis au chapitre suivant."
       : pc >= 50 ? "Pas mal. Relis les notions où tu t'es trompé, puis recommence."
       : "Reprends la partie « Je comprends » et refais l'entraînement.";

@@ -1,0 +1,43 @@
+rules_version = '2';
+// Règles de la base Firestore du Guide STI.
+// À coller dans la console Firebase : Firestore Database → Règles → Publier.
+// Le code enseignant est vérifié ici (côté serveur) : le changer à la ligne CODE_PROF.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function connecte() { return request.auth != null; }
+    function estProf() {
+      return connecte()
+        && exists(/databases/$(database)/documents/comptes/$(request.auth.uid))
+        && get(/databases/$(database)/documents/comptes/$(request.auth.uid)).data.role == 'prof';
+    }
+    function texte(v, max) { return v is string && v.size() <= max; }
+
+    // Profils : comptes/{uid}
+    match /comptes/{uid} {
+      allow read: if connecte() && (request.auth.uid == uid || estProf());
+      allow create: if connecte() && request.auth.uid == uid
+        && texte(request.resource.data.identifiant, 30)
+        && texte(request.resource.data.prenom, 40)
+        && texte(request.resource.data.nom, 40)
+        && texte(request.resource.data.classe, 20)
+        && (
+          (request.resource.data.role == 'eleve' && request.resource.data.niveau in [2, 3, 4])
+          || (request.resource.data.role == 'prof' && request.resource.data.code == 'STI-OUED-ELLIL')   // CODE_PROF
+        );
+      allow update: if false;
+      allow delete: if connecte() && (request.auth.uid == uid || (estProf() && resource.data.role == 'eleve'));
+    }
+
+    // Scores : scores/{uid}_{niveau}_{chapitre}
+    match /scores/{id} {
+      allow read: if connecte() && (resource.data.uid == request.auth.uid || estProf());
+      allow create, update: if connecte()
+        && request.resource.data.uid == request.auth.uid
+        && id.matches(request.auth.uid + '_[234]_[0-9]+')
+        && request.resource.data.meilleur is int
+        && request.resource.data.meilleur >= 0 && request.resource.data.meilleur <= 100;
+      allow delete: if connecte() && (resource.data.uid == request.auth.uid || estProf());
+    }
+  }
+}
