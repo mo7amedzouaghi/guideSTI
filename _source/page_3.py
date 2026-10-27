@@ -107,16 +107,25 @@ N.bloc(retenir([
     "Balises sémantiques : header, nav, main, section, article, aside, footer.",
     "Un <code>iframe</code> nommé (<code>name</code>) devient la cible d'un lien (<code>target</code>).",
     "Bouton de contrôle : <code>&lt;input type=\"button\" onclick=\"…\"&gt;</code>, jamais <code>&lt;button&gt;</code>.",
-], autres=[("Balises de la séquence", ["Balise", "Attributs (annexe)", "Rôle"], [
-    (c("<link>"), c("href, rel, type"), "Ressource externe"),
-    (c("<script>"), c("src, type"), "Script JavaScript"),
-    (c("<header> <nav> <main> <footer>"), "—", "Zones de la page"),
-    (c("<section> <article> <aside>"), "—", "Organisation du contenu"),
-    (c("<div> <span>"), "—", "Conteneurs bloc / en ligne"),
-    (c("<iframe>"), c("src, name"), "Cadre intégré"),
-    (c("<figure> <figcaption>"), "—", "Illustration et légende"),
-    (c("<details> <summary>"), c("open"), "Bloc dépliable"),
-    (c("<address> <cite>"), "—", "Contact, titre d'œuvre")])]), "À retenir — HTML5 avancé")
+], autres=[("Balises de la séquence", ["Balise", "Attributs (annexe)", "Définition", "Utilité"], [
+    (c('<link>'), c('href, rel, type'), 'Lien vers une ressource externe.', 'Relier la feuille de style .css à la page.'),
+    (c('<script>'), c('src, type'), 'Script JavaScript (interne ou externe).', 'Relier le fichier .js qui rend la page interactive.'),
+    (c('<header>'), '—', "En-tête de la page ou d'une section.", 'Contenir le logo, le titre du site, le slogan.'),
+    (c('<nav>'), '—', 'Zone de navigation.', 'Regrouper les liens du menu principal.'),
+    (c('<main>'), '—', 'Contenu principal (un seul par page).', 'Délimiter le contenu propre à la page, hors en-tête et pied.'),
+    (c('<footer>'), '—', "Pied de la page ou d'une section.", "Afficher les coordonnées, l'auteur, les mentions."),
+    (c('<section>'), '—', 'Regroupement thématique.', 'Découper le contenu en grandes parties, chacune avec son titre.'),
+    (c('<article>'), '—', 'Contenu autonome.', 'Présenter une fiche, une actualité ou un produit compréhensible seul.'),
+    (c('<aside>'), '—', 'Contenu complémentaire.', 'Placer un encadré, une info « Le saviez-vous ? », des liens annexes.'),
+    (c('<div>'), '—', 'Conteneur neutre de type bloc.', 'Regrouper des éléments pour leur appliquer un style quand aucune balise sémantique ne convient.'),
+    (c('<span>'), '—', 'Conteneur neutre en ligne.', "Mettre en forme une partie d'un texte (avec une classe)."),
+    (c('<iframe>'), c('src, name'), 'Cadre affichant une autre page.', 'Intégrer une page dans la page ; nommé, il sert de cible (target) aux liens.'),
+    (c('<figure>'), '—', 'Illustration autonome.', 'Associer une image (ou un schéma) à sa légende.'),
+    (c('<figcaption>'), '—', "Légende d'une figure.", "Décrire l'image contenue dans figure."),
+    (c('<details>'), c('open'), 'Bloc dépliable.', "Masquer un contenu secondaire que le visiteur affiche s'il le souhaite."),
+    (c('<summary>'), '—', "Titre cliquable d'un details.", 'Indiquer ce que contient le bloc dépliable.'),
+    (c('<address>'), '—', 'Coordonnées de contact.', "Donner l'adresse, le téléphone ou l'e-mail de l'auteur ou de l'établissement."),
+    (c('<cite>'), '—', "Titre d'une œuvre.", "Citer le titre d'un livre, d'un film ou d'un article.")])]), "À retenir — HTML5 avancé")
 
 # =====================================================================
 N.module("CSS3 : feuille externe et sélecteurs",

@@ -60,14 +60,16 @@ N.bloc(retenir([
     "Un seul <code>h1</code> par page, puis h2, h3… dans l'ordre.",
     "HTML décrit la structure, jamais la mise en forme.",
     "Une page est terminée quand elle passe le validateur W3C sans erreur.",
-], autres=[("Balises de la séquence", ["Balise", "Attributs (annexe)", "Rôle"], [
-    (c("<html>"), c("lang"), "Racine du document"),
-    (c("<meta>"), c("charset, name, content"), "Métadonnées (encodage, description)"),
-    (c("<title>"), "—", "Titre de l'onglet"),
-    (c("<h1> à <h6>"), "—", "Titres hiérarchisés"),
-    (c("<p>"), "—", "Paragraphe"),
-    (c("<br>"), "—", "Retour à la ligne"),
-    (c("<hr>"), "—", "Séparation thématique")])]), "À retenir — structure")
+], autres=[("Balises de la séquence", ["Balise", "Attributs (annexe)", "Définition", "Utilité"], [
+    (c('<html>'), c('lang'), 'Élément racine qui contient toute la page.', "Indiquer la langue du document (fr) aux navigateurs et aux lecteurs d'écran."),
+    (c('<head>'), '—', 'En-tête du document, non affiché dans la page.', 'Regrouper les informations sur la page : encodage, titre, styles.'),
+    (c('<meta>'), c('charset, name, content'), 'Métadonnée décrivant la page.', "Déclarer l'encodage UTF-8 pour afficher correctement les accents."),
+    (c('<title>'), '—', 'Titre du document.', "Afficher un nom dans l'onglet du navigateur et dans les favoris."),
+    (c('<body>'), '—', 'Corps du document.', 'Contenir tout ce que le visiteur voit.'),
+    (c('<h1> à <h6>'), '—', 'Titres de niveau 1 (le plus important) à 6.', "Hiérarchiser le contenu comme le plan d'un document."),
+    (c('<p>'), '—', 'Paragraphe de texte.', 'Regrouper des phrases en un bloc séparé des autres.'),
+    (c('<br>'), '—', 'Retour à la ligne (balise orpheline).', "Passer à la ligne à l'intérieur d'un même paragraphe (adresse, poème)."),
+    (c('<hr>'), '—', 'Ligne horizontale de séparation.', 'Marquer un changement de thème entre deux parties.')])]), "À retenir — structure")
 
 # =====================================================================
 N.module("Listes et tableaux",
@@ -123,14 +125,18 @@ N.bloc(retenir([
     "Chaque élément de liste est dans un <code>li</code>.",
     "Un tableau se lit ligne par ligne : <code>tr</code> puis <code>th</code> / <code>td</code>.",
     "<code>caption</code> se place juste après <code>&lt;table&gt;</code>.",
-], autres=[("Balises de la séquence", ["Balise", "Attributs (annexe)", "Rôle"], [
-    (c("<ul>"), "—", "Liste à puces"),
-    (c("<ol>"), c("type, start, reversed"), "Liste ordonnée"),
-    (c("<li>"), "—", "Élément de liste"),
-    (c("<table>"), "—", "Tableau"),
-    (c("<caption>"), "—", "Titre du tableau"),
-    (c("<thead> <tbody> <tfoot>"), "—", "En-tête, corps et pied du tableau"),
-    (c("<tr> <th> <td>"), "—", "Ligne, cellule d'en-tête, cellule de donnée")])]), "À retenir — listes et tableaux")
+], autres=[("Balises de la séquence", ["Balise", "Attributs (annexe)", "Définition", "Utilité"], [
+    (c('<ul>'), '—', 'Liste non ordonnée (à puces).', "Énumérer des éléments dont l'ordre n'a pas d'importance."),
+    (c('<ol>'), c('type, start, reversed'), 'Liste ordonnée (numérotée).', "Énumérer des étapes ou un classement où l'ordre compte."),
+    (c('<li>'), '—', "Élément d'une liste.", "Contenir chaque item d'un ul ou d'un ol."),
+    (c('<table>'), '—', 'Tableau.', 'Présenter des données en lignes et en colonnes.'),
+    (c('<caption>'), '—', 'Titre du tableau.', 'Annoncer le contenu du tableau ; se place juste après <table>.'),
+    (c('<thead>'), '—', 'En-tête du tableau.', 'Regrouper la ou les lignes de titres des colonnes.'),
+    (c('<tbody>'), '—', 'Corps du tableau.', 'Regrouper les lignes de données.'),
+    (c('<tfoot>'), '—', 'Pied du tableau.', 'Regrouper les lignes de total ou de synthèse.'),
+    (c('<tr>'), '—', 'Ligne du tableau.', "Contenir les cellules d'une même ligne."),
+    (c('<th>'), '—', "Cellule d'en-tête.", "Donner le titre d'une colonne ou d'une ligne (gras et centré par défaut)."),
+    (c('<td>'), '—', 'Cellule de donnée.', 'Contenir une valeur du tableau.')])]), "À retenir — listes et tableaux")
 
 # =====================================================================
 N.module("Liens et multimédia",
@@ -161,11 +167,11 @@ N.bloc(retenir([
     "<code>alt</code> est obligatoire sur chaque image (validation W3C).",
     "<code>controls</code> affiche les commandes audio/vidéo.",
     "Noms de fichiers sans espace ni accent : <code>photo_classe.jpg</code>.",
-], autres=[("Balises de la séquence", ["Balise", "Attributs (annexe)", "Rôle"], [
-    (c("<a>"), c("href, target"), "Lien hypertexte"),
-    (c("<img>"), c("src, alt"), "Image"),
-    (c("<audio>"), c("src, controls"), "Son"),
-    (c("<video>"), c("src, controls"), "Vidéo")])]), "À retenir — liens et multimédia")
+], autres=[("Balises de la séquence", ["Balise", "Attributs (annexe)", "Définition", "Utilité"], [
+    (c('<a>'), c('href, target'), 'Lien hypertexte.', 'Naviguer vers une autre page, un site ou un fichier.'),
+    (c('<img>'), c('src, alt'), 'Image (balise orpheline).', "Afficher une photo ou une illustration ; alt la décrit si elle ne s'affiche pas."),
+    (c('<audio>'), c('src, controls'), 'Lecteur de son.', 'Intégrer un fichier audio avec ses boutons de lecture.'),
+    (c('<video>'), c('src, controls'), 'Lecteur vidéo.', 'Intégrer une vidéo avec ses commandes.')])]), "À retenir — liens et multimédia")
 
 # =====================================================================
 N.module("Formulaires",
@@ -217,14 +223,15 @@ N.bloc(retenir([
     "<code>name</code> identifie la donnée envoyée, <code>id</code> sert au <code>label</code>.",
     "Radio : même <code>name</code> pour un choix unique.",
     "En 2ème : text, number, radio, checkbox, submit, reset uniquement.",
-], autres=[("Balises et types de la séquence", ["Élément", "Attributs (annexe)", "Rôle"], [
-    (c("<form>"), c("action, method, target"), "Formulaire"),
-    (c("<fieldset> <legend>"), "—", "Groupe de champs et son titre"),
-    (c("<label>"), c("for"), "Étiquette liée à un champ"),
-    (c("<input>"), c("type, name, value"), "Champ : text, number, radio, checkbox, submit, reset"),
-    (c("<select>"), c("name, required, disabled, multiple"), "Liste déroulante"),
-    (c("<option>"), c("value, selected"), "Choix de la liste"),
-    (c("<textarea>"), c("name, rows, cols, maxlength, placeholder"), "Texte multiligne")])]), "À retenir — formulaires")
+], autres=[("Balises et types de la séquence", ["Balise", "Attributs (annexe)", "Définition", "Utilité"], [
+    (c('<form>'), c('action, method, target'), 'Formulaire.', 'Regrouper des champs et envoyer leurs valeurs à une page de traitement.'),
+    (c('<fieldset>'), '—', 'Groupe de champs.', 'Encadrer des champs liés (identité, coordonnées).'),
+    (c('<legend>'), '—', "Titre d'un fieldset.", 'Nommer le groupe de champs.'),
+    (c('<label>'), c('for'), "Étiquette d'un champ.", "Décrire le champ ; un clic sur l'étiquette active le champ dont l'id est for."),
+    (c('<input>'), c('type, name, value'), 'Champ de saisie (text, number, radio, checkbox, submit, reset).', "Recueillir une donnée ou déclencher l'envoi / la remise à zéro."),
+    (c('<select>'), c('name, required, disabled, multiple'), 'Liste déroulante.', 'Proposer un choix parmi plusieurs options sans encombrer la page.'),
+    (c('<option>'), c('value, selected'), "Choix d'une liste.", 'Définir chaque valeur proposée par le select.'),
+    (c('<textarea>'), c('name, rows, cols, maxlength, placeholder'), 'Zone de texte multiligne.', 'Saisir un texte long (message, commentaire).')])]), "À retenir — formulaires")
 
 # =====================================================================
 N.module("CSS en ligne et interne",
