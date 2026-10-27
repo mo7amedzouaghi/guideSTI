@@ -22,7 +22,7 @@ NIVEAUX = {
 }
 
 MENU = [("verifier.html", "Vérifier un code", "cle"), ("n2.html", "2ème", "m2"), ("n3.html", "3ème", "m3"), ("n4.html", "4ème", "m4"),
-        ("annexe.html", "Annexe", ""), ("pedagogie.html", "Enseigner", ""), ("erreurs.html", "Erreurs", ""), ("outils.html", "Outils", "")]
+        ("annexe.html", "Annexe", ""), ("index.html#ressources", "Ressources", "")]
 
 INDEX_NOTIONS = []
 
@@ -86,11 +86,15 @@ def gabarit(fichier, titre, description, haut, contenu, classe="", scripts="", a
 """
 
 
-def bandeau(titre, chapeau, pastille=None, ariane=None):
+def bandeau(titre, chapeau, pastille=None, ariane=None, niveau=None):
     p = f'<span class="pastille-niveau">{pastille}</span><br>' if pastille else ""
     a = f'<nav class="ariane-v2" aria-label="Fil d\'Ariane">{ariane}</nav>' if ariane else ""
+    sel = ""
+    if niveau:
+        sel = ('<nav class="choix-niveau" aria-label="Changer de niveau"><span>Niveau :</span>' +
+               "".join(f'<a href="n{x}.html" class="cn-{x}"{" aria-current=\"page\"" if x == niveau else ""}>{x}ème année</a>' for x in ("2", "3", "4")) + "</nav><br>")
     return (f'<section class="bandeau"><div class="bandeau-grille" aria-hidden="true"></div><div class="bandeau-in">'
-            f'{a}{p}<h1>{titre}</h1><p class="chapeau">{chapeau}</p></div></section>')
+            f'{a}{sel}{p}<h1>{titre}</h1><p class="chapeau">{chapeau}</p></div></section>')
 
 
 def lien_v1_vers_v2(html, modules_par_niveau):
@@ -129,16 +133,23 @@ def main():
                     nav += "<ol>" + "".join(f'<li><a href="#{i}">{esc(t)}</a></li>' for i, t in sous) + "</ol>"
                 nav += "</li>"
             nav += f'<li><a href="n{n}.html#progression">Limites et progression</a></li></ol></nav>'
-            outils = (f'<div class="outils-seq"><button type="button" class="btn-imp" data-imprimer="retenir">Imprimer la fiche « À retenir »</button>'
-                      f'<button type="button" class="btn-imp" data-imprimer="tout">Imprimer le chapitre</button>'
-                      f'<a class="btn-imp" href="verifier.html?niveau={n}">Vérifier un code de {titre_n}</a></div>')
+            ancre_err = ("php" if "PHP" in titre else "sql" if ("SQL" in titre or "données" in titre) else "js" if "JavaScript" in titre
+                         else "css" if ("CSS" in titre or "Effets" in titre or "Mise en page" in titre) else "html")
+            outils = (f'<section class="ressources-chap" aria-label="Ressources du chapitre"><h2>Ressources du chapitre</h2><div class="rc-grille">'
+                      f'<button type="button" class="rc" data-imprimer="retenir"><b>🖨</b><span>Imprimer la fiche « À retenir »<small>La synthèse seule, pour la classe</small></span></button>'
+                      f'<button type="button" class="rc" data-imprimer="tout"><b>📄</b><span>Imprimer le chapitre<small>Notions, exemples et synthèse</small></span></button>'
+                      f'<button type="button" class="rc" data-telecharger="{esc(f[:-5])}"><b>⬇</b><span>Télécharger les exemples<small>Tous les codes du chapitre, en un fichier</small></span></button>'
+                      f'<a class="rc" href="pedagogie.html#seance"><b>🧭</b><span>Modèle de séance<small>Les 7 étapes d\'une séance conforme</small></span></a>'
+                      f'<a class="rc" href="erreurs.html#{ancre_err}"><b>⚠</b><span>Erreurs fréquentes<small>Code incorrect et version conforme</small></span></a>'
+                      f'<a class="rc" href="verifier.html?niveau={n}"><b>✔</b><span>Vérifier un code<small>Conformité au programme de {titre_n}</small></span></a>'
+                      f'</div></section>')
             prec = f'<a href="n{n}-s{k-1}.html">← {k-1}. {sequences[k-2][2]}</a>' if k > 1 else f'<a href="n{n}.html">← {titre_n}</a>'
             suiv = f'<a href="n{n}-s{k+1}.html">{k+1}. {sequences[k][2]} →</a>' if k < len(sequences) else f'<a href="n{n}.html#progression">Limites et progression →</a>'
             corps = (f'<div class="page">{nav}<div class="contenu">{outils}{"".join(blocs)}'
                      f'<nav class="suite" aria-label="Chapitres voisins">{prec}{suiv}</nav></div></div>')
             ariane = f'<a href="index.html">Accueil</a> › <a href="n{n}.html">{titre_n}</a> › Chapitre {k}'
             ecrire(f, gabarit(f, f"{titre} ({titre_n})", intro,
-                              bandeau(titre, intro, f"{titre_n} · Chapitre {k}", ariane), corps, f"niv-{n}",
+                              bandeau(titre, intro, f"{titre_n} · Chapitre {k}", ariane, n), corps, f"niv-{n}",
                               '<script src="assets/sequence.js"></script>', actif=f"n{n}.html"))
             for e in lib.INDEX:
                 if e["u"].startswith(f"niveau-{n}.html#{mid}-"):
@@ -149,7 +160,7 @@ def main():
                f'<h2 class="titre-section" id="progression">Limites du programme et progression</h2>{lim_blocs}</div>')
         ariane = f'<a href="index.html">Accueil</a> › {titre_n}'
         ecrire(f"n{n}.html", gabarit(f"n{n}.html", titre_n, chapeau_n,
-                                      bandeau(f"{titre_n} STI", chapeau_n, sous_n, ariane), vue, f"niv-{n}"))
+                                      bandeau(f"{titre_n} STI", chapeau_n, sous_n, ariane, n), vue, f"niv-{n}"))
         INDEX_NOTIONS.append({"t": f"{titre_n} — chapitres et progression", "u": f"n{n}.html", "n": f"{n}ème", "k": chapeau_n})
 
     # ------------------------------------------------------------ ressources réutilisées
@@ -212,11 +223,20 @@ def main():
 </div>""", "", '<script src="assets/data.js"></script>\n<script src="assets/verificateur.js"></script>\n<script src="assets/verifier-ui.js"></script>'))
 
     # ------------------------------------------------------------ accueil
-    tuiles = "".join(
-        f'<a class="tuile {c}" href="{u}"><span class="tuile-ic" aria-hidden="true">{i}</span><h3>{t}</h3><p>{d}</p></a>' for u, c, i, t, d in [
-            ("verifier.html", "t-verif", "✔", "Vérifier un code", "Collez un support ou une copie : tout ce qui sort de l'annexe est signalé, ligne par ligne, avec la correction."),
-            ("n3.html", "t-seq", "▤", "Préparer un cours", "Une page par chapitre : notions, exemples avec leur rendu, fiche « À retenir » imprimable."),
-            ("annexe.html", "t-annexe", "§", "Consulter l'annexe", "Chaque élément avec ses paramètres, un exemple conforme et les remarques.")])
+    tuiles = (
+        '<a class="tuile t-verif" href="verifier.html"><span class="tuile-ic" aria-hidden="true">✔</span><h3>Vérifier un code</h3>'
+        '<p>Collez un support ou une copie : tout ce qui sort de l\'annexe est signalé, ligne par ligne, avec la correction.</p></a>'
+        '<div class="tuile t-seq"><span class="tuile-ic" aria-hidden="true">▤</span><h3>Préparer un cours</h3>'
+        '<p>Choisissez le niveau : une page par chapitre, avec exemples, fiche « À retenir » imprimable et ressources.</p>'
+        '<div class="tuile-niveaux"><a href="n2.html" class="cn-2">2ème année</a><a href="n3.html" class="cn-3">3ème année</a><a href="n4.html" class="cn-4">4ème année</a></div></div>'
+        '<a class="tuile t-annexe" href="annexe.html"><span class="tuile-ic" aria-hidden="true">§</span><h3>Consulter l\'annexe</h3>'
+        '<p>Chaque élément avec ses paramètres, un exemple conforme et les remarques.</p></a>')
+    ressources = "".join(
+        f'<a class="porte" href="{u}"><span class="ic" aria-hidden="true">{i}</span><div><h3>{t}</h3><p>{d}</p></div></a>' for u, i, t, d in [
+            ("pedagogie.html", "🧭", "Enseigner pas à pas", "Préparer la rentrée, construire une séance en 7 étapes, concevoir un TP, évaluer, gérer le laboratoire."),
+            ("erreurs.html", "⚠", "Erreurs fréquentes", "22 cas : code incorrect et version conforme, en HTML, CSS, JavaScript, SQL et PHP."),
+            ("outils.html", "🧰", "Logiciels et glossaire", "Éditeur, navigateurs, validateur W3C, XAMPP pas à pas, vocabulaire du programme."),
+            ("annexe.html", "§", "Annexe complète", "300 éléments filtrables par langage et par niveau, avec fiches détaillées.")])
     niveaux_html = ""
     for n, page in niveaux.items():
         titre_n, sous_n, _ = NIVEAUX[n]
@@ -230,8 +250,8 @@ def main():
     <input type="search" id="g-q" placeholder="Ex. : substring, float, liste déroulante, date du jour" aria-label="Rechercher">
     <button type="submit">Rechercher</button>
   </form>
-  <div class="niveau-filtre" role="group" aria-label="Mon niveau">
-    <span>Mon niveau :</span>
+  <div class="niveau-filtre" role="group" aria-label="Filtrer la recherche par niveau">
+    <span>Filtrer la recherche :</span>
     <button type="button" data-n="0" aria-pressed="true">Tous</button><button type="button" data-n="2" aria-pressed="false">2ème</button><button type="button" data-n="3" aria-pressed="false">3ème</button><button type="button" data-n="4" aria-pressed="false">4ème</button>
   </div>
 </div></section>"""
@@ -241,6 +261,8 @@ def main():
 <div class="tuiles">{tuiles}</div>
 <h2 class="titre-section">Les chapitres par niveau</h2>
 <div class="niv-cols">{niveaux_html}</div>
+<h2 class="titre-section" id="ressources">Ressources pour l'enseignant</h2>
+<div class="portes">{ressources}</div>
 </div>
 </div>"""
     ecrire("index.html", gabarit("index.html", "Accueil",

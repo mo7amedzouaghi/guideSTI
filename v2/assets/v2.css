@@ -160,10 +160,11 @@ pre.alt { margin: 0; font: 12.5px/1.5 var(--mono); background: var(--code-bg); c
   .bandeau { background: none !important; color: #000; border-bottom: 2px solid #000; }
   .bandeau h1, .bandeau .chapeau { color: #000 !important; }
   .navigateur iframe { height: 120px !important; }
-  body.imp-retenir main > .bandeau { display: none; }
-  body.imp-retenir .contenu > *:not(.module) { display: none !important; }
-  body.imp-retenir .module > *:not(.module-tete):not([id*="a-retenir"]) { display: none !important; }
-  body.imp-retenir .retenir { border: 1.5px solid #000; break-inside: avoid; }
+  .ressources-chap, .choix-niveau { display: none !important; }
+  body.imp-retenir main > .bandeau .chapeau, body.imp-retenir main > .bandeau .pastille-niveau { display: none !important; }
+  body.imp-retenir .contenu > *:not([id*="a-retenir"]) { display: none !important; }
+  body.imp-retenir .retenir { border: 1.5px solid #000; break-inside: auto; margin-bottom: 14px; }
+  body.imp-retenir .tableau-wrap { break-inside: auto; overflow: visible; }
 }
 
 /* retouches */
@@ -177,3 +178,27 @@ pre.alt { margin: 0; font: 12.5px/1.5 var(--mono); background: var(--code-bg); c
   .verif-reglages label { flex-wrap: wrap; max-width: 100%; }
   .verif-reglages select { max-width: 100%; }
 }
+
+/* sélecteur de niveau dans le bandeau */
+.choix-niveau { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; background: rgba(255,255,255,.1); padding: 4px; border-radius: 10px; margin-bottom: 14px; }
+.choix-niveau span { font-size: 13.5px; color: #c9d5ee; padding: 0 6px; }
+.choix-niveau a { color: #e3eaf8; text-decoration: none; font-weight: 600; font-size: 14px; padding: 5px 12px; border-radius: 7px; }
+.choix-niveau a:hover { background: rgba(255,255,255,.12); color: #fff; }
+.choix-niveau a[aria-current="page"] { background: #fff; color: var(--marine); }
+/* tuile « Préparer un cours » : choix du niveau */
+.tuile-niveaux { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.tuile-niveaux a { flex: 1; text-align: center; text-decoration: none; font-weight: 700; color: #fff; padding: 9px 10px; border-radius: 9px; min-width: 96px; }
+.tuile-niveaux .cn-2 { background: var(--n2); } .tuile-niveaux .cn-3 { background: var(--n3); } .tuile-niveaux .cn-4 { background: var(--n4); }
+.tuile-niveaux a:hover { filter: brightness(1.12); }
+div.tuile:hover { border-color: var(--ligne); }
+/* ressources du chapitre */
+.ressources-chap { background: #fff; border: 1px solid var(--ligne); border-top: 5px solid var(--or); border-radius: 14px; padding: 14px 18px 16px; margin-bottom: 24px; }
+.ressources-chap h2 { font-size: 19px; margin-bottom: 10px; }
+.rc-grille { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.rc { display: flex; gap: 10px; align-items: flex-start; text-align: left; font: inherit; background: #f6f8fc; border: 1px solid var(--ligne); border-radius: 10px; padding: 10px 12px; cursor: pointer; text-decoration: none; color: var(--texte); }
+.rc:hover { border-color: var(--marine); background: #fff; color: var(--texte); }
+.rc b { font-size: 20px; line-height: 1.2; }
+.rc span { font-weight: 600; font-size: 14.5px; color: var(--marine); }
+.rc small { display: block; font-weight: 400; color: var(--texte-2); font-size: 13px; margin-top: 2px; }
+@media (max-width: 1020px) { .rc-grille { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .rc-grille { grid-template-columns: minmax(0, 1fr); } }
