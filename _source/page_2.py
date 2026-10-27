@@ -78,7 +78,7 @@ N.module("Listes et tableaux",
 N.notion("Listes à puces et listes ordonnées", f"""
 <p><code>&lt;ul&gt;</code> crée une liste à puces (l'ordre n'a pas d'importance), <code>&lt;ol&gt;</code> une liste numérotée (l'ordre compte). Chaque élément est dans un <code>&lt;li&gt;</code>. La liste ordonnée accepte trois attributs de l'annexe : <code>type</code>, <code>start</code> et <code>reversed</code>.</p>
 {duo(code('''<h3>Matériel du labo</h3>
-<ul>
+<ul type="square">
   <li>Ordinateurs</li>
   <li>Imprimante</li>
 </ul>
@@ -94,12 +94,14 @@ N.notion("Listes à puces et listes ordonnées", f"""
   <li>Prêts</li>
   <li>Partez</li>
 </ol>''', "html"),
-apercu('<h3>Matériel du labo</h3><ul><li>Ordinateurs</li><li>Imprimante</li></ul><h3>Classement du tournoi</h3><ol type="I" start="1"><li>3ème Info 1</li><li>3ème Info 2</li></ol><h3>Compte à rebours</h3><ol reversed><li>Prêts</li><li>Partez</li></ol>', haut=330))}
-{tableau(["Attribut de &lt;ol&gt;", "Valeurs", "Effet"], [
-    (c("type"), "1, A, a, I, i", "Style de numérotation"),
-    (c("start"), "un entier", "Numéro du premier élément"),
-    (c("reversed"), "sans valeur", "Numérotation décroissante")])}
-""", "liste ul ol li puces numérotée type start reversed")
+apercu('<h3>Matériel du labo</h3><ul type="square"><li>Ordinateurs</li><li>Imprimante</li></ul><h3>Classement du tournoi</h3><ol type="I" start="1"><li>3ème Info 1</li><li>3ème Info 2</li></ol><h3>Compte à rebours</h3><ol reversed><li>Prêts</li><li>Partez</li></ol>', haut=330))}
+{tableau(["Liste", "Attribut", "Valeurs", "Effet"], [
+    (c("<ul>"), c("type"), "disc, circle, square", "Forme de la puce : disque plein (par défaut), cercle vide, carré"),
+    (c("<ol>"), c("type"), "1, A, a, I, i", "Style de numérotation : chiffres, lettres majuscules ou minuscules, chiffres romains"),
+    (c("<ol>"), c("start"), "un entier", "Numéro du premier élément"),
+    (c("<ol>"), c("reversed"), "sans valeur", "Numérotation décroissante")])}
+{enc("att", "<p>L'attribut <code>type</code> de <code>&lt;ul&gt;</code> fonctionne dans les navigateurs, mais il n'est pas dans l'annexe et le validateur W3C le signale comme obsolète. Dès la 3ème, la forme des puces se règle en CSS : <code>list-style-type: square;</code></p>")}
+""", "liste ul ol li puces numérotée type square circle disc start reversed")
 
 N.notion("Tableaux de données", f"""
 <p>Un tableau se construit <b>ligne par ligne</b> : <code>&lt;tr&gt;</code> (ligne), puis les cellules <code>&lt;th&gt;</code> (en-tête) ou <code>&lt;td&gt;</code> (donnée). <code>&lt;caption&gt;</code> donne un titre au tableau, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> et <code>&lt;tfoot&gt;</code> en délimitent les parties.</p>
@@ -126,7 +128,7 @@ N.bloc(retenir([
     "Un tableau se lit ligne par ligne : <code>tr</code> puis <code>th</code> / <code>td</code>.",
     "<code>caption</code> se place juste après <code>&lt;table&gt;</code>.",
 ], autres=[("Balises de la séquence", ["Balise", "Attributs (annexe)", "Définition", "Utilité"], [
-    (c('<ul>'), '—', 'Liste non ordonnée (à puces).', "Énumérer des éléments dont l'ordre n'a pas d'importance."),
+    (c('<ul>'), 'type (disc, circle, square) — hors annexe', 'Liste non ordonnée (à puces).', "Énumérer des éléments dont l'ordre n'a pas d'importance."),
     (c('<ol>'), c('type, start, reversed'), 'Liste ordonnée (numérotée).', "Énumérer des étapes ou un classement où l'ordre compte."),
     (c('<li>'), '—', "Élément d'une liste.", "Contenir chaque item d'un ul ou d'un ol."),
     (c('<table>'), '—', 'Tableau.', 'Présenter des données en lignes et en colonnes.'),
