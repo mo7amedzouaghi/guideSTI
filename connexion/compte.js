@@ -245,6 +245,39 @@
       try { await u.updatePassword(nouveau); } catch (e) { throw new Error(messageFirebase(e)); }
     },
 
+    // suppression de son propre compte (exigée par Google Play) : scores, identifiant, profil, compte de connexion
+    async supprimerMonCompte(mdp) {
+      var s = session();
+      if (!s) throw new Error("Vous n'êtes pas connecté.");
+      if (!EN_LIGNE) {
+        var c = comptesLocaux();
+        if (!c[s.id] || c[s.id].h !== (await empreinte(s.id + ":" + mdp))) throw new Error("Mot de passe incorrect.");
+        delete c[s.id];
+        ecrire("sti-comptes", JSON.stringify(c));
+        try { Object.keys(localStorage).forEach(function (k) { if (k.slice(-(s.id.length + 1)) === "@" + s.id) localStorage.removeItem(k); }); } catch (e) { /* ignoré */ }
+        effacer("sti-session");
+        return;
+      }
+      await pret;
+      var u = fb.auth.currentUser;
+      if (!u) throw new Error("Session expirée : reconnectez-vous.");
+      try { await u.reauthenticateWithCredential(fb.EmailAuthProvider.credential(u.email, mdp)); }
+      catch (e) { throw new Error(/credential|password/.test(e.code || "") ? "Mot de passe incorrect." : messageFirebase(e)); }
+      try {
+        var lot = fb.db.batch();
+        if (s.role === "eleve") {
+          var r = await fb.db.collection("scores").where("identifiant", "==", s.id).get();
+          r.forEach(function (d) { lot.delete(d.ref); });
+        }
+        lot.delete(fb.db.collection("identifiants").doc(s.id));
+        await lot.commit();
+        await fb.db.collection("comptes").doc(u.uid).delete();
+        await u.delete();
+      } catch (e) { throw new Error(messageFirebase(e)); }
+      try { Object.keys(localStorage).forEach(function (k) { if (k.slice(-(s.id.length + 1)) === "@" + s.id) localStorage.removeItem(k); }); } catch (e) { /* ignoré */ }
+      effacer("sti-session");
+    },
+
     // appelé par les exercices à la fin d'un entraînement
     async enregistrerScore(n, c, pc, meilleur) {
       var s = session();

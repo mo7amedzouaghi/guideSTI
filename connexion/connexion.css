@@ -49,3 +49,7 @@
 .mc-infos dd { margin: 0; font-weight: 600; }
 .succes { background: #e7f5ec; border: 1px solid #bfe3cb; color: #14532D; border-radius: 9px; padding: 8px 12px; margin: 12px 0 0; font-weight: 600; }
 .motif { background: #fff4e5; border: 1px solid #f5d3a1; color: #7c4a03; border-radius: 9px; padding: 8px 12px; margin: 0 0 12px; }
+.case { display: flex !important; align-items: center; gap: 8px; font-weight: 500 !important; }
+.case input { width: 18px; height: 18px; }
+.btn-danger { background: #B91C1C; }
+.btn-danger:hover { background: #991B1B; }

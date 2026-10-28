@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.GuideSTI" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/marine</item>
+        <item name="android:statusBarColor">@color/marine</item>
+        <item name="android:navigationBarColor">@color/marine</item>
+        <item name="android:colorPrimary">@color/marine</item>
+        <item name="android:colorAccent">@color/or</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

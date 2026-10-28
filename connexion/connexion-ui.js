@@ -15,7 +15,7 @@
   function erreur(id, msg) { var p = document.getElementById(id); p.textContent = msg; p.hidden = !msg; }
 
   var motif = new URLSearchParams(location.search).get("motif");
-  var msgMotif = { desactive: "Votre compte a été désactivé par un enseignant.", supprime: "Votre compte n'existe plus. Refaites l'inscription avec le même identifiant." }[motif];
+  var msgMotif = { desactive: "Votre compte a été désactivé par un enseignant.", supprime: "Votre compte n'existe plus. Refaites l'inscription avec le même identifiant.", "compte-supprime": "Votre compte a bien été supprimé." }[motif];
   if (msgMotif) {
     var carte = document.querySelector(".compte-carte h1");
     if (carte) carte.insertAdjacentHTML("afterend", '<p class="motif" role="alert">' + msgMotif + "</p>");

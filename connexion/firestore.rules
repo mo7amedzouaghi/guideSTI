@@ -64,7 +64,7 @@ service cloud.firestore {
         && id == moi().identifiant + '_' + string(request.resource.data.n) + '_' + string(request.resource.data.c)
         && request.resource.data.meilleur is int
         && request.resource.data.meilleur >= 0 && request.resource.data.meilleur <= 100;
-      allow delete: if estProf();
+      allow delete: if estProf() || (aUnCompte() && resource.data.identifiant == moi().identifiant);
     }
   }
 }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politique de confidentialité — Guide STI</title>
+<meta name="description" content="Politique de confidentialité du Guide STI (site et application Android) : données collectées, utilisation, conservation et suppression.">
+<link rel="icon" href="prof/assets/flag.png">
+<link rel="stylesheet" href="prof/assets/vendor/fonts.css">
+<link rel="stylesheet" href="prof/assets/style.css">
+<style>
+  body { background: #F6F4EE; }
+  .conf { max-width: 820px; margin: 0 auto; padding: 32px 16px 64px; }
+  .conf header { background: #0D2B6B; color: #fff; border-radius: 16px; padding: 28px 28px 24px; border-bottom: 6px solid #F5B800; }
+  .conf header h1 { color: #fff; margin: 0 0 6px; font-size: 34px; }
+  .conf header p { margin: 0; color: #C9D5EE; }
+  .conf section { background: #fff; border: 1px solid #D9DEE8; border-radius: 12px; padding: 18px 24px; margin-top: 16px; }
+  .conf h2 { font-size: 22px; margin: 0 0 8px; color: #0D2B6B; }
+  .conf li { margin: 4px 0; }
+  .conf table { border-collapse: collapse; width: 100%; font-size: 15px; }
+  .conf th, .conf td { border: 1px solid #D9DEE8; padding: 8px 10px; text-align: left; vertical-align: top; }
+  .conf th { background: #EEF2F8; }
+  .tableau-wrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+<main class="conf">
+<header>
+  <h1>Politique de confidentialité</h1>
+  <p>Guide STI — site web et application Android « Guide STI ». Dernière mise à jour : 28 octobre 2026.</p>
+</header>
+
+<section>
+  <h2>Qui sommes-nous ?</h2>
+  <p>Le Guide STI est une ressource pédagogique gratuite pour les élèves et les enseignants de Sciences et Technologies de l'Informatique (2ème, 3ème et 4ème année), conçue par Mohamed Zouaghi, professeur d'informatique. Elle ne contient aucune publicité et ne vend aucune donnée.</p>
+  <p>Contact : <a href="mailto:mo7amed.zouaghi@gmail.com">mo7amed.zouaghi@gmail.com</a></p>
+</section>
+
+<section>
+  <h2>Données collectées</h2>
+  <div class="tableau-wrap"><table>
+    <tr><th>Donnée</th><th>Qui</th><th>Pourquoi</th></tr>
+    <tr><td>Identifiant et mot de passe</td><td>Élèves et enseignants</td><td>Se connecter. Le mot de passe est géré par Firebase Authentication et n'est jamais visible, même par l'enseignant.</td></tr>
+    <tr><td>Prénom, nom</td><td>Élèves et enseignants</td><td>Afficher le nom dans l'en-tête et dans la liste de l'enseignant.</td></tr>
+    <tr><td>Niveau et classe</td><td>Élèves</td><td>Ouvrir le bon parcours et regrouper les résultats par classe.</td></tr>
+    <tr><td>Scores aux entraînements</td><td>Élèves</td><td>Afficher la progression de l'élève et permettre le suivi par l'enseignant.</td></tr>
+  </table></div>
+  <p>Aucune adresse e-mail, aucun numéro de téléphone, aucune localisation, aucune photo, aucun contact ni aucun identifiant publicitaire n'est collecté. Le code écrit dans le bac à sable et dans le vérificateur reste sur l'appareil : il n'est envoyé nulle part.</p>
+</section>
+
+<section>
+  <h2>Qui voit les données ?</h2>
+  <ul>
+    <li>Un élève voit uniquement son propre profil et ses propres scores.</li>
+    <li>Les enseignants inscrits (avec le code enseignant) voient la liste des élèves et leurs scores, pour le suivi pédagogique.</li>
+    <li>Les données ne sont ni vendues, ni louées, ni partagées avec des tiers.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Où sont-elles stockées ?</h2>
+  <p>Les comptes et les scores sont stockés dans un projet Google Firebase (Authentication et Cloud Firestore), avec des règles d'accès qui appliquent les limites ci-dessus. Les communications sont chiffrées (HTTPS). Le site est hébergé sur GitHub Pages. La progression est aussi gardée dans le navigateur ou l'application de l'appareil.</p>
+</section>
+
+<section>
+  <h2>Conservation et suppression</h2>
+  <ul>
+    <li>Les données sont conservées tant que le compte existe.</li>
+    <li><b>Supprimer son compte soi-même :</b> se connecter, ouvrir « Mon compte » (clic sur son prénom en haut de la page), puis « Supprimer mon compte ». Le profil, l'identifiant et tous les scores sont effacés définitivement. Page directe : <a href="connexion/mon-compte.html">Mon compte</a>.</li>
+    <li>Un enseignant peut aussi supprimer le compte d'un élève depuis « Gestion des comptes ».</li>
+    <li>Vous pouvez demander la suppression par e-mail à l'adresse ci-dessus.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Élèves mineurs</h2>
+  <p>L'application est destinée aux élèves de lycée et à leurs enseignants, dans un cadre scolaire. Elle ne demande que les informations nécessaires au suivi pédagogique décrites ci-dessus.</p>
+</section>
+
+<section>
+  <h2>Modifications</h2>
+  <p>Cette politique peut être mise à jour ; la date en haut de la page indique la dernière version.</p>
+</section>
+<p style="text-align:center;margin-top:24px"><a href="connexion/">← Retour à la connexion</a></p>
+</main>
+</body>
+</html>

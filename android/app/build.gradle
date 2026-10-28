@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Numéro de version : numéro d'exécution GitHub Actions (toujours croissant, exigé par Google Play)
+def numero = (System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInteger()
+def motDePasse = System.getenv("ANDROID_KEYSTORE_PASSWORD")
+def cleFichier = System.getenv("ANDROID_KEYSTORE_PATH")
+
+android {
+    namespace 'io.github.mo7amedzouaghi.guidesti'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'io.github.mo7amedzouaghi.guidesti'
+        minSdk 24
+        targetSdk 36
+        versionCode numero
+        versionName "1.0." + numero
+    }
+
+    signingConfigs {
+        envoi {
+            if (motDePasse && cleFichier) {
+                storeFile file(cleFichier)
+                storePassword motDePasse
+                keyAlias 'guidesti'
+                keyPassword motDePasse
+                storeType 'pkcs12'
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            if (motDePasse && cleFichier) {
+                signingConfig signingConfigs.envoi
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}

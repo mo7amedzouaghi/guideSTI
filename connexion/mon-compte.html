@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mon compte — STI, l'annexe en pratique</title>
 <meta name="description" content="Connexion à l'espace STI : élèves et enseignants.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0D2B6B">
+<link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
 <link rel="icon" href="../prof/assets/flag.png">
 <link rel="stylesheet" href="../prof/assets/vendor/fonts.css?v=202610271818">
 <link rel="stylesheet" href="../prof/assets/style.css?v=202610271818">
@@ -32,6 +35,16 @@
       <p class="succes" id="m-ok" role="status" hidden>Mot de passe modifié.</p>
       <button type="submit" class="btn-compte">Changer le mot de passe</button>
     </form>
+    <h2>Supprimer mon compte</h2>
+    <p class="aide">Votre profil, votre identifiant et vos scores sont effacés définitivement. Cette action est irréversible.</p>
+    <form id="f-suppr" novalidate>
+      <label for="s-mdp">Mot de passe</label>
+      <input type="password" id="s-mdp" autocomplete="current-password" required>
+      <label class="case"><input type="checkbox" id="s-ok"> Je confirme la suppression définitive de mon compte</label>
+      <p class="erreur" id="s-erreur" role="alert" hidden></p>
+      <button type="submit" class="btn-compte btn-danger">Supprimer mon compte</button>
+    </form>
+    <p class="compte-bas"><a href="../confidentialite.html">Politique de confidentialité</a></p>
     <p class="compte-bas"><a id="mc-retour" href="#">← Retour à mon espace</a> · <button type="button" class="btn-lien" id="mc-sortir">Déconnexion</button></p>
   </section>
   <p class="compte-note" id="note-mode">Les comptes sont enregistrés dans le navigateur de cet appareil. Sur un ordinateur partagé, pensez à vous déconnecter.</p>

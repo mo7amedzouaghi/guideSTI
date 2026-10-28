@@ -31,4 +31,13 @@
     catch (x) { err.textContent = x.message; err.hidden = false; }
     btn.disabled = false; btn.classList.remove("attente");
   });
+  var fs = document.getElementById("f-suppr"), es = document.getElementById("s-erreur"), bs = fs.querySelector("button");
+  fs.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    es.hidden = true;
+    if (!document.getElementById("s-ok").checked) { es.textContent = "Cochez la case de confirmation."; es.hidden = false; return; }
+    bs.disabled = true; bs.classList.add("attente");
+    try { await C.supprimerMonCompte(document.getElementById("s-mdp").value); location.replace("index.html?motif=compte-supprime"); }
+    catch (x) { es.textContent = x.message; es.hidden = false; bs.disabled = false; bs.classList.remove("attente"); }
+  });
 })();
