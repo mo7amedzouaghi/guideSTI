@@ -14,7 +14,7 @@ const TOL = require("./tolerance.js");
 // réglages par défaut de la correction tolérante (modifiables pour chaque devoir)
 // règles validées par l'enseignant : code → points retirés (0 = toléré sans pénalité) ; une règle absente n'est pas appliquée.
 // Une erreur n'est pénalisée qu'une fois par élève, même si elle touche plusieurs critères.
-const TOLERANCE = { active: true, max: 3, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A7: 0.25, A9: 0, A10: 0.25, B1: 0, C1: 0.25, D3: 0.25 } };
+const TOLERANCE = { active: true, max: 3, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A7: 0.25, A9: 0, A10: 0.25, B1: 0, B2: 0, C1: 0.25, D3: 0.25 } };
 const regleActive = (ctx, code) => { const t = ctx.tolerance || {}; return t.active && t.regles && Object.prototype.hasOwnProperty.call(t.regles, code) && t.regles[code] !== null && t.regles[code] !== false; };
 function deduire(ctx, corrections, pts) {
   const deja = ctx.penalisees || new Set(), ici = new Set(); let retrait = 0, nouvelles = 0, dejaComptees = 0;
@@ -349,6 +349,9 @@ async function verifier(c, ctx) {
           // B1 : margin-top, padding-left… (forme détaillée de margin / padding) tolérées
           const det = /propriété\s+((?:margin|padding)-(?:top|right|bottom|left))\b/i.exec(p.message);
           if (det && regleActive(ctx, "B1")) { toleres.push({ code: "B1", cle: "B1|" + det[1].toLowerCase(), texte: det[1].toLowerCase() }); continue; }
+          // B2 : sélecteur descendant (div a, #menu li) — les combinateurs > + ~ restent hors annexe
+          const comb = /sélecteur combiné « ([^»]+) »/.exec(p.message);
+          if (comb && !/[>+~]/.test(comb[1]) && regleActive(ctx, "B2")) { const sel = comb[1].trim().replace(/\s+/g, " "); toleres.push({ code: "B2", cle: "B2|" + sel, texte: "« " + sel + " »" }); continue; }
           probs.push(x.f + " L" + p.ligne + " : " + p.message.split(".")[0]);
         }
       }

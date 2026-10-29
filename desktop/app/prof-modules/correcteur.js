@@ -179,15 +179,16 @@
     ["A9", "Point-virgule oublié (CSS)", "color: red⏎text-align: center;"],
     ["A10", "Accolade oubliée (CSS)", "règle non fermée"],
     ["B1", "Conformité : margin-* / padding-* détaillées", "margin-top, padding-left (au lieu de margin / padding)"],
+    ["B2", "Conformité : sélecteur descendant", "div a, #menu li (pas >, +, ~)"],
     ["C1", "Nom approché cherché par « contient »", "afficherDat au lieu de afficherDate"],
     ["C2", "SQL : étiquettes -- Qn oubliées", "requêtes sans commentaire"],
     ["C3", "SQL : colonnes dans un autre ordre", "SELECT prenom, nom"],
     ["D3", "Faute de frappe dans un identifiant (id)", "id=\"resulat\" / getElementById(\"resultat\")"]
   ];
-  var DEFAUT = { active: true, max: 3, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A7: 0.25, A9: 0, A10: 0.25, B1: 0, C1: 0.25, D3: 0.25 } };
+  var DEFAUT = { active: true, max: 3, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A7: 0.25, A9: 0, A10: 0.25, B1: 0, B2: 0, C1: 0.25, D3: 0.25 } };
   function tol() {
     var t = dev.tolerance;
-    if (t && t.regles && (t.connues || []).indexOf("B1") < 0) { t = JSON.parse(JSON.stringify(t)); t.regles.B1 = DEFAUT.regles.B1; }
+    if (t && t.regles) ["B1", "B2"].forEach(function (k) { if ((t.connues || []).indexOf(k) < 0 && !(k in t.regles)) { t = JSON.parse(JSON.stringify(t)); t.regles[k] = DEFAUT.regles[k]; } });
     return t && t.regles ? t : { active: !t || t.active !== false, max: DEFAUT.max, regles: Object.assign({}, DEFAUT.regles) }; }
   function carteTolerance() {
     var t = tol(), montants = [[0, "toléré (0 pt)"], [0.25, "−0,25 pt"], [0.5, "−0,5 pt"], [1, "−1 pt"]];

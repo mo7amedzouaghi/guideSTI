@@ -95,6 +95,7 @@ const REGLES = {
   A9: "Point-virgule oublié (CSS)",
   A10: "Accolade oubliée (CSS)",
   B1: "Conformité : margin-* / padding-* détaillées",
+  B2: "Conformité : sélecteur descendant (div a)",
   C1: "Nom approché cherché par « contient »",
   C2: "SQL : étiquettes -- Qn oubliées",
   C3: "SQL : colonnes dans un autre ordre",
