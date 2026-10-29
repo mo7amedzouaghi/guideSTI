@@ -178,7 +178,7 @@
     ["A8", "Nom de fonction différent entre HTML et JS", "onclick=\"verif()\" / function verife()"],
     ["A9", "Point-virgule oublié (CSS)", "color: red⏎text-align: center;"],
     ["A10", "Accolade oubliée (CSS)", "règle non fermée"],
-    ["B1", "Conformité : margin-* / padding-* détaillées", "margin-top, padding-left (au lieu de margin / padding)"],
+    ["B1", "Conformité : margin-* / padding-* / border-* détaillées", "margin-top, padding-left, border-top"],
     ["B2", "Conformité : sélecteur descendant", "div a, #menu li (pas >, +, ~)"],
     ["C1", "Nom approché cherché par « contient »", "afficherDat au lieu de afficherDate"],
     ["C2", "SQL : étiquettes -- Qn oubliées", "requêtes sans commentaire"],

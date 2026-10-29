@@ -346,8 +346,8 @@ async function verifier(c, ctx) {
           // tolérance : une faute de frappe sur une méthode du programme n'est pas un élément hors annexe
           const nom = (/(?:méthode|fonction|propriété)\s+([\w.$]+)/i.exec(p.message) || [])[1];
           if ((regleActive(ctx, "A4") || regleActive(ctx, "A5")) && nom && TOL.estFauteDeFrappe(nom.split(".").pop())) continue;
-          // B1 : margin-top, padding-left… (forme détaillée de margin / padding) tolérées
-          const det = /propriété\s+((?:margin|padding)-(?:top|right|bottom|left))\b/i.exec(p.message);
+          // B1 : margin-top, padding-left, border-top… (forme détaillée de margin / padding / border) tolérées
+          const det = /propriété\s+((?:margin|padding|border)-(?:top|right|bottom|left)(?:-(?:width|style|color))?)(?![\w-])/i.exec(p.message);
           if (det && regleActive(ctx, "B1")) { toleres.push({ code: "B1", cle: "B1|" + det[1].toLowerCase(), texte: det[1].toLowerCase() }); continue; }
           // B2 : sélecteur descendant (div a, #menu li) — les combinateurs > + ~ restent hors annexe
           const comb = /sélecteur combiné « ([^»]+) »/.exec(p.message);
