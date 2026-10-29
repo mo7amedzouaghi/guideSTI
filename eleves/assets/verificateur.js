@@ -57,7 +57,11 @@
       : lang === "css" ? /\/\*[\s\S]*?\*\/|"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'/g
       : /\/\/[^\n]*|\/\*[\s\S]*?\*\/|#[^\n]*|'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*`/g;
     if (lang === "js") re = /\/\/[^\n]*|\/\*[\s\S]*?\*\/|'(?:[^'\\\n]|\\.)*'|"(?:[^"\\\n]|\\.)*"|`(?:[^`\\]|\\.)*`/g;
-    return code.replace(re, function (m) { return m.charAt(0) + blanchir(m.slice(1, -1)) + (m.length > 1 ? m.charAt(m.length - 1) : ""); });
+    return code.replace(re, function (m) {
+      // commentaires : entièrement effacés (sinon « / … / » reste collé au sélecteur suivant) ; chaînes : guillemets conservés
+      if (/^(\/\/|\/\*|--|#)/.test(m)) return blanchir(m);
+      return m.charAt(0) + blanchir(m.slice(1, -1)) + (m.length > 1 ? m.charAt(m.length - 1) : "");
+    });
   }
 
   /* ---------------------------------------------------------------- découpage en segments */
