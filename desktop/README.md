@@ -28,12 +28,10 @@ La version **Portable** se lance directement depuis une clé USB, sans installat
 
 ## Publier une nouvelle version
 
-```bash
-# dans desktop/package.json : "version": "1.4.1"
-git commit -am "Bureau 1.4.1" && git tag bureau-v1.4.1 && git push && git push --tags
-```
+1. Dans `desktop/package.json`, augmenter `"version"` (ex. `1.4.1`) et pousser sur `main`.
+2. Sur GitHub : onglet **Actions › Application bureau › Run workflow** (ou pousser un tag `bureau-v1.4.1`).
 
-Le workflow GitHub Actions `bureau.yml` construit les deux variantes sous Windows et publie la release `bureau-v1.4.1` et la release `bureau-derniere` (lue par les applications installées).
+Le workflow `bureau.yml` construit les deux variantes sous Windows (≈ 10 min) et publie la release `bureau-v1.4.1` et la release `bureau-derniere`, lue par les applications installées.
 
 ## Mettre à jour le contenu du guide
 
