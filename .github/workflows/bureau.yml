@@ -1,0 +1,63 @@
+# Application bureau (dossier desktop/) : construit STI Guide + STI Élève sous Windows
+# et publie les mises à jour lues par les applications installées.
+# Déclenchement : git tag bureau-v1.4.1 && git push --tags   (ou manuellement depuis l'onglet Actions)
+name: Application bureau
+
+on:
+  push:
+    tags: ["bureau-v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: Dépendances
+        working-directory: desktop
+        run: npm ci
+
+      - name: Contenu du guide (prof/ et eleves/)
+        working-directory: desktop
+        run: node scripts/preparer-contenu.js ..
+
+      - name: Installateurs
+        working-directory: desktop
+        run: |
+          node scripts/construire.js complet
+          node scripts/construire.js eleve
+          ls dist/complet dist/eleve
+
+      - name: Publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: desktop
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          FICHIERS=$(ls dist/complet/*.exe dist/complet/*.yml dist/complet/*.blockmap dist/eleve/*.exe dist/eleve/*.yml dist/eleve/*.blockmap | grep -v builder-debug)
+          echo "$FICHIERS"
+          NOTES="STI Guide (poste prof) et STI Élève (postes du labo) — version $VERSION.
+          Les applications 1.4.0 et suivantes trouvent cette version seules (page Mises à jour).
+          Première installation : STI-Guide-Installation-$VERSION.exe (prof) ou STI-Eleve-Installation-$VERSION.exe (labo)."
+          # release versionnée (historique)
+          gh release delete "bureau-v$VERSION" -y 2>/dev/null || true
+          gh release create "bureau-v$VERSION" $FICHIERS --title "Application bureau $VERSION" --notes "$NOTES" --latest=false --target "$GITHUB_SHA"
+          # release fixe lue par les mises à jour automatiques
+          gh release delete bureau-derniere -y --cleanup-tag 2>/dev/null || true
+          git push origin :refs/tags/bureau-derniere 2>/dev/null || true
+          gh release create bureau-derniere $FICHIERS --title "Application bureau — dernière version ($VERSION)" --notes "$NOTES" --latest=false --target "$GITHUB_SHA"

@@ -1,0 +1,32 @@
+{
+  "name": "sti-guide",
+  "productName": "STI Guide",
+  "version": "1.4.0",
+  "description": "Guide du Programme STI — version bureau hors ligne (Espace Élève + Espace Prof, sans inscription)",
+  "author": {
+    "name": "Zouaghi Mohamed",
+    "email": "mo7amed.zouaghi@gmail.com"
+  },
+  "license": "UNLICENSED",
+  "main": "main.js",
+  "scripts": {
+    "contenu": "node scripts/preparer-contenu.js",
+    "start": "electron .",
+    "dist:complet": "node scripts/construire.js complet",
+    "dist:eleve": "node scripts/construire.js eleve",
+    "dist": "node scripts/construire.js complet && node scripts/construire.js eleve"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.0",
+    "playwright-core": "^1.64.1"
+  },
+  "dependencies": {
+    "acorn": "^8.19.0",
+    "electron-updater": "^6.8.11",
+    "exceljs": "^4.4.0",
+    "fflate": "^0.8.3",
+    "node-unrar-js": "^2.0.2",
+    "sql.js": "^1.15.2"
+  }
+}

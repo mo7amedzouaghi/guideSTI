@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Correcteur de devoirs — STI Espace Prof</title>
+<link rel="stylesheet" href="../contenu/eleves/assets/vendor/fonts.css">
+<link rel="stylesheet" href="../desktop/barre.css">
+<link rel="stylesheet" href="../modules/modules.css">
+<link rel="stylesheet" href="../modules/tp.css">
+<link rel="stylesheet" href="correcteur.css">
+</head>
+<body>
+<header class="m-barre" data-titre="Correcteur de devoirs" data-espace="prof" data-actif="correcteur"></header>
+<main class="m-page p-cols">
+  <aside class="p-liste">
+    <h3>Devoirs</h3>
+    <div id="liste"></div>
+    <button type="button" class="btn" id="nouveau" style="width:100%;margin-top:10px;justify-content:center">＋ Nouveau devoir</button>
+    <button type="button" class="btn sec" id="modele" style="width:100%;margin-top:8px;justify-content:center">⇩ Modèle de grille (Excel)</button>
+  </aside>
+  <section id="vue">
+    <div class="m-carte">
+      <h2>Corriger un devoir en quelques minutes</h2>
+      <ol class="cr-etapes-aide">
+        <li><b>Énoncé</b> (PDF, Word…) : joint au devoir pour référence.</li>
+        <li><b>Grille d'évaluation</b> (Excel) avec le barème détaillé : une ligne par critère, et pour chaque critère la vérification automatique à faire (voir le modèle de grille).</li>
+        <li><b>Travaux des élèves</b> : une archive <b>RAR ou ZIP</b> contenant un dossier (ou une archive) par élève.</li>
+        <li>L'application note chaque critère automatiquement, vous complétez les critères « manuels », puis vous exportez la <b>grille détaillée en Excel</b> : points de chaque question, total et note sur 20 pour tous les élèves.</li>
+      </ol>
+      <button type="button" class="btn or" id="nouveau2">＋ Nouveau devoir</button>
+    </div>
+  </section>
+</main>
+<script src="../desktop/commun.js"></script>
+<script src="../modules/entete.js"></script>
+<script src="../modules/editeur.js"></script>
+<script src="../vendor/sql-wasm.js"></script>
+<script src="../modules/sqlmoteur.js"></script>
+<script src="../modules/sqlconsole.js"></script>
+<script src="correcteur.js"></script>
+</body>
+</html>

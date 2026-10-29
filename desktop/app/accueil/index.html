@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Guide du Programme STI</title>
+<link rel="stylesheet" href="../contenu/eleves/assets/vendor/fonts.css">
+<link rel="stylesheet" href="../desktop/barre.css">
+<link rel="stylesheet" href="accueil.css">
+</head>
+<body>
+<header class="haut">
+  <div class="grille" aria-hidden="true"></div>
+  <div class="haut-in">
+    <div class="logo">STI</div>
+    <div>
+      <p class="sur">Sciences et Technologies de l'Informatique</p>
+      <h1>Guide du Programme STI</h1>
+      <p class="chapeau">L'annexe officielle en pratique, du cours au TP. Fonctionne sans Internet et sans inscription.</p>
+    </div>
+  </div>
+</header>
+
+<div class="maj-bandeau" id="maj-bandeau" hidden></div>
+<main class="cartes" id="cartes">
+  <section class="carte eleve">
+    <div class="carte-tete"><span class="pastille">Élève</span><h2>Espace Élèves</h2></div>
+    <p>Cours des trois niveaux, entraînements, aide-mémoire, bac à sable et TP.</p>
+    <button type="button" class="entrer" id="go-eleve">Entrer dans l'Espace Élèves</button>
+    <div class="raccourcis">
+      <a href="../modules/tp-eleve.html">📝 TP &amp; examens</a>
+      <a href="../contenu/eleves/bac.html">🧪 Bac à sable</a>
+      <a href="../modules/verifier-dossier.html">📁 Vérifier mon dossier</a>
+    </div>
+    <p class="qui" id="qui"></p>
+  </section>
+
+  <section class="carte prof" id="carte-prof" hidden>
+    <div class="carte-tete"><span class="pastille">Prof</span><h2>Espace Prof</h2></div>
+    <p>Séances détaillées, annexe, vérificateur, suivi des élèves, TP avec corrigés et ramassage en réseau.</p>
+    <button type="button" class="entrer" id="go-prof">Entrer dans l'Espace Prof</button>
+    <div class="raccourcis" id="raccourcis-prof">
+      <a href="../prof-modules/tp.html">📋 TP, corrigés &amp; notes</a>
+      <a href="../prof-modules/correcteur.html">✅ Correcteur de devoirs</a>
+      <a href="../prof-modules/ramassage.html">📡 Ramassage réseau</a>
+      <a href="../contenu/prof/suivi.html">📊 Suivi des élèves</a>
+    </div>
+    <p class="qui"><button type="button" class="lien" id="changer-pin">Changer le code prof</button><span id="verrouiller" hidden> · <button type="button" class="lien">Verrouiller</button></span></p>
+  </section>
+</main>
+
+<footer class="pied">
+  <span>Conçu par <b>Zouaghi Mohamed</b>, professeur d'informatique au Lycée Oued Ellil.</span>
+  <span id="version"></span>
+  <a href="../modules/mise-a-jour.html" id="lien-maj">Guide du … · Mettre à jour</a>
+  <span>En cas de doute, l'annexe officielle fait foi.</span>
+</footer>
+
+<script src="../desktop/commun.js"></script>
+<script src="accueil.js"></script>
+</body>
+</html>

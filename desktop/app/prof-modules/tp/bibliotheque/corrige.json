@@ -1,0 +1,151 @@
+{
+  "principe": [
+    "Requêtes à réparer : l'élève doit exécuter et interpréter le résultat obtenu (nombre de lignes, message), pas seulement réécrire.",
+    "Prédiction avant exécution : P2 piège les élèves (la comparaison de texte ignore la casse : 'informatique' trouve 4 livres).",
+    "Consigne surprise par poste : 3 variantes débloquées à la 40e minute.",
+    "Poste hors ligne : condition indispensable du dispositif."
+  ],
+  "erreurs": [
+    {
+      "ligne": "Q1",
+      "errone": "ORDER BY titre DESC",
+      "corrige": "ORDER BY titre",
+      "effet": "Les 4 romans sont triés de Z à A au lieu de A à Z."
+    },
+    {
+      "ligne": "Q2",
+      "errone": "classe = '4SI1' OR YEAR(dateNaiss) = 2008",
+      "corrige": "classe = '4SI1' AND YEAR(dateNaiss) = 2008",
+      "effet": "OR : 9 élèves (tous les 4SI1 + tous les nés en 2008) au lieu de 5."
+    },
+    {
+      "ligne": "Q3",
+      "errone": "WHERE numEl = 3",
+      "corrige": "WHERE Livre.codeLivre = Emprunt.codeLivre AND numEl = 3",
+      "effet": "Condition de jointure absente : produit cartésien, 45 lignes au lieu de 3."
+    },
+    {
+      "ligne": "Q4",
+      "errone": "annee > 2000 AND annee < 2010",
+      "corrige": "annee BETWEEN 2000 AND 2010",
+      "effet": "Bornes exclues : 2 livres au lieu de 4 (2000 et 2010 manquent)."
+    },
+    {
+      "ligne": "Q5",
+      "errone": "nom LIKE '%B'",
+      "corrige": "nom LIKE 'B%'",
+      "effet": "Cherche les noms qui finissent par B : 1 élève (Ayeb) au lieu de 4."
+    },
+    {
+      "ligne": "Q6",
+      "errone": "(pas de GROUP BY)",
+      "corrige": "GROUP BY categorie",
+      "effet": "Sans regroupement : une seule ligne (25 emprunts) ou une erreur sous MySQL, au lieu de 4 catégories."
+    },
+    {
+      "ligne": "Q7",
+      "errone": "GROUP BY categorie WHERE COUNT(*) > 4",
+      "corrige": "GROUP BY categorie HAVING COUNT(*) > 4",
+      "effet": "Erreur de syntaxe : une condition sur un regroupement s'écrit avec HAVING."
+    },
+    {
+      "ligne": "Q8",
+      "errone": "dateRetour = NULL",
+      "corrige": "dateRetour IS NULL",
+      "effet": "= NULL n'est jamais vrai : 0 ligne au lieu de 9."
+    }
+  ],
+  "baremeP1": "0,5 pt pour la requête corrigée + 0,5 pt pour l'explication du résultat erroné.",
+  "variantes": [
+    {
+      "num": 1,
+      "code": "-- F1 (1 ligne : Bacha Hiba)\nSELECT nom, prenom\nFROM Eleve\nWHERE numEl NOT IN (SELECT numEl FROM Emprunt);\n\n-- F2 (5 lignes : Chaabane 4, Ben Salah 3, Bouzid 3, Trabelsi 2, Gharbi 2)\nSELECT nom, prenom, COUNT(*) AS nb\nFROM Eleve, Emprunt\nWHERE Eleve.numEl = Emprunt.numEl AND classe = '4SI1'\nGROUP BY Eleve.numEl, nom, prenom\nORDER BY nb DESC;"
+    },
+    {
+      "num": 2,
+      "code": "-- F1 (1 ligne : Atlas de la Tunisie)\nSELECT titre\nFROM Livre\nWHERE codeLivre NOT IN (SELECT codeLivre FROM Emprunt);\n\n-- F2 (5 lignes)\nSELECT categorie, ROUND(AVG(annee)) AS anneeMoyenne\nFROM Livre\nGROUP BY categorie;"
+    },
+    {
+      "num": 3,
+      "code": "-- F1 (5 lignes)\nSELECT DISTINCT nom, prenom\nFROM Eleve, Emprunt, Livre\nWHERE Eleve.numEl = Emprunt.numEl\n  AND Emprunt.codeLivre = Livre.codeLivre\n  AND categorie = 'Sciences';\n\n-- F2 (2 lignes : 4SI1 5, 4SI2 4)\nSELECT classe, COUNT(*) AS nonRendus\nFROM Eleve, Emprunt\nWHERE Eleve.numEl = Emprunt.numEl AND dateRetour IS NULL\nGROUP BY classe\nHAVING COUNT(*) >= 2;"
+    }
+  ],
+  "baremeP2": "Prédictions : 1 pt par requête (prédiction + explication de l'écart). Consigne surprise : 2 pts par requête correcte + 1 pt pour la réponse écrite.",
+  "cartes": [
+    {
+      "q": "Q3 donnait 45 lignes : pourquoi exactement 45 ?",
+      "r": "Produit cartésien des 15 livres par les 3 emprunts de l'élève n° 3 (15 × 3).",
+      "rem": "Faire calculer"
+    },
+    {
+      "q": "Quelle différence entre WHERE et HAVING ?",
+      "r": "WHERE filtre les lignes avant le regroupement ; HAVING filtre les groupes (conditions sur COUNT, SUM…).",
+      "rem": ""
+    },
+    {
+      "q": "Pourquoi dateRetour = NULL ne renvoie rien ?",
+      "r": "NULL n'est égal à rien, même pas à NULL : on teste avec IS NULL.",
+      "rem": ""
+    },
+    {
+      "q": "P2 : pourquoi 'informatique' en minuscules trouve-t-il des livres ?",
+      "r": "MySQL compare les textes sans tenir compte des majuscules (comme la console de l'application).",
+      "rem": ""
+    },
+    {
+      "q": "Modifie Q4 en direct : livres parus avant 1950 exclus et après 2015 exclus.",
+      "r": "WHERE annee BETWEEN 1950 AND 2015.",
+      "rem": "Manipulation"
+    },
+    {
+      "q": "Dans ta requête F2, pourquoi mettre nom et prenom dans le GROUP BY ?",
+      "r": "Toute colonne affichée hors fonction d'agrégation doit être dans le GROUP BY.",
+      "rem": "Fiche 1"
+    },
+    {
+      "q": "NOT IN avec une sous-requête : que renvoie la sous-requête seule ?",
+      "r": "La liste des numéros (ou codes) présents dans Emprunt ; on garde ceux qui n'y sont pas.",
+      "rem": "Fiches 1 et 2"
+    },
+    {
+      "q": "Explique ta consigne surprise : nombre de lignes et construction choisie.",
+      "r": "Selon la fiche (résultats attendus dans le corrigé).",
+      "rem": "Question obligatoire"
+    }
+  ],
+  "grille": [
+    {
+      "id": "p1",
+      "critere": "Partie 1 — 8 requêtes (correction 0,5 + explication 0,5)",
+      "max": 8
+    },
+    {
+      "id": "p2",
+      "critere": "Partie 2 — prédictions (3 × 1)",
+      "max": 3
+    },
+    {
+      "id": "p3a",
+      "critere": "Partie 3 — F1 correcte",
+      "max": 2
+    },
+    {
+      "id": "p3b",
+      "critere": "Partie 3 — F2 correcte",
+      "max": 2
+    },
+    {
+      "id": "p3c",
+      "critere": "Partie 3 — réponse écrite",
+      "max": 1
+    },
+    {
+      "id": "p4",
+      "critere": "Partie 4 — entretien (2 questions × 2)",
+      "max": 4
+    }
+  ],
+  "fichiersCorriges": {
+    "requetes.sql": "-- Q1\nSELECT titre, auteur FROM Livre WHERE categorie = 'Roman' ORDER BY titre;\n-- Q2\nSELECT nom, prenom FROM Eleve WHERE classe = '4SI1' AND YEAR(dateNaiss) = 2008;\n-- Q3\nSELECT titre FROM Livre, Emprunt WHERE Livre.codeLivre = Emprunt.codeLivre AND numEl = 3;\n-- Q4\nSELECT titre, annee FROM Livre WHERE annee BETWEEN 2000 AND 2010;\n-- Q5\nSELECT nom, prenom FROM Eleve WHERE nom LIKE 'B%';\n-- Q6\nSELECT categorie, COUNT(*) AS nbEmprunts FROM Livre, Emprunt WHERE Livre.codeLivre = Emprunt.codeLivre GROUP BY categorie;\n-- Q7\nSELECT categorie, COUNT(*) AS nbEmprunts FROM Livre, Emprunt WHERE Livre.codeLivre = Emprunt.codeLivre GROUP BY categorie HAVING COUNT(*) > 4;\n-- Q8\nSELECT codeLivre, dateEmprunt FROM Emprunt WHERE dateRetour IS NULL;\n"
+  }
+}

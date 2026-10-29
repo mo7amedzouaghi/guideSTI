@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>TP &amp; examens — STI Élèves</title>
+<link rel="stylesheet" href="../contenu/eleves/assets/vendor/fonts.css">
+<link rel="stylesheet" href="../desktop/barre.css">
+<link rel="stylesheet" href="modules.css">
+<link rel="stylesheet" href="tp.css">
+</head>
+<body>
+<header class="m-barre" data-titre="TP &amp; examens" data-actif="tp"></header>
+
+<!-- liste des TP -->
+<main class="m-page" id="vue-liste">
+  <section class="m-carte">
+    <h2>Bibliothèque de TP</h2>
+    <p class="m-aide">Choisis le TP indiqué par ton professeur. Ton travail est enregistré automatiquement sur ce poste (Documents › STI › TP).</p>
+    <div class="rangee">
+      <button type="button" class="btn sec" id="recuperer">⇩ Récupérer les TP du poste prof</button>
+      <span class="m-aide" id="qui" style="margin:0"></span>
+    </div>
+  </section>
+  <div class="tp-grille" id="liste"></div>
+</main>
+
+<!-- TP en cours -->
+<div id="vue-tp" hidden>
+  <div class="tp-barre">
+    <div class="tp-barre-in">
+      <div class="tp-titre"><span class="niv" id="t-niv"></span><b id="t-titre"></b><small id="t-qui"></small></div>
+      <div class="tp-chrono" id="chrono" title="Temps restant">--:--</div>
+      <span class="tp-etat" id="etat">●</span>
+      <div class="tp-actions">
+        <button type="button" class="btn sec" id="plein">⛶ Plein écran</button>
+        <button type="button" class="btn sec" id="usb">💾 Copier sur clé</button>
+        <button type="button" class="btn vert" id="remettre">⇪ Remettre au prof</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="tp-depart m-page" id="depart" hidden>
+    <div class="m-carte">
+      <h2 id="d-titre"></h2>
+      <p id="d-resume" class="m-aide"></p>
+      <div class="tp-conditions" id="d-conditions"></div>
+      <ul class="tp-parties" id="d-parties"></ul>
+      <button type="button" class="btn or" id="commencer" style="font-size:16px;padding:14px 22px">▶ Commencer le TP</button>
+    </div>
+  </section>
+
+  <main class="m-page" id="travail" hidden>
+    <div class="tp-plan">
+      <div class="ed" id="editeur"></div>
+      <div class="apercu">
+        <div class="apercu-tete"><span class="points"><i></i><i></i><i></i></span><span class="url" id="url"></span><button type="button" class="btn sec" id="actualiser" style="padding:4px 10px">↻ Actualiser</button></div>
+        <iframe id="cadre" title="Aperçu de la page"></iframe>
+        <div class="apercu-err" id="erreur" hidden></div>
+      </div>
+    </div>
+    <div id="parties"></div>
+  </main>
+</div>
+
+<script src="../desktop/commun.js"></script>
+<script src="entete.js"></script>
+<script src="editeur.js"></script>
+<script src="../vendor/sql-wasm.js"></script>
+<script src="sqlmoteur.js"></script>
+<script src="sqlconsole.js"></script>
+<script src="tp-eleve.js"></script>
+</body>
+</html>

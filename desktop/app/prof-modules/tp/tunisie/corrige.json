@@ -1,0 +1,152 @@
+{
+  "principe": [
+    "Corriger plutôt qu'écrire : 5 erreurs sont signalées par le vérificateur, 3 ne se voient qu'à l'écran (image, défilement, flottement) : l'élève doit observer et expliquer.",
+    "Consigne surprise par poste : 3 variantes débloquées à la 40e minute.",
+    "Entretien de 3 min : une question porte toujours sur la consigne surprise.",
+    "Poste hors ligne : condition indispensable du dispositif."
+  ],
+  "erreurs": [
+    {
+      "ligne": "index.html L11",
+      "errone": "<b>Bienvenue</b>",
+      "corrige": "<span class=\"fort\">Bienvenue</span>\n.fort { font-weight: bold; }",
+      "effet": "<b> est une balise de mise en forme hors annexe : le gras se fait en CSS (font-weight)."
+    },
+    {
+      "ligne": "index.html L31",
+      "errone": "src=\"images/carthage.svg\"",
+      "corrige": "src=\"img/carthage.svg\"",
+      "effet": "Mauvais dossier : l'image ne s'affiche pas (seul le texte alt apparaît)."
+    },
+    {
+      "ligne": "style.css L25",
+      "errone": ".menu a { … }",
+      "corrige": "<a … class=\"lien\"> et .lien { … }",
+      "effet": "Sélecteur combiné hors annexe : on donne une classe aux liens."
+    },
+    {
+      "ligne": "style.css L38",
+      "errone": "width: 30em;",
+      "corrige": "width: 400px;",
+      "effet": "Unité em hors annexe : px ou % uniquement."
+    },
+    {
+      "ligne": "style.css L39",
+      "errone": "animation: defiler 8s infinite;",
+      "corrige": "animation: defile 8s infinite;",
+      "effet": "Le nom ne correspond pas à @keyframes defile : le texte du bandeau ne défile pas."
+    },
+    {
+      "ligne": "style.css L72",
+      "errone": ".carte:hover { transition: transform 1s; }",
+      "corrige": ".carte { … transition: transform 1s; }",
+      "effet": "Transition déclarée dans :hover : l'effet est progressif à l'aller mais le retour est brusque."
+    },
+    {
+      "ligne": "style.css L73",
+      "errone": "translateX(10px)",
+      "corrige": "translate(10px, 0px)",
+      "effet": "translateX() hors annexe : translate(x, y)."
+    },
+    {
+      "ligne": "style.css L88",
+      "errone": "float: rigth;",
+      "corrige": "float: right;",
+      "effet": "Valeur mal orthographiée ignorée : le bloc Météo ne se place pas à droite (il passe sous le contenu)."
+    }
+  ],
+  "baremeP1": "0,5 pt pour la correction dans le code + 0,5 pt pour l'effet ou la règle dans le tableau.",
+  "variantes": [
+    {
+      "num": 1,
+      "code": "<!-- index.html -->\n<h2 id=\"titre-agenda\">Agenda des festivals</h2>\n\n/* style.css */\n#titre-agenda {\n    animation: clignote 2s infinite;\n}\n\n@keyframes clignote {\n    from { opacity: 1; }\n    50% { opacity: 0.3; }\n    to { opacity: 1; }\n}\n\ntr {\n    transition: background-color 0.5s;\n}\n\ntr:hover {\n    background-color: #fff6d6;\n}"
+    },
+    {
+      "num": 2,
+      "code": "/* style.css : la transition reste sur .carte */\n.carte {\n    width: 20%;\n    …\n    transition: transform 1s;\n}\n\n.carte:hover {\n    transform: rotate(360deg) scale(1.2);\n}\n\n<!-- index.html : 4e carte -->\n<article class=\"carte\">\n    <h3>Les oasis</h3>\n    <p>Les palmeraies de Tozeur et de Nefta.</p>\n</article>"
+    },
+    {
+      "num": 3,
+      "code": "/* style.css */\n#meteo {\n    position: fixed;\n    right: 20px;\n    bottom: 20px;\n    width: 200px;\n    background-color: #e8efff;\n    padding: 10px;\n}\n\n<!-- index.html -->\n<table>\n    <caption>Saison 2026</caption>\n    …\n    <tr><td>Festival de la médina</td><td>Tunis</td><td>Ramadan</td></tr>"
+    }
+  ],
+  "baremeP2": "Résultat visible dans l'aperçu 3 pts · code conforme et bien placé 2 pts · réponse écrite 1 pt.",
+  "cartes": [
+    {
+      "q": "Pourquoi la transition doit-elle être écrite sur .carte et non sur .carte:hover ?",
+      "r": "Sur :hover elle n'existe que pendant le survol : l'aller est progressif mais le retour est instantané.",
+      "rem": "Erreur 6"
+    },
+    {
+      "q": "Le texte du bandeau ne défilait pas : comment l'as-tu trouvé ?",
+      "r": "Le nom après animation doit être identique au nom de @keyframes (defile).",
+      "rem": "Faire montrer les deux lignes"
+    },
+    {
+      "q": "Pourquoi #defilant a-t-il position: relative ?",
+      "r": "left n'agit que sur un élément positionné ; sans position, l'animation de left n'a aucun effet.",
+      "rem": "Retirer position en direct"
+    },
+    {
+      "q": "À quoi sert overflow: hidden sur #contenu ?",
+      "r": "Le bloc englobe les éléments flottants (main et aside) : le pied de page reste dessous.",
+      "rem": "Retirer la ligne en direct"
+    },
+    {
+      "q": "Pourquoi ne pas écrire .menu a ?",
+      "r": "Les sélecteurs combinés sont hors annexe : on donne une classe aux liens.",
+      "rem": ""
+    },
+    {
+      "q": "Modifie en direct : la carte doit s'incliner de -5° au lieu de 3°.",
+      "r": "Changer rotate(3deg) en rotate(-5deg) dans .carte:hover.",
+      "rem": "Manipulation"
+    },
+    {
+      "q": "Quelle différence entre float: right et position: fixed pour la météo ?",
+      "r": "float reste dans la page et défile ; fixed est placé par rapport à la fenêtre et reste visible.",
+      "rem": ""
+    },
+    {
+      "q": "Explique ta consigne surprise ligne par ligne.",
+      "r": "Selon la fiche : sélecteur, propriété, valeur et emplacement justifiés.",
+      "rem": "Question obligatoire"
+    }
+  ],
+  "grille": [
+    {
+      "id": "p1",
+      "critere": "Partie 1 — 8 erreurs (correction 0,5 + effet 0,5)",
+      "max": 8
+    },
+    {
+      "id": "p2a",
+      "critere": "Partie 2 — résultat visible",
+      "max": 3
+    },
+    {
+      "id": "p2b",
+      "critere": "Partie 2 — code conforme et bien placé",
+      "max": 2
+    },
+    {
+      "id": "p2c",
+      "critere": "Partie 2 — réponse écrite",
+      "max": 1
+    },
+    {
+      "id": "p3",
+      "critere": "Partie 3 — entretien (2 questions × 2)",
+      "max": 4
+    },
+    {
+      "id": "q",
+      "critere": "Qualité : indentation, commentaires, conformité",
+      "max": 2
+    }
+  ],
+  "fichiersCorriges": {
+    "index.html": "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Découvrir la Tunisie</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <header id=\"entete\">\n        <h1>Découvrir la Tunisie</h1>\n        <p class=\"accroche\"><span class=\"fort\">Bienvenue</span> sur le portail touristique du club informatique.</p>\n    </header>\n\n    <nav class=\"menu\">\n        <a href=\"#regions\" class=\"lien\">Régions</a>\n        <a href=\"#agenda\" class=\"lien\">Agenda</a>\n        <a href=\"#contact\" class=\"lien\">Contact</a>\n    </nav>\n\n    <div id=\"bandeau\">\n        <p id=\"defilant\">Festival international de Carthage : juillet - août</p>\n    </div>\n\n    <div id=\"contenu\">\n        <main>\n            <section id=\"regions\">\n                <h2>Trois régions à visiter</h2>\n                <article class=\"carte\">\n                    <h3>Le Nord</h3>\n                    <figure>\n                        <img src=\"img/carthage.svg\" alt=\"Site de Carthage\" width=\"240\">\n                        <figcaption>Les thermes d'Antonin à Carthage</figcaption>\n                    </figure>\n                </article>\n                <article class=\"carte\">\n                    <h3>Le Sahel</h3>\n                    <p>Plages de Sousse et de Monastir, médinas classées.</p>\n                </article>\n                <article class=\"carte\">\n                    <h3>Le Sud</h3>\n                    <p>Le désert du Sahara et les ksour de Tataouine.</p>\n                </article>\n            </section>\n\n            <section id=\"agenda\">\n                <h2>Agenda des festivals</h2>\n                <table>\n                    <thead>\n                        <tr><th>Festival</th><th>Ville</th><th>Mois</th></tr>\n                    </thead>\n                    <tbody>\n                        <tr><td>Festival international de Carthage</td><td>Carthage</td><td>Juillet</td></tr>\n                        <tr><td>Festival de Tabarka Jazz</td><td>Tabarka</td><td>Août</td></tr>\n                        <tr><td>Festival international du Sahara</td><td>Douz</td><td>Décembre</td></tr>\n                    </tbody>\n                </table>\n            </section>\n        </main>\n\n        <aside id=\"meteo\">\n            <h3>Météo du jour</h3>\n            <ul>\n                <li>Tunis : 24 °C</li>\n                <li>Sousse : 26 °C</li>\n                <li>Tozeur : 31 °C</li>\n            </ul>\n        </aside>\n    </div>\n\n    <footer id=\"contact\">\n        <p>Club informatique — Lycée Oued Ellil</p>\n    </footer>\n</body>\n</html>\n",
+    "style.css": "* {\n    margin: 0px;\n    padding: 0px;\n}\n\nbody {\n    font-family: Arial;\n    background-color: #F3F6FA;\n    color: #1c2536;\n}\n\n.fort {\n    font-weight: bold;\n}\n\n#entete {\n    background-color: #0D2B6B;\n    color: white;\n    text-align: center;\n    padding: 20px;\n}\n\n.menu {\n    background-color: #F5B800;\n    padding: 10px;\n    text-align: center;\n}\n\n.lien {\n    color: #0D2B6B;\n    padding: 10px;\n}\n\n#bandeau {\n    background-color: white;\n    overflow: hidden;\n    height: 30px;\n}\n\n#defilant {\n    position: relative;\n    width: 400px;\n    animation: defile 8s infinite;\n}\n\n@keyframes defile {\n    from { left: 100%; }\n    to { left: -50%; }\n}\n\n#contenu {\n    overflow: hidden;\n}\n\n#regions {\n    overflow: hidden;\n}\n\nmain {\n    width: 70%;\n    float: left;\n    padding: 10px;\n}\n\n.carte {\n    background-color: white;\n    border: 2px solid #1D4ED8;\n    border-radius: 10px;\n    width: 28%;\n    float: left;\n    margin: 10px;\n    padding: 10px;\n    transition: transform 1s;\n}\n\n.carte:hover {\n    transform: translate(10px, 0px) rotate(3deg);\n}\n\ntable {\n    border-collapse: collapse;\n    width: 100%;\n}\n\nth, td {\n    border: 1px solid #1D4ED8;\n    padding: 6px;\n}\n\n#meteo {\n    width: 20%;\n    float: right;\n    background-color: #e8efff;\n    margin: 10px;\n    padding: 10px;\n}\n\nfooter {\n    background-color: #0D2B6B;\n    color: white;\n    text-align: center;\n    padding: 10px;\n}\n"
+  }
+}

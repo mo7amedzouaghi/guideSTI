@@ -1,0 +1,54 @@
+/* Version bureau : dock, dialogues, notifications (charte du Guide STI) */
+.sti-dock {
+  position: fixed; right: 16px; bottom: 16px; z-index: 900;
+  display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: calc(100% - 32px);
+}
+.sti-dock-btn {
+  font: 600 13px/1 "Inter", "Segoe UI", sans-serif; color: #fff; background: #0D2B6B;
+  border: 0; border-radius: 999px; padding: 10px 14px; cursor: pointer; text-decoration: none;
+  box-shadow: 0 6px 18px rgba(13, 43, 107, .28); transition: background .15s, transform .15s;
+}
+.sti-dock-btn:hover { background: #16388a; transform: translateY(-1px); }
+.sti-dock-btn[data-a="id"] { background: #F5B800; color: #0D2B6B; }
+.sti-lien-bureau { border-bottom: 2px solid #F5B800; }
+.sti-projet-info { font-size: 12px; color: #4a5568; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sti-outils { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 0 0 18px; }
+.sti-outils span { font-size: 14px; color: #4a5568; }
+
+.sti-modal-fond {
+  position: fixed; inset: 0; z-index: 1000; background: rgba(10, 34, 87, .55);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.sti-modal {
+  width: min(460px, 100%); background: #fff; border-radius: 14px; padding: 24px 26px 20px;
+  border-top: 6px solid #F5B800; box-shadow: 0 24px 60px rgba(0, 0, 0, .3);
+  font-family: "Inter", "Segoe UI", sans-serif; color: #1c2536;
+}
+.sti-modal h2 { margin: 0 0 6px; font: 700 22px/1.2 "Roboto Condensed", "Arial Narrow", sans-serif; color: #0D2B6B; }
+.sti-modal-texte { margin: 0 0 14px; font-size: 14px; color: #4a5568; line-height: 1.5; }
+.sti-champ { display: block; margin: 10px 0; }
+.sti-champ span { display: block; font-size: 13px; font-weight: 600; color: #0D2B6B; margin-bottom: 4px; }
+.sti-champ input, .sti-champ select {
+  width: 100%; font: 15px "Inter", "Segoe UI", sans-serif; padding: 9px 11px;
+  border: 1.5px solid #dbe3ee; border-radius: 8px; background: #fff;
+}
+.sti-champ input:focus, .sti-champ select:focus { outline: none; border-color: #1D4ED8; box-shadow: 0 0 0 3px #e8efff; }
+.sti-modal-erreur { color: #C62828; background: #fdecec; border-radius: 8px; padding: 8px 10px; font-size: 14px; margin: 8px 0 0; }
+.sti-modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+.sti-btn {
+  font: 600 14px "Inter", "Segoe UI", sans-serif; border: 0; border-radius: 8px; padding: 10px 18px;
+  background: #0D2B6B; color: #fff; cursor: pointer;
+}
+.sti-btn:hover { background: #16388a; }
+.sti-btn.sec { background: #eef2f8; color: #0D2B6B; }
+.sti-btn.sec:hover { background: #dbe3ee; }
+
+.sti-toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 1100; transform: translate(-50%, 20px); opacity: 0;
+  background: #0D2B6B; color: #fff; padding: 11px 18px; border-radius: 10px; max-width: 80vw;
+  font: 500 14px "Inter", "Segoe UI", sans-serif; box-shadow: 0 10px 30px rgba(0, 0, 0, .25); transition: opacity .25s, transform .25s;
+}
+.sti-toast.vu { opacity: 1; transform: translate(-50%, 0); }
+.sti-toast.ok { background: #1E7B3C; }
+.sti-toast.ko { background: #C62828; }
+@media print { .sti-dock, .sti-toast { display: none !important; } }

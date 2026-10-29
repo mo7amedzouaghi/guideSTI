@@ -1,0 +1,80 @@
+{
+  "titre": "Inscription à un stage",
+  "niveau": 4,
+  "duree": 90,
+  "resume": "Formulaire JavaScript (fieldset, range, datalist, radio, code de vérification) : débogage, consigne surprise par poste et entretien.",
+  "conditions": "1 h 30 · poste sans accès Internet · aucun téléphone ni document.",
+  "depart": [
+    "stage.html",
+    "style.css",
+    "stage.js"
+  ],
+  "principal": "stage.html",
+  "parties": [
+    {
+      "id": "p1",
+      "type": "tableau",
+      "titre": "Débogage",
+      "points": 8,
+      "minutes": 40,
+      "consigne": "La page stage.html permet à un élève de s'inscrire à un stage d'été. Le fichier stage.js contient 8 erreurs : certaines empêchent le bon fonctionnement de la page, d'autres ne respectent pas le programme officiel. 1) Corrige les 8 erreurs dans stage.js. 2) Complète le tableau.",
+      "colonnes": [
+        "Ligne",
+        "Instruction erronée",
+        "Instruction corrigée",
+        "Effet de l'erreur sur la page (ou règle non respectée)"
+      ],
+      "lignes": 8
+    },
+    {
+      "id": "p2",
+      "type": "surprise",
+      "titre": "Consigne surprise",
+      "points": 6,
+      "deblocage": 40,
+      "consigne": "À la 40e minute, la fiche propre à ton poste s'affiche. Réalise la modification demandée dans stage.js, teste-la, puis réponds à la question."
+    },
+    {
+      "id": "p3",
+      "type": "info",
+      "titre": "Entretien au poste",
+      "points": 4,
+      "consigne": "L'enseignant passe à ton poste et te pose deux questions sur ton code. Tu réponds à l'oral et, si demandé, tu modifies le code devant lui."
+    },
+    {
+      "id": "p4",
+      "type": "info",
+      "titre": "Qualité du code",
+      "points": 2,
+      "consigne": "Code indenté, commenté et conforme au programme officiel."
+    }
+  ],
+  "fiches": [
+    {
+      "num": 1,
+      "titre": "Code de vérification plus souple et plus sûr",
+      "consignes": [
+        "Le code de vérification doit être accepté qu'il soit saisi en majuscules ou en minuscules.",
+        "Après 3 codes erronés, afficher « Inscription bloquée : trop de tentatives. » dans le paragraphe resultat, et refuser toute nouvelle validation."
+      ]
+    },
+    {
+      "num": 2,
+      "titre": "Nouvelles règles d'inscription",
+      "consignes": [
+        "Une durée de plus de 4 semaines n'est autorisée qu'au niveau Avancé.",
+        "La spécialité « Bases de données » n'est ouverte qu'aux élèves âgés d'au moins 17 ans.",
+        "Chaque refus affiche un message adapté."
+      ]
+    },
+    {
+      "num": 3,
+      "titre": "Numéro d'inscription",
+      "consignes": [
+        "Ajouter au message de succès un numéro d'inscription formé : des 3 premières lettres du nom en majuscules, des 2 derniers chiffres de l'année de naissance, puis de la durée sur 2 chiffres.",
+        "Exemple : Ben Salah, né en 2009, 4 semaines → BEN0904"
+      ]
+    }
+  ],
+  "questionFiche": "Quelle(s) ligne(s) as-tu ajoutée(s) ou modifiée(s), et pourquoi à cet endroit ?"
+}

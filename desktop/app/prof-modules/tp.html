@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>TP, corrigés &amp; notes — STI Espace Prof</title>
+<link rel="stylesheet" href="../contenu/eleves/assets/vendor/fonts.css">
+<link rel="stylesheet" href="../desktop/barre.css">
+<link rel="stylesheet" href="../modules/modules.css">
+<link rel="stylesheet" href="../modules/tp.css">
+</head>
+<body>
+<header class="m-barre" data-titre="TP, corrigés &amp; notes" data-espace="prof" data-actif="tp"></header>
+<main class="m-page p-cols">
+  <aside class="p-liste">
+    <h3>Bibliothèque</h3>
+    <div id="liste"></div>
+    <button type="button" class="btn sec" id="importer" style="width:100%;margin-top:10px;justify-content:center">＋ Importer un TP (dossier)</button>
+  </aside>
+  <section>
+    <div class="onglets no-print" id="onglets">
+      <button type="button" data-o="seance" aria-selected="true">Séance</button>
+      <button type="button" data-o="corrige">Corrigé</button>
+      <button type="button" data-o="fiches">Fiches &amp; entretien</button>
+      <button type="button" data-o="copies">Copies &amp; notes</button>
+    </div>
+    <div id="vue"></div>
+  </section>
+</main>
+<script src="../contenu/prof/assets/data.js"></script>
+<script src="../contenu/prof/assets/verificateur.js"></script>
+<script src="../desktop/commun.js"></script>
+<script src="../modules/entete.js"></script>
+<script src="../modules/editeur.js"></script>
+<script src="../vendor/sql-wasm.js"></script>
+<script src="../modules/sqlmoteur.js"></script>
+<script src="../modules/sqlconsole.js"></script>
+<script src="tp.js"></script>
+</body>
+</html>

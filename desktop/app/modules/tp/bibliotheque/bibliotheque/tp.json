@@ -1,0 +1,88 @@
+{
+  "titre": "Bibliothèque du lycée — requêtes à réparer",
+  "niveau": 4,
+  "duree": 90,
+  "resume": "SQL (sélection, jointure classique, BETWEEN, LIKE, IS NULL, GROUP BY, HAVING, sous-requête) : requêtes erronées à corriger, prédiction de résultats, consigne surprise par poste.",
+  "conditions": "1 h 30 · poste sans accès Internet · aucun téléphone ni document. La base « bibliotheque » est chargée dans l'application : bouton « Exécuter » ou Ctrl+Entrée.",
+  "depart": [
+    "requetes.sql",
+    "predictions.sql"
+  ],
+  "principal": "requetes.sql",
+  "console": "sql",
+  "base": "base.sql",
+  "parties": [
+    {
+      "id": "p1",
+      "type": "tableau",
+      "titre": "Requêtes à réparer",
+      "points": 8,
+      "minutes": 35,
+      "consigne": "Le fichier requetes.sql contient 8 requêtes (Q1 à Q8) qui ne donnent pas le résultat demandé. Chacune contient une seule erreur. 1) Corrige chaque requête et exécute-la. 2) Complète le tableau : erreur, correction, et ce que donnait la requête erronée (nombre de lignes, message d'erreur…).",
+      "colonnes": [
+        "Requête",
+        "Partie erronée",
+        "Correction",
+        "Résultat de la requête erronée (et pourquoi)"
+      ],
+      "lignes": 8
+    },
+    {
+      "id": "p2",
+      "type": "tableau",
+      "titre": "Prédire avant d'exécuter",
+      "points": 3,
+      "consigne": "Ouvre predictions.sql. Pour chaque requête P1 à P3, écris d'abord ta prédiction en regardant le schéma de la base (bouton « Schéma »), puis exécute et explique l'écart éventuel.",
+      "colonnes": [
+        "Requête",
+        "Ma prédiction (nombre de lignes)",
+        "Nombre de lignes obtenu",
+        "Explication de l'écart"
+      ],
+      "lignes": 3
+    },
+    {
+      "id": "p3",
+      "type": "surprise",
+      "titre": "Consigne surprise",
+      "points": 5,
+      "deblocage": 40,
+      "consigne": "À la 40e minute, la fiche propre à ton poste s'affiche. Écris les requêtes demandées à la fin de requetes.sql (-- F1, -- F2), exécute-les, puis réponds à la question."
+    },
+    {
+      "id": "p4",
+      "type": "info",
+      "titre": "Entretien au poste",
+      "points": 4,
+      "consigne": "L'enseignant passe à ton poste, te demande d'expliquer une requête et de la modifier devant lui."
+    }
+  ],
+  "fiches": [
+    {
+      "num": 1,
+      "titre": "Élèves et emprunts",
+      "consignes": [
+        "F1 : nom et prénom des élèves qui n'ont jamais emprunté de livre.",
+        "F2 : pour chaque élève de la classe 4SI1, son nom, son prénom et le nombre de livres empruntés, du plus grand au plus petit nombre."
+      ]
+    },
+    {
+      "num": 2,
+      "titre": "Livres et catégories",
+      "consignes": [
+        "F1 : titre des livres qui n'ont jamais été empruntés.",
+        "F2 : pour chaque catégorie, l'année moyenne de parution des livres, arrondie à l'unité."
+      ]
+    },
+    {
+      "num": 3,
+      "titre": "Lecteurs scientifiques",
+      "consignes": [
+        "F1 : nom et prénom (sans doublon) des élèves ayant emprunté au moins un livre de la catégorie « Sciences ».",
+        "F2 : pour chaque classe, le nombre d'emprunts non rendus, seulement pour les classes qui en ont au moins 2."
+      ]
+    }
+  ],
+  "questionFiche": "Pour chaque requête : nombre de lignes obtenu, et pourquoi as-tu choisi cette construction (jointure, sous-requête, GROUP BY, HAVING…) ?",
+  "nomBase": "bibliotheque"
+}

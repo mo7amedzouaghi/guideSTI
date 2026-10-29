@@ -1,0 +1,99 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: Arial;
+    background-color: #F3F6FA;
+    color: #1c2536;
+}
+
+#entete {
+    background-color: #0D2B6B;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.menu {
+    background-color: #F5B800;
+    padding: 10px;
+    text-align: center;
+}
+
+.menu a {
+    color: #0D2B6B;
+    padding: 10px;
+}
+
+#bandeau {
+    background-color: white;
+    overflow: hidden;
+    height: 30px;
+}
+
+#defilant {
+    position: relative;
+    width: 30em;
+    animation: defiler 8s infinite;
+}
+
+@keyframes defile {
+    from { left: 100%; }
+    to { left: -50%; }
+}
+
+#contenu {
+    overflow: hidden;
+}
+
+#regions {
+    overflow: hidden;
+}
+
+main {
+    width: 70%;
+    float: left;
+    padding: 10px;
+}
+
+.carte {
+    background-color: white;
+    border: 2px solid #1D4ED8;
+    border-radius: 10px;
+    width: 28%;
+    float: left;
+    margin: 10px;
+    padding: 10px;
+}
+
+.carte:hover {
+    transition: transform 1s;
+    transform: translateX(10px) rotate(3deg);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #1D4ED8;
+    padding: 6px;
+}
+
+#meteo {
+    width: 20%;
+    float: rigth;
+    background-color: #e8efff;
+    margin: 10px;
+    padding: 10px;
+}
+
+footer {
+    background-color: #0D2B6B;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}

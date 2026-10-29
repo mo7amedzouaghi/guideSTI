@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Mises à jour — STI</title>
+<link rel="stylesheet" href="../contenu/eleves/assets/vendor/fonts.css">
+<link rel="stylesheet" href="../desktop/barre.css">
+<link rel="stylesheet" href="modules.css">
+<style>
+  .version { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .v-carte { background: var(--fond); border-radius: 12px; padding: 14px 16px; border-left: 5px solid var(--c); }
+  .v-carte small { display: block; text-transform: uppercase; letter-spacing: .06em; font-size: 11.5px; font-weight: 700; color: var(--c); }
+  .v-carte b { display: block; font: 700 24px var(--titre); color: var(--marine); margin: 2px 0; }
+  .v-carte code { font-size: 12.5px; background: #fff; padding: 1px 6px; border-radius: 4px; }
+  .v-carte p { margin: 4px 0 0; font-size: 13.5px; color: var(--texte-2); }
+  .bandeau-maj { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; background: var(--or-pale); border: 2px solid var(--or); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; }
+  .bandeau-maj.ok { background: var(--n2-pale); border-color: var(--n2); }
+  .bandeau-maj.ko { background: var(--rouge-pale); border-color: var(--rouge); }
+  .bandeau-maj .ico { font-size: 28px; }
+  .bandeau-maj div { flex: 1; min-width: 220px; }
+  .barre-prog { height: 10px; background: var(--ligne); border-radius: 999px; overflow: hidden; margin-top: 8px; }
+  .barre-prog i { display: block; height: 100%; width: 0; background: var(--n3); transition: width .2s; }
+  .barre-prog.indet i { width: 35%; animation: aller 1.1s infinite ease-in-out; }
+  @keyframes aller { 0% { margin-left: -35%; } 100% { margin-left: 100%; } }
+  .sources { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .source { background: #fff; border: 1.5px solid var(--ligne); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .source h3 { margin: 0; font: 700 18px var(--titre); color: var(--marine); }
+  .source p { margin: 0; font-size: 14px; color: var(--texte-2); flex: 1; }
+</style>
+</head>
+<body>
+<header class="m-barre" data-titre="Mises à jour" data-actif=""></header>
+<main class="m-page">
+  <section class="m-carte" style="--c:var(--n4)" id="app-carte">
+    <h2>Application<span class="pts" id="app-version"></span></h2>
+    <p class="m-aide">Nouvelles fonctions et corrections de l'application (correcteur, TP, modules). Seules les parties modifiées sont téléchargées ; vos données sont conservées.</p>
+    <div id="app-etat"></div>
+    <div class="sources">
+      <div class="source">
+        <h3>🌐 Depuis Internet</h3>
+        <p>Recherche la dernière version publiée et l'installe au prochain redémarrage.</p>
+        <div class="rangee"><button type="button" class="btn sec" id="app-verifier">Rechercher</button><button type="button" class="btn" id="app-telecharger" disabled>Télécharger</button><button type="button" class="btn vert" id="app-installer" hidden>Redémarrer et installer</button></div>
+      </div>
+      <div class="source">
+        <h3>📡 Depuis le poste prof</h3>
+        <p>Pour les postes du labo sans Internet, pendant le ramassage réseau.</p>
+        <div class="rangee"><button type="button" class="btn" id="app-prof">Rechercher sur le poste prof</button></div>
+      </div>
+      <div class="source" id="app-labo-carte" hidden>
+        <h3>🏫 Préparer les postes du labo</h3>
+        <p id="app-labo-texte">Télécharge la mise à jour de STI Élève sur ce poste pour la partager pendant le ramassage réseau.</p>
+        <div class="rangee"><button type="button" class="btn sec" id="app-labo">Préparer la mise à jour élève</button></div>
+      </div>
+      <div class="source">
+        <h3>💾 Depuis un fichier</h3>
+        <p>Installateur copié sur clé USB (STI-Guide-Installation-x.y.z.exe ou STI-Eleve-…).</p>
+        <div class="rangee"><button type="button" class="btn sec" id="app-fichier">Choisir l'installateur</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="m-carte">
+    <h2>Version du guide sur ce poste</h2>
+    <div class="version" id="versions"></div>
+  </section>
+
+  <section class="m-carte" style="--c:var(--n3)">
+    <h2>Mettre à jour le guide</h2>
+    <p class="m-aide">Le contenu des Espaces Élève et Prof (cours, séances, annexe, vérificateur) vient du site <b>Guide du Programme STI</b> publié sur GitHub. La mise à jour remplace ce contenu par la dernière version publiée ; vos TP, notes, travaux d'élèves et réglages ne sont pas touchés.</p>
+    <div id="etat"></div>
+    <div class="sources">
+      <div class="source">
+        <h3>🌐 Depuis GitHub</h3>
+        <p>Le poste doit avoir accès à Internet. Téléchargement d'environ 4 Mo.</p>
+        <div class="rangee"><button type="button" class="btn sec" id="verifier">Rechercher</button><button type="button" class="btn" id="github">Installer la dernière version</button></div>
+      </div>
+      <div class="source">
+        <h3>📡 Depuis le poste prof</h3>
+        <p>Pour les postes du labo sans Internet : le poste prof (mis à jour) partage le guide pendant le ramassage réseau.</p>
+        <div class="rangee"><button type="button" class="btn" id="prof">Mettre à jour depuis le poste prof</button></div>
+      </div>
+      <div class="source">
+        <h3>💾 Depuis un fichier .zip</h3>
+        <p>Sur un PC connecté : github.com/mo7amedzouaghi/guideSTI › Code › Download ZIP, puis copie sur clé USB.</p>
+        <div class="rangee"><button type="button" class="btn sec" id="fichier">Choisir le fichier .zip</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="m-carte" style="--c:var(--rouge)" id="carte-revenir" hidden>
+    <h2>Revenir à la version d'origine</h2>
+    <p class="m-aide">Supprime la mise à jour et réutilise le guide livré avec l'application.</p>
+    <button type="button" class="btn rouge" id="revenir">↺ Revenir à la version d'origine</button>
+  </section>
+</main>
+<script src="../desktop/commun.js"></script>
+<script src="entete.js"></script>
+<script src="mise-a-jour.js"></script>
+<script src="mise-a-jour-app.js"></script>
+</body>
+</html>

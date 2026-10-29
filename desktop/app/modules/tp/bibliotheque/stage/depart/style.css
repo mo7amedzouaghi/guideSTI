@@ -1,0 +1,34 @@
+body {
+    font-family: Arial;
+    background-color: #F3F6FA;
+    margin: 20px;
+}
+h1 {
+    color: #0D2B6B;
+    text-align: center;
+}
+fieldset {
+    border: 2px solid #5B2C9F;
+    border-radius: 8px;
+    margin: 0px 0px 12px 0px;
+    background-color: white;
+}
+legend {
+    font-weight: bold;
+    color: #5B2C9F;
+}
+label {
+    display: inline-block;
+    width: 160px;
+    margin: 4px 0;
+}
+#code {
+    font-family: Courier New;
+    font-size: 22px;
+    background-color: #F5B800;
+    padding: 2px 8px;
+}
+#resultat {
+    font-weight: bold;
+    color: #1E7B3C;
+}

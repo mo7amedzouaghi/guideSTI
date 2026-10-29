@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Ramassage réseau — STI Espace Prof</title>
+<link rel="stylesheet" href="../contenu/eleves/assets/vendor/fonts.css">
+<link rel="stylesheet" href="../desktop/barre.css">
+<link rel="stylesheet" href="../modules/modules.css">
+<link rel="stylesheet" href="../modules/tp.css">
+<style>
+  .ip-grande { font: 700 40px var(--mono); color: var(--marine); background: var(--or-pale); border: 2px solid var(--or); border-radius: 14px; padding: 6px 18px; display: inline-block; margin: 4px 8px 4px 0; }
+  .voyant { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; }
+  .voyant::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: #cbd5e1; }
+  .voyant.on { color: var(--n2); } .voyant.on::before { background: var(--n2); box-shadow: 0 0 0 4px var(--n2-pale); animation: pulse 1.6s infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 8px transparent; } }
+  .journal { max-height: 280px; overflow: auto; font-size: 14px; }
+  .journal div { padding: 6px 0; border-bottom: 1px solid var(--ligne); }
+  .journal time { font: 12px var(--mono); color: var(--texte-2); margin-right: 8px; }
+  .etapes { margin: 6px 0 0; padding-left: 20px; line-height: 1.8; }
+</style>
+</head>
+<body>
+<header class="m-barre" data-titre="Ramassage réseau" data-espace="prof" data-actif="ramassage"></header>
+<main class="m-page">
+  <section class="m-carte" style="--c:var(--n4)">
+    <h2>Poste prof <span class="voyant" id="voyant">arrêté</span></h2>
+    <div class="rangee" style="margin-bottom:14px">
+      <label>Nom affiché <input type="text" id="nom" value="Poste prof" style="width:180px"></label>
+      <label>Classe <input type="text" id="classe" placeholder="ex. 4SI1" style="width:110px"></label>
+      <button type="button" class="btn vert" id="demarrer">▶ Démarrer le ramassage</button>
+      <button type="button" class="btn rouge" id="arreter" hidden>■ Arrêter</button>
+    </div>
+    <div id="adresses"></div>
+    <ol class="etapes m-aide">
+      <li>Démarrez le ramassage sur ce poste (Windows peut demander d'autoriser l'application sur le réseau privé : acceptez).</li>
+      <li>Sur chaque poste élève : <b>TP &amp; examens</b> → <b>Remettre au prof</b>, ou <b>Envoyer ma progression</b>. Le poste prof est trouvé automatiquement ; sinon l'élève saisit l'adresse affichée ci-dessus.</li>
+      <li>Les travaux arrivent dans Documents › STI › Ramassage, classés par date, TP et élève.</li>
+    </ol>
+  </section>
+
+  <div class="p-cols" style="grid-template-columns:minmax(0,1fr) 380px">
+    <section class="m-carte" style="--c:var(--n2)">
+      <h2>Travaux reçus</h2>
+      <div class="rangee" style="margin-bottom:10px"><button type="button" class="btn sec" id="dossier">📁 Ouvrir le dossier</button><a class="btn sec" href="../contenu/prof/suivi.html">📊 Suivi des élèves</a></div>
+      <div id="recus"></div>
+    </section>
+    <section class="m-carte" style="--c:var(--sarcelle)">
+      <h2>Journal</h2>
+      <div class="journal" id="journal"><p class="m-aide">Aucun événement pour l'instant.</p></div>
+    </section>
+  </div>
+</main>
+<script src="../desktop/commun.js"></script>
+<script src="../modules/entete.js"></script>
+<script src="ramassage.js"></script>
+</body>
+</html>

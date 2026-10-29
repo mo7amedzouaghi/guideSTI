@@ -1,0 +1,151 @@
+{
+  "principe": [
+    "Corriger plutôt qu'écrire : l'élève lit, exécute et explique l'effet de chaque erreur.",
+    "Consigne surprise par poste : 3 variantes débloquées à la 40e minute ; deux voisins n'ont jamais la même.",
+    "Entretien de 3 min : une question porte toujours sur l'ajout de la Partie 2.",
+    "Poste hors ligne : condition indispensable du dispositif."
+  ],
+  "erreurs": [
+    {
+      "ligne": "8",
+      "errone": "for (var i = 0; i <= 5; i++)",
+      "corrige": "for (var i = 0; i < 5; i++)",
+      "effet": "6 lettres générées alors que le champ accepte 5 caractères (maxlength) : validation impossible."
+    },
+    {
+      "ligne": "9",
+      "errone": "Math.floor(Math.random() * 26)",
+      "corrige": "Math.trunc(Math.random() * 26)",
+      "effet": "Math.floor hors programme."
+    },
+    {
+      "ligne": "26",
+      "errone": "ch.charAt(i)",
+      "corrige": "ch[i]",
+      "effet": "charAt hors programme : accès par indice ch[i]."
+    },
+    {
+      "ligne": "47-48",
+      "errone": "alert(\"Prénom invalide…\");",
+      "corrige": "alert(\"Prénom invalide…\");\nreturn;",
+      "effet": "Sans return, l'exécution continue : plusieurs alertes, inscription possible avec un prénom invalide."
+    },
+    {
+      "ligne": "54",
+      "errone": "dn.substring(0, 2)",
+      "corrige": "dn.substring(0, 4)",
+      "effet": "Année lue « 20 » au lieu de « 2009 » : âge ≈ 2006, inscription toujours refusée."
+    },
+    {
+      "ligne": "60",
+      "errone": "if (spec == -1)",
+      "corrige": "if (spec == 0)",
+      "effet": "selectedIndex vaut 0 pour « -- Choisir -- » : la spécialité n'est jamais contrôlée."
+    },
+    {
+      "ligne": "72",
+      "errone": "i <= niv.length",
+      "corrige": "i < niv.length",
+      "effet": "Aucun niveau coché → niv[3] n'existe pas : erreur JS, le message n'apparaît jamais."
+    },
+    {
+      "ligne": "88",
+      "errone": "d.getMonth()",
+      "corrige": "(d.getMonth() + 1)",
+      "effet": "Mois affiché décalé de 1 (getMonth renvoie 0 à 11)."
+    }
+  ],
+  "baremeP1": "0,5 pt pour la correction dans le code + 0,5 pt pour l'effet ou la règle dans le tableau. Une correction qui fonctionne mais reste hors programme vaut 0,25.",
+  "variantes": [
+    {
+      "num": 1,
+      "code": "// Nombre de codes erronés saisis (variable globale)\nvar essais = 0;\n\n// Au début de verifier(), après var d = new Date();\nif (essais == 3) {\n    alert(\"Inscription bloquée.\");\n    return;\n}\n\n// Contrôle du code (remplace l'ancien)\nif (cap.toUpperCase() != codeCaptcha) {\n    essais = essais + 1;\n    if (essais == 3) {\n        document.getElementById(\"resultat\").innerHTML = \"Inscription bloquée : trop de tentatives.\";\n    }\n    alert(\"Code de vérification incorrect.\");\n    genererCaptcha();\n    return;\n}"
+    },
+    {
+      "num": 2,
+      "code": "// Après la boucle des boutons radio (i et age sont connus)\n// Plus de 4 semaines réservé au niveau Avancé\nif (duree > 4 && niv[i].value != \"Avancé\") {\n    alert(\"Plus de 4 semaines : réservé au niveau Avancé.\");\n    return;\n}\n// Bases de données (indice 3) à partir de 17 ans\nif (spec == 3 && age < 17) {\n    alert(\"Bases de données : âge minimum 17 ans.\");\n    return;\n}"
+    },
+    {
+      "num": 3,
+      "code": "// Avant le message de succès\n// Numéro : 3 lettres du nom + 2 chiffres de l'année + durée sur 2 chiffres\nvar num = nom.substring(0, 3).toUpperCase() + dn.substring(2, 4);\nif (duree < 10) {\n    num = num + \"0\" + duree;\n} else {\n    num = num + duree;\n}\n// puis ajouter  + \". N° : \" + num  à la fin du message de succès"
+    }
+  ],
+  "baremeP2": "Fonctionnement testé devant l'enseignant 3 pts · code conforme et bien placé 2 pts · réponse écrite 1 pt.",
+  "cartes": [
+    {
+      "q": "Pourquoi faut-il return après chaque alert ?",
+      "r": "Pour arrêter verifier() : sinon les contrôles suivants s'exécutent et la page peut afficher le succès.",
+      "rem": "Erreur 4"
+    },
+    {
+      "q": "Que se passe-t-il si on remplace < par <= dans la boucle des radios ?",
+      "r": "Si aucun bouton n'est coché, on lit niv[3] qui n'existe pas → erreur JS.",
+      "rem": "Faire tester sans cocher"
+    },
+    {
+      "q": "Pourquoi multiplie-t-on Math.random() par 26 ?",
+      "r": "Indice entier de 0 à 25 après Math.trunc : une lettre parmi les 26 de alpha.",
+      "rem": "Montrer la ligne"
+    },
+    {
+      "q": "Pourquoi tester selectedIndex et non la valeur ?",
+      "r": "La 1re option « -- Choisir -- » a l'indice 0 : selectedIndex == 0 ⇒ aucun choix réel.",
+      "rem": ""
+    },
+    {
+      "q": "Modifie en direct : le code doit avoir 4 lettres. Que changes-tu ?",
+      "r": "Deux endroits : la boucle (i < 4) dans stage.js et maxlength=\"4\" dans stage.html.",
+      "rem": "Manipulation"
+    },
+    {
+      "q": "Que renvoient estAlpha(\"Ben Salah\") et estAlpha(\"\") ?",
+      "r": "true (lettres + espace) ; false (chaîne vide refusée au début de la fonction).",
+      "rem": ""
+    },
+    {
+      "q": "Pourquoi régénère-t-on le code après une erreur ?",
+      "r": "Empêcher les essais répétés sur le même code.",
+      "rem": ""
+    },
+    {
+      "q": "Explique ton ajout de la Partie 2, ligne par ligne.",
+      "r": "Selon la fiche : l'élève justifie l'emplacement et chaque instruction.",
+      "rem": "Question obligatoire"
+    }
+  ],
+  "grille": [
+    {
+      "id": "p1",
+      "critere": "Partie 1 — 8 erreurs (correction 0,5 + effet 0,5)",
+      "max": 8
+    },
+    {
+      "id": "p2a",
+      "critere": "Partie 2 — fonctionnement testé",
+      "max": 3
+    },
+    {
+      "id": "p2b",
+      "critere": "Partie 2 — code conforme et bien placé",
+      "max": 2
+    },
+    {
+      "id": "p2c",
+      "critere": "Partie 2 — réponse écrite",
+      "max": 1
+    },
+    {
+      "id": "p3",
+      "critere": "Partie 3 — entretien (2 questions × 2)",
+      "max": 4
+    },
+    {
+      "id": "q",
+      "critere": "Qualité : indentation, commentaires, conformité",
+      "max": 2
+    }
+  ],
+  "fichiersCorriges": {
+    "stage.js": "// Code de vérification généré au chargement de la page\nvar codeCaptcha = \"\";\n\n// Génère un code de 5 lettres majuscules aléatoires\nfunction genererCaptcha() {\n    var alpha = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\n    codeCaptcha = \"\";\n    for (var i = 0; i < 5; i++) {\n        codeCaptcha = codeCaptcha + alpha[Math.trunc(Math.random() * 26)];\n    }\n    document.getElementById(\"code\").innerHTML = codeCaptcha;\n}\n\n// Affiche la durée choisie dans l'élément output\nfunction afficherDuree() {\n    document.getElementById(\"aff\").value = document.getElementById(\"duree\").value;\n}\n\n// Vérifie qu'une chaîne non vide ne contient que des lettres et des espaces\nfunction estAlpha(ch) {\n    if (ch.length == 0) {\n        return false;\n    }\n    ch = ch.toUpperCase();\n    var i = 0;\n    while (i < ch.length && ((ch[i] >= \"A\" && ch[i] <= \"Z\") || ch[i] == \" \")) {\n        i++;\n    }\n    return i == ch.length;\n}\n\nfunction verifier() {\n    var nom = document.getElementById(\"nom\").value;\n    var prenom = document.getElementById(\"prenom\").value;\n    var dn = document.getElementById(\"dn\").value;\n    var spec = document.getElementById(\"spec\").selectedIndex;\n    var ville = document.getElementById(\"ville\").value;\n    var duree = Number(document.getElementById(\"duree\").value);\n    var cap = document.getElementById(\"cap\").value;\n    var d = new Date();\n\n    // 1. Nom et prénom : lettres et espaces uniquement\n    if (estAlpha(nom) == false) {\n        alert(\"Nom invalide : lettres et espaces uniquement.\");\n        return;\n    }\n    if (estAlpha(prenom) == false) {\n        alert(\"Prénom invalide : lettres et espaces uniquement.\");\n        return;\n    }\n\n    // 2. Date de naissance : âge entre 15 et 20 ans\n    if (dn == \"\") {\n        alert(\"Saisir la date de naissance.\");\n        return;\n    }\n    var age = d.getFullYear() - Number(dn.substring(0, 4));\n    if (age < 15 || age > 20) {\n        alert(\"Stage réservé aux élèves âgés de 15 à 20 ans.\");\n        return;\n    }\n\n    // 3. Spécialité : la première option n'est pas un choix\n    if (spec == 0) {\n        alert(\"Choisir une spécialité.\");\n        return;\n    }\n\n    // 4. Ville obligatoire\n    if (ville == \"\") {\n        alert(\"Saisir la ville.\");\n        return;\n    }\n\n    // 5. Niveau : un bouton radio doit être coché\n    var niv = document.getElementsByName(\"niv\");\n    var i = 0;\n    while (i < niv.length && niv[i].checked == false) {\n        i++;\n    }\n    if (i == niv.length) {\n        alert(\"Choisir un niveau.\");\n        return;\n    }\n\n    // 6. Code de vérification\n    if (cap != codeCaptcha) {\n        alert(\"Code de vérification incorrect.\");\n        genererCaptcha();\n        return;\n    }\n\n    // Succès : message de confirmation daté\n    document.getElementById(\"resultat\").innerHTML = \"Inscription enregistrée le \"\n        + d.getDate() + \"/\" + (d.getMonth() + 1) + \"/\" + d.getFullYear()\n        + \" : \" + prenom + \" \" + nom + \" — \" + document.getElementById(\"spec\").value\n        + \" à \" + ville + \", \" + duree + \" semaine(s), niveau \" + niv[i].value + \".\";\n}\n"
+  }
+}

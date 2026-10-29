@@ -1,0 +1,79 @@
+{
+  "titre": "Découvrir la Tunisie — page à réparer",
+  "niveau": 3,
+  "duree": 90,
+  "resume": "HTML5/CSS3 (divisions sémantiques, figure, tableau, float, position, transition, transformation, animation) : débogage, consigne surprise par poste et entretien.",
+  "conditions": "1 h 30 · poste sans accès Internet · aucun téléphone ni document.",
+  "depart": [
+    "index.html",
+    "style.css",
+    "img/carthage.svg"
+  ],
+  "principal": "index.html",
+  "parties": [
+    {
+      "id": "p1",
+      "type": "tableau",
+      "titre": "Débogage",
+      "points": 8,
+      "minutes": 40,
+      "consigne": "La page du club « Découvrir la Tunisie » contient 8 erreurs réparties dans index.html et style.css : certaines cassent l'affichage (image absente, texte qui ne défile pas, bloc mal placé, effet de survol brusque), d'autres ne respectent pas le programme officiel. 1) Corrige les 8 erreurs. 2) Complète le tableau en indiquant le fichier et la ligne.",
+      "colonnes": [
+        "Fichier et ligne",
+        "Code erroné",
+        "Code corrigé",
+        "Ce que l'erreur provoque à l'écran (ou règle non respectée)"
+      ],
+      "lignes": 8
+    },
+    {
+      "id": "p2",
+      "type": "surprise",
+      "titre": "Consigne surprise",
+      "points": 6,
+      "deblocage": 40,
+      "consigne": "À la 40e minute, la fiche propre à ton poste s'affiche. Réalise les modifications demandées, vérifie le résultat dans l'aperçu, puis réponds à la question."
+    },
+    {
+      "id": "p3",
+      "type": "info",
+      "titre": "Entretien au poste",
+      "points": 4,
+      "consigne": "L'enseignant passe à ton poste et te pose deux questions. Tu réponds à l'oral et tu modifies le code devant lui si on te le demande."
+    },
+    {
+      "id": "p4",
+      "type": "info",
+      "titre": "Qualité du code",
+      "points": 2,
+      "consigne": "Code indenté, commenté et conforme au programme de 3ème (unités px et %, aucune balise de mise en forme, aucun sélecteur combiné)."
+    }
+  ],
+  "fiches": [
+    {
+      "num": 1,
+      "titre": "Agenda animé",
+      "consignes": [
+        "Le titre « Agenda des festivals » clignote en boucle : son opacité passe de 1 à 0,3 puis revient à 1 en 2 secondes.",
+        "Au survol, chaque ligne du tableau prend la couleur de fond #fff6d6 avec une transition de 0,5 seconde (retour progressif)."
+      ]
+    },
+    {
+      "num": 2,
+      "titre": "Cartes vivantes",
+      "consignes": [
+        "Au survol, une carte fait un tour complet (360°) et s'agrandit de 1,2 fois en 1 seconde ; le retour est progressif.",
+        "Ajoute une 4e carte « Les oasis » (texte : « Les palmeraies de Tozeur et de Nefta. ») et adapte la largeur pour que les cartes tiennent sur une ligne. Le titre devient « Quatre régions à visiter »."
+      ]
+    },
+    {
+      "num": 3,
+      "titre": "Météo toujours visible",
+      "consignes": [
+        "Le bloc « Météo du jour » reste affiché en bas à droite de la fenêtre même quand on fait défiler la page : 200 px de large, à 20 px du bas et de la droite.",
+        "Ajoute au tableau la ligne « Festival de la médina — Tunis — Ramadan » et la légende « Saison 2026 » au-dessus du tableau."
+      ]
+    }
+  ],
+  "questionFiche": "Quelles propriétés (ou balises) as-tu ajoutées, sur quel sélecteur, et pourquoi à cet endroit ?"
+}

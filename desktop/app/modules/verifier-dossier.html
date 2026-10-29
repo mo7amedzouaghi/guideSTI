@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Vérifier un dossier — STI</title>
+<link rel="stylesheet" href="../contenu/eleves/assets/vendor/fonts.css">
+<link rel="stylesheet" href="../desktop/barre.css">
+<link rel="stylesheet" href="modules.css">
+</head>
+<body>
+<header class="m-barre" data-titre="Vérifier un dossier" data-actif="dossier"></header>
+<main class="m-page">
+  <section class="m-carte no-print">
+    <h2>Conformité à l'annexe officielle</h2>
+    <p class="m-aide">Choisissez (ou glissez ici) le dossier d'un TP ou d'un projet : chaque fichier HTML, CSS, JS, PHP et SQL est analysé selon l'annexe du niveau choisi. Le contenu n'est jamais modifié.</p>
+    <div class="rangee" style="margin-bottom:14px">
+      <label>Niveau <select id="niveau"><option value="2">2ème année</option><option value="3">3ème année</option><option value="4" selected>4ème année (Bac)</option></select></label>
+      <button type="button" class="btn" id="choisir">📁 Choisir un dossier</button>
+      <button type="button" class="btn sec" id="relancer" disabled>↻ Relancer l'analyse</button>
+      <button type="button" class="btn sec" id="pdf" disabled>⇩ Rapport PDF</button>
+      <span id="chemin" class="m-aide" style="margin:0"></span>
+    </div>
+    <div class="zone-depot" id="depot"><b>Déposez un dossier ou des fichiers ici</b>HTML · CSS · JS · PHP · SQL</div>
+  </section>
+  <div id="resultat"></div>
+</main>
+<script src="../contenu/eleves/assets/data.js"></script>
+<script src="../contenu/eleves/assets/verificateur.js"></script>
+<script src="../desktop/commun.js"></script>
+<script>if (/espace=prof/.test(location.search)) document.querySelector("header.m-barre").dataset.espace = "prof";</script>
+<script src="entete.js"></script>
+<script src="verifier-dossier.js"></script>
+</body>
+</html>
