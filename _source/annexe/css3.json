@@ -1,6 +1,13 @@
 {
   "Sélecteurs": [
     {
+      "sélecteur": "*",
+      "définition": "Sélecteur universel : sélectionne tous les éléments de la page.",
+      "exemple": "* {\n  margin: 0px;\n  padding: 0px;\n}",
+      "niveau": 3,
+      "motsClés": "sélecteur universel étoile tous les éléments remise à zéro marges"
+    },
+    {
       "sélecteur": "element",
       "définition": "Sélectionne tous les éléments de type element.",
       "exemple": "p {\n  color: #1c2536;\n  font-size: 15px;\n}",

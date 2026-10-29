@@ -1046,6 +1046,32 @@
       ],
       "niveau": 2,
       "motsClés": "option choix liste"
+    },
+    {
+      "balise": "<output>",
+      "définition": "Représente le résultat d'un calcul ou d'une action de l'utilisateur (par exemple la valeur d'un curseur range).",
+      "attributs": [
+        "id",
+        "name",
+        "for"
+      ],
+      "exemple": "<input type=\"range\" id=\"duree\" min=\"1\" max=\"8\" value=\"4\" oninput=\"afficher()\">\n<output id=\"aff\">4</output>\n\n<script>\n  function afficher() {\n    document.getElementById(\"aff\").value = document.getElementById(\"duree\").value;\n  }\n</script>",
+      "paramètres": [
+        {
+          "nom": "id",
+          "rôle": "Identifiant utilisé en JavaScript pour écrire le résultat"
+        },
+        {
+          "nom": "for",
+          "rôle": "id du (des) champ(s) dont dépend le résultat"
+        }
+      ],
+      "remarques": [
+        "Souvent associé à input type=\"range\" et à l'événement oninput.",
+        "En JavaScript, on modifie son contenu avec value (ou innerHTML)."
+      ],
+      "niveau": 3,
+      "motsClés": "résultat sortie afficher valeur curseur range calcul"
     }
   ]
 }

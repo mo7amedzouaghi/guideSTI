@@ -210,7 +210,7 @@
                 var cible = p.split(/[\s>+~]+/).pop().replace(/\[\]/g, "").replace(/:[a-z-]+(\([^)]*\))?/g, "");
                 var balise = (cible.match(/^[a-z][a-z0-9]*/i) || ["a"])[0];
                 var nomC = (partie.trim().split(/[\s>+~]+/)[0].replace(/[^\w-]/g, "") || "zone") + "-" + balise;
-                ajouter(posS, "hors", "Le sélecteur combiné « " + partie.trim() + " » n'est pas dans l'annexe. Sélecteurs autorisés : element, #id, .classe, element.classe, element[attr], element[attr=valeur], a:link, a:visited, a:hover, a:active, :focus. Donner une classe (ou un id) aux éléments ciblés.",
+                ajouter(posS, "hors", "Le sélecteur combiné « " + partie.trim() + " » n'est pas dans l'annexe. Sélecteurs autorisés : *, element, #id, .classe, element.classe, element[attr], element[attr=valeur], a:link, a:visited, a:hover, a:active, :focus. Donner une classe (ou un id) aux éléments ciblés.",
                   "/* HTML : <" + balise + ' class="' + nomC + '"> */\n.' + nomC + " {\n  color: white;\n}", "CSS", "combine");
               });
               var pc, rp = /:([a-z-]+)/g;
@@ -222,6 +222,8 @@
                   if (nP > niveau) ajouter(posS, "niveau", niveauMsg(":" + nomP, nP), "", "CSS", "pseudo" + nomP);
                 }
               }
+              // sélecteur universel *
+              if (/(^|,)\s*\*\s*(,|$)/.test(sel)) { element("*", "CSS3", 3); if (niveau < 3) ajouter(posS, "niveau", niveauMsg("Le sélecteur universel *", 3), "", "CSS", "univ"); }
               if (/\[/.test(sel)) { element("element[attr]", "CSS3", 4); if (niveau < 4) ajouter(posS, "niveau", niveauMsg("Le sélecteur d'attribut [attr]", 4), "", "CSS", "attrsel"); }
               if (/(^|[\s,])[a-z][a-z0-9]*\.[\w-]/i.test(sel)) { element("element.class", "CSS3", 4); if (niveau < 4) ajouter(posS, "niveau", niveauMsg("Le sélecteur élément.classe", 4), "", "CSS", "elclass"); }
               if (niveau === 2 && /[#.]/.test(sel.replace(/\[[^\]]*\]/g, ""))) ajouter(posS, "niveau", "Les sélecteurs #id et .classe sont introduits en 3ème : en 2ème, sélecteur d'élément.", "", "CSS", "sel2");
