@@ -178,13 +178,17 @@
     ["A8", "Nom de fonction différent entre HTML et JS", "onclick=\"verif()\" / function verife()"],
     ["A9", "Point-virgule oublié (CSS)", "color: red⏎text-align: center;"],
     ["A10", "Accolade oubliée (CSS)", "règle non fermée"],
+    ["B1", "Conformité : margin-* / padding-* détaillées", "margin-top, padding-left (au lieu de margin / padding)"],
     ["C1", "Nom approché cherché par « contient »", "afficherDat au lieu de afficherDate"],
     ["C2", "SQL : étiquettes -- Qn oubliées", "requêtes sans commentaire"],
     ["C3", "SQL : colonnes dans un autre ordre", "SELECT prenom, nom"],
     ["D3", "Faute de frappe dans un identifiant (id)", "id=\"resulat\" / getElementById(\"resultat\")"]
   ];
-  var DEFAUT = { active: true, max: 3, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A7: 0.25, A9: 0, A10: 0.25, C1: 0.25, D3: 0.25 } };
-  function tol() { var t = dev.tolerance; return t && t.regles ? t : { active: !t || t.active !== false, max: DEFAUT.max, regles: Object.assign({}, DEFAUT.regles) }; }
+  var DEFAUT = { active: true, max: 3, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A7: 0.25, A9: 0, A10: 0.25, B1: 0, C1: 0.25, D3: 0.25 } };
+  function tol() {
+    var t = dev.tolerance;
+    if (t && t.regles && (t.connues || []).indexOf("B1") < 0) { t = JSON.parse(JSON.stringify(t)); t.regles.B1 = DEFAUT.regles.B1; }
+    return t && t.regles ? t : { active: !t || t.active !== false, max: DEFAUT.max, regles: Object.assign({}, DEFAUT.regles) }; }
   function carteTolerance() {
     var t = tol(), montants = [[0, "toléré (0 pt)"], [0.25, "−0,25 pt"], [0.5, "−0,5 pt"], [1, "−1 pt"]];
     return '<div class="m-carte" style="--c:var(--n4)"><h2>Tolérance aux petites erreurs</h2>' +
@@ -206,7 +210,7 @@
         var on = tr.querySelector(".t-on").checked; tr.querySelector(".t-val").disabled = !on;
         if (on) regles[tr.dataset.r] = Number(tr.querySelector(".t-val").value);
       });
-      dev.tolerance = { active: $("t-active").checked, max: Number($("t-max").value), regles: regles };
+      dev.tolerance = { active: $("t-active").checked, max: Number($("t-max").value), regles: regles, connues: REGLES.map(function (r) { return r[0]; }) };
       await sauver({ tolerance: dev.tolerance });
       S.toast("Règles enregistrées — relancez la correction pour les appliquer", "ok");
     }

@@ -14,7 +14,7 @@ const TOL = require("./tolerance.js");
 // réglages par défaut de la correction tolérante (modifiables pour chaque devoir)
 // règles validées par l'enseignant : code → points retirés (0 = toléré sans pénalité) ; une règle absente n'est pas appliquée.
 // Une erreur n'est pénalisée qu'une fois par élève, même si elle touche plusieurs critères.
-const TOLERANCE = { active: true, max: 3, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A7: 0.25, A9: 0, A10: 0.25, C1: 0.25, D3: 0.25 } };
+const TOLERANCE = { active: true, max: 3, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A7: 0.25, A9: 0, A10: 0.25, B1: 0, C1: 0.25, D3: 0.25 } };
 const regleActive = (ctx, code) => { const t = ctx.tolerance || {}; return t.active && t.regles && Object.prototype.hasOwnProperty.call(t.regles, code) && t.regles[code] !== null && t.regles[code] !== false; };
 function deduire(ctx, corrections, pts) {
   const deja = ctx.penalisees || new Set(), ici = new Set(); let retrait = 0, nouvelles = 0, dejaComptees = 0;
@@ -339,18 +339,28 @@ async function verifier(c, ctx) {
       if (!ctx.verificateur) return res(0, "Vérificateur indisponible");
       const l = trouver(ctx.fichiers, c.fichier, (f) => /\.(html?|css|js|php|sql)$/i.test(f));
       if (!l.length) return res(0, "Aucun fichier à vérifier");
-      const probs = [];
+      const probs = [], toleres = [];
       for (const x of lireTextes(ctx.base, l)) {
         for (const p of ctx.verificateur.analyser(x.t, ctx.niveau, langueDe(x.f)).problemes) {
           if (p.type === "convention") continue;
           // tolérance : une faute de frappe sur une méthode du programme n'est pas un élément hors annexe
           const nom = (/(?:méthode|fonction|propriété)\s+([\w.$]+)/i.exec(p.message) || [])[1];
           if ((regleActive(ctx, "A4") || regleActive(ctx, "A5")) && nom && TOL.estFauteDeFrappe(nom.split(".").pop())) continue;
+          // B1 : margin-top, padding-left… (forme détaillée de margin / padding) tolérées
+          const det = /propriété\s+((?:margin|padding)-(?:top|right|bottom|left))\b/i.exec(p.message);
+          if (det && regleActive(ctx, "B1")) { toleres.push({ code: "B1", cle: "B1|" + det[1].toLowerCase(), texte: det[1].toLowerCase() }); continue; }
           probs.push(x.f + " L" + p.ligne + " : " + p.message.split(".")[0]);
         }
       }
+      let note = "";
+      if (toleres.length) {
+        const d = deduire(ctx, toleres, pts);
+        const noms = Array.from(new Set(toleres.map((t) => t.texte)));
+        note = " — toléré : " + noms.join(", ") + texteRetrait(d);
+        if (!probs.length) { const o = res(pts - d.retrait, "Conforme à l'annexe (" + ctx.niveau + "ème)" + note); if (d.retrait) o.revoir = true; return o; }
+      }
       if (!probs.length) return res(pts, "Conforme à l'annexe (" + ctx.niveau + "ème)");
-      return res(probs.length <= 2 ? pts / 2 : 0, probs.length + " écart(s) : " + probs.slice(0, 3).join(" ; ") + (probs.length > 3 ? " ; …" : ""));
+      return res(probs.length <= 2 ? pts / 2 : 0, probs.length + " écart(s) : " + probs.slice(0, 3).join(" ; ") + (probs.length > 3 ? " ; …" : "") + note);
     }
     case "page": {
       const html = trouver(ctx.fichiers, c.fichier, (f) => /\.html?$/i.test(f));

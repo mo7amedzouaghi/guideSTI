@@ -953,6 +953,7 @@ ipcMain.handle("cor:corriger", async (e, id, o) => {
   const liste = devoir.eleves.filter((x) => !o.eleves || o.eleves.includes(x.id));
   // ancien format (pénalité unique) ou réglages absents : règles validées par défaut
   const tolerance = Object.assign({}, COR.TOLERANCE, devoir.tolerance && devoir.tolerance.regles ? devoir.tolerance : { active: devoir.tolerance ? devoir.tolerance.active !== false : true });
+  if (devoir.tolerance && devoir.tolerance.regles && !(devoir.tolerance.connues || []).includes("B1")) tolerance.regles = Object.assign({ B1: COR.TOLERANCE.regles.B1 }, tolerance.regles);
   let fait = 0;
   for (const el of liste) {
     const base = path.join(dd, el.dossier), fichiers = COR.fichiersEleve(base, el.isoles);
