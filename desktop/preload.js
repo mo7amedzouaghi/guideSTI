@@ -32,7 +32,7 @@ contextBridge.exposeInMainWorld("stiDesktop", {
   cor: {
     liste: I("cor:liste"), creer: I("cor:creer"), charger: I("cor:charger"), enregistrer: I("cor:enregistrer"), supprimer: I("cor:supprimer"),
     ouvrirDossier: I("cor:ouvrirDossier"), importerTravaux: I("cor:importerTravaux"), importerGrille: I("cor:importerGrille"), modeleGrille: I("cor:modeleGrille"),
-    joindre: I("cor:joindre"), ouvrirEnonce: I("cor:ouvrirEnonce"), corriger: I("cor:corriger"), fichiers: I("cor:fichiers"), ouvrirTravail: I("cor:ouvrirTravail"),
+    joindre: I("cor:joindre"), ressources: I("cor:ressources"), ouvrirEnonce: I("cor:ouvrirEnonce"), corriger: I("cor:corriger"), fichiers: I("cor:fichiers"), ouvrirTravail: I("cor:ouvrirTravail"),
     exporter: I("cor:exporter"), ouvrirFichier: I("cor:ouvrirFichier"),
     surProgression: (fn) => { const h = (e, x) => fn(x); ipcRenderer.on("cor:progression", h); return () => ipcRenderer.removeListener("cor:progression", h); }
   },

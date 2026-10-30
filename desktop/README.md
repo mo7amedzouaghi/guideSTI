@@ -81,6 +81,8 @@ Vérifications : `manuel`, `fichier`, `contient` (points proportionnels), `absen
 
 Tolérance (règles validées, réglables par devoir dans l'onglet Grille) : A1 parenthèse JS, A2 accolade JS, A4 majuscule dans une méthode, A5 faute de frappe dans une méthode, A7 = au lieu de ==, A10 accolade CSS, C1 nom approché, D3 faute dans un id → réparés, −0,25 pt ; A9 « ; » CSS , B1 margin-*/padding-*/border-* détaillées (margin-top, padding-left, border-top…) et B2 sélecteur descendant (div a ; pas > + ~) dans le critère « conforme » → tolérés (0 pt). Désactivées par défaut : A6, A8, C2, C3. Une erreur n'est pénalisée qu'une fois par élève ; au plus 3 réparations par page ; les critères concernés sont marqués « à revoir » (`lib/tolerance.js`).
 
+Ressources (facultatif) : dossier ou archive des fichiers donnés aux élèves (images, sons, vidéos…). Pendant les tests de page, un fichier absent du travail d'un élève est pris dans ces ressources.
+
 Travaux : une archive RAR ou ZIP avec un dossier (ou une archive) par élève ; les dossiers englobants et les archives imbriquées sont gérés. Export Excel : feuilles *Notes* (points par question, total, note /20, moyenne), *Grille détaillée* (chaque critère, justification en commentaire de cellule), *Justifications*, *Statistiques*, *Barème*. Les devoirs sont rangés dans *Documents › STI › Devoirs*.
 
 ## Structure

@@ -92,6 +92,8 @@
         '<button type="button" class="btn" data-a="grille">Importer la grille (Excel)</button><button type="button" class="btn sec" data-a="modele">Modèle de grille</button>', "Colonnes : Question · Critère · Points · Vérification · Fichier · Paramètre. Une grille sans les trois dernières colonnes est acceptée : tous les critères sont alors notés à la main.") +
       carte("🗄️", "Base de référence SQL", dev.base ? "✔ " + esc(dev.base.original) + " — " + esc((dev.base.tables || []).join(", ")) + (dev.base.erreurs ? " · " + dev.base.erreurs + " instruction(s) ignorée(s)" : "") : (sqlUtile ? "⚠ Nécessaire : la grille contient des vérifications SQL." : "Facultative (devoirs de bases de données)."), !!dev.base,
         '<button type="button" class="btn sec" data-a="base">Joindre le script .sql</button>', "Export phpMyAdmin ou script CREATE TABLE + INSERT INTO : les requêtes des élèves sont exécutées sur cette base.") +
+      carte("🧩", "Ressources fournies aux élèves", dev.ressources ? "✔ " + esc(dev.ressources.original) + " — " + dev.ressources.fichiers + " fichier(s)" : "Facultatif.", !!dev.ressources,
+        '<button type="button" class="btn sec" data-a="ressDossier">Joindre un dossier</button><button type="button" class="btn sec" data-a="ressArchive">…ou une archive</button>' + (dev.ressources ? '<button type="button" class="btn sec" data-a="ressRetirer">Retirer</button>' : ""), "Images, sons, vidéos, fichiers donnés avec l'énoncé. Pendant les tests de page, un fichier absent du travail d'un élève est pris ici : l'élève n'est pas pénalisé pour une ressource qu'il n'a pas rendue.") +
       carte("🗂️", "Travaux des élèves", dev.eleves.length ? "✔ " + dev.eleves.length + " élève(s) — " + esc(dev.source || "") : "Aucun travail importé.", !!dev.eleves.length,
         '<button type="button" class="btn" data-a="rar">Importer l\'archive RAR / ZIP</button><button type="button" class="btn sec" data-a="dossierTravaux">…ou un dossier</button>', "Une archive contenant un dossier (ou une archive) par élève, nommé avec son nom. Les archives imbriquées sont extraites automatiquement.") +
       "</div><div id=\"journal\"></div>";
@@ -114,6 +116,7 @@
       try {
         if (a === "enonce" || a === "base") { var r = await C.joindre(dev.id, a); if (r) { dev = r; rendre(); } }
         if (a === "voirEnonce") C.ouvrirEnonce(dev.id);
+        if (a === "ressDossier" || a === "ressArchive" || a === "ressRetirer") { var rr = await C.ressources(dev.id, a === "ressDossier" ? "dossier" : a === "ressArchive" ? "archive" : "retirer"); if (rr) { dev = rr; rendre(); S.toast(dev.ressources ? dev.ressources.fichiers + " ressource(s) jointe(s)" : "Ressources retirées", "ok"); } }
         if (a === "grille") { var g = await C.importerGrille(dev.id); if (g) { dev = g; S.toast(dev.grille.length + " critère(s) importé(s)", "ok"); rendre(); liste(); } }
         if (a === "modele") { var f = await C.modeleGrille(dev.grille.length ? dev.id : null); if (f) { S.toast("Grille enregistrée : " + f, "ok"); C.ouvrirFichier(f); } }
         if (a === "rar" || a === "dossierTravaux") {

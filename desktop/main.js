@@ -836,8 +836,14 @@ async function testerPage(fichierHtml, scenario, opts) {
   opts = opts || {};
   if (!sessionCorrecteur) {
     sessionCorrecteur = require("electron").session.fromPartition("sti-correcteur");
-    sessionCorrecteur.webRequest.onBeforeRequest((d, cb) => cb({ cancel: !/^(file|data|blob|about|devtools):/i.test(d.url) }));
+    sessionCorrecteur.webRequest.onBeforeRequest((d, cb) => {
+      if (!/^(file|data|blob|about|devtools):/i.test(d.url)) return cb({ cancel: true });
+      let r = null;
+      try { r = /^file:/i.test(d.url) ? ressourceManquante(d.url) : null; } catch (e) { r = null; }
+      cb(r ? { redirectURL: pathToFileURL(r).toString() } : {});
+    });
   }
+  ressourcesCourantes = opts.ressources && fs.existsSync(opts.ressources) ? { dossier: opts.ressources, page: path.dirname(fichierHtml) } : null;
   const w = new BrowserWindow({ show: false, width: 1280, height: 900, webPreferences: { session: sessionCorrecteur, preload: path.join(__dirname, "lib", "sonde.js"), contextIsolation: false, sandbox: true, nodeIntegration: false, devTools: false } });
   w.webContents.on("will-navigate", (e) => e.preventDefault());
   w.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
@@ -858,8 +864,25 @@ async function testerPage(fichierHtml, scenario, opts) {
     try { res.erreursJs = await w.webContents.executeJavaScript("(window.__sti && window.__sti.erreurs) || []", true); } catch (e) { /* ignoré */ }
     try { res.substitutions = await w.webContents.executeJavaScript("(window.__sti && window.__sti.subs) || []", true); } catch (e) { res.substitutions = []; }
   } catch (e) { res.erreur = e.message; }
-  finally { if (!w.isDestroyed()) w.destroy(); }
+  finally { if (!w.isDestroyed()) w.destroy(); ressourcesCourantes = null; }
   return res;
+}
+// ressources fournies aux élèves (images, sons, vidéos…) : un fichier absent du travail est pris dans les ressources du devoir
+let ressourcesCourantes = null;
+function ressourceManquante(url) {
+  const R = ressourcesCourantes;
+  if (!R) return null;
+  let f;
+  try { f = require("url").fileURLToPath(url.split(/[?#]/)[0]); } catch (e) { return null; }
+  if (fs.existsSync(f)) return null;
+  const rel = path.relative(R.page, f);
+  if (rel.startsWith("..") || path.isAbsolute(rel)) return null;
+  const parts = rel.split(path.sep);
+  for (let i = 0; i < parts.length; i++) { const c = path.join(R.dossier, ...parts.slice(i)); if (fs.existsSync(c) && fs.statSync(c).isFile()) return c; }
+  // même nom de fichier ailleurs dans les ressources (dossier images/ renommé…)
+  const nom = parts[parts.length - 1].toLowerCase(), trouves = [];
+  (function parcourir(d, n) { if (n > 6) return; for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) parcourir(p, n + 1); else if (e.name.toLowerCase() === nom) trouves.push(p); } })(R.dossier, 0);
+  return trouves.length === 1 ? trouves[0] : null;
 }
 
 let moteurSql = null;
@@ -939,6 +962,23 @@ function STISQL_creer(SQL, script) {
   const t = M.schema(b.db).map((x) => x.table + " (" + x.lignes + ")"); b.db.close();
   return { tables: t, erreurs: b.erreurs };
 }
+ipcMain.handle("cor:ressources", async (e, id, mode) => {
+  exigerProf();
+  const devoir = lireDevoir(id), dest = path.join(dossierDevoir(id), "ressources");
+  if (mode === "retirer") { fs.rmSync(dest, { recursive: true, force: true }); delete devoir.ressources; ecrireDevoir(id, devoir); return lireDevoir(id); }
+  const r = await dialog.showOpenDialog(fenetre, mode === "dossier"
+    ? { title: "Dossier des ressources fournies aux élèves (images, sons, fichiers de départ…)", properties: ["openDirectory"] }
+    : { title: "Ressources fournies aux élèves (archive RAR ou ZIP)", filters: [{ name: "Archives", extensions: ["rar", "zip"] }], properties: ["openFile"] });
+  if (r.canceled) return null;
+  fs.rmSync(dest, { recursive: true, force: true });
+  if (mode === "dossier") fs.cpSync(r.filePaths[0], dest, { recursive: true });
+  else await COR.extraireArchive(r.filePaths[0], dest);
+  let n = 0;
+  (function compter(d) { for (const x of fs.readdirSync(d, { withFileTypes: true })) x.isDirectory() ? compter(path.join(d, x.name)) : n++; })(dest);
+  devoir.ressources = { original: path.basename(r.filePaths[0]), fichiers: n };
+  ecrireDevoir(id, devoir);
+  return lireDevoir(id);
+});
 ipcMain.handle("cor:ouvrirEnonce", (e, id) => { exigerProf(); const d = lireDevoir(id); if (d.enonce) shell.openPath(path.join(dossierDevoir(id), d.enonce.fichier)); });
 ipcMain.handle("cor:corriger", async (e, id, o) => {
   exigerProf();
@@ -954,6 +994,8 @@ ipcMain.handle("cor:corriger", async (e, id, o) => {
   // ancien format (pénalité unique) ou réglages absents : règles validées par défaut
   const tolerance = Object.assign({}, COR.TOLERANCE, devoir.tolerance && devoir.tolerance.regles ? devoir.tolerance : { active: devoir.tolerance ? devoir.tolerance.active !== false : true });
   if (devoir.tolerance && devoir.tolerance.regles && true) for (const k of ["B1", "B2"]) if (!(devoir.tolerance.connues || []).includes(k) && !(k in tolerance.regles)) tolerance.regles = Object.assign({ [k]: COR.TOLERANCE.regles[k] }, tolerance.regles);
+  const dossierRess = devoir.ressources ? path.join(dd, "ressources") : null;
+  const testerAvecRessources = (f, s, op) => testerPage(f, s, Object.assign({ ressources: dossierRess }, op));
   let fait = 0;
   for (const el of liste) {
     const base = path.join(dd, el.dossier), fichiers = COR.fichiersEleve(base, el.isoles);
@@ -964,7 +1006,7 @@ ipcMain.handle("cor:corriger", async (e, id, o) => {
     const reparer = () => repare || (repare = { dossier: path.join(os.tmpdir(), "sti-repare", propre(id), el.id), rep: null }, repare.rep = require("./lib/tolerance").reparerProjet(base, repare.dossier, tolerance.regles || {}), repare);
     for (const c of devoir.grille) {
       if (res[c.id] && res[c.id].modifie && !o.ecraser) continue;            // note saisie par l'enseignant conservée
-      try { res[c.id] = await COR.verifier(c, { base, fichiers, niveau: devoir.niveau, verificateur: verif, SQL, refSql, testerPage, tolerance, reparer, penalisees }); }
+      try { res[c.id] = await COR.verifier(c, { base, fichiers, niveau: devoir.niveau, verificateur: verif, SQL, refSql, testerPage: testerAvecRessources, tolerance, reparer, penalisees }); }
       catch (err) { res[c.id] = { points: 0, justif: "Erreur de vérification : " + err.message, auto: true }; }
     }
     fait++;
