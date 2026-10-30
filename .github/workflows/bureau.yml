@@ -45,19 +45,22 @@ jobs:
 
       - name: Publication
         env:
-          GH_TOKEN: ${{ github.token }}
+          # RELEASE_TOKEN (facultatif) : jeton personnel de Zouaghi Mohamed → la release apparaît publiée par son compte
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN || github.token }}
         working-directory: desktop
         run: |
           VERSION=$(node -p "require('./package.json').version")
           FICHIERS=$(ls dist/complet/*.exe dist/complet/*.yml dist/complet/*.blockmap dist/eleve/*.exe dist/eleve/*.yml dist/eleve/*.blockmap | grep -v builder-debug)
           echo "$FICHIERS"
-          NOTES="STI Guide (poste prof) et STI Élève (postes du labo) — version $VERSION.
+          NOTES="**STI Guide** (poste prof) et **STI Élève** (postes du labo) — version $VERSION.
+          Conçu par **Zouaghi Mohamed** — Lycée Oued Ellil.
+
           Les applications 1.4.0 et suivantes trouvent cette version seules (page Mises à jour).
           Première installation : STI-Guide-Installation-$VERSION.exe (prof) ou STI-Eleve-Installation-$VERSION.exe (labo)."
           # release versionnée (historique)
           gh release delete "bureau-v$VERSION" -y 2>/dev/null || true
-          gh release create "bureau-v$VERSION" $FICHIERS --title "Application bureau $VERSION" --notes "$NOTES" --latest=false --target "$GITHUB_SHA"
+          gh release create "bureau-v$VERSION" $FICHIERS --title "STI Guide $VERSION — Zouaghi Mohamed" --notes "$NOTES" --latest=false --target "$GITHUB_SHA"
           # release fixe lue par les mises à jour automatiques
           gh release delete bureau-derniere -y --cleanup-tag 2>/dev/null || true
           git push origin :refs/tags/bureau-derniere 2>/dev/null || true
-          gh release create bureau-derniere $FICHIERS --title "Application bureau — dernière version ($VERSION)" --notes "$NOTES" --latest=false --target "$GITHUB_SHA"
+          gh release create bureau-derniere $FICHIERS --title "STI Guide — dernière version ($VERSION) — Zouaghi Mohamed" --notes "$NOTES" --latest=false --target "$GITHUB_SHA"
