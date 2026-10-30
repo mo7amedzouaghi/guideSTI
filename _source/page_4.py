@@ -203,7 +203,7 @@ CREATE TABLE Eleve (
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );''', "sql")}
-{enc("att", "<p><code>AUTO_INCREMENT</code> n'est pas dans l'annexe : la clé primaire est saisie explicitement.</p>")}
+{enc("info", "<p>Annexe 2026 : <code>AUTO_INCREMENT</code> attribue automatiquement une valeur numérique croissante (<code>idEmprunt INT AUTO_INCREMENT PRIMARY KEY</code>) ; la colonne est alors omise dans <code>INSERT INTO</code>.</p>")}
 """, "CREATE TABLE PRIMARY KEY FOREIGN KEY REFERENCES CONSTRAINT NOT NULL UNIQUE DEFAULT CHECK ON DELETE CASCADE ON UPDATE CASCADE")
 
 N.notion("Modifier la structure : ALTER TABLE", f"""
@@ -222,14 +222,14 @@ ALTER TABLE Eleve DROP CONSTRAINT uq_nom;
 
 -- Supprimer une table
 DROP TABLE Eleve;''', "sql")}
-{enc("info", "<p>L'annexe mentionne aussi <code>ALTER TABLE t ALTER colonne type</code> et <code>ALTER TABLE t RENAME nom1 TO nom2</code>. Sous MySQL, ces formes ne s'exécutent pas pour modifier une colonne : on enseigne <code>CHANGE</code> (ancien nom, nouveau nom, type).</p>")}
+{enc("info", "<p>Annexe 2026 : pour changer le type, <code>ALTER TABLE t ALTER COLUMN colonne type</code> ou <code>MODIFY</code> ; pour renommer, <code>ALTER TABLE t RENAME COLUMN nom1 TO nom2</code> ou <code>CHANGE</code>. Sous MySQL, ce sont <code>MODIFY</code> et <code>CHANGE</code> (ancien nom, nouveau nom, type) qui s'exécutent partout.</p>")}
 """, "ALTER TABLE ADD DROP CHANGE CONSTRAINT DROP TABLE modifier colonne renommer")
 
 N.bloc(retenir([
     "Clé primaire et clé étrangère se déclarent avec <code>CONSTRAINT nom</code>.",
     "<code>ON DELETE / ON UPDATE CASCADE</code> propage les suppressions et modifications.",
-    "Renommer ou retyper une colonne : <code>CHANGE</code>.",
-    "Pas d'<code>AUTO_INCREMENT</code>.",
+    "Retyper une colonne : <code>MODIFY</code> ; renommer : <code>CHANGE</code> (ou <code>RENAME COLUMN</code>).",
+    "<code>AUTO_INCREMENT</code> : numéro automatique (annexe 2026).",
 ], autres=[("Instructions de définition", ["Instruction", "Syntaxe (annexe)"], [
     (c("CREATE DATABASE"), c("CREATE DATABASE nom")), (c("DROP DATABASE"), c("DROP DATABASE nom")),
     (c("CREATE TABLE"), c("CREATE TABLE t (col type [contrainte], …, [CONSTRAINT nom] contrainte)")),
@@ -342,7 +342,6 @@ N.notion("Fonctions PHP de l'annexe", f"""
   strlen("Tunis");                  // 5
   substr("Oued Ellil", 0, 4);       // "Oued"
   strpos("Oued Ellil", "E");        // 5
-  strcmp("abc", "abd");             // < 0
   str_replace("Oued", "Wed", $ch);
   strtoupper($ch);  strtolower($ch);  trim($ch);
   ord("A");  chr(65);
@@ -352,7 +351,7 @@ N.notion("Fonctions PHP de l'annexe", f"""
   strtotime("2026-12-31");
   checkdate(2, 30, 2026);           // false
 ?>''', "php")}
-""", "abs sqrt round rand strlen substr strpos strcmp str_replace strtoupper strtolower trim ord chr date time strtotime checkdate")
+""", "abs sqrt round rand strlen substr strpos str_replace strtoupper strtolower trim ord chr date time strtotime checkdate")
 
 N.notion("Recevoir des données : $_GET, $_POST, isset", f"""
 {duo(code('''<?php
@@ -468,7 +467,7 @@ N.bloc(interdits("À ne pas enseigner en 4ème année", [
     "Sessions et cookies",
     "switch et var_dump() en PHP",
     "Hachage des mots de passe<small>md5, password_hash…</small>",
-    "AUTO_INCREMENT, CURDATE()<small>DATE(NOW())</small>",
+    "CURDATE()<small>DATE(NOW())</small>",
     "JOIN explicite<small>syntaxe classique avec WHERE</small>",
     "Sous-requêtes corrélées",
     "Attribut pattern, console.log()",

@@ -5,7 +5,11 @@
       "définition": "Sélecteur universel : sélectionne tous les éléments de la page.",
       "exemple": "* {\n  margin: 0px;\n  padding: 0px;\n}",
       "niveau": 3,
-      "motsClés": "sélecteur universel étoile tous les éléments remise à zéro marges"
+      "motsClés": "sélecteur universel étoile tous les éléments remise à zéro marges",
+      "remarques": [
+        "Utilisé surtout pour remettre à zéro les marges de tous les éléments.",
+        "À ne pas confondre avec les sélecteurs combinés (.menu a), hors annexe."
+      ]
     },
     {
       "sélecteur": "element",
@@ -80,7 +84,7 @@
       "motsClés": "lien visité pseudo-classe"
     },
     {
-      "sélecteur": "a:hover",
+      "sélecteur": "selecteur:hover",
       "définition": "Cible l'élément au moment où l'utilisateur le survole avec le pointeur de la souris.",
       "exemple": "a:hover {\n  color: #D35400;\n}\n.carte:hover {\n  border-color: #F5B800;\n}",
       "remarques": [
@@ -91,7 +95,7 @@
       "motsClés": "survol souris hover pseudo-classe"
     },
     {
-      "sélecteur": ":focus",
+      "sélecteur": "selecteur:focus",
       "définition": "Cible l'élément lorsqu'il a le focus (par exemple lors d'un clic ou de la navigation au clavier).",
       "exemple": "input:focus {\n  border: 2px solid #F5B800;\n  background-color: #fff6d6;\n}",
       "remarques": [
@@ -101,8 +105,8 @@
       "motsClés": "focus champ actif saisie pseudo-classe"
     },
     {
-      "sélecteur": "a:active",
-      "définition": "Cible l'élément au moment où il est activé par l'utilisateur.",
+      "sélecteur": "selecteur:active",
+      "définition": "Cible l'élément lorsqu'il est activé.",
       "exemple": "a:active {\n  color: #C62828;\n}",
       "niveau": 4,
       "motsClés": "lien clic actif pseudo-classe"
@@ -179,15 +183,15 @@
       "définition": "Définit une ombre au texte.",
       "exemple": "h1 {\n  text-shadow: 2px 2px 4px gray;\n}",
       "valeurs": "décalage-x décalage-y [flou] couleur",
-      "niveau": 3,
+      "niveau": 2,
       "motsClés": "ombre texte"
     },
     {
       "propriété": "text-transform",
       "définition": "Spécifie la façon de transformer les caractères d'un texte en majuscules ou en minuscules (uppercase, lowercase, capitalize).",
-      "exemple": "nav a {\n  text-transform: uppercase;\n}\n.nom {\n  text-transform: capitalize;\n}",
+      "exemple": ".lien-menu {\n  text-transform: uppercase;\n}\n.nom {\n  text-transform: capitalize;\n}",
       "valeurs": "uppercase, lowercase, capitalize",
-      "niveau": 3,
+      "niveau": 2,
       "motsClés": "majuscules minuscules casse capitale"
     },
     {
@@ -272,12 +276,20 @@
       "définition": "Spécifie la taille d'une image d'arrière-plan.",
       "exemple": "header {\n  background-image: url(\"carthage.jpg\");\n  background-size: cover;\n}",
       "valeurs": "cover, contain, ou largeur hauteur en px / %",
-      "niveau": 3,
+      "niveau": 2,
       "motsClés": "taille image de fond couvrir"
     },
     {
+      "propriété": "background-position",
+      "définition": "Définit la position d'une image de fond.",
+      "exemple": "body {\n  background-image: url(\"images/logo.png\");\n  background-repeat: repeat-y;\n  background-position: center;\n}",
+      "valeurs": "center, left, right",
+      "niveau": 2,
+      "motsClés": "position image fond centrer"
+    },
+    {
       "propriété": "background",
-      "définition": "Super-propriété d'arrière-plan. Combine background-color, background-image, background-repeat, background-size.",
+      "définition": "Super-propriété d'arrière-plan. Combine background-color, background-image, background-repeat, background-size, background-position.",
       "exemple": "header {\n  background: #0D2B6B url(\"motif.png\") repeat-x;\n}",
       "valeurs": "couleur image répétition taille",
       "niveau": 2,
@@ -378,6 +390,17 @@
       "motsClés": "flotter flottant côte à côte colonnes mise en page"
     },
     {
+      "propriété": "clear",
+      "définition": "Définit si un élément doit être déplacé sous les éléments flottants.",
+      "exemple": "footer {\n  clear: both;\n}",
+      "valeurs": "left, right, both, none",
+      "remarques": [
+        "À placer sur l'élément qui suit des blocs flottants (souvent le pied de page)."
+      ],
+      "niveau": 3,
+      "motsClés": "flottant arrêter dessous float"
+    },
+    {
       "propriété": "padding",
       "définition": "Propriété abrégée qui définit la marge intérieure d'un élément des 4 côtés.",
       "exemple": ".carte {\n  padding: 15px;            /* 4 côtés */\n  padding: 10px 20px;       /* haut-bas  gauche-droite */\n  padding: 5px 10px 15px 20px; /* haut droite bas gauche */\n}",
@@ -403,11 +426,11 @@
     },
     {
       "propriété": "display",
-      "définition": "Spécifie le comportement d'affichage d'un élément (inline, block, inline-block).",
-      "exemple": "nav a {\n  display: inline-block;\n  width: 120px;\n}",
-      "valeurs": "inline, block, inline-block",
+      "définition": "Spécifie le comportement d'affichage d'un élément (inline, block, inline-block, flex).",
+      "exemple": ".lien-menu {\n  display: inline-block;\n  width: 120px;\n}",
+      "valeurs": "inline, block, inline-block, flex",
       "remarques": [
-        "flex, grid et none ne sont pas listés dans l'annexe."
+        "La valeur flex est dans l'annexe 2026 ; justify-content, align-items et grid n'y sont pas."
       ],
       "niveau": 3,
       "motsClés": "affichage bloc en ligne"
@@ -459,6 +482,17 @@
       "valeurs": "Nombre de 0 (transparent) à 1 (opaque)",
       "niveau": 3,
       "motsClés": "transparence opacité"
+    },
+    {
+      "propriété": "visibility",
+      "définition": "Affiche ou masque un élément sans modifier la disposition d'un document.",
+      "exemple": ".message {\n  visibility: hidden;\n}",
+      "valeurs": "visible, hidden",
+      "remarques": [
+        "L'élément masqué garde sa place dans la page."
+      ],
+      "niveau": 3,
+      "motsClés": "masquer cacher afficher visible"
     }
   ],
   "Propriétés des bordures": [
@@ -486,14 +520,14 @@
       "définition": "Définit le rayon des coins arrondis d'un élément.",
       "exemple": ".carte {\n  border-radius: 10px;\n}\nimg.profil {\n  border-radius: 50%;   /* cercle */\n}",
       "valeurs": "Valeur en px ou %",
-      "niveau": 3,
+      "niveau": 2,
       "motsClés": "coins arrondis cercle"
     },
     {
       "propriété": "border-width",
       "définition": "Définit la largeur des bordures d'un élément (medium, thin, thick, valeur en px).",
       "exemple": ".cadre {\n  border-width: 3px;\n}",
-      "valeurs": "medium, thin, thick, ou valeur en px",
+      "valeurs": "medium, thin, thick, valeur en px",
       "niveau": 2,
       "motsClés": "épaisseur bordure"
     },
@@ -598,7 +632,7 @@
     },
     {
       "propriété": "animation",
-      "définition": "Super-propriété de l'animation. Combine animation-name, animation-duration, animation-delay, animation-iteration-count et animation-direction.",
+      "définition": "Super-propriété de l'animation. Combine animation-name, animation-duration, animation-delay, animation-iteration-count, animation-direction et animation-timing-function.",
       "exemple": "@keyframes traversee {\n  0%   { left: 0px; }\n  100% { left: 300px; }\n}\n.bateau {\n  position: relative;\n  animation: traversee 3s 0s infinite alternate;\n}",
       "valeurs": "nom durée [délai] [répétitions] [direction]",
       "remarques": [

@@ -34,8 +34,8 @@
     if (it.l === "SQL" && it.t === "fonction") SQLF[it.e.replace(/\(\)$/, "")] = it.n;
   });
   // méthodes et fonctions JavaScript de l'annexe (nom -> niveau)
-  [["getElementById", 3], ["getElementsByName", 4], ["write", 3], ["substring", 3], ["indexOf", 3], ["lastIndexOf", 3],
-   ["replace", 3], ["toLowerCase", 3], ["toUpperCase", 3], ["trim", 3], ["fromCharCode", 3], ["getDate", 3], ["getMonth", 3],
+  [["getElementById", 3], ["getElementsByName", 4], ["substring", 3], ["indexOf", 3], ["lastIndexOf", 3],
+   ["replace", 3], ["toLowerCase", 3], ["toUpperCase", 3], ["trim", 3], ["fromCharCode", 3], ["charCodeAt", 3], ["getDate", 3], ["getMonth", 3],
    ["getFullYear", 3], ["toString", 3], ["play", 4], ["pause", 4]].forEach(function (x) { JSM[x[0]] = x[1]; });
   var MATH = { abs: 3, sqrt: 3, round: 3, trunc: 3, random: 3 };
   var JSGLOB = { alert: 3, prompt: 3, isNaN: 3, Number: 3, parseInt: 3, parseFloat: 3, String: 3, Date: 3 };
@@ -44,10 +44,9 @@
   var PHPKW = { "if": 1, "elseif": 1, "else": 1, "for": 1, "while": 1, "do": 1, "function": 1, "return": 1, "array": 1,
     "isset": 1, "echo": 1, "require": 1, "die": 1, "count": 1, "and": 1, "or": 1, "int": 1, "float": 1, "string": 1, "bool": 1 };
   var TYPES_INPUT = { text: 2, number: 2, radio: 2, checkbox: 2, submit: 2, reset: 2,
-    email: 3, tel: 3, password: 3, date: 3, time: 3, range: 3, button: 3 };
+    email: 3, tel: 3, password: 3, date: 3, time: 3, "datetime-local": 3, range: 3, button: 3 };
   var PSEUDO = { link: 4, visited: 4, hover: 3, focus: 4, active: 4 };
-  var NOM_TAG = { b: "<b>", strong: "<b>", i: "<b>", em: "<b>", u: "<b>", font: "<b>", center: "<b>",
-    button: "<button>", source: "<source>", abbr: "<abbr>" };
+  var NOM_TAG = { b: "<b>", i: "<b>", font: "<b>", center: "<b>", button: "<button>", abbr: "<abbr>" };
 
   /* ---------------------------------------------------------------- outils de texte */
   function blanchir(s) { return s.replace(/[^\n]/g, " "); }
@@ -214,7 +213,7 @@
                 var cible = p.split(/[\s>+~]+/).pop().replace(/\[\]/g, "").replace(/:[a-z-]+(\([^)]*\))?/g, "");
                 var balise = (cible.match(/^[a-z][a-z0-9]*/i) || ["a"])[0];
                 var nomC = (partie.trim().split(/[\s>+~]+/)[0].replace(/[^\w-]/g, "") || "zone") + "-" + balise;
-                ajouter(posS, "hors", "Le sélecteur combiné « " + partie.trim() + " » n'est pas dans l'annexe. Sélecteurs autorisés : *, element, #id, .classe, element.classe, element[attr], element[attr=valeur], a:link, a:visited, a:hover, a:active, :focus. Donner une classe (ou un id) aux éléments ciblés.",
+                ajouter(posS, "hors", "Le sélecteur combiné « " + partie.trim() + " » n'est pas dans l'annexe. Sélecteurs autorisés : *, element, #id, .classe, element.classe, element[attr], element[attr=valeur], a:link, a:visited, :hover, :focus, :active, et le groupe (virgule). Donner une classe (ou un id) aux éléments ciblés.",
                   "/* HTML : <" + balise + ' class="' + nomC + '"> */\n.' + nomC + " {\n  color: white;\n}", "CSS", "combine");
               });
               var pc, rp = /:([a-z-]+)/g;
@@ -239,19 +238,21 @@
             var prop = dcl[1].toLowerCase(), valeur = dcl[2], posD = base + dcl.index;
             if (prop.indexOf("--") === 0) continue;
             if (CSSP[prop] === undefined) {
-              var cle = prop === "clear" ? "clear" : prop === "line-height" ? "line-height" : prop === "text-decoration" ? "text-decoration"
-                : prop === "outline" ? "outline" : /^(justify-content|align-items|flex|flex-|grid)/.test(prop) ? "flex"
+              var cle = prop === "line-height" ? "line-height" : prop === "text-decoration" ? "text-decoration"
+                : prop === "outline" ? "outline" : /^(justify-content|align-items|flex|flex-|grid)/.test(prop) ? "justify-content"
                 : /timing-function/.test(prop) ? "ease" : null;
               var hc = cle ? hors(cle) : null;
-              ajouter(posD, prop === "clear" ? "convention" : "hors", hc ? hc.x : "La propriété " + prop + " n'est pas dans l'annexe.", hc ? hc.a : "", "CSS", "p" + prop);
+              ajouter(posD, "hors", hc ? hc.x : "La propriété " + prop + " n'est pas dans l'annexe.", hc ? hc.a : "", "CSS", "p" + prop);
             } else {
               element(prop, "CSS3", CSSP[prop]);
               if (CSSP[prop] > niveau) ajouter(posD, "niveau", niveauMsg("La propriété " + prop, CSSP[prop]), "", "CSS", "p" + prop);
             }
             if (/\d(\.\d+)?(em|rem|vh|vw)\b/.test(valeur)) { var he = hors("em"); ajouter(posD, "hors", he.x, he.a, "CSS", "unite"); }
-            if (prop === "display" && /\b(flex|grid|inline-flex)\b/.test(valeur)) { var hf = hors("flex"); ajouter(posD, "hors", hf.x, hf.a, "CSS", "flex"); }
+            // annexe 2026 : display accepte inline, block, inline-block et flex
+            if (prop === "display" && /\b(grid|inline-flex|inline-grid)\b/.test(valeur)) { var hf = hors("grid"); ajouter(posD, "hors", hf.x, hf.a, "CSS", "flex"); }
             if (/linear-gradient|radial-gradient/.test(valeur)) { var hg = hors("linear-gradient"); ajouter(posD, "hors", hg.x, hg.a, "CSS", "gradient"); }
-            if (/^(transition|animation)/.test(prop) && /\b(ease|ease-in|ease-out|ease-in-out|linear|cubic-bezier|steps)\b/.test(valeur)) { var hz = hors("ease"); ajouter(posD, "hors", hz.x, hz.a, "CSS", "ease"); }
+            // le rythme (timing-function) fait partie de la super-propriété animation (annexe 2026), pas de transition
+            if (/^transition/.test(prop) && /\b(ease|ease-in|ease-out|ease-in-out|linear|cubic-bezier|steps)\b/.test(valeur)) { var hz = hors("ease"); ajouter(posD, "hors", hz.x, hz.a, "CSS", "ease"); }
             if (prop === "transform" && /(translate|rotate|scale)[XYZ]\s*\(/.test(valeur)) { var ht = hors("translatex"); ajouter(posD, "hors", ht.x, ht.a, "CSS", "translatex"); }
             if (prop === "background-repeat" && /no-repeat/.test(valeur) || prop === "background" && /no-repeat/.test(valeur)) { var hn = hors("no-repeat"); ajouter(posD, "hors", hn.x, hn.a, "CSS", "norepeat"); }
             if (prop === "transform") nbTransform++;
@@ -306,6 +307,12 @@
         var reV = /\.(value|innerHTML|checked|disabled|readOnly|src|muted|selectedIndex|length|style)\b/g;
         while ((rx = reV.exec(js))) element("." + rx[1], "JavaScript", rx[1] === "selectedIndex" || rx[1] === "style" || rx[1] === "disabled" || rx[1] === "readOnly" || rx[1] === "muted" ? 4 : 3);
         if (/\.readonly\s*=/.test(js)) ajouter(s.debut + js.search(/\.readonly\s*=/), "convention", "En JavaScript, l'attribut s'écrit readOnly (O majuscule) : .readonly est sans effet.", 'document.getElementById("cin").readOnly = true;', "JS", "readonly");
+        // annexe 2026 : element.style limité à color, background, border, font, width, height, visibility
+        var reSt = /\.style\.([A-Za-z]+)/g, rst;
+        while ((rst = reSt.exec(js))) if (!/^(color|background|border|font|width|height|visibility)$/.test(rst[1])) { var hsl = hors("style non listé"); ajouter(s.debut + rst.index, "hors", "element.style." + rst[1] + " : " + hsl.x, hsl.a, "JS", "style" + rst[1]); }
+        // programme 2026 : let (ou déclaration implicite) et const
+        var reVar = /\bvar\s+[A-Za-z_$]/g, rv;
+        while ((rv = reVar.exec(js))) { var hv = hors("var"); ajouter(s.debut + rv.index, "convention", hv.x, hv.a, "JS", "var"); }
         if (/\.style\.[a-z]+-[a-z]/.test(js)) ajouter(s.debut + js.search(/\.style\.[a-z]+-[a-z]/), "convention", "Une propriété CSS avec tiret s'écrit en camelCase en JavaScript.", 'element.style.backgroundColor = "navy";', "JS", "camel");
       }
 
@@ -344,9 +351,9 @@
       var sql = sansChaines(s.texte, "sql").replace(/\$\w+/g, function (x) { return blanchir(x); });
       var U = sql.toUpperCase(), mq;
       if (niveau === 2 && !dejaNiveau.sql) { dejaNiveau.sql = true; ajouter(s.debut, "niveau", "Les bases de données sont introduites en 3ème.", "", "SQL", "sql2"); }
+      // annexe 2026 : AUTO_INCREMENT, MODIFY / CHANGE, ENUM et LIMIT sont dans l'annexe
       var HORS_SQL = [[/\b(INNER|LEFT|RIGHT|NATURAL|CROSS)?\s*JOIN\b/g, "join"], [/\bCURDATE\s*\(|\bCURRENT_DATE\b/g, "curdate"],
-        [/\bAUTO_INCREMENT\b/g, "auto_increment"], [/\bMODIFY\b|\bRENAME\s+COLUMN\b/g, "modify"], [/\bIF\s+(NOT\s+)?EXISTS\b/g, "if exists"],
-        [/\bLIMIT\s+\d/g, "limit"], [/\b(BOOLEAN|ENUM|FLOAT|DOUBLE)\b/g, "boolean"]];
+        [/\bIF\s+(NOT\s+)?EXISTS\b/g, "if exists"], [/\b(BOOLEAN|FLOAT|DOUBLE)\b/g, "boolean"]];
       HORS_SQL.forEach(function (x) {
         var mq2;
         while ((mq2 = x[0].exec(U))) { var hq = hors(x[1]); ajouter(s.debut + mq2.index, "hors", hq.x, hq.a, "SQL", "sql" + x[1]); }
@@ -363,15 +370,15 @@
         void OKSQL;
       }
       if (niveau === 3) {
-        var R3 = [[/\b(CREATE|ALTER|DROP)\s+(TABLE|DATABASE)\b/g, "Les instructions CREATE, ALTER et DROP sont réservées à la 4ème : en 3ème, la base se crée en mode assisté (phpMyAdmin)."],
-          [/\bGROUP\s+BY\b/g, "GROUP BY est au programme de 4ème."], [/\bHAVING\b/g, "HAVING est au programme de 4ème."],
+        // programme 2026 : la création et la gestion d'une BDR (CREATE, ALTER, DROP) sont en 3ème
+        var R3 = [[/\bGROUP\s+BY\b/g, "GROUP BY est au programme de 4ème."], [/\bHAVING\b/g, "HAVING est au programme de 4ème."],
           [/\(\s*SELECT\b/g, "Les sous-requêtes sont au programme de 4ème."]];
         R3.forEach(function (x) { var m3; while ((m3 = x[0].exec(U))) ajouter(s.debut + m3.index, "niveau", x[1], "", "SQL", x[1]); });
         var rFrom = /\bFROM\s+([\s\S]*?)(\bWHERE\b|\bORDER\b|\bGROUP\b|;|$)/g, mf;
         while ((mf = rFrom.exec(U))) if (/,/.test(mf[1])) ajouter(s.debut + mf.index, "niveau", "Une requête sur plusieurs tables (jointure) est au programme de 4ème : en 3ème, une seule table.", "", "SQL", "multi");
       }
       ["SELECT", "INSERT INTO", "UPDATE", "DELETE FROM", "CREATE TABLE", "ALTER TABLE", "DROP TABLE", "GROUP BY", "HAVING", "ORDER BY", "DISTINCT", "BETWEEN", "LIKE", "IS NULL", "FOREIGN KEY", "PRIMARY KEY"]
-        .forEach(function (k) { if (new RegExp("\\b" + k.replace(" ", "\\s+") + "\\b").test(U)) element(k, "SQL", /CREATE|ALTER|DROP|GROUP|HAVING|FOREIGN/.test(k) ? 4 : 3); });
+        .forEach(function (k) { if (new RegExp("\\b" + k.replace(" ", "\\s+") + "\\b").test(U)) element(k, "SQL", /GROUP|HAVING/.test(k) ? 4 : 3); });
     });
 
     problemes.sort(function (a, b) { return a.ligne - b.ligne; });

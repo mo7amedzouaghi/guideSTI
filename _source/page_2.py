@@ -40,7 +40,7 @@ et création de sites web.</p>
 <h2>Inscriptions</h2>
 <p>Ouvertes jusqu'au 15 novembre.</p>''', "html"),
 apercu('<h1>Club informatique</h1><h2>Nos activités</h2><p>Programmation, robotique<br>et création de sites web.</p><hr><h2>Inscriptions</h2><p>Ouvertes jusqu\'au 15 novembre.</p>', haut=230))}
-{enc("att", "<p>La mise en forme (gras, italique, couleur) ne se fait <b>jamais</b> avec des balises HTML comme <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code> ou <code>&lt;strong&gt;</code> : elle passe par le CSS (<code>font-weight</code>, <code>font-style</code>). HTML = structure, CSS = présentation.</p>")}
+{enc("att", "<p>Programme 2026 : pour donner du sens à un mot, on utilise <code>&lt;strong&gt;</code> (texte important), <code>&lt;em&gt;</code> (emphase), <code>&lt;u&gt;</code> (annotation) et <code>&lt;mark&gt;</code> (surbrillance). Les balises <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;font&gt;</code> et <code>&lt;center&gt;</code> ne sont pas dans l'annexe : la présentation passe par le CSS.</p>")}
 """, "h1 h2 h3 h4 h5 h6 titre paragraphe p br hr ligne séparation")
 
 N.notion("Valider sa page avec le W3C", f"""
@@ -335,7 +335,7 @@ N.bloc(interdits("À ne pas enseigner en 2ème année", [
     "CSS externe<small>fichier .css et balise link (3ème)</small>",
     "Types date, time, email, tel, password, range<small>3ème</small>",
     "Sélecteurs #id, .classe, pseudo-classes<small>3ème et 4ème</small>",
-    "Mise en forme par balises<small>b, strong, i, em, u, font, center</small>",
+    "Balises de présentation<small>b, i, font, center</small>",
 ]), "Interdits", "interdits 2ème")
 
 N.bloc(f"""<article class="notion" id="m6-progression"><div class="notion-tete"><h3>Progression suggérée</h3><span class="annexe-tag">Proposition</span></div><div class="notion-corps">

@@ -189,7 +189,7 @@ N.bloc(retenir([
 
 # =====================================================================
 N.module("Mise en page : boîtes et positionnement",
-         "Dimensionner les blocs, les faire flotter et les positionner, sans Flexbox ni Grid.")
+         "Dimensionner les blocs, les faire flotter et les positionner (float, position, display), sans Grid.")
 
 N.notion("Le modèle de boîte", f"""
 <p>Chaque élément est une boîte : le contenu (<code>width</code>, <code>height</code>), la marge intérieure (<code>padding</code>), la bordure, puis la marge extérieure (<code>margin</code>).</p>
@@ -229,7 +229,7 @@ apercu('<style>body{font:13px Arial;position:relative;margin:6px}nav,section,foo
     (c("absolute"), "Placé par rapport au premier parent positionné"),
     (c("fixed"), "Fixé à la fenêtre, ne défile pas"),
     (c("sticky"), "Normal puis collé au bord pendant le défilement")])}
-{enc("att", "<p><code>clear</code> ne figure pas dans l'annexe actuelle ; il reste indispensable pour arrêter un flottement. Les membres du comité de réforme proposent de l'y ajouter.</p>")}
+{enc("info", "<p><code>clear</code> (left, right, both, none) est dans l'annexe 2026 : il arrête le flottement. <code>display</code> accepte aussi la valeur <code>flex</code> (sans <code>justify-content</code> ni <code>align-items</code>).</p>")}
 """, "display inline block inline-block float left right none position static relative absolute fixed sticky top bottom left right clear hauteur 100%")
 
 N.notion("Débordement et transparence", f"""
@@ -247,7 +247,7 @@ N.bloc(retenir([
     "Taille totale d'une boîte = width + padding + border + margin.",
     "<code>float</code> place les blocs côte à côte ; le pied de page arrête le flottement.",
     "<code>top</code>, <code>left</code>… n'agissent que sur un élément positionné.",
-    "Flexbox et Grid ne sont pas au programme.",
+    "<code>display: flex</code> est dans l'annexe 2026 ; Grid, <code>justify-content</code> et <code>align-items</code> n'y sont pas.",
 ], css=[
     ("width / height", "valeur en px ou %", "220px", "Largeur / hauteur du contenu"),
     ("padding", "1 à 4 valeurs en px", "15px", "Marge intérieure"),
@@ -342,7 +342,6 @@ let prenom = prompt("Votre prénom ?");
 
 // Sorties
 alert("Bienvenue " + prenom);
-document.write("Bonjour");
 
 // Lire un champ et écrire dans la page
 let nom = document.getElementById("nom").value;
@@ -352,12 +351,11 @@ apercu('<input id="nom" value="Amine"> <input type="button" value="Afficher" onc
 {tableau(["Instruction", "Rôle"], [
     (c("prompt(message)"), "Affiche une boîte de saisie et renvoie le texte tapé"),
     (c("alert(message)"), "Affiche un message dans une boîte"),
-    (c("document.write(texte)"), "Écrit dans la page pendant son chargement"),
     (c("document.getElementById(id)"), "Renvoie l'élément ayant cet id"),
     (c("element.value"), "Valeur saisie dans un champ"),
     (c("element.innerHTML"), "Contenu HTML d'un élément (lecture ou écriture)")])}
 {enc("att", "<p><code>console.log()</code> n'est pas au programme : on affiche avec <code>alert()</code> ou <code>innerHTML</code>.</p>")}
-""", "prompt alert document.write innerHTML getElementById value entrée sortie")
+""", "prompt alert innerHTML getElementById value entrée sortie")
 
 N.notion("Variables, conditions et boucles", f"""
 {code('''let moyenne = 13.5;        // variable
@@ -482,7 +480,7 @@ N.bloc(retenir([
     "Mois affiché : <code>getMonth() + 1</code>.",
 ], js=[
     ("alert(msg)", "Affiche un message"), ("prompt(msg)", "Saisie d'une valeur"),
-    ("document.write(t)", "Écrit dans la page"), ("document.getElementById(id)", "Accède à un élément"),
+    ("document.getElementById(id)", "Accède à un élément"),
     ("innerHTML", "Lit ou modifie le contenu d'un élément"),
     ("Number(ch) / parseInt(ch, b) / parseFloat(ch)", "Convertit une chaîne en nombre"),
     ("String(x)", "Convertit en chaîne"), ("isNaN(ch)", "Vrai si la valeur n'est pas un nombre"),
@@ -574,7 +572,7 @@ DELETE FROM Eleve WHERE idEleve = 25;''', "sql")}
 N.bloc(retenir([
     "Clé primaire soulignée, clé étrangère suivie de #.",
     "Relation ∞:∞ = table intermédiaire.",
-    "Création de la base et des tables : mode assisté uniquement.",
+    "Création de la base et des tables : mode assisté, puis commandes SQL (CREATE, ALTER, DROP — programme 2026).",
     "Requêtes SQL sur une seule table.",
 ], autres=[("Instructions SQL de 3ème", ["Instruction", "Rôle"], [
     (c("SELECT … FROM … WHERE … ORDER BY"), "Consulter, filtrer, trier"), (c("DISTINCT"), "Supprimer les doublons"),
@@ -589,13 +587,13 @@ N.module("Limites du programme et progression",
 
 N.bloc(interdits("À ne pas enseigner en 3ème année", [
     "PHP<small>réservé à la 4ème</small>",
-    "Flexbox et Grid<small>mise en page par float et position</small>",
+    "Grid, justify-content, align-items<small>float, position, display: flex</small>",
     "Unités em, rem, vh, vw<small>px et % uniquement</small>",
     "console.log() et addEventListener<small>alert, innerHTML, événements HTML</small>",
     "getElementsByName<small>4ème</small>",
     "charAt, substr, Math.floor, Math.ceil, getDay<small>ch[i], substring, Math.trunc</small>",
     "&lt;button&gt;, onsubmit sur un bouton<small>input type=\"button\" + onclick</small>",
-    "CREATE, ALTER, DROP écrits<small>mode assisté phpMyAdmin</small>",
+    "document.write()<small>retiré de l'annexe 2026 : innerHTML</small>",
     "Jointures, agrégats, GROUP BY, sous-requêtes<small>4ème</small>",
     "transition-timing-function, translateX/Y<small>hors annexe</small>",
 ]), "Interdits", "interdits 3ème")

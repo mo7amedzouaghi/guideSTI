@@ -80,6 +80,16 @@
       ],
       "niveau": 3,
       "motsClés": "type date heure horodatage"
+    },
+    {
+      "type": "ENUM",
+      "définition": "Définit une liste de valeurs prédéfinies.",
+      "exemple": "CREATE TABLE Eleve (\n  idEleve INT PRIMARY KEY,\n  sexe ENUM('F', 'G')\n);",
+      "remarques": [
+        "Les valeurs possibles s'écrivent entre apostrophes."
+      ],
+      "niveau": 3,
+      "motsClés": "liste valeurs choix énumération"
     }
   ],
   "Opérateurs de comparaison": [
@@ -189,6 +199,13 @@
       ],
       "niveau": 3,
       "motsClés": "vide null absent non renseigné manquant"
+    },
+    {
+      "opérateur": "ANY",
+      "définition": "Utilisé avec une sous-requête pour comparer une valeur à au moins une des valeurs retournées par cette sous-requête.",
+      "exemple": "SELECT titre FROM Livre\nWHERE prix > ANY (SELECT prix FROM Livre WHERE genre = 'Roman');",
+      "niveau": 4,
+      "motsClés": "sous-requête comparer au moins une"
     }
   ],
   "Opérateurs logiques": [
@@ -424,7 +441,7 @@
     {
       "commande": "SELECT",
       "définition": "Spécification des colonnes du résultat.",
-      "syntaxe": "SELECT [DISTINCT] expression [, col, ... ou *] [[AS] alias] FROM table1 [[AS] alias] [, table2, ...] [WHERE condition] [GROUP BY critère] [HAVING condition] [ORDER BY expression [ASC/DESC]]",
+      "syntaxe": "SELECT [DISTINCT] expression [, col, ... ou *] [[AS] alias] FROM table1 [[AS] alias] [, table2, ...] [WHERE condition] [GROUP BY critère] [HAVING condition] [ORDER BY expression [ASC/DESC]] [LIMIT debut, nombre]",
       "exemple": "-- Une table (3ème)\nSELECT DISTINCT ville FROM Eleve ORDER BY ville ASC;\n\n-- Jointure, regroupement, filtre sur groupe (4ème)\nSELECT C.niveau, COUNT(*) AS effectif, AVG(E.moyenne) AS moy\nFROM Eleve E, Classe C\nWHERE E.idClasse = C.idClasse\nGROUP BY C.niveau\nHAVING COUNT(*) > 20\nORDER BY moy DESC;",
       "paramètres": [
         {
@@ -459,7 +476,8 @@
       "remarques": [
         "Ordre obligatoire des clauses : SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY.",
         "Jointure en syntaxe classique : tables dans FROM, condition dans WHERE. JOIN … ON n'est pas dans l'annexe.",
-        "3ème : une seule table, sans GROUP BY ni HAVING. 4ème : jointures, agrégats, sous-requêtes non corrélées."
+        "3ème : une seule table, sans GROUP BY ni HAVING. 4ème : jointures, agrégats, sous-requêtes non corrélées.",
+        "3ème : requêtes simples sur une table, sans jointure ni fonction d'agrégation."
       ],
       "niveau": 3,
       "motsClés": "sélectionner consulter afficher requête jointure jointures relier tables join tri trier group by having order by distinct sous-requête"
@@ -624,7 +642,7 @@
         "Si la clé référencée change, la clé étrangère est mise à jour automatiquement.",
         "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "contrainte intégrité cascade modification propagation"
     },
     {
@@ -635,7 +653,7 @@
         "Si la ligne référencée est supprimée, les lignes qui en dépendent le sont aussi.",
         "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "contrainte intégrité cascade suppression propagation"
     }
   ],
@@ -654,7 +672,7 @@
       "remarques": [
         "IF NOT EXISTS n'est pas dans l'annexe."
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "créer base de données"
     },
     {
@@ -671,7 +689,7 @@
       "remarques": [
         "Supprime la base, ses tables et toutes les données, sans confirmation."
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "supprimer base de données"
     },
     {
@@ -694,10 +712,9 @@
         }
       ],
       "remarques": [
-        "AUTO_INCREMENT n'est pas dans l'annexe : la clé primaire est saisie explicitement.",
         "Créer d'abord les tables référencées (Classe) puis celles qui les référencent (Eleve)."
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "créer table structure colonnes"
     },
     {
@@ -711,7 +728,7 @@
           "rôle": "Définition de la nouvelle colonne"
         }
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "ajouter colonne modifier structure"
     },
     {
@@ -728,7 +745,7 @@
       "remarques": [
         "Syntaxe de l'annexe : DROP colonne (le mot COLUMN est facultatif sous MySQL)."
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "supprimer colonne"
     },
     {
@@ -748,9 +765,10 @@
       ],
       "remarques": [
         "Sous MySQL, ALTER colonne ne permet pas de changer le type : on utilise CHANGE ancien_nom nouveau_nom type.",
-        "MODIFY n'est pas dans l'annexe."
+        "MODIFY n'est pas dans l'annexe.",
+        "Il est possible d'utiliser MODIFY au lieu de ALTER."
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "modifier type colonne changer taille change modify"
     },
     {
@@ -769,9 +787,10 @@
         }
       ],
       "remarques": [
-        "Pour une colonne, on enseigne CHANGE (ancien nom, nouveau nom, type). RENAME COLUMN n'est pas dans l'annexe."
+        "Pour une colonne, on enseigne CHANGE (ancien nom, nouveau nom, type). RENAME COLUMN n'est pas dans l'annexe.",
+        "Il est possible d'utiliser CHANGE."
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "renommer colonne table nom change"
     },
     {
@@ -789,7 +808,7 @@
           "rôle": "PRIMARY KEY, FOREIGN KEY, UNIQUE ou CHECK"
         }
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "ajouter contrainte clé étrangère"
     },
     {
@@ -806,7 +825,7 @@
       "remarques": [
         "D'où l'intérêt de nommer les contraintes avec CONSTRAINT nom."
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "supprimer contrainte"
     },
     {
@@ -824,8 +843,20 @@
         "Supprimer d'abord les tables qui référencent celle-ci.",
         "IF EXISTS n'est pas dans l'annexe."
       ],
-      "niveau": 4,
+      "niveau": 3,
       "motsClés": "supprimer table"
+    }
+  ],
+  "Propriété de colonne": [
+    {
+      "contrainte": "AUTO_INCREMENT",
+      "définition": "Attribue automatiquement une valeur numérique croissante.",
+      "exemple": "CREATE TABLE Emprunt (\n  idEmprunt INT AUTO_INCREMENT PRIMARY KEY,\n  dateEmp DATE NOT NULL\n);",
+      "remarques": [
+        "Colonne entière, clé primaire : la valeur n'est plus saisie à l'insertion."
+      ],
+      "niveau": 3,
+      "motsClés": "numéro automatique compteur identifiant"
     }
   ]
 }

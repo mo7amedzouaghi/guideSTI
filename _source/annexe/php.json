@@ -377,27 +377,6 @@
       "motsClés": "position chercher trouver occurrence contient"
     },
     {
-      "fonction": "strcmp()",
-      "définition": "Retourne le résultat de comparaison de deux chaînes (<0, 0, >0).",
-      "exemple": "<?php\n  $r = strcmp(\"abc\", \"abd\");   // valeur négative\n  if (strcmp($login, \"admin\") == 0) {\n    echo \"Identiques\";\n  }\n?>",
-      "paramètres": [
-        {
-          "nom": "chaîne1",
-          "rôle": "Première chaîne"
-        },
-        {
-          "nom": "chaîne2",
-          "rôle": "Seconde chaîne"
-        }
-      ],
-      "retour": "0 si les chaînes sont égales, un nombre négatif si chaîne1 < chaîne2, positif sinon.",
-      "remarques": [
-        "Comparaison sensible à la casse et à l'ordre alphabétique (codes ASCII)."
-      ],
-      "niveau": 4,
-      "motsClés": "comparer chaînes ordre alphabétique égalité"
-    },
-    {
       "fonction": "str_replace()",
       "définition": "Remplace, dans une chaîne, toutes les occurrences d'un motif par un autre.",
       "exemple": "<?php\n  echo str_replace(\" \", \"_\", \"mon fichier.txt\");   // mon_fichier.txt\n?>",

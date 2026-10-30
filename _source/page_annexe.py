@@ -28,11 +28,11 @@ CAT4 = {
     "sql": {"Fonctions définies sur le type date", "Fonctions d'agrégation", "Définition des données"},
 }
 REMARQUES = {
-    "ALTER TABLE ALTER": "Ne modifie pas le type d'une colonne sous MySQL : enseigner ALTER TABLE t CHANGE col col type.",
-    "ALTER TABLE RENAME": "Pour renommer une colonne sous MySQL : ALTER TABLE t CHANGE ancien nouveau type.",
-    "SELECT": "En 3ème : une seule table, sans GROUP BY ni HAVING.",
-    "<input>": "2ème : text, number, radio, checkbox, submit, reset. Les autres types arrivent en 3ème.",
-    "float": "Arrêt du flottement : clear: both (absent de l'annexe, proposé à la réforme).",
+    "ALTER TABLE ALTER": "Annexe 2026 : il est possible d'utiliser MODIFY au lieu de ALTER.",
+    "ALTER TABLE RENAME": "Annexe 2026 : il est possible d'utiliser CHANGE.",
+    "SELECT": "En 3ème : requêtes simples sur une table, sans jointure ni fonction d'agrégation.",
+    "<input>": "2ème : text, number, radio, checkbox, submit, reset. 3ème : date, time, datetime-local, email, tel, password, range, button.",
+    "float": "Arrêt du flottement : clear: both (dans l'annexe 2026).",
     "transition": "Déclarée sur l'élément, jamais sur :hover. Pas de transition-timing-function.",
     "transform": "Toutes les fonctions sur une seule ligne ; translate(x, y) uniquement.",
     "Math.trunc(x)": "Remplace Math.floor et Math.ceil, hors annexe.",
@@ -75,7 +75,7 @@ def donnees():
         for cat, items in d.items():
             for it in items:
                 nom = next(it[k] for k in CLES if k in it)
-                n = niveau(lang, cat, nom)
+                n = it.get("niveau") or niveau(lang, cat, nom)   # niveau des fiches (programme 2026), sinon règle par défaut
                 out.append({"l": nom_lang, "c": cat, "e": nom, "d": it.get("définition", "").replace("*", ""),
                             "x": details(it), "n": n, "r": REMARQUES.get(nom, "")})
                 indexer(f"{nom} ({nom_lang})", "annexe.html?q=" + nom.replace(" ", "+"), f"{n}ème",

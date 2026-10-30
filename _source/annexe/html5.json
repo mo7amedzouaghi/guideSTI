@@ -222,11 +222,39 @@
       "motsClés": "citation titre œuvre livre"
     },
     {
+      "balise": "<u>",
+      "définition": "Marque un texte présentant une annotation non textuelle.",
+      "exemple": "<p>Le mot <u>ordinateurr</u> contient une faute.</p>",
+      "niveau": 2,
+      "motsClés": "souligner annotation"
+    },
+    {
+      "balise": "<em>",
+      "définition": "Marque un texte avec une emphase particulière.",
+      "exemple": "<p>Il faut <em>toujours</em> enregistrer son travail.</p>",
+      "niveau": 2,
+      "motsClés": "emphase insister italique"
+    },
+    {
+      "balise": "<strong>",
+      "définition": "Marque un texte important.",
+      "exemple": "<p><strong>Attention :</strong> l'épreuve commence à 8 h.</p>",
+      "niveau": 2,
+      "motsClés": "important gras attention"
+    },
+    {
       "balise": "<p>",
       "définition": "Définit un paragraphe.",
       "exemple": "<p>Les inscriptions au club sont ouvertes jusqu'au 15 novembre.</p>",
       "niveau": 2,
       "motsClés": "paragraphe texte bloc"
+    },
+    {
+      "balise": "<mark>",
+      "définition": "Définit le texte qui doit être marqué ou mis en surbrillance.",
+      "exemple": "<p>Le lycée ouvre ses portes le <mark>samedi 14 mars</mark>.</p>",
+      "niveau": 2,
+      "motsClés": "surligner marquer surbrillance texte"
     },
     {
       "balise": "<h1> à <h6>",
@@ -284,6 +312,36 @@
       "exemple": "<figure>\n  <img src=\"carte.png\" alt=\"Carte des gouvernorats\">\n  <figcaption>Les 24 gouvernorats</figcaption>\n</figure>",
       "niveau": 3,
       "motsClés": "légende figure"
+    },
+    {
+      "balise": "<source>",
+      "définition": "Spécifie plusieurs ressources multimédias pour les éléments multimédias.",
+      "exemple": "<video controls>\n  <source src=\"videos/carthage.mp4\" type=\"video/mp4\">\n  <source src=\"videos/carthage.webm\" type=\"video/webm\">\n</video>",
+      "paramètres": [
+        {
+          "nom": "src",
+          "rôle": "Chemin du fichier média"
+        },
+        {
+          "nom": "type",
+          "rôle": "Type du fichier : video/mp4, audio/mpeg…"
+        },
+        {
+          "nom": "media",
+          "rôle": "Condition d'affichage (taille d'écran…)"
+        }
+      ],
+      "remarques": [
+        "Le navigateur lit la première source qu'il sait lire.",
+        "<source> se place à l'intérieur de <audio> ou <video>, sans attribut src sur la balise englobante."
+      ],
+      "attributs": [
+        "src",
+        "type",
+        "media"
+      ],
+      "niveau": 3,
+      "motsClés": "source fichier média vidéo audio format"
     },
     {
       "balise": "<audio>",
@@ -937,7 +995,8 @@
       "exemple": "<input type=\"text\" name=\"nom\" placeholder=\"Votre nom\" required>\n<input type=\"number\" name=\"age\" min=\"15\" max=\"20\">\n<input type=\"radio\" name=\"sexe\" value=\"F\"> Fille\n<input type=\"radio\" name=\"sexe\" value=\"G\"> Garçon\n<input type=\"checkbox\" name=\"photo\" value=\"oui\" checked>\n<input type=\"button\" value=\"Valider\" onclick=\"verifier()\">",
       "remarques": [
         "2ème : text, number, radio, checkbox, submit, reset. 3ème : email, tel, password, date, time, range, button.",
-        "Les boutons radio d'un même groupe partagent le même name."
+        "Les boutons radio d'un même groupe partagent le même name.",
+        "2ème : text, number, radio, checkbox, reset, submit. 3ème : date, time, datetime-local, email, tel, password, range, button (programme 2026)."
       ],
       "niveau": 2,
       "motsClés": "champ saisie formulaire bouton type text number radio checkbox email password date range"

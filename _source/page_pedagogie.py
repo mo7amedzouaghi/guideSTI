@@ -15,15 +15,15 @@ S.append(("rentree", "Préparer sa rentrée", "Les cinq choses à régler avant 
 """, "rentrée préparation annexe progression laboratoire projet fil rouge"))
 
 S.append(("regle", "La règle d'or : l'annexe", "Ce qui n'est pas dans l'annexe ne s'enseigne pas et ne se note pas, même si cela fonctionne.", f"""
-{enc("att", "<p>Beaucoup de tutoriels en ligne utilisent Flexbox, <code>addEventListener</code>, <code>charAt</code>, <code>JOIN</code> ou PDO. Ces techniques fonctionnent, mais elles sont <b>hors programme</b> : un élève qui les utilise à l'épreuve pratique s'éloigne du corrigé officiel.</p>")}
+{enc("att", "<p>Beaucoup de tutoriels en ligne utilisent Grid, <code>addEventListener</code>, <code>charAt</code>, <code>JOIN</code> ou PDO. Ces techniques fonctionnent, mais elles sont <b>hors programme</b> : un élève qui les utilise à l'épreuve pratique s'éloigne du corrigé officiel.</p>")}
 {tableau(["Si vous voulez…", "Hors annexe", "Conforme à l'annexe"], [
-    ("Mettre un texte en gras", c("<b>, <strong>"), c("font-weight: bold;")),
+    ("Mettre un texte en valeur", c("<b>, <i>"), c("<strong>, <em> ou font-weight: bold;")),
     ("Créer un bouton de contrôle", c("<button>"), c('<input type="button" onclick="verifier()">')),
     ("Lire le 3e caractère", c("ch.charAt(2)"), c("ch[2]")),
     ("Extraire une sous-chaîne", c("ch.substr(0, 3)"), c("ch.substring(0, 3)")),
     ("Partie entière", c("Math.floor(x)"), c("Math.trunc(x)")),
     ("Afficher un résultat", c("console.log(x)"), c("alert(x) ou innerHTML")),
-    ("Disposer deux blocs côte à côte", c("display: flex"), c("float: left / right")),
+    ("Disposer deux blocs côte à côte", c("display: grid"), c("float: left / right ou display: flex")),
     ("Relier deux tables", c("JOIN … ON"), c("FROM A, B WHERE A.id = B.id")),
     ("Date du jour en SQL", c("CURDATE()"), c("DATE(NOW())")),
     ("Se connecter à MySQL en PHP", c("new PDO(…)"), c("mysqli_connect(…)"))])}

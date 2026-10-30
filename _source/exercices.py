@@ -48,7 +48,7 @@ EX[("2", 3)] = [
     code("Complète pour afficher les boutons de lecture de la vidéo.", '<video src="visite.mp4" ___></video>', ["controls"], "controls affiche lecture, pause, volume."),
     qcm("La page contact.html est dans le dossier pages. Quel lien est correct depuis index.html (dossier parent) ?",
         ['href="contact.html"', 'href="pages/contact.html"', 'href="../contact.html"', 'href="/contact"'], 1, "Chemin relatif vers un sous-dossier : dossier/fichier."),
-    vf("La balise <source> sert à donner le fichier d'une vidéo en 2ème année.", False, "<source> n'est pas dans l'annexe : le fichier est donné par l'attribut src de <video>."),
+    vf("La balise <source> sert à donner le fichier d'une vidéo en 2ème année.", False, "<source> est introduite en 3ème : en 2ème, le fichier est donné par l'attribut src de <video>."),
 ]
 EX[("2", 4)] = [
     qcm("Pour que deux boutons radio s'excluent, ils doivent avoir :", ["le même id", "le même name", "le même value", "la même classe"], 1,
@@ -99,7 +99,7 @@ EX[("3", 2)] = [
 ]
 EX[("3", 3)] = [
     qcm("Dans le modèle de boîte, quelle propriété crée l'espace entre le contenu et la bordure ?", ["margin", "padding", "border", "width"], 1, "padding = marge intérieure ; margin = marge extérieure."),
-    qcm("Comment placer deux blocs côte à côte en 3ème ?", ["display: flex", "float: left et float: right", "display: grid", "position: center"], 1, "Flexbox et Grid ne sont pas au programme : float et position."),
+    qcm("Comment placer deux blocs côte à côte en 3ème avec la propriété float ?", ["float: center", "float: left et float: right", "display: grid", "position: center"], 1, "float: left et float: right ; Grid n'est pas au programme."),
     code("Complète pour fixer le bandeau en haut de la fenêtre même pendant le défilement.", ".bandeau {\n  position: ___;\n  top: 0px;\n}", ["fixed"], "fixed fixe l'élément par rapport à la fenêtre."),
     vf("top et left agissent sur un élément en position static.", False, "Ils n'agissent que sur un élément positionné (relative, absolute, fixed, sticky)."),
     qcm("Quelle valeur d'overflow ajoute des barres de défilement ?", ["visible", "hidden", "scroll", "clip"], 2, "scroll affiche toujours les barres ; auto seulement si nécessaire."),
@@ -128,7 +128,7 @@ EX[("3", 5)] = [
            ['if (nom == "") {', '  alert("Nom obligatoire");', "}", 'document.getElementById("msg").innerHTML = "Inscrit";'], 1,
            "Après alert(), il faut return; pour arrêter la fonction."),
     code("Complète pour extraire « Oued » de ch = \"Oued Ellil\".", "ch.___(0, 4)", ["substring"], "substring(d, f) : de d à f exclu. substr n'est pas dans l'annexe."),
-    vf("console.log() sert à afficher un résultat à l'élève en 3ème.", False, "On affiche avec alert(), document.write() ou innerHTML."),
+    vf("console.log() sert à afficher un résultat à l'élève en 3ème.", False, "On affiche avec alert() ou innerHTML."),
 ]
 EX[("3", 6)] = [
     qcm("Dans la représentation textuelle, comment repère-t-on la clé primaire ?", ["Elle est suivie de #", "Elle est soulignée", "Elle est en majuscules", "Elle est entre parenthèses"], 1, "Clé primaire soulignée, clé étrangère suivie de #."),
@@ -163,10 +163,10 @@ EX[("4", 2)] = [
 EX[("4", 3)] = [
     qcm("Quelle instruction ajoute une colonne à une table ?", ["ALTER TABLE t ADD col type;", "UPDATE TABLE t ADD col;", "INSERT COLUMN col INTO t;", "CREATE COLUMN col;"], 0, "ALTER TABLE … ADD."),
     code("Complète pour renommer prenom en prenomEleve (MySQL).", "ALTER TABLE Eleve ___ prenom prenomEleve VARCHAR(30);", ["change"], "CHANGE : ancien nom, nouveau nom, type."),
-    vf("AUTO_INCREMENT fait partie de l'annexe.", False, "La clé primaire est saisie explicitement."),
+    vf("AUTO_INCREMENT fait partie de l'annexe 2026.", True, "Il attribue automatiquement une valeur numérique croissante à la clé primaire."),
     qcm("Que fait ON DELETE CASCADE ?", ["Empêche toute suppression", "Supprime aussi les lignes qui dépendent de la ligne supprimée", "Supprime la table", "Rien"], 1, "La suppression se propage aux lignes liées."),
     code("Complète la contrainte de clé étrangère.", "CONSTRAINT fk_e FOREIGN KEY (idClasse) ___ Classe(idClasse)", ["references"], "FOREIGN KEY (col) REFERENCES table(col)."),
-    erreur("Quelle ligne est hors annexe ?", ["CREATE TABLE Eleve (", "  idEleve INT PRIMARY KEY AUTO_INCREMENT,", "  nom VARCHAR(30) NOT NULL", ");"], 1, "AUTO_INCREMENT n'est pas dans l'annexe."),
+    erreur("Quelle ligne est hors annexe ?", ["CREATE TABLE Eleve (", "  idEleve INT AUTO_INCREMENT PRIMARY KEY,", "  actif BOOLEAN DEFAULT 1,", "  nom VARCHAR(30) NOT NULL", ");"], 2, "BOOLEAN n'est pas un type de l'annexe (INT, DECIMAL, CHAR, VARCHAR, TEXT, DATE, TIME, DATETIME, ENUM)."),
 ]
 EX[("4", 4)] = [
     qcm("Une condition sur COUNT(*) s'écrit dans :", ["WHERE", "HAVING", "ORDER BY", "FROM"], 1, "WHERE filtre les lignes, HAVING filtre les groupes."),

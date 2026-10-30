@@ -141,23 +141,6 @@
       "motsClés": "afficher message boîte dialogue sortie erreur console.log"
     },
     {
-      "méthode": "document.write()",
-      "définition": "Affiche directement dans le document HTML.",
-      "exemple": "document.write(\"Bonjour<br>\");\ndocument.write(\"Nous sommes en \" + new Date().getFullYear());",
-      "paramètres": [
-        {
-          "nom": "texte",
-          "rôle": "Chaîne (pouvant contenir des balises HTML) écrite dans la page"
-        }
-      ],
-      "retour": "Aucune valeur.",
-      "remarques": [
-        "Appelé après le chargement de la page (dans une fonction déclenchée par un clic), il efface toute la page : pour un résultat, préférer innerHTML."
-      ],
-      "niveau": 3,
-      "motsClés": "écrire afficher page sortie"
-    },
-    {
       "méthode": "innerHTML",
       "définition": "Propriété pour afficher/modifier un contenu dynamique dans un élément HTML.",
       "exemple": "// <p id=\"resultat\"></p>\ndocument.getElementById(\"resultat\").innerHTML = \"Moyenne : \" + moy;\nlet ancien = document.getElementById(\"resultat\").innerHTML;  // lecture",
@@ -427,6 +410,17 @@
       "motsClés": "longueur taille nombre caractères charAt ch[i] caractère indice"
     },
     {
+      "propriété": "ch[p]",
+      "définition": "Accède au caractère d'indice p dans la chaîne de caractères ch.",
+      "exemple": "let ch = \"Oued Ellil\";\nch[0];               // \"O\"\nch[ch.length - 1];   // \"l\"",
+      "retour": "Le caractère d'indice p (le premier a l'indice 0).",
+      "remarques": [
+        "charAt() n'est pas dans l'annexe."
+      ],
+      "niveau": 3,
+      "motsClés": "caractère position indice lettre"
+    },
+    {
       "méthode": "ch.indexOf(ch1 [, p])",
       "définition": "Retourne la position de la 1ère occurrence de ch1 dans ch, en effectuant la recherche à partir de la position p (sinon -1).",
       "exemple": "let ch = \"programmation\";\nch.indexOf(\"m\");       // 6\nch.indexOf(\"m\", 7);    // 7\nch.indexOf(\"z\");       // -1 : absent\nif (email.indexOf(\"@\") == -1) {\n  alert(\"Adresse e-mail invalide\");\n}",
@@ -554,6 +548,17 @@
       ],
       "niveau": 3,
       "motsClés": "code ascii caractère lettre captcha charCodeAt"
+    },
+    {
+      "méthode": "ch.charCodeAt(p)",
+      "définition": "Retourne le code ASCII du caractère existant à la position p.",
+      "exemple": "\"A\".charCodeAt(0);      // 65\nlet c = mot.charCodeAt(0);\nif (c >= 65 && c <= 90) {\n  alert(\"Majuscule\");\n}",
+      "retour": "Un entier (code ASCII).",
+      "remarques": [
+        "Opération inverse : String.fromCharCode()."
+      ],
+      "niveau": 3,
+      "motsClés": "code ascii caractère majuscule lettre"
     }
   ],
   "L'objet Date": [
@@ -623,13 +628,13 @@
   ],
   "Modification du contenu, des attributs ou des styles des éléments HTML": [
     {
-      "propriété": "element.attribute = valeur",
+      "propriété": "element.attribut = valeur",
       "définition": "Change la valeur de l'attribut d'un élément HTML.",
       "exemple": "document.getElementById(\"photo\").src = \"images/sousse.jpg\";\ndocument.getElementById(\"envoyer\").disabled = true;\ndocument.getElementById(\"accord\").checked = false;\ndocument.getElementById(\"cin\").readOnly = true;\ndocument.getElementById(\"video\").muted = true;",
       "paramètres": [
         {
-          "nom": "attribute",
-          "rôle": "Attribut à modifier : value, checked, disabled, readOnly, src, muted…"
+          "nom": "attribut",
+          "rôle": "Se limiter à : value, checked, disabled, readOnly, src, muted, hidden"
         },
         {
           "nom": "valeur",
@@ -638,6 +643,7 @@
       ],
       "retour": "—",
       "remarques": [
+        "Annexe 2026 : se limiter aux attributs value, checked, disabled, readonly, src, muted, hidden.",
         "En JavaScript, l'attribut readonly s'écrit readOnly (O majuscule).",
         "setAttribute() n'est pas dans l'annexe."
       ],
@@ -647,11 +653,11 @@
     {
       "propriété": "element.style.propriété = valeur",
       "définition": "Change le style d'un élément HTML.",
-      "exemple": "let z = document.getElementById(\"zone\");\nz.style.color = \"white\";\nz.style.background = \"navy\";\nz.style.border = \"2px solid gold\";\nz.style.width = \"300px\";",
+      "exemple": "let z = document.getElementById(\"zone\");\nz.style.color = \"white\";\nz.style.background = \"navy\";\nz.style.border = \"2px solid gold\";\nz.style.width = \"300px\";\nz.style.visibility = \"hidden\";",
       "paramètres": [
         {
           "nom": "propriété",
-          "rôle": "Propriété CSS (color, background, border, font, width, height)"
+          "rôle": "Se limiter à : color, background, border, font, width, height, visibility"
         },
         {
           "nom": "valeur",
@@ -660,7 +666,7 @@
       ],
       "retour": "—",
       "remarques": [
-        "Une propriété CSS avec tiret s'écrit en camelCase : background-color devient backgroundColor.",
+        "Annexe 2026 : se limiter aux propriétés color, background, border, font, width, height, visibility.",
         "Toujours préciser l'unité : \"300px\", pas 300."
       ],
       "niveau": 4,
@@ -678,7 +684,10 @@
       ],
       "retour": "—",
       "niveau": 4,
-      "motsClés": "play pause vidéo audio lecture média"
+      "motsClés": "play pause vidéo audio lecture média",
+      "remarques": [
+        "Se limiter aux méthodes play() et pause()."
+      ]
     },
     {
       "propriété": "selectedIndex",
@@ -691,6 +700,26 @@
       ],
       "niveau": 4,
       "motsClés": "liste déroulante select option choisie choix index"
+    }
+  ],
+  "L'objet Array": [
+    {
+      "opérateur": "[ ]",
+      "définition": "Pour créer un tableau, utiliser les littéraux de tableau [ ].",
+      "exemple": "let notes = [12, 15.5, 9];\nlet jours = [\"lundi\", \"mardi\"];\nnotes[0];        // 12\nnotes[1] = 16;",
+      "remarques": [
+        "new Array() n'est pas dans l'annexe."
+      ],
+      "niveau": 3,
+      "motsClés": "tableau array liste créer indice"
+    },
+    {
+      "propriété": "t.length",
+      "définition": "Propriété qui représente le nombre d'éléments dans un tableau.",
+      "exemple": "let notes = [12, 15.5, 9];\nlet s = 0;\nfor (let i = 0; i < notes.length; i++) {\n  s = s + notes[i];\n}",
+      "retour": "Un entier.",
+      "niveau": 3,
+      "motsClés": "taille tableau nombre éléments parcours"
     }
   ]
 }

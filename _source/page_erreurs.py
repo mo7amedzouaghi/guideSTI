@@ -13,7 +13,7 @@ S.append(("html", "HTML5", "Les erreurs de structure les plus courantes dans les
     err("Mettre en forme avec des balises",
         '<p><b>Attention</b> : <i>date limite</i></p>',
         '<p><span class="alerte">Attention</span> : <span class="date">date limite</span></p>\n\n/* style.css */\n.alerte { font-weight: bold; }\n.date { font-style: italic; }',
-        "html", "Le gras et l'italique relèvent du CSS (<code>font-weight</code>, <code>font-style</code>). Les balises de mise en forme ne sont pas dans l'annexe.", "Tous niveaux"),
+        "html", "<code>&lt;b&gt;</code> et <code>&lt;i&gt;</code> ne sont pas dans l'annexe : <code>&lt;strong&gt;</code> (texte important) et <code>&lt;em&gt;</code> (emphase) le sont depuis 2026 ; sinon le CSS (<code>font-weight</code>, <code>font-style</code>).", "Tous niveaux"),
     err("Utiliser &lt;button&gt; pour un contrôle JavaScript",
         '<button onclick="verifier()">Valider</button>',
         '<input type="button" value="Valider" onclick="verifier()">',
@@ -45,10 +45,10 @@ S.append(("css", "CSS3", "Mise en page et effets : ce qui fonctionne mais sort d
         '.bus {\n  animation: rouler 4s infinite;\n}',
         '.bus {\n  position: relative;\n  animation: rouler 4s infinite;\n}',
         "css", "<code>left</code> et <code>top</code> sont sans effet sur un élément non positionné.", "3ème"),
-    err("Utiliser Flexbox ou des unités hors programme",
-        '.conteneur {\n  display: flex;\n  height: 100vh;\n  font-size: 1.2em;\n}',
+    err("Utiliser Grid ou des unités hors programme",
+        '.conteneur {\n  display: grid;\n  height: 100vh;\n  font-size: 1.2em;\n}',
         'html, body { height: 100%; }\n.gauche { float: left; width: 30%; height: 100%; }\n.droite { float: right; width: 68%; height: 100%; }\n.conteneur { font-size: 18px; }',
-        "css", "Mise en page par <code>float</code> et <code>position</code> ; unités <code>px</code> et <code>%</code> uniquement.", "3ème et 4ème"),
+        "css", "Mise en page par <code>float</code>, <code>position</code> ou <code>display: flex</code> (sans <code>justify-content</code> ni Grid) ; unités <code>px</code> et <code>%</code> uniquement.", "3ème et 4ème"),
 ]), "transition hover transform animation position flex vh em"))
 
 S.append(("js", "JavaScript", "Les écarts à l'annexe qui coûtent des points à l'épreuve pratique.", "".join([
@@ -87,15 +87,11 @@ S.append(("sql", "SQL", "Syntaxe classique des jointures et fonctions de l'annex
         'SELECT idClasse, COUNT(*) FROM Eleve\nWHERE COUNT(*) > 25\nGROUP BY idClasse;',
         'SELECT idClasse, COUNT(*) FROM Eleve\nGROUP BY idClasse\nHAVING COUNT(*) > 25;',
         "sql", "Une condition sur un groupe va dans <code>HAVING</code>.", "4ème"),
-    err("CURDATE et AUTO_INCREMENT",
-        'CREATE TABLE Emprunt (id INT PRIMARY KEY AUTO_INCREMENT, d DATE);\nSELECT * FROM Emprunt WHERE d = CURDATE();',
-        'CREATE TABLE Emprunt (id INT PRIMARY KEY, d DATE);\nSELECT * FROM Emprunt WHERE d = DATE(NOW());',
-        "sql", "Ni <code>AUTO_INCREMENT</code> ni <code>CURDATE()</code> ne sont dans l'annexe.", "4ème"),
-    err("Renommer une colonne",
-        'ALTER TABLE Eleve RENAME COLUMN prenom TO prenomEleve;',
-        'ALTER TABLE Eleve CHANGE prenom prenomEleve VARCHAR(30);',
-        "sql", "<code>CHANGE</code> : ancien nom, nouveau nom, type.", "4ème"),
-]), "JOIN HAVING WHERE CURDATE AUTO_INCREMENT RENAME CHANGE"))
+    err("Date du jour avec CURDATE",
+        'SELECT * FROM Emprunt WHERE dateEmp = CURDATE();',
+        'SELECT * FROM Emprunt WHERE dateEmp = DATE(NOW());',
+        "sql", "<code>CURDATE()</code> n'est pas dans l'annexe : <code>DATE(NOW())</code>.", "4ème"),
+]), "JOIN HAVING WHERE CURDATE"))
 
 S.append(("php", "PHP", "mysqli procédural, une connexion centralisée, aucun hachage.", "".join([
     err("PDO ou mysqli orienté objet",
