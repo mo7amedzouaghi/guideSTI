@@ -581,16 +581,44 @@
     {
       "balise": "<th>",
       "définition": "Définit une cellule d'en-tête dans un tableau.",
-      "exemple": "<tr>\n  <th>Jour</th>\n  <th>Matière</th>\n</tr>",
+      "exemple": "<tr>\n  <th rowspan=\"2\">Mercredi</th>\n  <td>14h</td>\n</tr>\n<tr>\n  <td>16h</td>\n</tr>",
       "niveau": 2,
-      "motsClés": "cellule en-tête tableau titre colonne"
+      "motsClés": "cellule en-tête tableau titre colonne",
+      "attributs": [
+        "rowspan",
+        "colspan"
+      ],
+      "paramètres": [
+        {
+          "nom": "rowspan",
+          "rôle": "Nombre de lignes fusionnées"
+        },
+        {
+          "nom": "colspan",
+          "rôle": "Nombre de colonnes fusionnées"
+        }
+      ]
     },
     {
       "balise": "<td>",
       "définition": "Définit une cellule dans un tableau.",
-      "exemple": "<tr>\n  <td>Mardi</td>\n  <td>Physique</td>\n</tr>",
+      "exemple": "<tr>\n  <td colspan=\"2\">Fermé le dimanche</td>\n</tr>",
       "niveau": 2,
-      "motsClés": "cellule donnée tableau"
+      "motsClés": "cellule donnée tableau",
+      "attributs": [
+        "rowspan",
+        "colspan"
+      ],
+      "paramètres": [
+        {
+          "nom": "rowspan",
+          "rôle": "Nombre de lignes fusionnées"
+        },
+        {
+          "nom": "colspan",
+          "rôle": "Nombre de colonnes fusionnées"
+        }
+      ]
     },
     {
       "balise": "<caption>",
@@ -1049,23 +1077,22 @@
       "définition": "Définit une liste déroulante.",
       "attributs": [
         "name",
-        "required",
-        "disabled",
-        "multiple"
+        "size",
+        "disabled"
       ],
       "exemple": "<select id=\"gouv\" name=\"gouv\">\n  <option value=\"\">-- Choisir --</option>\n  <option value=\"Manouba\">Manouba</option>\n  <option value=\"Ariana\">Ariana</option>\n</select>",
       "paramètres": [
         {
           "nom": "name",
-          "rôle": "Nom de la donnée"
+          "rôle": "Nom envoyé au serveur"
         },
         {
-          "nom": "multiple",
-          "rôle": "Plusieurs choix possibles"
+          "nom": "size",
+          "rôle": "Nombre d'options visibles"
         },
         {
-          "nom": "required / disabled",
-          "rôle": "Obligatoire / désactivé"
+          "nom": "disabled",
+          "rôle": "Liste désactivée"
         }
       ],
       "remarques": [
@@ -1110,19 +1137,18 @@
       "balise": "<output>",
       "définition": "Représente le résultat d'un calcul ou d'une action de l'utilisateur (par exemple la valeur d'un curseur range).",
       "attributs": [
-        "id",
         "name",
-        "for"
+        "value"
       ],
       "exemple": "<input type=\"range\" id=\"duree\" min=\"1\" max=\"8\" value=\"4\" oninput=\"afficher()\">\n<output id=\"aff\">4</output>\n\n<script>\n  function afficher() {\n    document.getElementById(\"aff\").value = document.getElementById(\"duree\").value;\n  }\n</script>",
       "paramètres": [
         {
-          "nom": "id",
-          "rôle": "Identifiant utilisé en JavaScript pour écrire le résultat"
+          "nom": "name",
+          "rôle": "Nom de l'élément"
         },
         {
-          "nom": "for",
-          "rôle": "id du (des) champ(s) dont dépend le résultat"
+          "nom": "value",
+          "rôle": "Valeur affichée"
         }
       ],
       "remarques": [
