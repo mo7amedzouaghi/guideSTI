@@ -995,7 +995,17 @@ ipcMain.handle("cor:corriger", async (e, id, o) => {
   const tolerance = Object.assign({}, COR.TOLERANCE, devoir.tolerance && devoir.tolerance.regles ? devoir.tolerance : { active: devoir.tolerance ? devoir.tolerance.active !== false : true });
   if (devoir.tolerance && devoir.tolerance.regles && true) for (const k of ["B1", "B2"]) if (!(devoir.tolerance.connues || []).includes(k) && !(k in tolerance.regles)) tolerance.regles = Object.assign({ [k]: COR.TOLERANCE.regles[k] }, tolerance.regles);
   const dossierRess = devoir.ressources ? path.join(dd, "ressources") : null;
-  const testerAvecRessources = (f, s, op) => testerPage(f, s, Object.assign({ ressources: dossierRess }, op));
+  const ressources = dossierRess && fs.existsSync(dossierRess) ? { dossier: dossierRess, fichiers: COR.fichiersEleve(dossierRess) } : null;
+  // test de page sur le projet de l'élève complété par les ressources fournies (le travail de l'élève est prioritaire)
+  const testerAvecRessources = async (f, s, op) => {
+    if (!ressources || !op || !op.racine) return testerPage(f, s, op);
+    const fusion = path.join(os.tmpdir(), "sti-fusion", propre(id) + "-" + crypto.randomBytes(4).toString("hex"));
+    fs.cpSync(ressources.dossier, fusion, { recursive: true });
+    const complets = ressources.fichiers.filter((x) => !fs.existsSync(path.join(op.racine, x)));
+    if (fs.existsSync(op.racine)) fs.cpSync(op.racine, fusion, { recursive: true, force: true });
+    try { const r = await testerPage(path.join(fusion, op.page), s, Object.assign({}, op, { ressources: ressources.dossier })); r.complets = complets.filter((x) => !/\.(png|jpe?g|gif|svg|webp|ico|bmp|mp3|mp4|wav|ogg|webm)$/i.test(x)); return r; }
+    finally { fs.rmSync(fusion, { recursive: true, force: true }); }
+  };
   let fait = 0;
   for (const el of liste) {
     const base = path.join(dd, el.dossier), fichiers = COR.fichiersEleve(base, el.isoles);
@@ -1006,7 +1016,7 @@ ipcMain.handle("cor:corriger", async (e, id, o) => {
     const reparer = () => repare || (repare = { dossier: path.join(os.tmpdir(), "sti-repare", propre(id), el.id), rep: null }, repare.rep = require("./lib/tolerance").reparerProjet(base, repare.dossier, tolerance.regles || {}), repare);
     for (const c of devoir.grille) {
       if (res[c.id] && res[c.id].modifie && !o.ecraser) continue;            // note saisie par l'enseignant conservée
-      try { res[c.id] = await COR.verifier(c, { base, fichiers, niveau: devoir.niveau, verificateur: verif, SQL, refSql, testerPage: testerAvecRessources, tolerance, reparer, penalisees }); }
+      try { res[c.id] = await COR.verifier(c, { base, fichiers, ressources, niveau: devoir.niveau, verificateur: verif, SQL, refSql, testerPage: testerAvecRessources, tolerance, reparer, penalisees }); }
       catch (err) { res[c.id] = { points: 0, justif: "Erreur de vérification : " + err.message, auto: true }; }
     }
     fait++;

@@ -299,6 +299,38 @@ function motifs(param) {
   });
 }
 const arrondi = (x) => Math.round(x * 100) / 100;
+/* ressources fournies aux élèves : { dossier, fichiers (chemins relatifs) } */
+// fichier rendu identique à une ressource fournie (même nom, même contenu)
+function identiqueRessource(ctx, f) {
+  const R = ctx.ressources;
+  if (!R) return false;
+  const nom = f.split("/").pop().toLowerCase();
+  const cand = R.fichiers.filter((x) => x.toLowerCase() === f.toLowerCase() || x.split("/").pop().toLowerCase() === nom);
+  if (!cand.length) return false;
+  let a; try { a = fs.readFileSync(path.join(ctx.base, f)); } catch (e) { return false; }
+  const norm = (b) => b.toString("utf8").replace(/^\uFEFF/, "").replace(/\r\n/g, "\n").trim();
+  return cand.some((x) => { try { const b = fs.readFileSync(path.join(R.dossier, x)); return a.equals(b) || (/\.(html?|css|js|sql|php|txt)$/i.test(f) && norm(a) === norm(b)); } catch (e) { return false; } });
+}
+// dossier du projet de l'élève (préfixe de chemin) sur lequel on superpose les ressources
+function racineProjet(ctx, p, fournie) {
+  if (fournie) {
+    // page fournie : le projet est le dossier qui contient le plus de fichiers de code de l'élève
+    const dirs = ctx.fichiers.filter((f) => /\.(css|js|html?)$/i.test(f)).map((f) => f.slice(0, f.lastIndexOf("/") + 1));
+    dirs.sort((a, b) => a.split("/").length - b.split("/").length);
+    return dirs[0] || "";
+  }
+  const dir = p.slice(0, p.lastIndexOf("/") + 1);
+  if (!ctx.ressources) return dir;
+  // le préfixe qui aligne le mieux l'arborescence des ressources sur celle de l'élève
+  const cands = [""]; dir.split("/").filter(Boolean).reduce((acc, s) => { acc += s + "/"; cands.push(acc); return acc; }, "");
+  const set = new Set(ctx.fichiers.map((f) => f.toLowerCase()));
+  let meilleur = dir, score = -1;
+  for (const c of cands) {
+    const s = ctx.ressources.fichiers.filter((x) => set.has((c + x).toLowerCase())).length + (c === dir ? 0.5 : 0);
+    if (s > score) { score = s; meilleur = c; }
+  }
+  return meilleur;
+}
 function lireTextes(base, l) { return l.map((f) => { try { return { f, t: fs.readFileSync(path.join(base, f), "utf8") }; } catch (e) { return { f, t: "" }; } }); }
 
 /* contexte : { base (dossier de l'élève), fichiers, niveau, SQL, refSql (base de référence), testerPage } */
@@ -308,7 +340,8 @@ async function verifier(c, ctx) {
   const code = (f) => EXT_CODE.test(f);
   switch (c.verif) {
     case "fichier": {
-      const l = trouver(ctx.fichiers, c.fichier);
+      const tous = trouver(ctx.fichiers, c.fichier), l = tous.filter((f) => !identiqueRessource(ctx, f));
+      if (!l.length && tous.length) return res(0, "Fichier fourni rendu sans modification : " + tous.slice(0, 3).join(", "));
       return l.length ? res(pts, "Trouvé : " + l.slice(0, 4).join(", ")) : res(0, "Fichier « " + (c.fichier || "?") + " » absent");
     }
     case "contient": case "absent": {
@@ -337,8 +370,8 @@ async function verifier(c, ctx) {
     }
     case "conforme": {
       if (!ctx.verificateur) return res(0, "Vérificateur indisponible");
-      const l = trouver(ctx.fichiers, c.fichier, (f) => /\.(html?|css|js|php|sql)$/i.test(f));
-      if (!l.length) return res(0, "Aucun fichier à vérifier");
+      const l = trouver(ctx.fichiers, c.fichier, (f) => /\.(html?|css|js|php|sql)$/i.test(f)).filter((f) => !identiqueRessource(ctx, f));
+      if (!l.length) return res(0, "Aucun fichier à vérifier (fichiers fournis non modifiés exclus)");
       const probs = [], toleres = [];
       for (const x of lireTextes(ctx.base, l)) {
         for (const p of ctx.verificateur.analyser(x.t, ctx.niveau, langueDe(x.f)).problemes) {
@@ -366,15 +399,22 @@ async function verifier(c, ctx) {
       return res(probs.length <= 2 ? pts / 2 : 0, probs.length + " écart(s) : " + probs.slice(0, 3).join(" ; ") + (probs.length > 3 ? " ; …" : "") + note);
     }
     case "page": {
-      const html = trouver(ctx.fichiers, c.fichier, (f) => /\.html?$/i.test(f));
-      const p = html.find((f) => /(^|\/)index\.html?$/i.test(f)) || html[0];
+      const estHtml = (f) => /\.html?$/i.test(f), choisir = (l) => l.find((f) => /(^|\/)index\.html?$/i.test(f)) || l[0];
+      let p = choisir(trouver(ctx.fichiers, c.fichier, estHtml)), fournie = false;
+      // page HTML fournie (prête à l'emploi) et non rendue par l'élève : prise dans les ressources
+      if (!p && ctx.ressources) { p = choisir(trouver(ctx.ressources.fichiers, c.fichier, estHtml)); fournie = !!p; }
       if (!p) return res(0, "Page HTML introuvable");
       if (!ctx.testerPage) return res(0, "Test de page indisponible");
       const idsTol = regleActive(ctx, "D3");
-      const r = await ctx.testerPage(path.join(ctx.base, p), c.param || "", { idsTolerants: idsTol });
+      const projet = racineProjet(ctx, p, fournie), rel = fournie ? p : p.slice(projet.length);
+      const tester = (dossier) => ctx.testerPage(path.join(dossier, projet, rel), c.param || "", { idsTolerants: idsTol, racine: path.join(dossier, projet), page: rel });
+      const r = await tester(ctx.base);
+      if (fournie) r.fournie = p;
       const brut = r.erreur ? res(0, r.erreur)
         : !r.total ? res(r.chargee ? pts : 0, r.chargee ? "Page chargée (aucun contrôle dans le scénario)" : "Page non chargée")
         : res(pts * r.reussis / r.total, r.reussis + "/" + r.total + " contrôle(s) réussi(s)" + (r.echecs.length ? " — " + r.echecs.slice(0, 2).join(" ; ") : "") + (r.erreursJs.length ? " — erreur JS : " + r.erreursJs[0] : ""));
+      if (fournie) brut.justif += " (page « " + p + " » fournie, non rendue)";
+      if (r.complets && r.complets.length) brut.justif += " — fichier(s) fourni(s) utilisé(s) : " + r.complets.slice(0, 4).join(", ");
       const tol = ctx.tolerance || {};
       // D3 : sélecteur #id du scénario trouvé sous un id très proche ; la pénalité n'est comptée que sur la note retenue
       const finir = () => {
@@ -391,7 +431,7 @@ async function verifier(c, ctx) {
       const corr = TOL.correctionsDePage(rp.rep, rp.dossier, p);
       if (!corr.length) return finir();
       if (corr.length > (tol.max || 3)) { brut.justif += " — " + corr.length + " erreurs de forme (au-delà de la tolérance : " + (tol.max || 3) + ")"; brut.revoir = true; return finir(); }
-      const r2 = await ctx.testerPage(path.join(rp.dossier, p), c.param || "", { idsTolerants: idsTol });
+      const r2 = await tester(rp.dossier);
       if (r2.erreur || !r2.total) return finir();
       const avant = pts * r2.reussis / r2.total;
       if (avant <= brut.points) return finir();
