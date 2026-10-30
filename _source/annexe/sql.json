@@ -476,8 +476,8 @@
       "remarques": [
         "Ordre obligatoire des clauses : SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY.",
         "Jointure en syntaxe classique : tables dans FROM, condition dans WHERE. JOIN … ON n'est pas dans l'annexe.",
-        "3ème : une seule table, sans GROUP BY ni HAVING. 4ème : jointures, agrégats, sous-requêtes non corrélées.",
-        "3ème : requêtes simples sur une table, sans jointure ni fonction d'agrégation."
+        "3ème : requêtes simples sur une table, sans jointure ni fonction d'agrégation ; la structure se crée en mode assisté (phpMyAdmin).",
+        "3ème : requêtes simples sur une table, sans jointure ni fonction d'agrégation ; la structure se crée en mode assisté (phpMyAdmin)."
       ],
       "niveau": 3,
       "motsClés": "sélectionner consulter afficher requête jointure jointures relier tables join tri trier group by having order by distinct sous-requête"
@@ -642,7 +642,7 @@
         "Si la clé référencée change, la clé étrangère est mise à jour automatiquement.",
         "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "contrainte intégrité cascade modification propagation"
     },
     {
@@ -653,7 +653,7 @@
         "Si la ligne référencée est supprimée, les lignes qui en dépendent le sont aussi.",
         "En 3ème, les contraintes se définissent en mode assisté (phpMyAdmin) ; en 4ème, on les écrit en SQL."
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "contrainte intégrité cascade suppression propagation"
     }
   ],
@@ -672,7 +672,7 @@
       "remarques": [
         "IF NOT EXISTS n'est pas dans l'annexe."
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "créer base de données"
     },
     {
@@ -689,7 +689,7 @@
       "remarques": [
         "Supprime la base, ses tables et toutes les données, sans confirmation."
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "supprimer base de données"
     },
     {
@@ -714,7 +714,7 @@
       "remarques": [
         "Créer d'abord les tables référencées (Classe) puis celles qui les référencent (Eleve)."
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "créer table structure colonnes"
     },
     {
@@ -728,7 +728,7 @@
           "rôle": "Définition de la nouvelle colonne"
         }
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "ajouter colonne modifier structure"
     },
     {
@@ -745,7 +745,7 @@
       "remarques": [
         "Syntaxe de l'annexe : DROP colonne (le mot COLUMN est facultatif sous MySQL)."
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "supprimer colonne"
     },
     {
@@ -768,7 +768,7 @@
         "MODIFY n'est pas dans l'annexe.",
         "Il est possible d'utiliser MODIFY au lieu de ALTER."
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "modifier type colonne changer taille change modify"
     },
     {
@@ -790,7 +790,7 @@
         "Pour une colonne, on enseigne CHANGE (ancien nom, nouveau nom, type). RENAME COLUMN n'est pas dans l'annexe.",
         "Il est possible d'utiliser CHANGE."
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "renommer colonne table nom change"
     },
     {
@@ -808,7 +808,7 @@
           "rôle": "PRIMARY KEY, FOREIGN KEY, UNIQUE ou CHECK"
         }
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "ajouter contrainte clé étrangère"
     },
     {
@@ -825,7 +825,7 @@
       "remarques": [
         "D'où l'intérêt de nommer les contraintes avec CONSTRAINT nom."
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "supprimer contrainte"
     },
     {
@@ -843,7 +843,7 @@
         "Supprimer d'abord les tables qui référencent celle-ci.",
         "IF EXISTS n'est pas dans l'annexe."
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "supprimer table"
     }
   ],
@@ -855,7 +855,7 @@
       "remarques": [
         "Colonne entière, clé primaire : la valeur n'est plus saisie à l'insertion."
       ],
-      "niveau": 3,
+      "niveau": 4,
       "motsClés": "numéro automatique compteur identifiant"
     }
   ]

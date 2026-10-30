@@ -370,15 +370,16 @@
         void OKSQL;
       }
       if (niveau === 3) {
-        // programme 2026 : la création et la gestion d'une BDR (CREATE, ALTER, DROP) sont en 3ème
-        var R3 = [[/\bGROUP\s+BY\b/g, "GROUP BY est au programme de 4ème."], [/\bHAVING\b/g, "HAVING est au programme de 4ème."],
+        // 3ème : la structure se crée en mode assisté (aides pédagogiques 2026 : observer le SQL généré)
+        var R3 = [[/\b(CREATE|ALTER|DROP)\s+(TABLE|DATABASE)\b/g, "Les instructions CREATE, ALTER et DROP sont réservées à la 4ème : en 3ème, la base se crée en mode assisté (phpMyAdmin)."],
+          [/\bGROUP\s+BY\b/g, "GROUP BY est au programme de 4ème."], [/\bHAVING\b/g, "HAVING est au programme de 4ème."],
           [/\(\s*SELECT\b/g, "Les sous-requêtes sont au programme de 4ème."]];
         R3.forEach(function (x) { var m3; while ((m3 = x[0].exec(U))) ajouter(s.debut + m3.index, "niveau", x[1], "", "SQL", x[1]); });
         var rFrom = /\bFROM\s+([\s\S]*?)(\bWHERE\b|\bORDER\b|\bGROUP\b|;|$)/g, mf;
         while ((mf = rFrom.exec(U))) if (/,/.test(mf[1])) ajouter(s.debut + mf.index, "niveau", "Une requête sur plusieurs tables (jointure) est au programme de 4ème : en 3ème, une seule table.", "", "SQL", "multi");
       }
       ["SELECT", "INSERT INTO", "UPDATE", "DELETE FROM", "CREATE TABLE", "ALTER TABLE", "DROP TABLE", "GROUP BY", "HAVING", "ORDER BY", "DISTINCT", "BETWEEN", "LIKE", "IS NULL", "FOREIGN KEY", "PRIMARY KEY"]
-        .forEach(function (k) { if (new RegExp("\\b" + k.replace(" ", "\\s+") + "\\b").test(U)) element(k, "SQL", /GROUP|HAVING/.test(k) ? 4 : 3); });
+        .forEach(function (k) { if (new RegExp("\\b" + k.replace(" ", "\\s+") + "\\b").test(U)) element(k, "SQL", /CREATE|ALTER|DROP|GROUP|HAVING|FOREIGN/.test(k) ? 4 : 3); });
     });
 
     problemes.sort(function (a, b) { return a.ligne - b.ligne; });

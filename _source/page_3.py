@@ -572,7 +572,7 @@ DELETE FROM Eleve WHERE idEleve = 25;''', "sql")}
 N.bloc(retenir([
     "Clé primaire soulignée, clé étrangère suivie de #.",
     "Relation ∞:∞ = table intermédiaire.",
-    "Création de la base et des tables : mode assisté, puis commandes SQL (CREATE, ALTER, DROP — programme 2026).",
+    "Création de la base et des tables : mode assisté uniquement (on observe le SQL généré).",
     "Requêtes SQL sur une seule table.",
 ], autres=[("Instructions SQL de 3ème", ["Instruction", "Rôle"], [
     (c("SELECT … FROM … WHERE … ORDER BY"), "Consulter, filtrer, trier"), (c("DISTINCT"), "Supprimer les doublons"),
@@ -593,6 +593,7 @@ N.bloc(interdits("À ne pas enseigner en 3ème année", [
     "getElementsByName<small>4ème</small>",
     "charAt, substr, Math.floor, Math.ceil, getDay<small>ch[i], substring, Math.trunc</small>",
     "&lt;button&gt;, onsubmit sur un bouton<small>input type=\"button\" + onclick</small>",
+    "CREATE, ALTER, DROP écrits<small>mode assisté phpMyAdmin</small>",
     "document.write()<small>retiré de l'annexe 2026 : innerHTML</small>",
     "Jointures, agrégats, GROUP BY, sous-requêtes<small>4ème</small>",
     "transition-timing-function, translateX/Y<small>hors annexe</small>",

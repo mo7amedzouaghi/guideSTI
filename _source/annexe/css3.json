@@ -183,7 +183,7 @@
       "définition": "Définit une ombre au texte.",
       "exemple": "h1 {\n  text-shadow: 2px 2px 4px gray;\n}",
       "valeurs": "décalage-x décalage-y [flou] couleur",
-      "niveau": 2,
+      "niveau": 3,
       "motsClés": "ombre texte"
     },
     {
@@ -191,7 +191,7 @@
       "définition": "Spécifie la façon de transformer les caractères d'un texte en majuscules ou en minuscules (uppercase, lowercase, capitalize).",
       "exemple": ".lien-menu {\n  text-transform: uppercase;\n}\n.nom {\n  text-transform: capitalize;\n}",
       "valeurs": "uppercase, lowercase, capitalize",
-      "niveau": 2,
+      "niveau": 3,
       "motsClés": "majuscules minuscules casse capitale"
     },
     {
@@ -276,7 +276,7 @@
       "définition": "Spécifie la taille d'une image d'arrière-plan.",
       "exemple": "header {\n  background-image: url(\"carthage.jpg\");\n  background-size: cover;\n}",
       "valeurs": "cover, contain, ou largeur hauteur en px / %",
-      "niveau": 2,
+      "niveau": 3,
       "motsClés": "taille image de fond couvrir"
     },
     {
@@ -284,7 +284,7 @@
       "définition": "Définit la position d'une image de fond.",
       "exemple": "body {\n  background-image: url(\"images/logo.png\");\n  background-repeat: repeat-y;\n  background-position: center;\n}",
       "valeurs": "center, left, right",
-      "niveau": 2,
+      "niveau": 3,
       "motsClés": "position image fond centrer"
     },
     {
@@ -520,7 +520,7 @@
       "définition": "Définit le rayon des coins arrondis d'un élément.",
       "exemple": ".carte {\n  border-radius: 10px;\n}\nimg.profil {\n  border-radius: 50%;   /* cercle */\n}",
       "valeurs": "Valeur en px ou %",
-      "niveau": 2,
+      "niveau": 3,
       "motsClés": "coins arrondis cercle"
     },
     {
