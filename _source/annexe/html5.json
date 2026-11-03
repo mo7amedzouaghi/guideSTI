@@ -956,7 +956,7 @@
           "attributs_specifiques": []
         },
         {
-          "type": "text, email, tel",
+          "type": "text",
           "attributs_generiques": [
             "name",
             "value",
@@ -969,7 +969,7 @@
           "attributs_specifiques": []
         },
         {
-          "type": "password",
+          "type": "email, tel, password",
           "attributs_generiques": [
             "name",
             "value",
@@ -981,13 +981,14 @@
           "attributs_specifiques": []
         },
         {
-          "type": "number, range",
+          "type": "number",
           "attributs_generiques": [
             "name",
             "value",
             "readonly",
             "required",
-            "disabled"
+            "disabled",
+            "step"
           ],
           "attributs_specifiques": [
             "min",
@@ -995,7 +996,20 @@
           ]
         },
         {
-          "type": "date, time",
+          "type": "range",
+          "attributs_generiques": [
+            "name",
+            "value",
+            "disabled",
+            "step"
+          ],
+          "attributs_specifiques": [
+            "min",
+            "max"
+          ]
+        },
+        {
+          "type": "datetime-local, date, time",
           "attributs_generiques": [
             "name",
             "value",
@@ -1022,12 +1036,12 @@
       ],
       "exemple": "<input type=\"text\" name=\"nom\" placeholder=\"Votre nom\" required>\n<input type=\"number\" name=\"age\" min=\"15\" max=\"20\">\n<input type=\"radio\" name=\"sexe\" value=\"F\"> Fille\n<input type=\"radio\" name=\"sexe\" value=\"G\"> Garçon\n<input type=\"checkbox\" name=\"photo\" value=\"oui\" checked>\n<input type=\"button\" value=\"Valider\" onclick=\"verifier()\">",
       "remarques": [
-        "2ème : text, number, radio, checkbox, submit, reset. 3ème : email, tel, password, date, time, range, button.",
+        "2ème : text, number, radio, checkbox, reset, submit. 3ème : datetime-local, date, time, email, tel, password, range, button (programme 2026).",
         "Les boutons radio d'un même groupe partagent le même name.",
-        "2ème : text, number, radio, checkbox, reset, submit. 3ème : date, time, datetime-local, email, tel, password, range, button (programme 2026)."
+        "list ne s'applique qu'au type text ; range n'accepte ni readonly ni required."
       ],
       "niveau": 2,
-      "motsClés": "champ saisie formulaire bouton type text number radio checkbox email password date range"
+      "motsClés": "champ saisie formulaire bouton type text number radio checkbox email password date range datetime-local step"
     },
     {
       "balise": "<textarea>",
