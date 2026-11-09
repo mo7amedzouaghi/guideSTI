@@ -2,14 +2,14 @@
 window.RUB=(window.RUB||[]).concat([
 {id:"css-selecteurs-avances",niv:4,titre:"Sélecteurs avancés et filtres",tags:"[attr] · a:link · :focus · :active · filter",
 lead:"Cibler les éléments selon leurs attributs ou leur état, et appliquer des filtres aux images.",
-anim:{titre:"Des sélecteurs plus précis",lang:"CSS",prev:true,mode:"css",html:"Nom : <input type=\"text\"> Mot de passe : <input type=\"password\"><p><a href=\"#\">Un lien</a></p><p class=\"note\">Note importante</p>",steps:[
+anim:{titre:"Des sélecteurs plus précis",lang:"CSS",prev:true,mode:"css",html:"<input type=\"text\" placeholder=\"Nom\"> <input type=\"password\" placeholder=\"Mot de passe\"><p><a href=\"#\">Un lien</a></p><p class=\"note\">Note importante</p>",steps:[
  {add:"input[type=password] { background-color: #fff6d6; }",cap:"element[attr=valeur] cible seulement les champs mot de passe."},
  {add:"input:focus { border: 2px solid #5B2C9F; }",cap:":focus s'applique au champ actif. Cliquez dans un champ de l'aperçu."},
  {add:"a:link { color: green; }\na:visited { color: gray; }",cap:"a:link et a:visited distinguent les liens non visités et visités."},
  {add:"a:active { color: red; }",cap:":active s'applique pendant le clic."},
  {add:"p.note { font-weight: bold; color: #5B2C9F; }",cap:"element.class cible un paragraphe de classe note uniquement."}]},
 ex:{ask:"Mettre en évidence les champs obligatoires du formulaire, le champ actif, et passer une image en noir et blanc.",
- html:"Nom : <input type=\"text\" title=\"obligatoire\">\nCourriel : <input type=\"email\">\n<p class=\"aide\">Les champs encadrés sont obligatoires.</p>\n<img class=\"photo\" src=\"club.jpg\" alt=\"Photo du club\" width=\"200\">",
+ html:"<input type=\"text\" title=\"obligatoire\" placeholder=\"Nom\">\n<input type=\"email\" placeholder=\"Courriel\">\n<p class=\"aide\">Les champs encadrés sont obligatoires.</p>\n<img class=\"photo\" src=\"club.jpg\" alt=\"Photo du club\" style=\"width: 200px;\">",
  css:"input[title=obligatoire] {\n  border: 2px solid #C62828;\n}\ninput:focus {\n  background-color: #f1eafb;\n}\np.aide {\n  font-style: italic;\n}\nimg.photo {\n  filter: grayscale(100%);\n}"},
 pieges:["Écrire input[type=\"password\"] avec un espace avant les crochets : on cible alors autre chose.","Utiliser des sélecteurs combinés comme .menu a : hors programme.","Inverser a:link et a:visited : l'ordre conseillé est link, visited, puis :hover et :active.","Oublier l'unité dans grayscale() ou blur() : grayscale(100%), blur(3px)."],
 retenir:["element[attr] et element[attr=valeur] ciblent par attribut.","element.class cible un type d'élément avec une classe.",":focus = champ actif, :active = pendant le clic.","filter : blur(), grayscale()…"],
