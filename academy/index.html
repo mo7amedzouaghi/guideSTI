@@ -3,9 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="icon" href="../flag.png">
 <title>STI Web Academy</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" href="../flag.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;800&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
 /* Charte « STIWeb » — reprise du site Guide STI */
@@ -124,210 +123,133 @@ td code{font-family:var(--f-mono);font-size:.8rem;color:var(--blue)}
 .fb{font-size:.88rem;margin-top:6px;color:var(--muted)}
 footer{text-align:center;color:var(--muted);font-size:.85rem;padding:20px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.anim2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));justify-items:stretch;align-items:start}
+.aout{min-width:0;display:grid;place-items:center;min-height:160px;background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:10px}
+.aout .frame{width:100%;height:220px}
+pre span.l.hot{background:#F5B80033;box-shadow:inset 3px 0 0 #F5B800}
+.stage>.bar{margin:10px auto 0}.stage>.caption{margin:10px 0 14px;width:auto;margin-inline:14px}
+.frame{width:100%;min-height:200px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.frame.big{min-height:320px}
+.preview .frame{flex:1;min-width:0}
+.lab textarea{width:100%;min-height:320px;font-family:var(--f-mono);font-size:.82rem;background:var(--code-bg);color:var(--code-fg);border-radius:10px;padding:12px;border:0;min-width:0}
+.outhtml{font-size:.95rem;line-height:1.7;min-width:0;overflow-x:auto}
+table.mini{min-width:0;width:auto}table.mini th,table.mini td{padding:4px 10px}
+.grid2{margin-top:12px}
 </style>
 </head>
 <body>
-
 <header><div class="hin">
   <a class="brand" href="../index.html" title="Retour au Guide STI">⟵</a> <a class="brand" href="#accueil">STI <span>Web</span> Academy</a>
   <nav>
     <a href="#accueil">Accueil</a>
-    <a href="#accueil" data-go="n2">2ème STI</a>
-    <a href="#accueil" data-go="n3">3ème STI</a>
-    <a href="#accueil" data-go="nbac">4ème · Bac</a>
+    <a href="#accueil" data-go="n2">2ème année</a>
+    <a href="#accueil" data-go="n3">3ème année</a>
+    <a href="#accueil" data-go="n4">4ème · Bac</a>
   </nav>
 </div></header>
 
 <main>
-<!-- ===== ACCUEIL ===== -->
 <section id="v-accueil">
   <h1>Le programme STI, notion par notion</h1>
   <p class="lead">Chaque rubrique suit le même parcours : la notion en animation, un exemple d'application, les pièges fréquents, l'essentiel à retenir conforme à l'annexe officielle, puis la pratique et l'auto-évaluation.</p>
-
-  <div class="levels">
-    <div class="level" id="n2" style="--c:var(--n2)"><h2><span class="tag">2ème</span> 2ème année STI</h2>
-      <p>Les bases du web : structure d'une page HTML5, mise en forme CSS3 élémentaire.</p>
-      <div class="rubs">
-        <a class="rub soon"><b>Structure d'une page HTML5</b><small>doctype · head · body</small></a>
-        <a class="rub soon"><b>Textes, listes et liens</b><small>h1–h6 · ul/ol · a</small></a>
-        <a class="rub soon"><b>Images et tableaux</b><small>img · table · colspan</small></a>
-        <a class="rub soon"><b>Premiers sélecteurs CSS</b><small>balise · classe · id</small></a>
-      </div></div>
-
-    <div class="level" id="n3" style="--c:var(--n3)"><h2><span class="tag">3ème</span> 3ème année STI</h2>
-      <p>Mise en page et effets : divisions sémantiques, positionnement, transitions, transformations, animations.</p>
-      <div class="rubs">
-        <a class="rub soon"><b>Divisions sémantiques</b><small>header · nav · section · footer</small></a>
-        <a class="rub soon"><b>Float et position</b><small>float · relative · absolute</small></a>
-        <a class="rub live" href="#transition"><b>Transition et transformation</b><small>transition · transform · :hover</small></a>
-        <a class="rub soon"><b>Animation CSS</b><small>@keyframes · animation</small></a>
-        <a class="rub soon"><b>iframe et figure</b><small>iframe · figure · figcaption</small></a>
-      </div></div>
-
-    <div class="level" id="nbac" style="--c:var(--n4)"><h2><span class="tag">4ème</span> Bac Sciences de l'informatique</h2>
-      <p>Programmation côté client et serveur : JavaScript, formulaires, SQL et PHP.</p>
-      <div class="rubs">
-        <a class="rub soon"><b>Formulaires HTML5</b><small>input · select · fieldset</small></a>
-        <a class="rub soon"><b>Contrôles de saisie JS</b><small>String · Math · Date</small></a>
-        <a class="rub soon"><b>LDD SQL</b><small>CREATE · ALTER · DROP</small></a>
-        <a class="rub soon"><b>PHP et MySQL</b><small>connexion · requêtes</small></a>
-      </div></div>
-  </div>
+  <div class="levels" id="levels"></div>
 </section>
-
-<!-- ===== RUBRIQUE : TRANSITION ===== -->
-<section id="v-transition" hidden>
-  <div class="crumb"><a href="#accueil">Accueil</a> › 3ème STI › Transition et transformation</div>
-  <h1>Transition et transformation</h1>
-  <p class="lead">Faire passer un élément d'un état à un autre en douceur, au survol de la souris.</p>
-
-  <div class="sec">
-    <h2><span class="ic">🎬</span> La notion en animation</h2>
-    <p class="sub">L'illustration se lit toute seule : ⏸ / ▶ pour la commander, ↻ pour la rejouer.</p>
-    <div class="stage">
-      <div class="stage-h"><div><b>Une transition, image par image</b><small>transition: all 1s</small></div>
-        <div><button class="btn" id="aPlay" aria-label="Pause">⏸</button> <button class="btn" id="aRe" aria-label="Rejouer">↻</button></div></div>
-      <div class="stage-b">
-        <div class="track">
-          <span class="prop" id="p1">état initial</span>
-          <span class="prop" id="p2">:hover détecté</span>
-          <span class="prop" id="p3">transform: scale(1.3)</span>
-          <span class="prop" id="p4">background-color</span>
-        </div>
-        <div class="boxdemo" id="aBox">.carte</div>
-        <div class="bar"><i id="aBar"></i></div>
-        <div class="caption" id="aCap">Étape 1 : la carte est dans son état initial.</div>
-        <div class="note">Sans transition, le changement est instantané. Avec transition, le navigateur calcule les états intermédiaires pendant la durée choisie.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <h2><span class="ic">✎</span> Exemple d'application</h2>
-    <p class="sub">Sans animation : pour modifier les valeurs vous-même, passez à « Mettre en pratique ».</p>
-    <div class="ask">✍ Au survol d'une carte, l'agrandir, la tourner de 5° et changer sa couleur de fond en 1 seconde.</div>
-    <div class="codes">
-      <div class="code"><div class="code-h">HTML <button class="btn cp" data-t="cHtml">Copier</button></div>
-<pre id="cHtml"><span class="l">&lt;div class="carte"&gt;Survolez-moi&lt;/div&gt;</span></pre></div>
-      <div class="code"><div class="code-h">CSS <button class="btn cp" data-t="cCss">Copier</button></div>
-<pre id="cCss"><span class="l">.carte {</span><span class="l">  width: 180px;</span><span class="l">  padding: 16px;</span><span class="l">  background-color: teal;</span><span class="l">  transition: all 1s;</span><span class="l">}</span><span class="l">.carte:hover {</span><span class="l">  transform: scale(1.15) rotate(5deg);</span><span class="l">  background-color: orangered;</span><span class="l">}</span></pre></div>
-    </div>
-    <div class="preview"><span class="lbl">Résultat :</span><div class="cardx" tabindex="0">Survolez-moi</div></div>
-  </div>
-
-  <div class="sec">
-    <h2><span class="ic">⚠</span> Pièges fréquents</h2>
-    <div class="grid2" style="margin-top:12px">
-      <div class="pit">Placer <code>transition</code> dans <code>:hover</code> seulement : l'effet est fluide à l'aller mais brutal au retour.</div>
-      <div class="pit">Oublier l'unité de durée : <code>transition: all 1</code> est ignoré, il faut <code>1s</code> ou <code>1000ms</code>.</div>
-      <div class="pit">Écrire deux <code>transform</code> séparés : le second écrase le premier. On les enchaîne dans une seule déclaration.</div>
-      <div class="pit">Mettre une virgule entre les fonctions : <code>scale(1.2), rotate(5deg)</code> est invalide, on sépare par un espace.</div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <h2><span class="ic">📌</span> À retenir</h2>
-    <div class="grid2" style="margin-top:12px">
-      <div class="keep">La transition se déclare sur l'état normal de l'élément.</div>
-      <div class="keep">La pseudo-classe :hover définit l'état d'arrivée.</div>
-      <div class="keep">transform ne déplace pas les autres éléments de la page.</div>
-      <div class="keep">Plusieurs transformations s'écrivent dans une seule propriété transform.</div>
-    </div>
-    <div class="tw"><table>
-      <thead><tr><th>Propriété CSS</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Description</th></tr></thead>
-      <tbody>
-        <tr><td><code>transition</code></td><td>propriété · durée · délai</td><td><code>all 1s</code></td><td>Super-propriété : combine transition-property, transition-duration et transition-delay.</td></tr>
-        <tr><td><code>transition-property</code></td><td><code>all</code>, nom d'une propriété</td><td><code>all</code></td><td>Propriétés concernées par la transition.</td></tr>
-        <tr><td><code>transition-duration</code></td><td>durée en <code>s</code> ou <code>ms</code></td><td><code>1s</code></td><td>Durée de la transition.</td></tr>
-                <tr><td><code>transition-delay</code></td><td>durée en <code>s</code> ou <code>ms</code></td><td>non utilisée</td><td>Temps d'attente avant le début.</td></tr>
-        <tr><td><code>transform</code></td><td><code>translate()</code>, <code>rotate()</code>, <code>scale()</code>, <code>skew()</code></td><td><code>scale(1.15) rotate(5deg)</code></td><td>Déplace, tourne, agrandit ou incline l'élément. Toutes les fonctions sur une seule ligne ; translate(x, y) uniquement.</td></tr>
-      </tbody></table></div>
-    <p class="note" style="text-align:left;margin-top:8px">Valeurs à vérifier et ajuster selon votre dernière version de l'annexe officielle.</p>
-  </div>
-
-  <div class="sec cta">
-    <div><h3>Passer de la théorie à la pratique</h3><p class="sub" style="margin:4px 0 0">Modifiez les valeurs et observez le résultat, puis testez-vous.</p></div>
-    <div class="acts"><button class="btn pri" data-open="labSec">▶ Mettre en pratique</button><button class="btn ok" data-open="quizSec">✔ S'évaluer</button></div>
-  </div>
-
-  <div class="sec" id="labSec" hidden>
-    <h2><span class="ic">⚙</span> Mettre en pratique</h2>
-    <p class="sub">Choisissez les valeurs, puis survolez le carré.</p>
-    <div class="lab">
-      <div class="ctrls">
-        <label for="lDur">Durée : <span id="lDurV">1s</span><input id="lDur" type="range" min="0.2" max="3" step="0.1" value="1"></label>
-        <label for="lFn">Délai : <span id="lFnV">0s</span><input id="lFn" type="range" min="0" max="2" step="0.1" value="0"></label>
-        <label for="lTr">Transformation<select id="lTr"><option value="scale(1.3)">scale(1.3)</option><option value="rotate(45deg)">rotate(45deg)</option><option value="translate(40px,0)">translate(40px,0)</option><option value="skew(15deg)">skew(15deg)</option><option value="scale(1.2) rotate(10deg)">scale(1.2) rotate(10deg)</option></select></label>
-        <div class="code"><div class="code-h">CSS généré <button class="btn cp" data-t="lCode">Copier</button></div><pre id="lCode"></pre></div>
-      </div>
-      <div class="playground"><div id="labBox" tabindex="0">.carte</div></div>
-    </div>
-  </div>
-
-  <div class="sec" id="quizSec" hidden>
-    <h2><span class="ic">✔</span> S'évaluer</h2>
-    <p class="sub">Trois questions, correction immédiate. Score : <b id="score">0 / 3</b></p>
-    <div class="quiz" id="quiz"></div>
-  </div>
-</section>
+<section id="v-rub" hidden></section>
 </main>
-<footer>Lycée Oued Ellil · Sciences et Technologies de l'Informatique · Mr. Zouaghi Mohamed</footer>
+<footer>Lycée Oued Ellil · Sciences et Technologies de l'Informatique · Mr. Zouaghi Mohamed · Contenus conformes à l'annexe officielle STI</footer>
 
+<script src="rubriques-2.js"></script>
+<script src="rubriques-3.js"></script>
+<script src="rubriques-4.js"></script>
 <script>
-const views=["accueil","transition"];
-function route(){const h=location.hash.slice(1)||"accueil";const v=views.includes(h)?h:"accueil";
-  views.forEach(x=>document.getElementById("v-"+x).hidden=x!==v);window.scrollTo(0,0);}
-addEventListener("hashchange",route);route();
-document.querySelectorAll("[data-go]").forEach(a=>a.addEventListener("click",e=>{
-  if(location.hash&&location.hash!=="#accueil"){location.hash="accueil";}
-  setTimeout(()=>document.getElementById(a.dataset.go).scrollIntoView({behavior:"smooth"}),50);e.preventDefault();}));
+const R=window.RUB||[];
+const NIV={2:["2ème année","Les bases du web : structure HTML5, textes, listes, tableaux, médias, formulaires et premières règles CSS.","var(--n2)"],
+ 3:["3ème année","Web interactif et bases de données : HTML5 sémantique, CSS3 externe, mise en page, effets, JavaScript et SQL simple.","var(--n3)"],
+ 4:["4ème année · Bac","Sites dynamiques : compléments JS, SQL (définition, agrégats, jointures) et PHP + MySQL.","var(--n4)"]};
+const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const lines=t=>t.split("\n").map(l=>`<span class="l">${esc(l)||" "}</span>`).join("");
+const $=id=>document.getElementById(id);
 
-/* animation pas à pas */
-const steps=[
- {p:"p1",t:"Étape 1 : la carte est dans son état initial.",s:"none",c:"var(--blue)",w:0},
- {p:"p2",t:"Étape 2 : la souris survole la carte, :hover devient actif.",s:"none",c:"var(--blue)",w:15},
- {p:"p3",t:"Étape 3 : transform: scale(1.3) agrandit progressivement la carte.",s:"scale(1.3)",c:"var(--blue)",w:60},
- {p:"p4",t:"Étape 4 : background-color passe au orange pendant la même seconde.",s:"scale(1.3)",c:"var(--accent)",w:100}];
-let si=0,playing=true,timer;
-const box=document.getElementById("aBox");box.style.transition="all 1s";
-function show(i){const s=steps[i];document.querySelectorAll(".prop").forEach(e=>e.classList.toggle("on",e.id===s.p));
-  box.style.transform=s.s;box.style.background=s.c;document.getElementById("aBar").style.width=s.w+"%";
-  document.getElementById("aBar").style.transition="width 1s";document.getElementById("aCap").textContent=s.t;}
-function tick(){si=(si+1)%steps.length;show(si);}
-function start(){clearInterval(timer);timer=setInterval(tick,1800);}
-show(0);start();
-document.getElementById("aPlay").onclick=e=>{playing=!playing;e.target.textContent=playing?"⏸":"▶";playing?start():clearInterval(timer);};
-document.getElementById("aRe").onclick=()=>{si=0;show(0);if(playing)start();};
+/* accueil */
+$("levels").innerHTML=[2,3,4].map(n=>`<div class="level" id="n${n}" style="--c:${NIV[n][2]}"><h2><span class="tag">${n}ème</span> ${NIV[n][0]}</h2><p>${NIV[n][1]}</p><div class="rubs">${
+ R.filter(r=>r.niv===n).map(r=>`<a class="rub" href="#${r.id}"><b>${r.titre}</b><small>${r.tags}</small></a>`).join("")}</div></div>`).join("");
 
-/* copier */
-document.addEventListener("click",e=>{const b=e.target.closest(".cp");if(!b)return;
-  const txt=[...document.getElementById(b.dataset.t).querySelectorAll(".l")].map(l=>l.textContent).join("\n");
-  const done=()=>{b.textContent="Copié";setTimeout(()=>b.textContent="Copier",1400)};
-  navigator.clipboard?.writeText(txt).then(done).catch(()=>{const r=document.createRange();r.selectNodeContents(document.getElementById(b.dataset.t));getSelection().removeAllRanges();getSelection().addRange(r);});});
+function doc(ex){ // assemble une page HTML d'aperçu
+  let h=ex.html||"";const css=ex.css?`<style>${ex.css}</style>`:"",js=ex.js?`<script>${ex.js}<\/script>`:"";
+  const base=`<style>body{font-family:Arial,sans-serif;margin:12px}</style>`;
+  if(/<html/i.test(h))return h.replace(/<\/head>/i,base+css+"</head>").replace(/<\/body>/i,js+"</body>");
+  return base+css+h+js;
+}
+function codeBox(t,lang,id){return `<div class="code"><div class="code-h">${lang} <button class="btn cp" data-t="${id}">Copier</button></div><pre id="${id}">${lines(t)}</pre></div>`;}
 
-/* ouvrir sections */
-document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const s=document.getElementById(b.dataset.open);s.hidden=false;s.scrollIntoView({behavior:"smooth"});});
+function render(r){
+  const v=$("v-rub");const a=r.anim,e=r.ex;let k=0;
+  const blocks=[["html","HTML"],["css","CSS"],["js","JavaScript"],["sql","SQL"],["php","PHP"]].filter(([x])=>e[x]).map(([x,L])=>codeBox(e[x],L,"c"+(k++))).join("");
+  const showPrev=e.html&&!e.noPreview;
+  v.innerHTML=`<div class="crumb"><a href="#accueil">Accueil</a> › ${NIV[r.niv][0]} › ${r.titre}</div>
+  <h1>${r.titre}</h1><p class="lead">${r.lead}</p>
+  <div class="sec"><h2><span class="ic">🎬</span> La notion en animation</h2>
+   <p class="sub">L'illustration se lit toute seule : ⏸ / ▶ pour la commander, ↻ pour la rejouer.</p>
+   <div class="stage"><div class="stage-h"><div><b>${a.titre}</b></div><div><button class="btn" id="aPlay" aria-label="Pause">⏸</button> <button class="btn" id="aRe" aria-label="Rejouer">↻</button></div></div>
+    <div class="stage-b anim2"><div class="code"><div class="code-h">${a.lang||"Code"}</div><pre id="aCode"></pre></div>
+     <div class="aout" id="aOut"></div></div>
+    <div class="bar"><i id="aBar"></i></div><div class="caption" id="aCap"></div></div></div>
+  <div class="sec"><h2><span class="ic">✎</span> Exemple d'application</h2>
+   <p class="sub">Sans animation : pour modifier le code vous-même, passez à « Mettre en pratique ».</p>
+   <div class="ask">✍ ${e.ask}</div><div class="codes">${blocks}</div>
+   ${showPrev?`<div class="preview"><span class="lbl">Résultat :</span><iframe class="frame" id="exFrame" title="Résultat"></iframe></div>`:e.out?`<div class="preview"><span class="lbl">Résultat :</span><div class="outhtml">${e.out}</div></div>`:""}</div>
+  <div class="sec"><h2><span class="ic">⚠</span> Pièges fréquents</h2><div class="grid2">${r.pieges.map(p=>`<div class="pit">${p}</div>`).join("")}</div></div>
+  <div class="sec"><h2><span class="ic">📌</span> À retenir</h2><div class="grid2">${r.retenir.map(p=>`<div class="keep">${p}</div>`).join("")}</div>
+   ${r.props&&r.props.length?`<div class="tw"><table><thead><tr><th>${r.propsTitre||"Propriété CSS"}</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Description</th></tr></thead><tbody>${r.props.map(p=>`<tr><td><code>${esc(p[0])}</code></td><td>${p[1]}</td><td><code>${esc(p[2])}</code></td><td>${p[3]}</td></tr>`).join("")}</tbody></table></div>`:""}
+   ${r.meth&&r.meth.length?`<div class="tw"><table><thead><tr><th>${r.methTitre||"Méthode / élément JS"}</th><th>Description</th></tr></thead><tbody>${r.meth.map(p=>`<tr><td><code>${esc(p[0])}</code></td><td>${p[1]}</td></tr>`).join("")}</tbody></table></div>`:""}
+   ${r.tags2?`<div class="tw"><table><thead><tr><th>Élément / attribut HTML</th><th>Description</th></tr></thead><tbody>${r.tags2.map(p=>`<tr><td><code>${esc(p[0])}</code></td><td>${p[1]}</td></tr>`).join("")}</tbody></table></div>`:""}</div>
+  <div class="sec cta"><div><h3>Passer de la théorie à la pratique</h3><p class="sub" style="margin:4px 0 0">Un exercice guidé, puis un quiz corrigé.</p></div>
+   <div class="acts"><button class="btn pri" data-open="labSec">▶ Mettre en pratique</button><button class="btn ok" data-open="quizSec">✔ S'évaluer</button></div></div>
+  <div class="sec" id="labSec" hidden><h2><span class="ic">⚙</span> Mettre en pratique</h2>
+   <div class="ask">🎯 ${r.exo.enonce}</div>
+   ${showPrev?`<p class="sub">Modifiez le code : le résultat se met à jour en direct.</p><div class="lab"><textarea id="labCode" spellcheck="false" aria-label="Code">${esc(r.exo.depart||doc0(e))}</textarea><iframe class="frame big" id="labFrame" title="Aperçu"></iframe></div>`:""}
+   <button class="btn" id="corrBtn" style="margin-top:12px">Afficher la correction</button><div id="corr" hidden style="margin-top:12px">${codeBox(r.exo.corr,r.exo.lang||"Correction","cx")}</div></div>
+  <div class="sec" id="quizSec" hidden><h2><span class="ic">✔</span> S'évaluer</h2><p class="sub">Correction immédiate. Score : <b id="score">0 / ${r.quiz.length}</b></p><div class="quiz" id="quiz"></div></div>`;
+  if(showPrev)$("exFrame").srcdoc=doc(e);
+  if(showPrev){const up=()=>$("labFrame").srcdoc=$("labCode").value;$("labCode").addEventListener("input",up);up();}
+  $("corrBtn").onclick=()=>{$("corr").hidden=!$("corr").hidden;$("corrBtn").textContent=$("corr").hidden?"Afficher la correction":"Masquer la correction";};
+  v.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const s=$(b.dataset.open);s.hidden=false;s.scrollIntoView({behavior:"smooth"});});
+  quiz(r.quiz);anim(a);
+}
+function doc0(e){let s="";if(e.css)s+="<style>\n"+e.css+"\n</style>\n";s+=e.html||"";if(e.js)s+="\n<script>\n"+e.js+"\n<\/script>";return s;}
 
-/* labo */
-const lb=document.getElementById("labBox"),lD=document.getElementById("lDur"),lF=document.getElementById("lFn"),lT=document.getElementById("lTr");
-let st=document.createElement("style");document.head.appendChild(st);
-function lab(){const d=lD.value+"s",dl=lF.value+"s";document.getElementById("lDurV").textContent=d;document.getElementById("lFnV").textContent=dl;
-  st.textContent=`#labBox{transition:all ${d} ${dl}}#labBox:hover,#labBox:focus{transform:${lT.value};background:var(--accent)}`;
-  const lines=[".carte {",`  transition: all ${d} ${dl};`,"}",".carte:hover {",`  transform: ${lT.value};`,"  background-color: orangered;","}"];
-  document.getElementById("lCode").innerHTML=lines.map(l=>`<span class="l">${l}</span>`).join("");}
-[lD,lF,lT].forEach(x=>x.addEventListener("input",lab));lab();
-
-/* quiz */
-const Q=[
- {q:"Où déclare-t-on la propriété transition pour un effet fluide à l'aller et au retour ?",o:["Dans :hover","Dans le sélecteur normal de l'élément","Dans le body"],a:1,e:"Déclarée sur l'état normal, elle s'applique dans les deux sens."},
- {q:"Quelle écriture combine correctement deux transformations ?",o:["transform: scale(1.2), rotate(5deg);","transform: scale(1.2); transform: rotate(5deg);","transform: scale(1.2) rotate(5deg);"],a:2,e:"Les fonctions s'enchaînent dans une seule déclaration, séparées par un espace."},
- {q:"Que fait transition-delay: 0.5s ?",o:["La transition dure 0,5 s","La transition attend 0,5 s avant de commencer","La transition se répète toutes les 0,5 s"],a:1,e:"transition-delay définit le temps d'attente avant le début de la transition."}];
-let score=0;const qz=document.getElementById("quiz");
-Q.forEach((x,i)=>{const d=document.createElement("div");d.className="q";d.innerHTML=`<p>${i+1}. ${x.q}</p><div class="opts">${x.o.map((o,j)=>`<button data-j="${j}">${o}</button>`).join("")}</div><div class="fb"></div>`;
+/* animation : chaque étape ajoute du code et met à jour le résultat */
+let T=null,playing=true,si=0;
+function anim(a){
+  const S=a.steps;
+  const show=i=>{const acc=S.slice(0,i+1).map(s=>s.add).join("\n");const n=acc.split("\n").length,m=S[i].add.split("\n").length;
+    $("aCode").innerHTML=acc.split("\n").map((l,j)=>`<span class="l${j>=n-m?" hot":""}">${esc(l)||" "}</span>`).join("");
+    const o=$("aOut");
+    if(S[i].out!==undefined)o.innerHTML=`<div class="outhtml">${S[i].out}</div>`;
+    else if(a.prev){const src=a.mode==="css"?`<style>body{font-family:Arial;margin:10px}${acc}</style>${a.html}`:`<style>body{font-family:Arial;margin:10px}${a.css||""}</style>${acc}`;
+      o.innerHTML=`<iframe class="frame" title="Aperçu"></iframe>`;o.firstChild.srcdoc=src;}
+    $("aCap").textContent=`Étape ${i+1}/${S.length} : ${S[i].cap}`;$("aBar").style.width=((i+1)/S.length*100)+"%";};
+  const start=()=>{clearInterval(T);T=setInterval(()=>{si=(si+1)%S.length;show(si);},2800);};
+  si=0;show(0);playing=true;start();
+  $("aPlay").onclick=e=>{playing=!playing;e.target.textContent=playing?"⏸":"▶";playing?start():clearInterval(T);};
+  $("aRe").onclick=()=>{si=0;show(0);if(playing)start();};
+}
+function quiz(Q){let score=0;const qz=$("quiz");
+  Q.forEach((x,i)=>{const d=document.createElement("div");d.className="q";d.innerHTML=`<p>${i+1}. ${esc(x[0])}</p><div class="opts">${x[1].map((o,j)=>`<button data-j="${j}">${esc(o)}</button>`).join("")}</div><div class="fb"></div>`;
   d.querySelectorAll("button").forEach(b=>b.onclick=()=>{if(d.dataset.done)return;d.dataset.done=1;const j=+b.dataset.j;
-    d.querySelectorAll("button")[x.a].classList.add("good");if(j!==x.a)b.classList.add("bad");else score++;
-    document.getElementById("score").textContent=score+" / 3";d.querySelector(".fb").textContent=(j===x.a?"Bravo. ":"Pas tout à fait. ")+x.e;});
-  qz.appendChild(d);});
+    d.querySelectorAll("button")[x[2]].classList.add("good");if(j!==x[2])b.classList.add("bad");else score++;
+    $("score").textContent=score+" / "+Q.length;d.querySelector(".fb").textContent=(j===x[2]?"Bravo. ":"Pas tout à fait. ")+x[3];});qz.appendChild(d);});}
+
+document.addEventListener("click",e=>{const b=e.target.closest(".cp");if(!b)return;
+  const t=[...$(b.dataset.t).querySelectorAll(".l")].map(l=>l.textContent).join("\n");
+  navigator.clipboard?.writeText(t).then(()=>{b.textContent="Copié";setTimeout(()=>b.textContent="Copier",1400)}).catch(()=>{});});
+
+function route(){clearInterval(T);const h=location.hash.slice(1);const r=R.find(x=>x.id===h);
+  $("v-accueil").hidden=!!r;$("v-rub").hidden=!r;if(r)render(r);window.scrollTo(0,0);}
+addEventListener("hashchange",route);route();
+document.querySelectorAll("[data-go]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();if(location.hash&&location.hash!=="#accueil")location.hash="accueil";
+  setTimeout(()=>$(a.dataset.go).scrollIntoView({behavior:"smooth"}),60);}));
 </script>
 </body>
 </html>
