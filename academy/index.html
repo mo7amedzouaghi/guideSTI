@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="../flag.png">
+<title>STI Web Academy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700;800&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Charte « STIWeb » — reprise du site Guide STI */
+/* Layout : barre de niveaux fixe, accueil en grille de rubriques, page rubrique en sections empilées */
+:root{
+  --bg:#F3F6FA; --surface:#ffffff; --ink:#1c2536; --muted:#4a5568; --line:#dbe3ee;
+  --marine:#0D2B6B; --or:#F5B800; --or-pale:#fff6d6; --head:#0D2B6B;
+  --accent:#D35400; --accent-soft:#fdf0e6; --blue:#1D4ED8; --blue-soft:#e8efff;
+  --n2:#1E7B3C; --n3:#1D4ED8; --n4:#5B2C9F;
+  --warn:#C62828; --warn-soft:#fdecec; --code-bg:#0F172A; --code-fg:#e2e8f0; --code-head:#1e293b;
+  --ok:#0F7C80; --ok-soft:#e4f4f4;
+  --f-display:"Roboto Condensed","Arial Narrow",sans-serif; --f-body:"Inter","Segoe UI",Calibri,sans-serif; --f-mono:"JetBrains Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b1530; --surface:#132045; --ink:#e6ebf5; --muted:#a8b3cc; --line:#26365f;
+  --marine:#0a2257; --or:#F5B800; --or-pale:#3a3110; --head:#ffd34d;
+  --accent:#ff8a3d; --accent-soft:#3a2614; --blue:#6f9bff; --blue-soft:#1a2b57;
+  --n2:#4cc27a; --n3:#6f9bff; --n4:#b08ae8;
+  --warn:#ff7b6e; --warn-soft:#3a1f22; --code-bg:#070d1f; --code-fg:#e2e8f0; --code-head:#16213f;
+  --ok:#46c5c9; --ok-soft:#123536; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b1530; --surface:#132045; --ink:#e6ebf5; --muted:#a8b3cc; --line:#26365f;
+  --marine:#0a2257; --or:#F5B800; --or-pale:#3a3110; --head:#ffd34d;
+  --accent:#ff8a3d; --accent-soft:#3a2614; --blue:#6f9bff; --blue-soft:#1a2b57;
+  --n2:#4cc27a; --n3:#6f9bff; --n4:#b08ae8;
+  --warn:#ff7b6e; --warn-soft:#3a1f22; --code-bg:#070d1f; --code-fg:#e2e8f0; --code-head:#16213f;
+  --ok:#46c5c9; --ok-soft:#123536; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+*{box-sizing:border-box}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--marine)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--marine);border-bottom:4px solid var(--or)}
+.hin{max-width:1180px;margin:0 auto;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+.brand{font-family:var(--f-display);font-weight:800;font-size:1.3rem;text-decoration:none;color:#fff}
+.brand span{color:var(--or)}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav a{text-decoration:none;color:#dbe4f7;font-weight:600;padding:6px 12px;border-radius:999px;font-size:.92rem}
+nav a:hover,nav a:focus-visible{background:var(--or);color:var(--marine);outline:none}
+main{max-width:1180px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);color:var(--head);text-wrap:balance;margin:0}
+h1{font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.1}
+h2{font-size:1.3rem;display:flex;gap:10px;align-items:center}
+.lead{color:var(--muted);max-width:65ch;margin:10px 0 0}
+.crumb{font-size:.85rem;color:var(--muted);margin-bottom:6px}
+.crumb a{color:var(--blue)}
+/* accueil */
+.levels{display:grid;gap:22px;margin-top:28px}
+.level{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.level h2 .tag{font-family:var(--f-display);font-size:.85rem;background:var(--c);color:#fff;padding:3px 9px;border-radius:6px}
+.level{border-top:5px solid var(--c)}
+.level p{color:var(--muted);margin:6px 0 14px}
+.rubs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.rub{display:block;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}
+.rub b{display:block}
+.rub small{color:var(--muted);font-family:var(--f-mono);font-size:.74rem}
+.rub.live{border-color:var(--accent);background:var(--accent-soft)}
+.rub.live::after{content:"Disponible ▶";display:block;margin-top:6px;font-size:.78rem;font-weight:700;color:var(--accent)}
+.rub.soon{opacity:.75}
+/* rubrique */
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:22px}
+.sec>.sub{color:var(--muted);font-size:.92rem;margin:4px 0 14px}
+.ic{color:var(--or)}
+.stage{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stage-h{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line)}
+.stage-h b{color:var(--accent);text-transform:uppercase;letter-spacing:.06em;font-size:.82rem}
+.stage-h small{color:var(--muted);font-family:var(--f-mono);font-size:.72rem;margin-left:8px}
+.btn{font:inherit;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;padding:6px 12px}
+.btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.btn.pri{background:var(--or);border-color:var(--or);color:#0D2B6B}
+.btn.ok{color:var(--ok);border-color:var(--ok)}
+.stage-b{background:var(--bg);padding:22px 14px;display:grid;gap:16px;justify-items:center}
+.track{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.prop{font-family:var(--f-mono);font-size:.78rem;padding:6px 10px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);transition:all .3s}
+.prop.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);border-style:dashed}
+.boxdemo{width:110px;height:110px;border-radius:12px;background:var(--n3);display:grid;place-items:center;color:#fff;font-weight:700;font-family:var(--f-mono);font-size:.8rem}
+.bar{width:min(420px,100%);height:10px;border-radius:5px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent)}
+.caption{background:var(--surface);border-radius:10px;padding:10px 14px;text-align:center;font-weight:600;width:100%}
+.note{font-size:.8rem;color:var(--muted);text-align:center}
+.ask{background:var(--accent-soft);color:var(--ink);border-radius:10px;padding:12px 16px;font-weight:600;margin-bottom:14px}
+.codes{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.code{min-width:0;border-radius:12px;overflow:hidden;background:var(--code-bg)}
+.code-h{display:flex;justify-content:space-between;align-items:center;background:var(--code-head);color:var(--code-fg);padding:8px 12px;font-weight:700;font-size:.88rem}
+.code-h .btn{background:transparent;color:var(--code-fg);border-color:#ffffff33;font-size:.8rem;padding:4px 10px}
+pre{margin:0;padding:12px 14px;overflow-x:auto;color:var(--code-fg);font-family:var(--f-mono);font-size:.82rem;line-height:1.75;counter-reset:l}
+pre span.l{display:block}
+pre span.l::before{counter-increment:l;content:counter(l);display:inline-block;width:2ch;margin-right:12px;color:#7a80a8;text-align:right}
+.preview{margin-top:14px;border:1px dashed var(--line);border-radius:12px;padding:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.preview .lbl{font-size:.8rem;color:var(--muted)}
+.cardx{width:180px;padding:16px;border-radius:12px;background:var(--n3);color:#fff;font-weight:700;text-align:center;transition:all 1s;cursor:pointer}
+.cardx:hover{transform:scale(1.15) rotate(5deg);background-color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
+.pit{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:10px;padding:10px 14px;font-size:.93rem}
+.pit::before{content:"⚠ ";color:var(--warn);font-weight:700}
+.keep{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:10px;padding:10px 14px;font-weight:600;font-size:.93rem}
+.tw{overflow-x:auto;margin-top:16px}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.88rem}
+th{background:var(--n3);color:#fff;text-align:left;padding:8px 10px;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+td{border-bottom:1px solid var(--line);padding:8px 10px;vertical-align:top}
+td code{font-family:var(--f-mono);font-size:.8rem;color:var(--blue)}
+.cta{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;border-top:4px solid var(--or)}
+.cta .acts{display:flex;gap:10px;flex-wrap:wrap}
+/* pratique */
+.lab{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:6px}
+.ctrls{display:grid;gap:12px;min-width:0}
+.ctrls label{font-weight:600;font-size:.9rem;display:grid;gap:4px}
+.ctrls select,.ctrls input{font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.playground{min-height:220px;border:1px dashed var(--line);border-radius:12px;display:grid;place-items:center;background:var(--bg);padding:20px}
+#labBox{width:120px;height:120px;border-radius:12px;background:var(--blue);display:grid;place-items:center;color:#fff;font-weight:700;cursor:pointer}
+.quiz{display:grid;gap:14px}
+.q{border:1px solid var(--line);border-radius:12px;padding:14px}
+.q p{margin:0 0 8px;font-weight:600}
+.opts{display:grid;gap:6px}
+.opts button{text-align:left;font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.opts button.good{background:var(--ok-soft);border-color:var(--ok)}
+.opts button.bad{background:var(--warn-soft);border-color:var(--warn)}
+.fb{font-size:.88rem;margin-top:6px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:20px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header><div class="hin">
+  <a class="brand" href="../index.html" title="Retour au Guide STI">⟵</a> <a class="brand" href="#accueil">STI <span>Web</span> Academy</a>
+  <nav>
+    <a href="#accueil">Accueil</a>
+    <a href="#accueil" data-go="n2">2ème STI</a>
+    <a href="#accueil" data-go="n3">3ème STI</a>
+    <a href="#accueil" data-go="nbac">4ème · Bac</a>
+  </nav>
+</div></header>
+
+<main>
+<!-- ===== ACCUEIL ===== -->
+<section id="v-accueil">
+  <h1>Le programme STI, notion par notion</h1>
+  <p class="lead">Chaque rubrique suit le même parcours : la notion en animation, un exemple d'application, les pièges fréquents, l'essentiel à retenir conforme à l'annexe officielle, puis la pratique et l'auto-évaluation.</p>
+
+  <div class="levels">
+    <div class="level" id="n2" style="--c:var(--n2)"><h2><span class="tag">2ème</span> 2ème année STI</h2>
+      <p>Les bases du web : structure d'une page HTML5, mise en forme CSS3 élémentaire.</p>
+      <div class="rubs">
+        <a class="rub soon"><b>Structure d'une page HTML5</b><small>doctype · head · body</small></a>
+        <a class="rub soon"><b>Textes, listes et liens</b><small>h1–h6 · ul/ol · a</small></a>
+        <a class="rub soon"><b>Images et tableaux</b><small>img · table · colspan</small></a>
+        <a class="rub soon"><b>Premiers sélecteurs CSS</b><small>balise · classe · id</small></a>
+      </div></div>
+
+    <div class="level" id="n3" style="--c:var(--n3)"><h2><span class="tag">3ème</span> 3ème année STI</h2>
+      <p>Mise en page et effets : divisions sémantiques, positionnement, transitions, transformations, animations.</p>
+      <div class="rubs">
+        <a class="rub soon"><b>Divisions sémantiques</b><small>header · nav · section · footer</small></a>
+        <a class="rub soon"><b>Float et position</b><small>float · relative · absolute</small></a>
+        <a class="rub live" href="#transition"><b>Transition et transformation</b><small>transition · transform · :hover</small></a>
+        <a class="rub soon"><b>Animation CSS</b><small>@keyframes · animation</small></a>
+        <a class="rub soon"><b>iframe et figure</b><small>iframe · figure · figcaption</small></a>
+      </div></div>
+
+    <div class="level" id="nbac" style="--c:var(--n4)"><h2><span class="tag">4ème</span> Bac Sciences de l'informatique</h2>
+      <p>Programmation côté client et serveur : JavaScript, formulaires, SQL et PHP.</p>
+      <div class="rubs">
+        <a class="rub soon"><b>Formulaires HTML5</b><small>input · select · fieldset</small></a>
+        <a class="rub soon"><b>Contrôles de saisie JS</b><small>String · Math · Date</small></a>
+        <a class="rub soon"><b>LDD SQL</b><small>CREATE · ALTER · DROP</small></a>
+        <a class="rub soon"><b>PHP et MySQL</b><small>connexion · requêtes</small></a>
+      </div></div>
+  </div>
+</section>
+
+<!-- ===== RUBRIQUE : TRANSITION ===== -->
+<section id="v-transition" hidden>
+  <div class="crumb"><a href="#accueil">Accueil</a> › 3ème STI › Transition et transformation</div>
+  <h1>Transition et transformation</h1>
+  <p class="lead">Faire passer un élément d'un état à un autre en douceur, au survol de la souris.</p>
+
+  <div class="sec">
+    <h2><span class="ic">🎬</span> La notion en animation</h2>
+    <p class="sub">L'illustration se lit toute seule : ⏸ / ▶ pour la commander, ↻ pour la rejouer.</p>
+    <div class="stage">
+      <div class="stage-h"><div><b>Une transition, image par image</b><small>transition: all 1s</small></div>
+        <div><button class="btn" id="aPlay" aria-label="Pause">⏸</button> <button class="btn" id="aRe" aria-label="Rejouer">↻</button></div></div>
+      <div class="stage-b">
+        <div class="track">
+          <span class="prop" id="p1">état initial</span>
+          <span class="prop" id="p2">:hover détecté</span>
+          <span class="prop" id="p3">transform: scale(1.3)</span>
+          <span class="prop" id="p4">background-color</span>
+        </div>
+        <div class="boxdemo" id="aBox">.carte</div>
+        <div class="bar"><i id="aBar"></i></div>
+        <div class="caption" id="aCap">Étape 1 : la carte est dans son état initial.</div>
+        <div class="note">Sans transition, le changement est instantané. Avec transition, le navigateur calcule les états intermédiaires pendant la durée choisie.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2><span class="ic">✎</span> Exemple d'application</h2>
+    <p class="sub">Sans animation : pour modifier les valeurs vous-même, passez à « Mettre en pratique ».</p>
+    <div class="ask">✍ Au survol d'une carte, l'agrandir, la tourner de 5° et changer sa couleur de fond en 1 seconde.</div>
+    <div class="codes">
+      <div class="code"><div class="code-h">HTML <button class="btn cp" data-t="cHtml">Copier</button></div>
+<pre id="cHtml"><span class="l">&lt;div class="carte"&gt;Survolez-moi&lt;/div&gt;</span></pre></div>
+      <div class="code"><div class="code-h">CSS <button class="btn cp" data-t="cCss">Copier</button></div>
+<pre id="cCss"><span class="l">.carte {</span><span class="l">  width: 180px;</span><span class="l">  padding: 16px;</span><span class="l">  background-color: teal;</span><span class="l">  transition: all 1s;</span><span class="l">}</span><span class="l">.carte:hover {</span><span class="l">  transform: scale(1.15) rotate(5deg);</span><span class="l">  background-color: orangered;</span><span class="l">}</span></pre></div>
+    </div>
+    <div class="preview"><span class="lbl">Résultat :</span><div class="cardx" tabindex="0">Survolez-moi</div></div>
+  </div>
+
+  <div class="sec">
+    <h2><span class="ic">⚠</span> Pièges fréquents</h2>
+    <div class="grid2" style="margin-top:12px">
+      <div class="pit">Placer <code>transition</code> dans <code>:hover</code> seulement : l'effet est fluide à l'aller mais brutal au retour.</div>
+      <div class="pit">Oublier l'unité de durée : <code>transition: all 1</code> est ignoré, il faut <code>1s</code> ou <code>1000ms</code>.</div>
+      <div class="pit">Écrire deux <code>transform</code> séparés : le second écrase le premier. On les enchaîne dans une seule déclaration.</div>
+      <div class="pit">Mettre une virgule entre les fonctions : <code>scale(1.2), rotate(5deg)</code> est invalide, on sépare par un espace.</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2><span class="ic">📌</span> À retenir</h2>
+    <div class="grid2" style="margin-top:12px">
+      <div class="keep">La transition se déclare sur l'état normal de l'élément.</div>
+      <div class="keep">La pseudo-classe :hover définit l'état d'arrivée.</div>
+      <div class="keep">transform ne déplace pas les autres éléments de la page.</div>
+      <div class="keep">Plusieurs transformations s'écrivent dans une seule propriété transform.</div>
+    </div>
+    <div class="tw"><table>
+      <thead><tr><th>Propriété CSS</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>transition</code></td><td>propriété · durée · délai</td><td><code>all 1s</code></td><td>Super-propriété : combine transition-property, transition-duration et transition-delay.</td></tr>
+        <tr><td><code>transition-property</code></td><td><code>all</code>, nom d'une propriété</td><td><code>all</code></td><td>Propriétés concernées par la transition.</td></tr>
+        <tr><td><code>transition-duration</code></td><td>durée en <code>s</code> ou <code>ms</code></td><td><code>1s</code></td><td>Durée de la transition.</td></tr>
+                <tr><td><code>transition-delay</code></td><td>durée en <code>s</code> ou <code>ms</code></td><td>non utilisée</td><td>Temps d'attente avant le début.</td></tr>
+        <tr><td><code>transform</code></td><td><code>translate()</code>, <code>rotate()</code>, <code>scale()</code>, <code>skew()</code></td><td><code>scale(1.15) rotate(5deg)</code></td><td>Déplace, tourne, agrandit ou incline l'élément. Toutes les fonctions sur une seule ligne ; translate(x, y) uniquement.</td></tr>
+      </tbody></table></div>
+    <p class="note" style="text-align:left;margin-top:8px">Valeurs à vérifier et ajuster selon votre dernière version de l'annexe officielle.</p>
+  </div>
+
+  <div class="sec cta">
+    <div><h3>Passer de la théorie à la pratique</h3><p class="sub" style="margin:4px 0 0">Modifiez les valeurs et observez le résultat, puis testez-vous.</p></div>
+    <div class="acts"><button class="btn pri" data-open="labSec">▶ Mettre en pratique</button><button class="btn ok" data-open="quizSec">✔ S'évaluer</button></div>
+  </div>
+
+  <div class="sec" id="labSec" hidden>
+    <h2><span class="ic">⚙</span> Mettre en pratique</h2>
+    <p class="sub">Choisissez les valeurs, puis survolez le carré.</p>
+    <div class="lab">
+      <div class="ctrls">
+        <label for="lDur">Durée : <span id="lDurV">1s</span><input id="lDur" type="range" min="0.2" max="3" step="0.1" value="1"></label>
+        <label for="lFn">Délai : <span id="lFnV">0s</span><input id="lFn" type="range" min="0" max="2" step="0.1" value="0"></label>
+        <label for="lTr">Transformation<select id="lTr"><option value="scale(1.3)">scale(1.3)</option><option value="rotate(45deg)">rotate(45deg)</option><option value="translate(40px,0)">translate(40px,0)</option><option value="skew(15deg)">skew(15deg)</option><option value="scale(1.2) rotate(10deg)">scale(1.2) rotate(10deg)</option></select></label>
+        <div class="code"><div class="code-h">CSS généré <button class="btn cp" data-t="lCode">Copier</button></div><pre id="lCode"></pre></div>
+      </div>
+      <div class="playground"><div id="labBox" tabindex="0">.carte</div></div>
+    </div>
+  </div>
+
+  <div class="sec" id="quizSec" hidden>
+    <h2><span class="ic">✔</span> S'évaluer</h2>
+    <p class="sub">Trois questions, correction immédiate. Score : <b id="score">0 / 3</b></p>
+    <div class="quiz" id="quiz"></div>
+  </div>
+</section>
+</main>
+<footer>Lycée Oued Ellil · Sciences et Technologies de l'Informatique · Mr. Zouaghi Mohamed</footer>
+
+<script>
+const views=["accueil","transition"];
+function route(){const h=location.hash.slice(1)||"accueil";const v=views.includes(h)?h:"accueil";
+  views.forEach(x=>document.getElementById("v-"+x).hidden=x!==v);window.scrollTo(0,0);}
+addEventListener("hashchange",route);route();
+document.querySelectorAll("[data-go]").forEach(a=>a.addEventListener("click",e=>{
+  if(location.hash&&location.hash!=="#accueil"){location.hash="accueil";}
+  setTimeout(()=>document.getElementById(a.dataset.go).scrollIntoView({behavior:"smooth"}),50);e.preventDefault();}));
+
+/* animation pas à pas */
+const steps=[
+ {p:"p1",t:"Étape 1 : la carte est dans son état initial.",s:"none",c:"var(--blue)",w:0},
+ {p:"p2",t:"Étape 2 : la souris survole la carte, :hover devient actif.",s:"none",c:"var(--blue)",w:15},
+ {p:"p3",t:"Étape 3 : transform: scale(1.3) agrandit progressivement la carte.",s:"scale(1.3)",c:"var(--blue)",w:60},
+ {p:"p4",t:"Étape 4 : background-color passe au orange pendant la même seconde.",s:"scale(1.3)",c:"var(--accent)",w:100}];
+let si=0,playing=true,timer;
+const box=document.getElementById("aBox");box.style.transition="all 1s";
+function show(i){const s=steps[i];document.querySelectorAll(".prop").forEach(e=>e.classList.toggle("on",e.id===s.p));
+  box.style.transform=s.s;box.style.background=s.c;document.getElementById("aBar").style.width=s.w+"%";
+  document.getElementById("aBar").style.transition="width 1s";document.getElementById("aCap").textContent=s.t;}
+function tick(){si=(si+1)%steps.length;show(si);}
+function start(){clearInterval(timer);timer=setInterval(tick,1800);}
+show(0);start();
+document.getElementById("aPlay").onclick=e=>{playing=!playing;e.target.textContent=playing?"⏸":"▶";playing?start():clearInterval(timer);};
+document.getElementById("aRe").onclick=()=>{si=0;show(0);if(playing)start();};
+
+/* copier */
+document.addEventListener("click",e=>{const b=e.target.closest(".cp");if(!b)return;
+  const txt=[...document.getElementById(b.dataset.t).querySelectorAll(".l")].map(l=>l.textContent).join("\n");
+  const done=()=>{b.textContent="Copié";setTimeout(()=>b.textContent="Copier",1400)};
+  navigator.clipboard?.writeText(txt).then(done).catch(()=>{const r=document.createRange();r.selectNodeContents(document.getElementById(b.dataset.t));getSelection().removeAllRanges();getSelection().addRange(r);});});
+
+/* ouvrir sections */
+document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const s=document.getElementById(b.dataset.open);s.hidden=false;s.scrollIntoView({behavior:"smooth"});});
+
+/* labo */
+const lb=document.getElementById("labBox"),lD=document.getElementById("lDur"),lF=document.getElementById("lFn"),lT=document.getElementById("lTr");
+let st=document.createElement("style");document.head.appendChild(st);
+function lab(){const d=lD.value+"s",dl=lF.value+"s";document.getElementById("lDurV").textContent=d;document.getElementById("lFnV").textContent=dl;
+  st.textContent=`#labBox{transition:all ${d} ${dl}}#labBox:hover,#labBox:focus{transform:${lT.value};background:var(--accent)}`;
+  const lines=[".carte {",`  transition: all ${d} ${dl};`,"}",".carte:hover {",`  transform: ${lT.value};`,"  background-color: orangered;","}"];
+  document.getElementById("lCode").innerHTML=lines.map(l=>`<span class="l">${l}</span>`).join("");}
+[lD,lF,lT].forEach(x=>x.addEventListener("input",lab));lab();
+
+/* quiz */
+const Q=[
+ {q:"Où déclare-t-on la propriété transition pour un effet fluide à l'aller et au retour ?",o:["Dans :hover","Dans le sélecteur normal de l'élément","Dans le body"],a:1,e:"Déclarée sur l'état normal, elle s'applique dans les deux sens."},
+ {q:"Quelle écriture combine correctement deux transformations ?",o:["transform: scale(1.2), rotate(5deg);","transform: scale(1.2); transform: rotate(5deg);","transform: scale(1.2) rotate(5deg);"],a:2,e:"Les fonctions s'enchaînent dans une seule déclaration, séparées par un espace."},
+ {q:"Que fait transition-delay: 0.5s ?",o:["La transition dure 0,5 s","La transition attend 0,5 s avant de commencer","La transition se répète toutes les 0,5 s"],a:1,e:"transition-delay définit le temps d'attente avant le début de la transition."}];
+let score=0;const qz=document.getElementById("quiz");
+Q.forEach((x,i)=>{const d=document.createElement("div");d.className="q";d.innerHTML=`<p>${i+1}. ${x.q}</p><div class="opts">${x.o.map((o,j)=>`<button data-j="${j}">${o}</button>`).join("")}</div><div class="fb"></div>`;
+  d.querySelectorAll("button").forEach(b=>b.onclick=()=>{if(d.dataset.done)return;d.dataset.done=1;const j=+b.dataset.j;
+    d.querySelectorAll("button")[x.a].classList.add("good");if(j!==x.a)b.classList.add("bad");else score++;
+    document.getElementById("score").textContent=score+" / 3";d.querySelector(".fb").textContent=(j===x.a?"Bravo. ":"Pas tout à fait. ")+x.e;});
+  qz.appendChild(d);});
+</script>
+</body>
+</html>
