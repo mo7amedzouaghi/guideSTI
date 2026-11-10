@@ -136,6 +136,23 @@ pre span.l.hot{background:#F5B80033;box-shadow:inset 3px 0 0 #F5B800}
 .outhtml{font-size:.95rem;line-height:1.7;min-width:0;overflow-x:auto}
 table.mini{min-width:0;width:auto}table.mini th,table.mini td{padding:4px 10px}
 .grid2{margin-top:12px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+.chip{font-family:var(--f-mono);font-size:.78rem;padding:4px 10px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:var(--blue);background:var(--blue-soft)}
+.search{width:100%;max-width:520px;font:inherit;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);margin-top:18px}
+.prog{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin:4px 0 12px;max-width:320px}.prog i{display:block;height:100%;background:var(--c)}
+.progt{font-size:.82rem;color:var(--muted)}
+.rub.done{border-color:var(--c)}.rub.done b::after{content:" ✓";color:var(--ok)}
+.rub small.sc{display:block;color:var(--ok);font-weight:700}
+.cmpg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:12px}
+.cmpc{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg);min-width:0}
+.cmpc code{display:block;background:var(--code-bg);color:var(--code-fg);font-family:var(--f-mono);font-size:.78rem;padding:6px 10px}
+.cmpc iframe{width:100%;border:0;background:#fff;display:block}
+.cmpc p{margin:0;padding:8px 10px;font-size:.86rem}
+.bug .code{margin-top:10px}
+.conf{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:.9rem}
+.conf.ok{background:var(--ok-soft);color:var(--ok)}.conf.ko{background:var(--warn-soft);color:var(--warn)}
+.bacs{display:grid;gap:16px;margin-top:20px}
+@media print{header,footer,.sec,.crumb,.tools{display:none!important}.sec.keepp{display:block!important;border:0}body{background:#fff;color:#000}}
 </style>
 </head>
 <body>
@@ -146,6 +163,7 @@ table.mini{min-width:0;width:auto}table.mini th,table.mini td{padding:4px 10px}
     <a href="#accueil" data-go="n2">2ème année</a>
     <a href="#accueil" data-go="n3">3ème année</a>
     <a href="#accueil" data-go="n4">4ème · Bac</a>
+    <a href="#bac">Mode Bac</a>
   </nav>
 </div></header>
 
@@ -153,15 +171,20 @@ table.mini{min-width:0;width:auto}table.mini th,table.mini td{padding:4px 10px}
 <section id="v-accueil">
   <h1>Le programme STI, notion par notion</h1>
   <p class="lead">Chaque rubrique suit le même parcours : la notion en animation, un exemple d'application, les pièges fréquents, l'essentiel à retenir conforme à l'annexe officielle, puis la pratique et l'auto-évaluation.</p>
+  <input class="search" id="q" type="search" placeholder="Rechercher une notion : float, mysqli, onclick…" aria-label="Rechercher une notion">
   <div class="levels" id="levels"></div>
 </section>
 <section id="v-rub" hidden></section>
+<section id="v-bac" hidden></section>
 </main>
 <footer>Lycée Oued Ellil · Sciences et Technologies de l'Informatique · Mr. Zouaghi Mohamed · Contenus conformes à l'annexe officielle STI</footer>
 
 <script src="rubriques-2.js"></script>
 <script src="rubriques-3.js"></script>
 <script src="rubriques-4.js"></script>
+<script src="rubriques-plus.js"></script>
+<script src="bac.js"></script>
+<script src="../assets/annexe-data.js"></script>
 <script>
 const R=window.RUB||[];
 const NIV={2:["2ème année","Les bases du web : structure HTML5, textes, listes, tableaux, médias, formulaires et premières règles CSS.","var(--n2)"],
@@ -170,11 +193,16 @@ const NIV={2:["2ème année","Les bases du web : structure HTML5, textes, listes
 const esc=t=>String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const lines=t=>t.split("\n").map(l=>`<span class="l">${esc(l)||" "}</span>`).join("");
 const $=id=>document.getElementById(id);
+const LS="stiAcademy";let P={};try{P=JSON.parse(localStorage.getItem(LS))||{}}catch(e){}
+const saveP=()=>{try{localStorage.setItem(LS,JSON.stringify(P))}catch(e){}};
 
 /* accueil */
-$("levels").innerHTML=[2,3,4].map(n=>`<div class="level" id="n${n}" style="--c:${NIV[n][2]}"><h2><span class="tag">${n}ème</span> ${NIV[n][0]}</h2><p>${NIV[n][1]}</p><div class="rubs">${
- R.filter(r=>r.niv===n).map(r=>`<a class="rub" href="#${r.id}"><b>${r.titre}</b><small>${r.tags}</small></a>`).join("")}</div></div>`).join("");
-
+function home(){$("levels").innerHTML=[2,3,4].map(n=>{const L=R.filter(r=>r.niv===n),d=L.filter(r=>P[r.id]).length;
+ return `<div class="level" id="n${n}" style="--c:${NIV[n][2]}"><h2><span class="tag">${n}ème</span> ${NIV[n][0]}</h2><p>${NIV[n][1]}</p>
+ <div class="progt">${d} / ${L.length} rubriques terminées</div><div class="prog"><i style="width:${L.length?d/L.length*100:0}%"></i></div>
+ <div class="rubs">${L.map(r=>`<a class="rub${P[r.id]?" done":""}" href="#${r.id}" data-s="${(r.titre+" "+r.tags).toLowerCase()}"><b>${r.titre}</b><small>${r.tags}</small>${P[r.id]?`<small class="sc">Quiz : ${P[r.id].s} / ${P[r.id].t}</small>`:""}</a>`).join("")}</div></div>`}).join("");}
+home();
+$("q").addEventListener("input",()=>{const q=$("q").value.toLowerCase().trim();document.querySelectorAll(".rub").forEach(a=>a.hidden=q&&a.dataset.s.indexOf(q)<0);});
 function doc(ex){ // assemble une page HTML d'aperçu
   let h=ex.html||"";const css=ex.css?`<style>${ex.css}</style>`:"",js=ex.js?`<script>${ex.js}<\/script>`:"";
   const base=`<style>body{font-family:Arial,sans-serif;margin:12px}</style>`;
@@ -184,38 +212,44 @@ function doc(ex){ // assemble une page HTML d'aperçu
 function codeBox(t,lang,id){return `<div class="code"><div class="code-h">${lang} <button class="btn cp" data-t="${id}">Copier</button></div><pre id="${id}">${lines(t)}</pre></div>`;}
 
 function render(r){
-  const v=$("v-rub");const a=r.anim,e=r.ex;let k=0;
+  const v=$("v-rub");const a=r.anim,e=r.ex||{};let k=0;
   const blocks=[["html","HTML"],["css","CSS"],["js","JavaScript"],["sql","SQL"],["php","PHP"]].filter(([x])=>e[x]).map(([x,L])=>codeBox(e[x],L,"c"+(k++))).join("");
   const showPrev=e.html&&!e.noPreview;
   v.innerHTML=`<div class="crumb"><a href="#accueil">Accueil</a> › ${NIV[r.niv][0]} › ${r.titre}</div>
   <h1>${r.titre}</h1><p class="lead">${r.lead}</p>
-  <div class="sec"><h2><span class="ic">🎬</span> La notion en animation</h2>
+  ${a?`<div class="sec"><h2><span class="ic">🎬</span> La notion en animation</h2>
    <p class="sub">L'illustration se lit toute seule : ⏸ / ▶ pour la commander, ↻ pour la rejouer.</p>
    <div class="stage"><div class="stage-h"><div><b>${a.titre}</b></div><div><button class="btn" id="aPlay" aria-label="Pause">⏸</button> <button class="btn" id="aRe" aria-label="Rejouer">↻</button></div></div>
     <div class="stage-b anim2"><div class="code"><div class="code-h">${a.lang||"Code"}</div><pre id="aCode"></pre></div>
      <div class="aout" id="aOut"></div></div>
-    <div class="bar"><i id="aBar"></i></div><div class="caption" id="aCap"></div></div></div>
-  <div class="sec"><h2><span class="ic">✎</span> Exemple d'application</h2>
+    <div class="bar"><i id="aBar"></i></div><div class="caption" id="aCap"></div></div></div>`:""}
+  ${r.cmp?`<div class="sec"><h2><span class="ic">⚖</span> Comparer les valeurs</h2><p class="sub">${r.cmp.titre} : chaque cadre applique une valeur différente au même élément.</p><div class="cmpg">${r.cmp.vals.map((x,i)=>`<div class="cmpc"><code>${esc(r.cmp.sel||".demo")} { ${esc(r.cmp.prop?r.cmp.prop+": "+x[0]:x[0])}; }</code><iframe id="cf${i}" title="${esc(x[0])}" style="height:${r.cmp.h||130}px"></iframe><p>${x[1]}</p></div>`).join("")}</div></div>`:""}
+  ${e.ask?`<div class="sec"><h2><span class="ic">✎</span> Exemple d'application</h2>
    <p class="sub">Sans animation : pour modifier le code vous-même, passez à « Mettre en pratique ».</p>
    <div class="ask">✍ ${e.ask}</div><div class="codes">${blocks}</div>
-   ${showPrev?`<div class="preview"><span class="lbl">Résultat :</span><iframe class="frame" id="exFrame" title="Résultat"></iframe></div>`:e.out?`<div class="preview"><span class="lbl">Résultat :</span><div class="outhtml">${e.out}</div></div>`:""}</div>
+   ${showPrev?`<div class="preview"><span class="lbl">Résultat :</span><iframe class="frame" id="exFrame" title="Résultat"></iframe></div>`:e.out?`<div class="preview"><span class="lbl">Résultat :</span><div class="outhtml">${e.out}</div></div>`:""}</div>`:""}
   <div class="sec"><h2><span class="ic">⚠</span> Pièges fréquents</h2><div class="grid2">${r.pieges.map(p=>`<div class="pit">${p}</div>`).join("")}</div></div>
-  <div class="sec"><h2><span class="ic">📌</span> À retenir</h2><div class="grid2">${r.retenir.map(p=>`<div class="keep">${p}</div>`).join("")}</div>
+  ${r.bug?`<div class="sec bug"><h2><span class="ic">🛠</span> Trouver l'erreur</h2><div class="ask">🔎 ${r.bug.q}</div>${codeBox(r.bug.code,r.bug.lang||"Code","cb")}<button class="btn" id="bugBtn" style="margin-top:12px">Afficher la correction</button><div id="bugC" hidden><p>${r.bug.expl}</p>${codeBox(r.bug.corr,"Correction","cbc")}</div></div>`:""}
+  <div class="sec keepp"><h2><span class="ic">📌</span> À retenir</h2><div class="grid2">${r.retenir.map(p=>`<div class="keep">${p}</div>`).join("")}</div>
    ${r.props&&r.props.length?`<div class="tw"><table><thead><tr><th>${r.propsTitre||"Propriété CSS"}</th><th>Valeurs possibles (annexe)</th><th>Valeur utilisée</th><th>Description</th></tr></thead><tbody>${r.props.map(p=>`<tr><td><code>${esc(p[0])}</code></td><td>${p[1]}</td><td><code>${esc(p[2])}</code></td><td>${p[3]}</td></tr>`).join("")}</tbody></table></div>`:""}
    ${r.meth&&r.meth.length?`<div class="tw"><table><thead><tr><th>${r.methTitre||"Méthode / élément JS"}</th><th>Description</th></tr></thead><tbody>${r.meth.map(p=>`<tr><td><code>${esc(p[0])}</code></td><td>${p[1]}</td></tr>`).join("")}</tbody></table></div>`:""}
-   ${r.tags2?`<div class="tw"><table><thead><tr><th>Élément / attribut HTML</th><th>Description</th></tr></thead><tbody>${r.tags2.map(p=>`<tr><td><code>${esc(p[0])}</code></td><td>${p[1]}</td></tr>`).join("")}</tbody></table></div>`:""}</div>
+   ${r.tags2?`<div class="tw"><table><thead><tr><th>Élément / attribut HTML</th><th>Description</th></tr></thead><tbody>${r.tags2.map(p=>`<tr><td><code>${esc(p[0])}</code></td><td>${p[1]}</td></tr>`).join("")}</tbody></table></div>`:""}
+   <div class="tools"><span class="progt">Voir dans l'annexe :</span>${(r.ax||r.tags.split(" · ")).map(t=>`<a class="chip" href="../annexe.html?q=${encodeURIComponent(t.replace(/[<>]/g,""))}" target="_blank">${esc(t)}</a>`).join("")}<button class="btn" id="ficheBtn">📄 Imprimer la fiche résumé</button></div></div>
   <div class="sec cta"><div><h3>Passer de la théorie à la pratique</h3><p class="sub" style="margin:4px 0 0">Un exercice guidé, puis un quiz corrigé.</p></div>
    <div class="acts"><button class="btn pri" data-open="labSec">▶ Mettre en pratique</button><button class="btn ok" data-open="quizSec">✔ S'évaluer</button></div></div>
   <div class="sec" id="labSec" hidden><h2><span class="ic">⚙</span> Mettre en pratique</h2>
    <div class="ask">🎯 ${r.exo.enonce}</div>
-   ${showPrev?`<p class="sub">Modifiez le code : le résultat se met à jour en direct.</p><div class="lab"><textarea id="labCode" spellcheck="false" aria-label="Code">${esc(r.exo.depart||doc0(e))}</textarea><iframe class="frame big" id="labFrame" title="Aperçu"></iframe></div>`:""}
+   ${showPrev?`<p class="sub">Modifiez le code : le résultat se met à jour en direct.</p><div class="lab"><textarea id="labCode" spellcheck="false" aria-label="Code">${esc(r.exo.depart||doc0(e))}</textarea><iframe class="frame big" id="labFrame" title="Aperçu"></iframe></div><div class="conf" id="conf"></div>`:""}
    <button class="btn" id="corrBtn" style="margin-top:12px">Afficher la correction</button><div id="corr" hidden style="margin-top:12px">${codeBox(r.exo.corr,r.exo.lang||"Correction","cx")}</div></div>
   <div class="sec" id="quizSec" hidden><h2><span class="ic">✔</span> S'évaluer</h2><p class="sub">Correction immédiate. Score : <b id="score">0 / ${r.quiz.length}</b></p><div class="quiz" id="quiz"></div></div>`;
   if(showPrev)$("exFrame").srcdoc=doc(e);
-  if(showPrev){const up=()=>$("labFrame").srcdoc=$("labCode").value;$("labCode").addEventListener("input",up);up();}
+  if(r.cmp)r.cmp.vals.forEach((x,i)=>$("cf"+i).srcdoc=`<style>body{font-family:Arial;margin:8px;font-size:13px}${r.cmp.css||""}${r.cmp.sel||".demo"}{${r.cmp.prop?r.cmp.prop+":"+x[0]:x[0]}}</style>${r.cmp.html}`);
+  if(r.bug)$("bugBtn").onclick=()=>{$("bugC").hidden=!$("bugC").hidden;};
+  $("ficheBtn").onclick=()=>window.print();
+  if(showPrev){const up=()=>{$("labFrame").srcdoc=$("labCode").value;conf($("labCode").value,r.niv);};$("labCode").addEventListener("input",up);up();}
   $("corrBtn").onclick=()=>{$("corr").hidden=!$("corr").hidden;$("corrBtn").textContent=$("corr").hidden?"Afficher la correction":"Masquer la correction";};
   v.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{const s=$(b.dataset.open);s.hidden=false;s.scrollIntoView({behavior:"smooth"});});
-  quiz(r.quiz);anim(a);
+  quiz(r.quiz,r);if(a)anim(a);
 }
 function doc0(e){let s="";if(e.css)s+="<style>\n"+e.css+"\n</style>\n";s+=e.html||"";if(e.js)s+="\n<script>\n"+e.js+"\n<\/script>";return s;}
 
@@ -235,18 +269,31 @@ function anim(a){
   $("aPlay").onclick=e=>{playing=!playing;e.target.textContent=playing?"⏸":"▶";playing?start():clearInterval(T);};
   $("aRe").onclick=()=>{si=0;show(0);if(playing)start();};
 }
-function quiz(Q){let score=0;const qz=$("quiz");
+function quiz(Q,r){let score=0,nb=0;const qz=$("quiz");
   Q.forEach((x,i)=>{const d=document.createElement("div");d.className="q";d.innerHTML=`<p>${i+1}. ${esc(x[0])}</p><div class="opts">${x[1].map((o,j)=>`<button data-j="${j}">${esc(o)}</button>`).join("")}</div><div class="fb"></div>`;
   d.querySelectorAll("button").forEach(b=>b.onclick=()=>{if(d.dataset.done)return;d.dataset.done=1;const j=+b.dataset.j;
     d.querySelectorAll("button")[x[2]].classList.add("good");if(j!==x[2])b.classList.add("bad");else score++;
-    $("score").textContent=score+" / "+Q.length;d.querySelector(".fb").textContent=(j===x[2]?"Bravo. ":"Pas tout à fait. ")+x[3];});qz.appendChild(d);});}
+    $("score").textContent=score+" / "+Q.length;if(++nb===Q.length){P[r.id]={s:score,t:Q.length};saveP();}d.querySelector(".fb").textContent=(j===x[2]?"Bravo. ":"Pas tout à fait. ")+x[3];});qz.appendChild(d);});}
 
 document.addEventListener("click",e=>{const b=e.target.closest(".cp");if(!b)return;
   const t=[...$(b.dataset.t).querySelectorAll(".l")].map(l=>l.textContent).join("\n");
   navigator.clipboard?.writeText(t).then(()=>{b.textContent="Copié";setTimeout(()=>b.textContent="Copier",1400)}).catch(()=>{});});
 
-function route(){clearInterval(T);const h=location.hash.slice(1);const r=R.find(x=>x.id===h);
-  $("v-accueil").hidden=!!r;$("v-rub").hidden=!r;if(r)render(r);window.scrollTo(0,0);}
+/* vérificateur de conformité à l'annexe */
+function conf(code,niv){const A=window.ANNEXE||[];if(!A.length){$("conf").hidden=true;return;}
+  const tags={},css={};A.forEach(x=>{if(x.l==="HTML5"&&/^<[a-z0-9]+>$/.test(x.e))tags[x.e.slice(1,-1)]=x.n;if(x.e==="<h1> à <h6>")for(let i=1;i<7;i++)tags["h"+i]=x.n;if(x.l==="CSS3"&&/^[a-z-]+$/.test(x.e))css[x.e]=x.n;});
+  const pb=[];const seen={};
+  (code.replace(/<!--[\s\S]*?-->/g,"").match(/<\s*([a-zA-Z][a-zA-Z0-9]*)/g)||[]).forEach(m=>{const t=m.replace(/[<\s]/g,"").toLowerCase();if(seen[t])return;seen[t]=1;
+    if(!(t in tags))pb.push(`&lt;${t}&gt; n'est pas dans l'annexe`);else if(tags[t]>niv)pb.push(`&lt;${t}&gt; est au programme de ${tags[t]}ème année`);});
+  const blocs=(code.match(/\{[^{}]*\}/g)||[]).concat((code.match(/style\s*=\s*"[^"]*"/g)||[]).map(x=>"{"+x.replace(/^style\s*=\s*"/,"")));
+  blocs.forEach(b=>(b.match(/[{;]\s*([a-z-]+)\s*:/g)||[]).forEach(m=>{const p=m.replace(/[{;:\s]/g,"");if(seen["c"+p])return;seen["c"+p]=1;
+    if(!(p in css))pb.push(`la propriété ${p} n'est pas dans l'annexe`);else if(css[p]>niv)pb.push(`la propriété ${p} est au programme de ${css[p]}ème année`);}));
+  const c=$("conf");c.className="conf "+(pb.length?"ko":"ok");c.innerHTML=pb.length?"⚠ Hors annexe pour ce niveau : "+pb.join(" ; "):`✅ Conforme à l'annexe (${niv}ème année) pour les balises HTML et les propriétés CSS.`;}
+/* mode Bac */
+function bac(){const B=window.BAC||[];let k=0;$("v-bac").innerHTML=`<div class="crumb"><a href="#accueil">Accueil</a> › Mode Bac</div><h1>Mode Bac</h1><p class="lead">Des sujets de type bac pratique (4ème année), corrigés et conformes à l'annexe. Essayez d'abord, puis affichez la correction.</p><div class="bacs">${B.map(b=>`<div class="sec"><h2><span class="ic">📝</span> ${b.titre}</h2><p class="sub">${b.theme}</p><div class="ask">${b.contexte}</div><ol>${b.questions.map(q=>`<li style="margin-bottom:12px">${q[0]}<br><button class="btn bt" data-c="bc${k}" style="margin-top:6px">Correction</button><div id="bc${k}" hidden style="margin-top:8px">${codeBox(q[1],q[2]||"Correction","bq"+(k++))}</div></li>`).join("")}</ol></div>`).join("")}</div>`;
+  $("v-bac").querySelectorAll(".bt").forEach(b=>b.onclick=()=>{$(b.dataset.c).hidden=!$(b.dataset.c).hidden;});}
+function route(){clearInterval(T);const h=location.hash.slice(1);const r=R.find(x=>x.id===h);const isB=h==="bac";
+  $("v-accueil").hidden=!!r||isB;$("v-rub").hidden=!r;$("v-bac").hidden=!isB;if(r)render(r);else if(isB)bac();else home();window.scrollTo(0,0);}
 addEventListener("hashchange",route);route();
 document.querySelectorAll("[data-go]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();if(location.hash&&location.hash!=="#accueil")location.hash="accueil";
   setTimeout(()=>$(a.dataset.go).scrollIntoView({behavior:"smooth"}),60);}));
