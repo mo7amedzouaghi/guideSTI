@@ -26,7 +26,7 @@ EX[("2", 1)] = [
     qcm("Quelle balise trace une ligne de séparation horizontale ?", ["<br>", "<hr>", "<p>", "<line>"], 1,
         "<hr> sépare deux parties ; <br> ne fait qu'un retour à la ligne."),
     vf("Pour mettre un mot en gras, on utilise la balise <b>.", False,
-       "La mise en forme se fait en CSS : font-weight: bold. Les balises de mise en forme ne sont pas dans l'annexe."),
+       "<b> n'est pas dans l'annexe : la mise en forme se fait en CSS (font-weight: bold). <strong> sert à marquer un texte important (sens), pas à mettre en gras."),
     erreur("Le validateur W3C signale une erreur. Quelle ligne est fautive ?",
            ["<h1>Mon lycée</h1>", "<img src=\"lycee.jpg\">", "<p>Bienvenue</p>"], 1,
            "L'attribut alt est obligatoire sur <img> : <img src=\"lycee.jpg\" alt=\"Façade du lycée\">."),

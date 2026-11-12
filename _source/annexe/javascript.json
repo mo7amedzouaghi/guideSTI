@@ -135,7 +135,7 @@
       "retour": "Aucune valeur.",
       "remarques": [
         "Dans un contrôle de formulaire : alert() puis return pour arrêter la fonction.",
-        "console.log() n'est pas dans l'annexe : on affiche avec alert(), document.write() ou innerHTML."
+        "console.log() n'est pas dans l'annexe : on affiche avec alert() ou innerHTML (document.write() retiré en 2026)."
       ],
       "niveau": 3,
       "motsClés": "afficher message boîte dialogue sortie erreur console.log"
@@ -544,7 +544,7 @@
       ],
       "retour": "La chaîne formée des caractères correspondants.",
       "remarques": [
-        "charCodeAt() n'est pas dans l'annexe : pour comparer des lettres, on compare directement les caractères (ch[i] >= \"A\")."
+        "Opération inverse : ch.charCodeAt(p) (annexe 2026)."
       ],
       "niveau": 3,
       "motsClés": "code ascii caractère lettre captcha charCodeAt"

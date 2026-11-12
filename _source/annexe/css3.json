@@ -383,8 +383,8 @@
       "exemple": "nav {\n  float: left;\n  width: 25%;\n}\nsection {\n  float: right;\n  width: 70%;\n}",
       "valeurs": "left, right, none",
       "remarques": [
-        "Pour arrêter le flottement sous les colonnes : clear: both (absent de l'annexe, proposé à la réforme).",
-        "Flexbox (display: flex) et Grid ne sont pas au programme."
+        "Pour arrêter le flottement sous les colonnes : clear: both sur l'élément suivant (annexe 2026).",
+        "Autre mise en page possible : display: flex (annexe 2026), sans justify-content, align-items ni grid."
       ],
       "niveau": 3,
       "motsClés": "flotter flottant côte à côte colonnes mise en page"

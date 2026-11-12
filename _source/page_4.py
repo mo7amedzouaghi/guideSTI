@@ -235,6 +235,8 @@ N.bloc(retenir([
     (c("CREATE TABLE"), c("CREATE TABLE t (col type [contrainte], …, [CONSTRAINT nom] contrainte)")),
     (c("ALTER TABLE … ADD"), c("ALTER TABLE t ADD col type [contrainte]")),
     (c("ALTER TABLE … DROP"), c("ALTER TABLE t DROP col")),
+    (c("ALTER TABLE … ALTER / MODIFY"), c("ALTER TABLE t MODIFY col nouveau_type")),
+    (c("ALTER TABLE … RENAME / CHANGE"), c("ALTER TABLE t RENAME COLUMN nom1 TO nom2 — ou CHANGE nom1 nom2 type")),
     (c("ALTER TABLE … ADD CONSTRAINT"), c("ALTER TABLE t ADD CONSTRAINT nom contrainte")),
     (c("ALTER TABLE … DROP CONSTRAINT"), c("ALTER TABLE t DROP CONSTRAINT nom")),
     (c("DROP TABLE"), c("DROP TABLE t"))])]), "À retenir — définition des données", "sql ldd")
@@ -280,9 +282,13 @@ WHERE moyenne > (SELECT AVG(moyenne) FROM Eleve);
 
 -- Livres jamais empruntés
 SELECT titre FROM Livre
-WHERE idLivre NOT IN (SELECT idLivre FROM Emprunt);''', "sql")}
+WHERE idLivre NOT IN (SELECT idLivre FROM Emprunt);
+
+-- ANY (annexe 2026) : vrai si la comparaison réussit pour au moins une valeur
+SELECT nom, moyenne FROM Eleve
+WHERE moyenne > ANY (SELECT moyenne FROM Eleve WHERE idClasse = '4SI1');''', "sql")}
 {enc("att", "<p>La sous-requête doit pouvoir s'exécuter seule : les sous-requêtes corrélées (qui utilisent une colonne de la requête principale) sont hors programme.</p>")}
-""", "sous-requête imbriquée IN NOT IN non corrélée")
+""", "sous-requête imbriquée IN NOT IN ANY non corrélée")
 
 N.notion("Fonctions sur les dates", f"""
 {code('''SELECT nom, YEAR(dateNais) FROM Eleve;
@@ -297,7 +303,8 @@ SELECT idLivre, DATEDIFF(DATE(NOW()), dateEmprunt) AS jours FROM Emprunt;''', "s
 N.bloc(retenir([
     "Ordre des clauses : SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY.",
     "Jointure : tables dans FROM, condition dans WHERE.",
-    "Sous-requête non corrélée seulement.",
+    "Sous-requête non corrélée seulement ; <code>IN</code>, <code>NOT IN</code> ou comparaison avec <code>ANY</code>.",
+    "<code>LIMIT debut, nombre</code> en fin de requête limite les lignes affichées.",
     "Date du jour : <code>DATE(NOW())</code>.",
 ], autres=[("Fonctions SQL", ["Fonction", "Rôle"], [
     (c("COUNT()"), "Nombre de lignes"), (c("SUM()"), "Somme"), (c("AVG()"), "Moyenne"),

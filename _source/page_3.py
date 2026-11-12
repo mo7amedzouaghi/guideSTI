@@ -67,7 +67,12 @@ N.notion("Conteneurs, iframe, figure et details", f"""
 </details>''', "html"),
 apercu('<a href="#" onclick="return false">Carthage</a><br><iframe srcdoc="<p style=\'font:13px Arial\'>Contenu de accueil.html</p>" width="300" height="60" style="border:1px solid #999"></iframe><figure style="margin:8px 0"><div style="width:160px;height:60px;background:#e8d9b5;display:grid;place-items:center;font:12px Arial">dougga.jpg</div><figcaption>Le théâtre romain de Dougga</figcaption></figure><details><summary>Horaires de visite</summary>Tous les jours de 8h à 17h.</details>', haut=250,
        legende="Cliquez sur « Horaires de visite » pour déplier."))}
-""", "div span iframe src name target figure figcaption details summary open")
+<p>Annexe 2026 : la balise <code>&lt;source&gt;</code> (attributs <code>src</code>, <code>type</code>, <code>media</code>) se place dans <code>&lt;audio&gt;</code> ou <code>&lt;video&gt;</code> pour proposer un ou plusieurs fichiers ; le navigateur lit le premier qu'il sait lire.</p>
+{code('''<video controls width="320">
+  <source src="videos/carthage.mp4" type="video/mp4">
+  <source src="videos/carthage.webm" type="video/webm">
+</video>''', "html")}
+""", "div span iframe src name target figure figcaption details summary open source audio video type media")
 
 N.notion("Formulaires : nouveaux types et attributs", f"""
 <p>La 3ème enrichit les formulaires de types spécialisés et d'attributs de contrôle. Le bouton qui déclenche un contrôle JavaScript est un <code>&lt;input type="button"&gt;</code>.</p>
@@ -77,19 +82,24 @@ N.notion("Formulaires : nouveaux types et attributs", f"""
   <input type="password" placeholder="Mot de passe">
   <input type="date" min="2026-09-15">
   <input type="time">
-  Niveau : <input type="range" min="1" max="10" value="5">
+  <input type="datetime-local">
+  Niveau : <input type="range" id="niv" min="0" max="10" step="2" value="4"
+                  oninput="document.getElementById('aff').value = document.getElementById('niv').value">
+  <output id="aff">4</output>
   <input type="text" value="Oued Ellil" readonly>
   <input type="button" value="Valider" onclick="verifier()">
 </form>''', "html"),
-apercu('<form style="display:grid;gap:5px;max-width:260px"><input type="email" placeholder="adresse@mail.tn" required><input type="tel" placeholder="8 chiffres"><input type="password" placeholder="Mot de passe"><input type="date" min="2026-09-15"><input type="time"><span>Niveau : <input type="range" min="1" max="10" value="5"></span><input type="text" value="Oued Ellil" readonly><input type="button" value="Valider"></form>', haut=280))}
+apercu('<form style="display:grid;gap:5px;max-width:260px"><input type="email" placeholder="adresse@mail.tn" required><input type="tel" placeholder="8 chiffres"><input type="password" placeholder="Mot de passe"><input type="date" min="2026-09-15"><input type="time"><input type="datetime-local"><span>Niveau : <input type="range" id="niv" min="0" max="10" step="2" value="4" oninput="document.getElementById(\'aff\').value=document.getElementById(\'niv\').value"> <output id="aff">4</output></span><input type="text" value="Oued Ellil" readonly><input type="button" value="Valider"></form>', haut=320))}
 {tableau(["Types", "Attributs utilisables (annexe)"], [
-    ("text, email, tel", c("name, value, placeholder, readonly, required, disabled, list")),
-    ("password", c("name, value, placeholder, readonly, required, disabled")),
-    ("number, range", c("name, value, readonly, required, disabled, min, max")),
-    ("date, time", c("name, value, required, disabled, min, max")),
+    ("text", c("name, value, placeholder, readonly, required, disabled, list")),
+    ("email, tel, password", c("name, value, placeholder, readonly, required, disabled")),
+    ("number", c("name, value, readonly, required, disabled, step, min, max")),
+    ("range", c("name, value, disabled, step, min, max")),
+    ("datetime-local, date, time", c("name, value, required, disabled, min, max")),
     ("checkbox, radio", c("name, value, required, disabled, checked")),
     ("button, reset, submit", c("name, value, disabled"))])}
-""", "formulaire email tel password date time range button required placeholder readonly disabled min max list")
+{enc("info", "<p>Annexe 2026 : <code>datetime-local</code>, l'attribut <code>step</code> (number, range) et la balise <code>&lt;output&gt;</code> (<code>name</code>, <code>value</code>) qui affiche un résultat. <code>list</code> ne s'applique qu'au type text ; range n'accepte ni <code>readonly</code> ni <code>required</code>.</p>")}
+""", "formulaire email tel password date time datetime-local range step output button required placeholder readonly disabled min max list")
 
 N.notion("Événements HTML", f"""
 <p>Un événement relie une action de l'utilisateur à une fonction JavaScript, directement dans la balise. En 3ème, on n'utilise pas <code>addEventListener</code>.</p>
@@ -125,7 +135,10 @@ N.bloc(retenir([
     (c('<details>'), c('open'), 'Bloc dépliable.', "Masquer un contenu secondaire que le visiteur affiche s'il le souhaite."),
     (c('<summary>'), '—', "Titre cliquable d'un details.", 'Indiquer ce que contient le bloc dépliable.'),
     (c('<address>'), '—', 'Coordonnées de contact.', "Donner l'adresse, le téléphone ou l'e-mail de l'auteur ou de l'établissement."),
-    (c('<cite>'), '—', "Titre d'une œuvre.", "Citer le titre d'un livre, d'un film ou d'un article.")])]), "À retenir — HTML5 avancé")
+    (c('<cite>'), '—', "Titre d'une œuvre.", "Citer le titre d'un livre, d'un film ou d'un article."),
+    (c('<source>'), c('src, type, media'), "Source d'un média (annexe 2026).", 'Proposer un ou plusieurs fichiers à un audio ou à une video.'),
+    (c('<output>'), c('name, value'), "Résultat d'un calcul (annexe 2026).", "Afficher une valeur calculée, par exemple celle d'un range."),
+    (c('<input>'), c('step'), "Pas d'un champ number ou range (annexe 2026).", 'Imposer des valeurs de 2 en 2, de 0.5 en 0.5…')])]), "À retenir — HTML5 avancé")
 
 # =====================================================================
 N.module("CSS3 : feuille externe et sélecteurs",
@@ -154,9 +167,10 @@ ul {
 header {
   background-image: url("../images/sahara.jpg");
   background-size: cover;
+  background-position: center;
 }''', "css", "css/style.css"),
 apercu('<style>h1{text-transform:uppercase;text-shadow:2px 2px 3px gray;font:bold 22px Arial}ul{list-style-type:square;list-style-position:inside;padding:0}</style><h1>Le Sahara tunisien</h1><ul><li>Douz</li><li>Tozeur</li><li>Ksar Ghilane</li></ul>', haut=150))}
-""", "text-transform text-shadow list-style-type list-style-position list-style-image list-style background-size cover contain")
+""", "text-transform text-shadow list-style-type list-style-position list-style-image list-style background-size cover contain background-position center")
 
 N.notion("Tableaux en CSS", f"""
 {duo(code('''table {
@@ -183,6 +197,7 @@ N.bloc(retenir([
     ("list-style-image", "url(\"image\")", "—", "Image comme puce"),
     ("list-style", "combine type, position, image", "—", "Propriété abrégée des listes"),
     ("background-size", "cover, contain, valeur en px ou %", "cover", "Taille de l'image de fond"),
+    ("background-position", "center, left, right", "center", "Position de l'image de fond"),
     ("border-collapse", "separate, collapse", "collapse", "Bordures fusionnées ou séparées"),
     ("table-layout", "auto, fixed", "fixed", "Disposition des colonnes"),
 ]), "À retenir — sélecteurs et propriétés", "css sélecteurs")
@@ -239,9 +254,13 @@ N.notion("Débordement et transparence", f"""
 }
 .filigrane {
   opacity: 0.4;
+}
+.message {
+  visibility: hidden;
 }''', "css"),
-apercu('<style>body{font:13px Arial}.actualites{height:70px;overflow:scroll;border:1px solid #ccc;padding:4px}.filigrane{opacity:.4;font-size:20px;font-weight:bold}</style><div class="actualites">Lundi : réunion des parents.<br>Mardi : sortie à Carthage.<br>Mercredi : club robotique.<br>Jeudi : examen blanc.</div><p class="filigrane">BROUILLON</p>', haut=140))}
-""", "overflow visible hidden clip scroll auto opacity transparence")
+apercu('<style>body{font:13px Arial}.actualites{height:70px;overflow:scroll;border:1px solid #ccc;padding:4px}.filigrane{opacity:.4;font-size:20px;font-weight:bold}.message{visibility:hidden}</style><div class="actualites">Lundi : réunion des parents.<br>Mardi : sortie à Carthage.<br>Mercredi : club robotique.<br>Jeudi : examen blanc.</div><p class="filigrane">BROUILLON</p><p class="message">Message masqué</p><p style="font-size:12px;color:#555">↑ l\'élément masqué garde sa place.</p>', haut=170))}
+{enc("info", "<p><code>visibility: hidden</code> (annexe 2026) masque un élément sans le retirer de la mise en page : sa place reste réservée.</p>")}
+""", "overflow visible hidden clip scroll auto opacity transparence visibility masquer")
 
 N.bloc(retenir([
     "Taille totale d'une boîte = width + padding + border + margin.",
@@ -254,12 +273,14 @@ N.bloc(retenir([
     ("margin", "1 à 4 valeurs en px", "20px", "Marge extérieure"),
     ("border-radius", "valeur en px ou %", "10px", "Coins arrondis"),
     ("box-shadow", "décalage-x décalage-y flou couleur", "4px 4px 8px gray", "Ombre de la boîte"),
-    ("display", "inline, block, inline-block", "—", "Comportement d'affichage"),
+    ("display", "inline, block, inline-block, flex", "—", "Comportement d'affichage"),
     ("float", "left, right, none", "left", "Flottement"),
+    ("clear", "left, right, both, none", "both", "Arrête le flottement"),
     ("position", "absolute, fixed, relative, static, sticky", "absolute", "Mode de positionnement"),
     ("top / bottom / left / right", "valeur en px ou %", "10px", "Décalage d'un élément positionné"),
     ("overflow", "visible, hidden, clip, scroll, auto", "scroll", "Gestion du débordement"),
     ("opacity", "de 0 (transparent) à 1 (opaque)", "0.4", "Niveau de transparence"),
+    ("visibility", "visible, hidden", "hidden", "Affiche ou masque sans libérer la place"),
 ]), "À retenir — mise en page", "box float position")
 
 # =====================================================================
@@ -410,7 +431,8 @@ ch.replace("Oued", "Wed");
 ch.toUpperCase();        // "OUED ELLIL"
 ch.toLowerCase();
 "  ok  ".trim();          // "ok"
-String.fromCharCode(65); // "A"''', "js")}
+String.fromCharCode(65); // "A"
+ch.charCodeAt(0);        // 79  (code ASCII de "O", annexe 2026)''', "js")}
 {enc("prof", "<p>Fonction type à faire construire : tester qu'une chaîne ne contient que des chiffres (téléphone, code postal, CAPTCHA).</p>")}
 {code('''function estChiffres(ch) {
   if (ch.length == 0) {
@@ -423,7 +445,14 @@ String.fromCharCode(65); // "A"''', "js")}
   }
   return true;
 }''', "js")}
-""", "chaîne string length indexOf lastIndexOf substring replace toUpperCase toLowerCase trim fromCharCode ch[i] estChiffres")
+<p><b>Tableaux (objet Array, annexe 2026).</b> Un tableau se crée avec les crochets <code>[ ]</code> ; <code>t.length</code> donne le nombre d'éléments et <code>t[i]</code> l'élément d'indice i.</p>
+{code('''let notes = [12, 15.5, 9];
+let s = 0;
+for (let i = 0; i < notes.length; i++) {
+  s = s + notes[i];
+}
+alert("Moyenne : " + s / notes.length);''', "js")}
+""", "chaîne string length indexOf lastIndexOf substring replace toUpperCase toLowerCase trim fromCharCode charCodeAt ch[i] estChiffres tableau array [ ] length")
 
 N.notion("Conversions, Math et Date", f"""
 {code('''Number("12.5");          // 12.5
@@ -487,12 +516,13 @@ N.bloc(retenir([
     ("ch.length", "Longueur de la chaîne"), ("ch.indexOf(ch1) / lastIndexOf(ch1)", "Première / dernière position"),
     ("ch.substring(d, f)", "Sous-chaîne de d à f exclu"), ("ch.replace(ch1, ch2)", "Remplace ch1 par ch2"),
     ("toUpperCase() / toLowerCase()", "Majuscules / minuscules"), ("ch.trim()", "Supprime les espaces aux extrémités"),
-    ("String.fromCharCode(n)", "Caractère de code n"),
+    ("String.fromCharCode(n)", "Caractère de code n"), ("ch.charCodeAt(p)", "Code ASCII du caractère en position p (annexe 2026)"),
     ("Math.abs / sqrt / round / trunc", "Valeur absolue, racine, arrondi, partie entière"),
     ("Math.random()", "Réel aléatoire dans [0, 1["),
     ("new Date() / new Date(ch)", "Date du jour / date donnée"),
     ("getDate() / getMonth() / getFullYear()", "Jour, mois (0 à 11), année"),
     ("d.toString()", "Date complète sous forme de chaîne"),
+    ("[ ] / t.length", "Crée un tableau / nombre d'éléments (objet Array, annexe 2026)"),
 ]), "À retenir — JavaScript", "javascript méthodes")
 
 # =====================================================================
@@ -526,7 +556,8 @@ N.notion("Types et contraintes", f"""
 {tableau(["Type", "Usage"], [
     (c("INT"), "Entier"), (c("DECIMAL(p,d)"), "Réel : p chiffres dont d après la virgule"),
     (c("CHAR(n)"), "Chaîne de longueur fixe"), (c("VARCHAR(n)"), "Chaîne de longueur variable (n max)"),
-    (c("TEXT"), "Texte long"), (c("DATE"), "Date AAAA-MM-JJ"), (c("TIME"), "Heure"), (c("DATETIME"), "Date et heure")])}
+    (c("TEXT"), "Texte long"), (c("DATE"), "Date AAAA-MM-JJ"), (c("TIME"), "Heure"), (c("DATETIME"), "Date et heure"),
+    (c("ENUM('v1', 'v2', …)"), "Liste de valeurs prédéfinies (annexe 2026)")])}
 {tableau(["Contrainte", "Rôle"], [
     (c("PRIMARY KEY"), "Identifiant unique et non vide"), (c("FOREIGN KEY … REFERENCES"), "Lien vers une autre table"),
     (c("NOT NULL"), "Valeur obligatoire"), (c("UNIQUE"), "Pas de doublon"),
@@ -559,6 +590,11 @@ SELECT * FROM Livre WHERE titre LIKE 'Le%';
 SELECT * FROM Eleve WHERE classe IN ('3SI1', '3SI2');
 SELECT * FROM Livre WHERE idAuteur IS NULL;
 
+-- Limiter le nombre de lignes (annexe 2026) : LIMIT debut, nombre
+SELECT titre, annee FROM Livre
+ORDER BY annee DESC
+LIMIT 0, 3;
+
 -- Mise à jour des données
 INSERT INTO Eleve (idEleve, nom, prenom, classe)
 VALUES (25, 'Ben Salah', 'Rim', '3SI1');
@@ -567,7 +603,7 @@ UPDATE Eleve SET classe = '3SI2' WHERE idEleve = 25;
 
 DELETE FROM Eleve WHERE idEleve = 25;''', "sql")}
 {enc("att", "<p>En 3ème : une seule table par requête. Jointures, fonctions d'agrégation, GROUP BY et sous-requêtes sont réservés à la 4ème.</p>")}
-""", "SQL SELECT WHERE ORDER BY DISTINCT BETWEEN LIKE IN IS NULL INSERT UPDATE DELETE requête")
+""", "SQL SELECT WHERE ORDER BY DISTINCT BETWEEN LIKE IN IS NULL LIMIT INSERT UPDATE DELETE requête")
 
 N.bloc(retenir([
     "Clé primaire soulignée, clé étrangère suivie de #.",
@@ -578,6 +614,7 @@ N.bloc(retenir([
     (c("SELECT … FROM … WHERE … ORDER BY"), "Consulter, filtrer, trier"), (c("DISTINCT"), "Supprimer les doublons"),
     (c("BETWEEN / LIKE / IN / IS NULL"), "Intervalle, motif, liste, valeur absente"),
     (c("AND / OR / NOT"), "Combiner des conditions"),
+    (c("LIMIT debut, nombre"), "Limiter le nombre de lignes affichées (annexe 2026)"),
     (c("INSERT INTO … VALUES"), "Ajouter une ligne"), (c("UPDATE … SET … WHERE"), "Modifier des lignes"),
     (c("DELETE FROM … WHERE"), "Supprimer des lignes")])]), "À retenir — bases de données", "sql bdd")
 

@@ -261,9 +261,9 @@ const BALISES = [
   [/\bparagraphe\b/i, "/<p[\\s>]/", "paragraphe"],
   [/\bdivision\b|\bdiv\b/i, "<div", "div"]
 ];
-const PROPS = ["background-color", "background-image", "background", "font-family", "font-size", "font-weight", "font-style", "text-align", "text-decoration", "text-transform",
+const PROPS = ["background-color", "background-image", "background-position", "background-size", "background-repeat", "background", "font-family", "font-size", "font-weight", "font-style", "text-align", "text-decoration", "text-transform",
   "text-indent", "line-height", "letter-spacing", "border-radius", "border-collapse", "border", "margin", "padding", "min-width", "max-width", "width", "height", "float", "clear",
-  "position", "display", "list-style-type", "list-style-image", "list-style", "box-shadow", "text-shadow", "opacity", "cursor", "transition", "transform", "animation", "z-index",
+  "position", "display", "list-style-type", "list-style-image", "list-style-position", "list-style", "table-layout", "filter", "box-shadow", "text-shadow", "opacity", "cursor", "transition", "transform", "animation", "z-index",
   "overflow", "vertical-align", "visibility", "color"];
 const CSS_MOTS = [
   [/police\s+d[eu]\s+caract|\bpolice\b(?!\s+(?:de\s+)?taille)/i, "/font(-family)?\\s*:/", "police"],
@@ -289,6 +289,13 @@ const CSS_MOTS = [
   [/\banimation|\bkeyframes/i, "@keyframes", "animation (@keyframes)"],
   [/\btransform|rotation|pivot|agrandi/i, "/transform\\s*:/", "transformation"],
   [/\bopacit|transparen/i, "/opacity\\s*:/", "opacité"],
+  // annexe 2026
+  [/arr[êe]t\w*\s+(?:le\s+)?flott|sous\s+les\s+(?:blocs|[ée]l[ée]ments)\s+flottants/i, "/clear\\s*:/", "arrêt du flottement (clear)"],
+  [/\bflex\b|conteneur\s+flexible/i, "/display\\s*:\\s*flex/", "display: flex"],
+  [/\bmasqu|\bcach|invisible/i, "/(visibility|display)\\s*:/", "visibilité"],
+  [/\bcoll[ée]|\bsticky\b/i, "/position\\s*:/", "position collante (sticky)"],
+  [/\bd[ée]bord|barre\s+de\s+d[ée]filement|\bd[ée]filant/i, "/overflow\\s*:/", "débordement (overflow)"],
+  [/position\s+de\s+l.image|image\s+(?:de\s+fond\s+)?centr/i, "/background-position\\s*:/", "position de l'image de fond"],
   [/\bcurseur\s+(?:de\s+la\s+)?souris|\bmain\b/i, "/cursor\\s*:/", "curseur"]
 ];
 const API_JS = ["getElementById", "innerHTML", "indexOf", "lastIndexOf", "substring", "substr", "toUpperCase", "toLowerCase", "parseInt", "parseFloat", "isNaN", "Math.round",

@@ -73,6 +73,11 @@ Types de parties : `tableau` (colonnes + nombre de lignes), `surprise` (débloca
 - **Personnalisation** : réglages de notation par devoir, correction adaptée par élève (erreurs de forme ignorées, pénalités ≤ 1 pt), message d'alerte reformulé accepté (D4), colonne « Réf. » pour saisir votre note à la main et voir l'écart.
 - **Export** : feuille « Grille officielle » (format correcteurAuto : une colonne par critère, ligne « Détail »), notes provisoires signalées.
 
+### 1.5.4 — annexe 2026
+
+- **Grille proposée depuis l'énoncé** : nouvelles propriétés reconnues dans le sujet — `clear` (arrêter le flottement), `display: flex`, `visibility`, `position: sticky`, `overflow`, `background-position` / `background-size` / `background-repeat`, `list-style-position`, `table-layout`, `filter`.
+- **Guide intégré** : fiches de l'annexe 2026 corrigées (clear, flex, `<source>`, charCodeAt, MODIFY, RENAME COLUMN), cours mis à jour (rowspan / colspan, select avec size, datetime-local, step, `<output>`, `<source>`, charCodeAt, tableaux `[ ]`, ENUM, LIMIT, ANY, visibility, background-position).
+
 ### 1.5.3 — nouvelles règles de tolérance
 
 - **Réglage simplifié** : toutes les règles s'appliquent ; **case cochée = −0,25**, **case décochée = erreur tolérée (0)**. Boutons « Tout cocher » / « Tout décocher ».

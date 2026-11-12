@@ -765,7 +765,6 @@
       ],
       "remarques": [
         "Sous MySQL, ALTER colonne ne permet pas de changer le type : on utilise CHANGE ancien_nom nouveau_nom type.",
-        "MODIFY n'est pas dans l'annexe.",
         "Il est possible d'utiliser MODIFY au lieu de ALTER."
       ],
       "niveau": 4,
@@ -787,7 +786,7 @@
         }
       ],
       "remarques": [
-        "Pour une colonne, on enseigne CHANGE (ancien nom, nouveau nom, type). RENAME COLUMN n'est pas dans l'annexe.",
+        "Pour une colonne : ALTER TABLE t RENAME COLUMN ancien TO nouveau, ou CHANGE ancien nouveau type (annexe 2026).",
         "Il est possible d'utiliser CHANGE."
       ],
       "niveau": 4,

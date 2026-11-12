@@ -117,8 +117,15 @@ N.notion("Tableaux de données", f"""
   </tfoot>
 </table>''', "html"),
 apercu('<table border="1"><caption>Emploi du temps — lundi</caption><thead><tr><th>Heure</th><th>Matière</th></tr></thead><tbody><tr><td>8h</td><td>Informatique</td></tr><tr><td>10h</td><td>Mathématiques</td></tr></tbody><tfoot><tr><td>Total</td><td>2 séances</td></tr></tfoot></table>', haut=170))}
+<p>Annexe 2026 : les attributs <code>rowspan</code> et <code>colspan</code> de <code>&lt;th&gt;</code> et <code>&lt;td&gt;</code> fusionnent une cellule sur plusieurs lignes ou plusieurs colonnes.</p>
+{duo(code('''<table border="1">
+  <tr><th colspan="2">Lundi</th></tr>
+  <tr><td rowspan="2">Matin</td><td>Informatique</td></tr>
+  <tr><td>Arabe</td></tr>
+</table>''', "html"),
+apercu('<table border="1"><tr><th colspan="2">Lundi</th></tr><tr><td rowspan="2">Matin</td><td>Informatique</td></tr><tr><td>Arabe</td></tr></table>', haut=110))}
 {enc("astuce", "<p>Faites dessiner le tableau sur papier avant de le coder : l'élève compte les lignes, et chaque ligne devient un <code>&lt;tr&gt;</code>.</p>")}
-""", "tableau table tr td th thead tbody tfoot caption")
+""", "tableau table tr td th thead tbody tfoot caption rowspan colspan fusion")
 
 N.bloc(retenir([
     "<code>ul</code> : ordre sans importance ; <code>ol</code> : ordre significatif.",
@@ -135,8 +142,8 @@ N.bloc(retenir([
     (c('<tbody>'), '—', 'Corps du tableau.', 'Regrouper les lignes de données.'),
     (c('<tfoot>'), '—', 'Pied du tableau.', 'Regrouper les lignes de total ou de synthèse.'),
     (c('<tr>'), '—', 'Ligne du tableau.', "Contenir les cellules d'une même ligne."),
-    (c('<th>'), '—', "Cellule d'en-tête.", "Donner le titre d'une colonne ou d'une ligne (gras et centré par défaut)."),
-    (c('<td>'), '—', 'Cellule de donnée.', 'Contenir une valeur du tableau.')])]), "À retenir — listes et tableaux")
+    (c('<th>'), c('rowspan, colspan'), "Cellule d'en-tête.", "Donner le titre d'une colonne ou d'une ligne (gras et centré par défaut)."),
+    (c('<td>'), c('rowspan, colspan'), 'Cellule de donnée.', 'Contenir une valeur du tableau ; rowspan / colspan fusionnent des cellules (annexe 2026).')])]), "À retenir — listes et tableaux")
 
 # =====================================================================
 N.module("Liens et multimédia",
@@ -204,7 +211,7 @@ apercu('<form><fieldset><legend>Inscription au club</legend><label for="nom">Nom
 """, "formulaire form input text number radio checkbox submit reset label for fieldset legend action method")
 
 N.notion("Listes déroulantes et zones de texte", f"""
-<p><code>&lt;select&gt;</code> propose une liste de <code>&lt;option&gt;</code> ; <code>selected</code> présélectionne une option et <code>multiple</code> autorise plusieurs choix. <code>&lt;textarea&gt;</code> accepte un texte sur plusieurs lignes.</p>
+<p><code>&lt;select&gt;</code> propose une liste de <code>&lt;option&gt;</code> ; <code>selected</code> présélectionne une option et <code>size</code> fixe le nombre d'options visibles (annexe 2026 : <code>name</code>, <code>size</code>, <code>disabled</code>). <code>&lt;textarea&gt;</code> accepte un texte sur plusieurs lignes.</p>
 {duo(code('''<label for="gouv">Gouvernorat :</label>
 <select id="gouv" name="gouv">
   <option value="">-- Choisir --</option>
@@ -216,7 +223,7 @@ N.notion("Listes déroulantes et zones de texte", f"""
 <textarea id="msg" name="msg" rows="3" cols="30"
   maxlength="200" placeholder="Votre message"></textarea>''', "html"),
 apercu('<label for="gouv">Gouvernorat :</label> <select id="gouv" name="gouv"><option value="">-- Choisir --</option><option value="Manouba" selected>Manouba</option><option value="Tunis">Tunis</option></select><br><label for="msg">Message :</label><br><textarea id="msg" name="msg" rows="3" cols="30" maxlength="200" placeholder="Votre message"></textarea>', haut=150))}
-""", "select option selected multiple textarea rows cols maxlength placeholder liste déroulante")
+""", "select option selected size textarea rows cols maxlength placeholder liste déroulante")
 
 N.bloc(retenir([
     "<code>method</code> vaut <code>get</code> ou <code>post</code> ; <code>action</code> désigne la page de traitement.",
@@ -229,7 +236,7 @@ N.bloc(retenir([
     (c('<legend>'), '—', "Titre d'un fieldset.", 'Nommer le groupe de champs.'),
     (c('<label>'), c('for'), "Étiquette d'un champ.", "Décrire le champ ; un clic sur l'étiquette active le champ dont l'id est for."),
     (c('<input>'), c('type, name, value'), 'Champ de saisie (text, number, radio, checkbox, submit, reset).', "Recueillir une donnée ou déclencher l'envoi / la remise à zéro."),
-    (c('<select>'), c('name, required, disabled, multiple'), 'Liste déroulante.', 'Proposer un choix parmi plusieurs options sans encombrer la page.'),
+    (c('<select>'), c('name, size, disabled'), 'Liste déroulante.', 'Proposer un choix parmi plusieurs options sans encombrer la page.'),
     (c('<option>'), c('value, selected'), "Choix d'une liste.", 'Définir chaque valeur proposée par le select.'),
     (c('<textarea>'), c('name, rows, cols, maxlength, placeholder'), 'Zone de texte multiligne.', 'Saisir un texte long (message, commentaire).')])]), "À retenir — formulaires")
 

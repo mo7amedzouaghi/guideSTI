@@ -362,7 +362,7 @@
         }
       ],
       "remarques": [
-        "<source> n'est pas dans l'annexe : le fichier est donné par l'attribut src.",
+        "Le fichier est donné par l'attribut src, ou par une ou plusieurs balises <source> (annexe 2026).",
         "Sans controls, le lecteur est invisible."
       ],
       "niveau": 2,
@@ -387,7 +387,7 @@
         }
       ],
       "remarques": [
-        "<source> n'est pas dans l'annexe : le fichier est donné par l'attribut src."
+        "Le fichier est donné par l'attribut src, ou par une ou plusieurs balises <source> (annexe 2026)."
       ],
       "niveau": 2,
       "motsClés": "vidéo lecteur film"
