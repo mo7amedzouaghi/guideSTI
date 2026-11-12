@@ -73,6 +73,15 @@ Types de parties : `tableau` (colonnes + nombre de lignes), `surprise` (débloca
 - **Personnalisation** : réglages de notation par devoir, correction adaptée par élève (erreurs de forme ignorées, pénalités ≤ 1 pt), message d'alerte reformulé accepté (D4), colonne « Réf. » pour saisir votre note à la main et voir l'écart.
 - **Export** : feuille « Grille officielle » (format correcteurAuto : une colonne par critère, ligne « Détail »), notes provisoires signalées.
 
+### 1.5.3 — nouvelles règles de tolérance
+
+- **Réglage simplifié** : toutes les règles s'appliquent ; **case cochée = −0,25**, **case décochée = erreur tolérée (0)**. Boutons « Tout cocher » / « Tout décocher ».
+- **JavaScript (forme)** : A13 propriété d'affichage inversée (.value / .innerHTML), A14 casse ou faute dans une variable, A15 `onclick="verifier"` sans (), A16 guillemets mélangés, A17 `return` oublié dans onsubmit, A23 fonction jamais appelée (bouton relié), A24 code écrit hors de la fonction, A25 variable non initialisée.
+- **JavaScript (logique)** : si une seule petite modification rend le résultat juste, l'élève ne perd que 0,25 — A12 addition devenue concaténation (Number), A18 condition inversée, A19 `<` / `<=`, A20 `&&` / `||`, A21 méthode voisine (substr / substring, round / trunc…), A22 indice décalé de 1 (charAt, `<= length`, getMonth). 10 variantes essayées au plus par page.
+- **Résultat** : D5 comparaison souple (casse, accents, ponctuation), D6 contrôles dans un autre ordre, D7 résultat affiché par alert au lieu de la page (ou l'inverse), D8 nombre écrit autrement (12,5 / 12.50).
+- **HTML / CSS** : B3 balise non fermée, B4 valeur équivalente (red / #ff0000, bold / 700), B5 chemin d'image ou de fichier mal écrit, B6 `.titre` au lieu de `#titre`, B7 propriété voisine (color / background-color), B8 unité oubliée.
+- **SQL** (même résultat) : C4 `=` / LIKE ou guillemets doubles, C5 table en trop, C6 COUNT(*) / alias.
+
 ### 1.5.2 — correction JS sur le code
 
 - **A11 — propriété oubliée** (−0,25 par élément, réglable) : le correcteur lit le code de l'élève comme l'enseignant. `N = document.getElementById("n"); alert(N)` → `.value` ; case ou bouton radio → `.checked` ; `document.getElementById("r") = "…"` ou `r = "…"` sur une zone d'affichage → `.innerHTML`. Le scénario est rejoué sur le code corrigé. Pas de correction si l'élément est déjà utilisé avec un point ailleurs (`N.focus()`, `N.value`).

@@ -803,20 +803,32 @@ function actionPage(a) {
     if (!e) throw new Error("élément introuvable : " + sel);
     return e;
   }
+  function noterTol(code, texte) { S.tol = S.tol || []; if (!S.tol.some(function (x) { return x.code === code && x.texte === texte; })) S.tol.push({ code: code, texte: texte }); }
+  // comparaison souple : casse, accents, ponctuation, espaces ; nombres comparés par leur valeur (12,5 = 12.50)
+  function normal(x) { return String(x || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/(\d),(\d)/g, "$1.$2").replace(/[^a-z0-9.]+/g, " ").replace(/\.(?!\d)/g, " ").trim(); }
+  function egalSouple(recu, attendu, texteSeul, exact) {
+    var r = normal(recu), t = normal(attendu);
+    if (!t) return false;
+    if (texteSeul) return exact ? r === t : r.indexOf(t) >= 0;
+    var nb = function (x) { return (x.match(/-?\d+(?:\.\d+)?/g) || []).map(Number); }, nr = nb(r), na = nb(t);
+    if (!na.length) return false;
+    var sans = function (x) { return x.replace(/-?\d+(?:\.\d+)?/g, "#").replace(/\s+/g, " ").trim(); };
+    return na.every(function (v) { return nr.some(function (w) { return Math.abs(v - w) < 0.006; }); }) && (exact ? sans(r) === sans(t) : sans(r).indexOf(sans(t).replace(/#/g, "").trim()) >= 0);
+  }
   function txt(e) { return /^(INPUT|TEXTAREA|SELECT|OUTPUT)$/.test(e.tagName) ? String(e.value) : String(e.innerText || e.textContent || ""); }
   function rempl(v) { return String(v == null ? "" : v).replace(/\{([^}]+)\}/g, function (m, s) { var e = document.querySelector(s); return e ? txt(e).trim() : ""; }); }
   function ev(e, n) { e.dispatchEvent(new Event(n, { bubbles: true })); }
   try {
     switch (a.t) {
-      case "saisir": { S.marque = S.alertes.length; var e = el(a.sel); e.value = rempl(a.v); ev(e, "input"); ev(e, "change"); return { ok: true }; }
+      case "saisir": { S.marque = S.alertes.length; S.corps = String(document.body.innerText || ""); var e = el(a.sel); e.value = rempl(a.v); ev(e, "input"); ev(e, "change"); return { ok: true }; }
       case "choisir": {
-        S.marque = S.alertes.length; var s = el(a.sel), v = rempl(a.v);
+        S.marque = S.alertes.length; S.corps = String(document.body.innerText || ""); var s = el(a.sel), v = rempl(a.v);
         if (/^\d+$/.test(v) && s.options && Number(v) < s.options.length) s.selectedIndex = Number(v);
         else { var o = Array.prototype.find.call(s.options || [], function (x) { return x.text.trim().toLowerCase() === v.toLowerCase() || x.value === v; }); if (!o) throw new Error("option introuvable : " + v); o.selected = true; }
         ev(s, "input"); ev(s, "change"); return { ok: true };
       }
-      case "cocher": { S.marque = S.alertes.length; var c = el(a.sel); if (!c.checked) c.click(); return { ok: true }; }
-      case "cliquer": { S.marque = S.alertes.length; el(a.sel).click(); return { ok: true }; }
+      case "cocher": { S.marque = S.alertes.length; S.corps = String(document.body.innerText || ""); var c = el(a.sel); if (!c.checked) c.click(); return { ok: true }; }
+      case "cliquer": { S.marque = S.alertes.length; S.corps = String(document.body.innerText || ""); el(a.sel).click(); return { ok: true }; }
       case "alerte": {
         // une alerte (au moins) affichée depuis la dernière action contient le texte
         var n = S.alertes.slice(S.marque || 0), cherche = rempl(a.v).toLowerCase();
@@ -828,11 +840,23 @@ function actionPage(a) {
           var sens = function (t) { return NEG.test(t) ? -1 : POS.test(t) ? 1 : 0; };
           if (sens(cherche) * sens(der) >= 0) { S.reform = S.reform || []; S.reform.push(n[n.length - 1].slice(0, 60)); return { ok: true, detail: "message reformulé" }; }
         }
+        // D5 : comparaison souple (casse, accents, ponctuation, espaces) ; D8 : nombre écrit autrement
+        if (!ok && n.length && (a.souple || a.nombres)) { var nn = n.find(function (x) { return (a.souple && egalSouple(x, cherche, true)) || (a.nombres && egalSouple(x, cherche, false)); }); if (nn) { noterTol(a.souple && egalSouple(nn, cherche, true) ? "D5" : "D8", "alerte « " + nn.slice(0, 50) + " »"); return { ok: true }; } }
+        // D6 : contrôles dans un autre ordre — le message affiché est l'un des messages attendus ailleurs dans le scénario
+        if (!ok && n.length && a.ordre && a.attendus) { var aut = n.find(function (x) { return a.attendus.some(function (t) { return t.toLowerCase() !== cherche && egalSouple(x, t.toLowerCase(), true); }); }); if (aut) { noterTol("D6", "« " + aut.slice(0, 50) + " » affiché avant « " + cherche.slice(0, 40) + " »"); return { ok: true }; } }
+        // D7 : le message attendu est affiché dans la page au lieu d'une alerte
+        if (!ok && a.ailleurs && egalSouple(String(document.body.innerText || ""), cherche, true) && !egalSouple(S.corps || "", cherche, true)) { noterTol("D7", "« " + cherche.slice(0, 50) + " » affiché dans la page au lieu d'une alerte"); return { ok: true }; }
         return { ok: ok, detail: n.length ? "alerte(s) « " + n.join(" » « ").slice(0, 120) + " »" : "aucune alerte" };
       }
       case "sansalerte": { var n2 = S.alertes.slice(S.marque || 0); return { ok: !n2.length, detail: n2.length ? "alerte « " + n2[n2.length - 1] + " »" : "" }; }
-      case "texte": { var t = txt(el(a.sel)); return { ok: t.toLowerCase().indexOf(rempl(a.v).toLowerCase()) >= 0, detail: "« " + t.trim().slice(0, 60) + " »" }; }
-      case "valeur": { var t2 = txt(el(a.sel)).trim(); return { ok: t2 === rempl(a.v).trim(), detail: "« " + t2.slice(0, 60) + " »" }; }
+      case "texte": case "valeur": {
+        var t = txt(el(a.sel)), att = rempl(a.v), ok2 = a.t === "texte" ? t.toLowerCase().indexOf(att.toLowerCase()) >= 0 : t.trim() === att.trim();
+        if (!ok2 && a.souple && egalSouple(t, att, true, a.t === "valeur")) { noterTol("D5", "« " + t.trim().slice(0, 40) + " » accepté pour « " + att.slice(0, 40) + " »"); ok2 = true; }
+        if (!ok2 && a.nombres && egalSouple(t, att, false, a.t === "valeur")) { noterTol("D8", "« " + t.trim().slice(0, 40) + " » accepté pour « " + att.slice(0, 40) + " »"); ok2 = true; }
+        // D7 : le résultat attendu est affiché par une alerte au lieu de la zone de la page
+        if (!ok2 && a.ailleurs) { var al = S.alertes.slice(S.marque || 0).find(function (x) { return egalSouple(x, att, true); }); if (al) { noterTol("D7", "« " + att.slice(0, 40) + " » affiché par alert au lieu de " + a.sel); ok2 = true; } }
+        return { ok: ok2, detail: "« " + t.trim().slice(0, 60) + " »" };
+      }
       case "existe": return { ok: !!document.querySelector(a.sel), detail: "" };
       case "style": { var cs = getComputedStyle(el(a.sel))[a.prop.replace(/-([a-z])/g, function (m, l) { return l.toUpperCase(); })]; return { ok: String(cs).replace(/\s+/g, "").toLowerCase().indexOf(rempl(a.v).replace(/\s+/g, "").toLowerCase()) >= 0, detail: a.prop + " = " + cs }; }
       default: return { ok: false, detail: "étape inconnue : " + (a.texte || a.t) };
@@ -864,6 +888,10 @@ async function testerPage(fichierHtml, scenario, opts) {
       if (a.t === "attendre") { await delai(a.ms); continue; }
       if (opts.idsTolerants) a.idsTol = true;
       if (opts.reformule) a.reformule = true;
+      if (opts.souple) a.souple = true;
+      if (opts.nombres) a.nombres = true;
+      if (opts.ailleurs) a.ailleurs = true;
+      if (opts.ordre) { a.ordre = true; a.attendus = etapesScenario(scenario).filter((x) => x.t === "alerte").map((x) => x.v); }
       const r = await Promise.race([w.webContents.executeJavaScript("(" + actionPage.toString() + ")(" + JSON.stringify(a) + ")", true), delai(4000).then(() => ({ ok: false, detail: "délai dépassé (boucle infinie ?)" }))]);
       if (a.c) { res.total++; if (r.ok) res.reussis++; else res.echecs.push(r.detail || a.t); }
       else if (!r.ok) res.echecs.push(r.detail);
@@ -872,6 +900,7 @@ async function testerPage(fichierHtml, scenario, opts) {
     try { res.erreursJs = await w.webContents.executeJavaScript("(window.__sti && window.__sti.erreurs) || []", true); } catch (e) { /* ignoré */ }
     try { res.substitutions = await w.webContents.executeJavaScript("(window.__sti && window.__sti.subs) || []", true); } catch (e) { res.substitutions = []; }
     try { res.reformules = await w.webContents.executeJavaScript("(window.__sti && window.__sti.reform) || []", true); } catch (e) { res.reformules = []; }
+    try { res.tolerances = await w.webContents.executeJavaScript("(window.__sti && window.__sti.tol) || []", true); } catch (e) { res.tolerances = []; }
   } catch (e) { res.erreur = e.message; }
   finally { if (!w.isDestroyed()) w.destroy(); ressourcesCourantes = null; }
   return res;
@@ -1044,7 +1073,8 @@ ipcMain.handle("cor:corriger", async (e, id, o) => {
   // règles apparues dans une version plus récente (inconnues lors du réglage du devoir) : valeur par défaut
   if (devoir.tolerance && devoir.tolerance.regles) {
     const connues = devoir.tolerance.connues || Object.keys(devoir.tolerance.regles);
-    for (const k of Object.keys(COR.TOLERANCE.regles)) if (!connues.includes(k) && !(k in tolerance.regles)) tolerance.regles[k] = COR.TOLERANCE.regles[k];
+    // toutes les règles s'appliquent : cochée = pénalité (−0,25), décochée ou absente = tolérée (0)
+    for (const k of Object.keys(COR.TOLERANCE.regles)) if (!(k in tolerance.regles) || tolerance.regles[k] === null || tolerance.regles[k] === false) tolerance.regles[k] = connues.includes(k) ? 0 : COR.TOLERANCE.regles[k];
   }
   const reglages = Object.assign({}, COR.REGLAGES, devoir.reglages || {});
   const dossierRess = devoir.ressources ? path.join(dd, "ressources") : null;

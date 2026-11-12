@@ -12,10 +12,10 @@ const ExcelJS = require("exceljs");
 const STISQL = require("../app/modules/sqlmoteur.js");
 const TOL = require("./tolerance.js");
 // réglages par défaut de la correction tolérante (modifiables pour chaque devoir)
-// règles validées par l'enseignant : code → points retirés (0 = toléré sans pénalité) ; une règle absente n'est pas appliquée.
+// règles validées par l'enseignant : code → points retirés (case cochée = −0,25 ; décochée = 0, erreur tolérée sans pénalité).
 // Une erreur n'est pénalisée qu'une fois par élève, même si elle touche plusieurs critères.
 const SQLN = require("./sqlnote.js");
-const TOLERANCE = { active: true, max: 5, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A6: 0.25, A7: 0.25, A8: 0.25, A9: 0, A10: 0.25, A11: 0.25, B1: 0, B2: 0, C1: 0.25, C2: 0, C3: 0.25, D3: 0.25, D4: 0 } };
+const TOLERANCE = { active: true, max: 5, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A6: 0.25, A7: 0.25, A8: 0.25, A9: 0, A10: 0.25, A11: 0.25, A12: 0.25, A13: 0.25, A14: 0.25, A15: 0.25, A16: 0.25, A17: 0.25, A18: 0.25, A19: 0.25, A20: 0.25, A21: 0.25, A22: 0.25, A23: 0.25, A24: 0.25, A25: 0.25, B1: 0, B2: 0, B3: 0.25, B4: 0, B5: 0.25, B6: 0.25, B7: 0.25, B8: 0.25, C1: 0.25, C2: 0, C3: 0.25, C4: 0.25, C5: 0.25, C6: 0, D3: 0.25, D4: 0, D5: 0, D6: 0, D7: 0.25, D8: 0 } };
 /* Réglages de notation (personnalisables pour chaque devoir) :
    pas : arrondi de chaque critère (0,25 comme l'enseignant ; 0 = sans arrondi) ; arrondi : proche | superieur | inferieur ;
    parType : une erreur de forme est pénalisée une fois par TYPE sur toute la copie (sinon une fois par occurrence) ;
@@ -526,11 +526,19 @@ async function verifier(c, ctx) {
         return trouves.length ? res(0, "Interdit trouvé : " + trouves.map((m) => m.m).join(", ")) : res(pts, "Aucun élément interdit");
       }
       // tolérant : espaces, guillemets et casse ignorés ; nom mal orthographié = crédit avec pénalité
-      const r = mo.map((m) => Object.assign({ m: m.m }, TOL.chercherMotif(m.m, tout, c.verif === "contient" && regleActive(ctx, "C1") ? 0.5 : 0)));
+      const r = mo.map((m) => {
+        const x = Object.assign({ m: m.m }, TOL.chercherMotif(m.m, tout, c.verif === "contient" && regleActive(ctx, "C1") ? 0.5 : 0));
+        // B4 : même valeur écrite autrement (red / #ff0000, bold / 700)
+        if (!x.score && c.verif === "contient" && regleActive(ctx, "B4")) {
+          const eq = TOL.valeursEquivalentes(m.m).find((e) => TOL.chercherMotif(e, tout, 0).score === 1);
+          if (eq) return { m: m.m, score: 0.5, code: "B4", detail: "« " + eq + " » équivaut à « " + m.m + " »" };
+        }
+        return x;
+      });
       if (c.verif === "contient") {
         const part = pts / r.length, exacts = r.filter((x) => x.score === 1).length, approx = r.filter((x) => x.score > 0 && x.score < 1);
         let manque = r.filter((x) => !x.score).map((x) => x.m);
-        const d = approx.length ? deduire(ctx, approx.map((x) => ({ code: "C1", texte: x.detail })), part * approx.length) : { retrait: 0 };
+        const d = approx.length ? deduire(ctx, approx.map((x) => ({ code: x.code || "C1", type: x.code === "B4" ? "B4" : undefined, texte: x.detail })), part * approx.length) : { retrait: 0 };
         // attribut / propriété manquant : −0,25 (réglable) au lieu de perdre toute la part, si le travail existe
         const attrs = Number(R.attribut) > 0 && tout.replace(/\s+/g, "").length >= 30 && (exacts + approx.length > 0 || manque.every(TOL.estAttribut)) ? manque.filter(TOL.estAttribut) : [];
         let fa = { retrait: 0 };
@@ -538,7 +546,7 @@ async function verifier(c, ctx) {
           fa = deduire(ctx, attrs.map((x) => ({ code: "F", type: "F|" + x.toLowerCase(), cle: "F|" + x.toLowerCase(), montant: Math.min(part, Number(R.attribut)), texte: x })), part * attrs.length);
           manque = manque.filter((x) => !attrs.includes(x));
         }
-        const o = res(part * (exacts + approx.length + attrs.length) - d.retrait - fa.retrait, (manque.length ? "Manque : " + manque.join(", ") : attrs.length ? "Le reste est présent" : "Tout est présent") + (attrs.length ? " — attribut(s) manquant(s) : " + attrs.join(", ") + texteRetrait(fa) : "") + (approx.length ? " — orthographe approchée : " + approx.map((x) => x.detail).join(" ; ") + texteRetrait(d) : ""));
+        const o = res(part * (exacts + approx.length + attrs.length) - d.retrait - fa.retrait, (manque.length ? "Manque : " + manque.join(", ") : attrs.length ? "Le reste est présent" : "Tout est présent") + (attrs.length ? " — attribut(s) manquant(s) : " + attrs.join(", ") + texteRetrait(fa) : "") + (approx.length ? " — accepté : " + approx.map((x) => x.detail).join(" ; ") + texteRetrait(d) : ""));
         if (approx.length || attrs.length) o.revoir = true;
         return o;
       }
@@ -569,6 +577,8 @@ async function verifier(c, ctx) {
           if (!ecarts.has(t)) ecarts.set(t, { f: x.f, ligne: p.ligne, texte: p.message.split(/\.\s/)[0] });
         }
       }
+      // B3 : balise non fermée (une fois par balise)
+      if (regleActive(ctx, "B3")) for (const x of textes.filter((x) => /\.html?$/i.test(x.f))) for (const b of TOL.balisesNonFermees(x.t)) toleres.push({ code: "B3", type: "B3|" + b, cle: "B3|" + b, texte: "</" + b + "> manquante" });
       // −ecartAnnexe par TYPE d'écart (une balise interdite répétée 10 fois = une seule erreur), au lieu de « moitié ou 0 »
       const liste = Array.from(ecarts.entries()).map(([t, e]) => ({ code: "E", type: "E|" + t, cle: "E|" + t, montant: Number(R.ecartAnnexe) || 0, texte: e.f + " L" + e.ligne + " : " + e.texte }));
       const d = deduire(ctx, toleres.concat(liste), pts);
@@ -589,7 +599,7 @@ async function verifier(c, ctx) {
       if (!String(c.param || "").trim()) return { points: null, justif: "Scénario vide dans la grille : à compléter (ou noter à la main)", auto: false };
       const idsTol = regleActive(ctx, "D3"), reformule = regleActive(ctx, "D4");
       const projet = racineProjet(ctx, p, fournie), rel = fournie ? p : p.slice(projet.length);
-      const tester = (dossier) => ctx.testerPage(path.join(dossier, projet, rel), c.param || "", { idsTolerants: idsTol, reformule, racine: path.join(dossier, projet), page: rel });
+      const tester = (dossier) => ctx.testerPage(path.join(dossier, projet, rel), c.param || "", { idsTolerants: idsTol, reformule, souple: regleActive(ctx, "D5"), ordre: regleActive(ctx, "D6"), ailleurs: regleActive(ctx, "D7"), nombres: regleActive(ctx, "D8"), racine: path.join(dossier, projet), page: rel });
       const r = await tester(ctx.base);
       if (fournie) r.fournie = p;
       const resultat = (rr, apres) => rr.erreur ? res(0, rr.erreur)
@@ -600,7 +610,8 @@ async function verifier(c, ctx) {
       if (r.complets && r.complets.length) brut.justif += " — fichier(s) fourni(s) utilisé(s) : " + r.complets.slice(0, 4).join(", ");
       // D3 (id approché) et D4 (message reformulé) : pénalités comptées une fois par type
       const formes = (rr) => (rr.substitutions || []).map((x) => ({ code: "D3", cle: "D3|" + [x.de, x.vers].sort().join("|"), texte: p + " : id « " + x.de + " » trouvé sous « " + x.vers + " »" }))
-        .concat((rr.reformules || []).map((x) => ({ code: "D4", cle: "D4|" + x, texte: "message reformulé accepté : « " + x + " »" })));
+        .concat((rr.reformules || []).map((x) => ({ code: "D4", cle: "D4|" + x, texte: "message reformulé accepté : « " + x + " »" })))
+        .concat((rr.tolerances || []).map((x) => ({ code: x.code, cle: x.code + "|" + x.texte, type: x.code, texte: x.texte })));
       // démarche juste en partie mais résultat faux : une part des points perdus est rendue (lecture du code)
       const logique = (o) => {
         const part = Number(R.logique) || 0;
@@ -616,7 +627,7 @@ async function verifier(c, ctx) {
         o.revoir = true;
         return o;
       };
-      const finir = (o, rr) => logique(finir0(o, rr));
+      const finir = (o, rr) => { const juste = o.points >= pts; const x = finir0(o, rr); return juste ? x : logique(x); };
       const finir0 = (o, rr) => {
         const sc = formes(rr);
         if (sc.length && !rr.erreur && rr.total && o.points > 0) {
@@ -627,20 +638,40 @@ async function verifier(c, ctx) {
       };
       const tol = ctx.tolerance || {};
       if (!tol.active || !ctx.reparer || brut.points >= pts) return finir(brut, r);
-      // le code ne fonctionne pas : on rejoue le test sur une copie réparée, avec une pénalité par type d'erreur réparée
+      // 1. le code ne fonctionne pas : on rejoue le test sur une copie réparée (erreurs de forme)
       const rp = ctx.reparer();
       const corr = TOL.correctionsDePage(rp.rep, rp.dossier, p);
-      if (!corr.length) return finir(brut, r);
-      if (corr.length > (tol.max || 5)) { brut.justif += " — " + corr.length + " erreurs de forme (au-delà de la tolérance : " + (tol.max || 5) + ") : à revoir"; brut.revoir = true; return finir(brut, r); }
-      const r2 = await tester(rp.dossier);
-      if (r2.erreur || !r2.total) return finir(brut, r);
-      const avant = pts * r2.reussis / r2.total;
-      if (avant <= brut.points) return finir(brut, r);
-      const toutes = corr.concat(formes(r2));
-      const d = deduire(ctx, toutes, avant);
-      const o = res(avant - d.retrait, r2.reussis + "/" + r2.total + " contrôle(s) réussi(s) après correction de " + toutes.length + " erreur(s) de forme" + texteRetrait(d) + " : " + toutes.map((x) => x.texte + " [" + x.code + "]").join(" ; "));
-      o.revoir = true; o.corrections = corr;
-      return logique(o);
+      let meilleur = { dossier: ctx.base, corr: [], rr: r, pts: brut.points }, note = "";
+      if (corr.length > (tol.max || 5)) note = " — " + corr.length + " erreurs de forme (au-delà de la tolérance : " + (tol.max || 5) + ") : à revoir";
+      else if (corr.length) {
+        const r2 = await tester(rp.dossier);
+        if (!r2.erreur && r2.total) { const v = pts * r2.reussis / r2.total; if (v > meilleur.pts) meilleur = { dossier: rp.dossier, corr, rr: r2, pts: v }; }
+      }
+      // 2. résultat encore faux : une seule petite modification de logique à la fois (A12, A18 à A22, B7)
+      if (meilleur.pts < pts && !note) {
+        const src = corr.length ? rp.dossier : ctx.base;
+        const variantes = TOL.variantesProjet(path.join(src, projet), rel, Number(tol.variantes) || 10);
+        const tmp = path.join(require("os").tmpdir(), "sti-variante", String(process.pid) + "-" + Date.now());
+        for (const x of variantes) {
+          if (!Object.prototype.hasOwnProperty.call(tol.regles || {}, x.regle)) continue;
+          let r3;
+          try { r3 = await tester(TOL.appliquerVariante(src, tmp, Object.assign({}, x, { rel: projet + x.rel }))); } catch (e) { continue; }
+          if (r3.erreur || !r3.total) continue;
+          const v = pts * r3.reussis / r3.total;
+          if (v > meilleur.pts) {
+            meilleur = { dossier: tmp, corr: (corr.length ? corr : []).concat([{ code: x.regle, cle: x.regle + "|" + x.texte, type: x.regle, texte: x.rel + " " + x.texte }]), rr: r3, pts: v, variante: x };
+            if (v >= pts) break;
+          }
+        }
+        try { fs.rmSync(tmp, { recursive: true, force: true }); } catch (e) { /* ignoré */ }
+      }
+      if (meilleur.pts <= brut.points) { brut.justif += note; if (note) brut.revoir = true; return finir(brut, r); }
+      const toutes = meilleur.corr.concat(formes(meilleur.rr));
+      const d = deduire(ctx, toutes, meilleur.pts);
+      const quoi = meilleur.variante ? "après une petite correction de logique" + (meilleur.corr.length > 1 ? " et de forme" : "") : "après correction de " + toutes.length + " erreur(s) de forme";
+      const o = res(meilleur.pts - d.retrait, meilleur.rr.reussis + "/" + meilleur.rr.total + " contrôle(s) réussi(s) " + quoi + texteRetrait(d) + " : " + toutes.map((x) => x.texte + " [" + x.code + "]").join(" ; "));
+      o.revoir = true; o.corrections = meilleur.corr;
+      return meilleur.pts >= pts ? o : logique(o);
     }
     case "sql": {
       const info = infoSql(c);
@@ -655,6 +686,14 @@ async function verifier(c, ctx) {
       if (!n.egal && n.erreurs.length === 1 && n.erreurs[0] === "ordre des colonnes" && regleActive(ctx, "C3")) {
         n.egal = true; n.raison = "Résultat identique, colonnes dans un autre ordre";
         penalites.push({ code: "C3", texte: "colonnes " + etiq, dit: "colonnes dans un autre ordre" });
+      }
+      // C4 à C6 : résultat identique mais écriture différente de la requête attendue
+      if (n.egal && a.cible && a.cible.sql) {
+        const el = String(a.cible.sql).toLowerCase(), at = String(info.param).toLowerCase();
+        if (regleActive(ctx, "C4") && ((/\blike\b/.test(at) && !/\blike\b/.test(el)) || (!/\blike\b/.test(at) && /\blike\b/.test(el)) || /(=|like|in\s*\(|,)\s*"[^"]*"/.test(el))) penalites.push({ code: "C4", type: "C4", texte: "opérateur " + etiq, dit: "opérateur ou guillemets différents (même résultat)" });
+        const tables = (q) => ((/\bfrom\s+([\s\S]+?)(?:\bwhere\b|\bgroup\b|\border\b|\bhaving\b|;|$)/.exec(q) || [])[1] || "").split(/,|\bjoin\b/).map((x) => x.trim().split(/\s+/)[0]).filter(Boolean);
+        if (regleActive(ctx, "C5") && tables(el).length > tables(at).length) penalites.push({ code: "C5", type: "C5", texte: "tables " + etiq, dit: "table en trop dans FROM (même résultat)" });
+        if (regleActive(ctx, "C6") && (/count\s*\(\s*\*\s*\)/.test(el) !== /count\s*\(\s*\*\s*\)/.test(at) || (/\bas\b/.test(at) && !/\bas\b/.test(el)))) penalites.push({ code: "C6", type: "C6", texte: "count " + etiq, dit: "COUNT ou alias différent (même résultat)" });
       }
       const ou = !a.etiquetee ? " [requête l." + a.cible.ligne + "]" : "";
       if (!n.egal) { const o = res(n.points, etiq + ou + " : " + n.raison + (penalites.length ? " — " + penalites[0].dit : "")); o.revoir = n.points > 0; return o; }
