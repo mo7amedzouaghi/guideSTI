@@ -73,6 +73,10 @@ Types de parties : `tableau` (colonnes + nombre de lignes), `surprise` (débloca
 - **Personnalisation** : réglages de notation par devoir, correction adaptée par élève (erreurs de forme ignorées, pénalités ≤ 1 pt), message d'alerte reformulé accepté (D4), colonne « Réf. » pour saisir votre note à la main et voir l'écart.
 - **Export** : feuille « Grille officielle » (format correcteurAuto : une colonne par critère, ligne « Détail »), notes provisoires signalées.
 
+### 1.5.2 — correction JS sur le code
+
+- **A11 — `.value` oubliée** (−0,25, réglable) : le correcteur lit le code de l'élève comme l'enseignant. `N = document.getElementById("n"); alert(N)` ou `alert(document.getElementById("n"))` sur un champ de formulaire (input, select, textarea, output) : `.value` est ajoutée, le scénario est rejoué et la question garde ses points moins la pénalité. Pas de réparation si la variable est déjà utilisée avec un point ailleurs (`N.focus()`, `N.value`).
+
 ### 1.5.1 — seconde expertise du correcteur
 
 - **SQL** : règle stricte « −0,25 par type d'erreur, commande principale fausse = 0 » ; noms de tables / colonnes mal orthographiés tolérés (requête rejouée avec le bon nom) ; numérotation « 1) SELECT… », « -- 1) », « R1 : » reconnue ; sans étiquette, chaque requête est affectée à une seule question ; CREATE / ALTER non exécutables comparés à l'écriture ; ORDER BY demandé mais absent = erreur même si l'ordre coïncide.

@@ -251,6 +251,7 @@
     ["A8", "Nom de fonction différent entre HTML et JS", "onclick=\"verif()\" / function verife()"],
     ["A9", "Point-virgule oublié (CSS)", "color: red⏎text-align: center;"],
     ["A10", "Accolade oubliée (CSS)", "règle non fermée"],
+    ["A11", "Propriété .value oubliée (champ de formulaire)", "N = document.getElementById(\"n\"); alert(N)"],
     ["B1", "Conformité : margin-* / padding-* / border-* détaillées", "margin-top, padding-left, border-top"],
     ["B2", "Conformité : sélecteur descendant", "div a, #menu li (pas >, +, ~)"],
     ["C1", "Nom approché cherché par « contient »", "afficherDat au lieu de afficherDate"],
@@ -259,7 +260,7 @@
     ["D3", "Faute de frappe dans un identifiant (id)", "id=\"resulat\" / getElementById(\"resultat\")"],
     ["D4", "Message d'alerte reformulé (affiché au bon moment)", "« Nom obligatoire » au lieu de « Saisir le nom »"]
   ];
-  var DEFAUT = { active: true, max: 5, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A6: 0.25, A7: 0.25, A8: 0.25, A9: 0, A10: 0.25, B1: 0, B2: 0, C1: 0.25, C2: 0, C3: 0.25, D3: 0.25, D4: 0 } };
+  var DEFAUT = { active: true, max: 5, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A6: 0.25, A7: 0.25, A8: 0.25, A9: 0, A10: 0.25, A11: 0.25, B1: 0, B2: 0, C1: 0.25, C2: 0, C3: 0.25, D3: 0.25, D4: 0 } };
   function tol() {
     var t = dev.tolerance;
     // règles ajoutées depuis le réglage de ce devoir : valeur par défaut

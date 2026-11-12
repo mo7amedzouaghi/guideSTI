@@ -15,7 +15,7 @@ const TOL = require("./tolerance.js");
 // règles validées par l'enseignant : code → points retirés (0 = toléré sans pénalité) ; une règle absente n'est pas appliquée.
 // Une erreur n'est pénalisée qu'une fois par élève, même si elle touche plusieurs critères.
 const SQLN = require("./sqlnote.js");
-const TOLERANCE = { active: true, max: 5, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A6: 0.25, A7: 0.25, A8: 0.25, A9: 0, A10: 0.25, B1: 0, B2: 0, C1: 0.25, C2: 0, C3: 0.25, D3: 0.25, D4: 0 } };
+const TOLERANCE = { active: true, max: 5, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A6: 0.25, A7: 0.25, A8: 0.25, A9: 0, A10: 0.25, A11: 0.25, B1: 0, B2: 0, C1: 0.25, C2: 0, C3: 0.25, D3: 0.25, D4: 0 } };
 /* Réglages de notation (personnalisables pour chaque devoir) :
    pas : arrondi de chaque critère (0,25 comme l'enseignant ; 0 = sans arrondi) ; arrondi : proche | superieur | inferieur ;
    parType : une erreur de forme est pénalisée une fois par TYPE sur toute la copie (sinon une fois par occurrence) ;

@@ -94,6 +94,7 @@ const REGLES = {
   A8: "Nom de fonction différent entre HTML et JS",
   A9: "Point-virgule oublié (CSS)",
   A10: "Accolade oubliée (CSS)",
+  A11: "Propriété .value oubliée (champ de formulaire)",
   B1: "Conformité : margin-* / padding-* / border-* détaillées",
   B2: "Conformité : sélecteur descendant (div a)",
   C1: "Nom approché cherché par « contient »",
@@ -104,7 +105,7 @@ const REGLES = {
 const actif = (regles, code) => !!regles && Object.prototype.hasOwnProperty.call(regles, code) && regles[code] !== null && regles[code] !== false;
 const corr = (code, texte) => ({ code, texte });
 
-function reparerJS(code, declares, regles, ids) {
+function reparerJS(code, declares, regles, ids, champs) {
   const corrections = [];
   const noms = new Set((declares || []).concat(identifiants(masquer(code)).filter((x) => new RegExp("\\b(var|let|const|function)\\s+" + x.replace(/\$/g, "\\$") + "\\b").test(code))));
   const nomCorrige = (nom, liste) => {
@@ -140,6 +141,46 @@ function reparerJS(code, declares, regles, ids) {
       corrections.push(Object.assign(corr("D3", "L" + ligneDe(code, pos) + " : identifiant « " + id + " » → « " + bon + " »"), { cle: "D3|" + [id, bon].sort().join("|") }));
       return a + bon + b;
     });
+  }
+  // A11 : .value oubliée sur un champ de formulaire (input, select, textarea, output) — lecture du code, pas de l'exécution
+  //   N = document.getElementById("n"); alert(N)  →  N = document.getElementById("n").value
+  //   alert(document.getElementById("n"))          →  alert(document.getElementById("n").value)
+  if (actif(regles, "A11") && champs && champs.length) {
+    const estChamp = (id) => champs.some((x) => x.toLowerCase() === id.toLowerCase());
+    const echap = (x) => x.replace(/[$]/g, "\\$");
+    // 1. variable qui reçoit l'élément puis n'est jamais utilisée avec un point (N.value, N.focus…)
+    const affect = /(^|[^\w$.])((?:var|let|const)\s+)?([A-Za-z_$][\w$]*)\s*=\s*document\s*\.\s*getElementById\s*\(\s*(["'])([^"']+)\4\s*\)(?!\s*[.\[])/gi;
+    const aCorriger = [];
+    const masque0 = masquer(code), horsChaine = (i) => masque0[i] === code[i];
+    const usagesDe = (v, depuis) => Array.from(masque0.slice(depuis).matchAll(new RegExp("(^|[^\\w$.])" + echap(v) + "(?![\\w$])(\\s*(?:===?|!==?|[.\\[]|=))?", "g")));
+    let m;
+    affect.lastIndex = 0;
+    while ((m = affect.exec(code))) {
+      const debut = m.index + m[1].length;
+      if (!horsChaine(debut)) continue;
+      const v = m[3], id = m[5];
+      if (!estChamp(id)) continue;
+      const fin = m.index + m[0].length, usages = usagesDe(v, fin);
+      if (!usages.length) continue;
+      if (usages.some((u) => u[2] && /^\s*[.\[]/.test(u[2]))) continue;          // N.value ou N.focus() ailleurs : pas d'oubli
+      if (usages.every((u) => u[2] && /^\s*=$/.test(u[2]))) continue;            // seulement réaffectée
+      aCorriger.push({ pos: fin, v, id, avant: true });
+    }
+    // 2. élément utilisé directement comme une valeur (dans alert, un calcul, une condition…)
+    const direct = /document\s*\.\s*getElementById\s*\(\s*(["'])([^"'\n]+)\1\s*\)(?!\s*[.\[])/gi;
+    while ((m = direct.exec(code))) {
+      if (!horsChaine(m.index) || !estChamp(m[2])) continue;
+      const fin = m.index + m[0].length;
+      if (aCorriger.some((x) => x.pos === fin)) continue;
+      const avant = masque0.slice(0, m.index).replace(/\s+$/, "");
+      if (/(^|[^=!<>])=$/.test(avant)) continue;                                 // affectation à une variable (cas 1)
+      aCorriger.push({ pos: fin, id: m[2] });
+    }
+    for (const x of aCorriger.sort((a, b) => b.pos - a.pos)) {
+      const l = ligneDe(code, x.pos);
+      code = code.slice(0, x.pos) + ".value" + code.slice(x.pos);
+      corrections.push(Object.assign(corr("A11", "L" + l + " : " + (x.v ? x.v + " = getElementById(\"" + x.id + "\") puis " + x.v + " utilisée comme valeur" : "getElementById(\"" + x.id + "\") utilisé comme valeur") + " → .value ajoutée"), { cle: "A11|" + x.id.toLowerCase() }));
+    }
   }
   // A6 : d.getFullYear → d.getFullYear()
   if (actif(regles, "A6")) {
@@ -240,14 +281,15 @@ function reparerProjet(src, dest, regles) {
   const rel = (p) => path.relative(dest, p).split(path.sep).join("/");
   const noter = (p, l) => { if (l.length) parFichier[rel(p)] = (parFichier[rel(p)] || []).concat(l); };
   const ids = Array.from(new Set([].concat(...html.map((p) => Array.from(lire(p).matchAll(/\bid\s*=\s*["']([^"']+)["']/gi)).map((m) => m[1])))));
+  const champs = Array.from(new Set([].concat(...html.map((p) => Array.from(lire(p).matchAll(/<(?:input|select|textarea|output)\b[^>]*?\bid\s*=\s*["']([^"']+)["']/gi)).map((m) => m[1])))));
   const declares = fonctionsDeclarees(js.map(lire).concat(...html.map((p) => scriptsInline(lire(p)))));
-  for (const p of js) { const r = reparerJS(lire(p), declares, regles, ids); if (r.corrections.length) { ecrire(p, r.code); noter(p, r.corrections); } }
+  for (const p of js) { const r = reparerJS(lire(p), declares, regles, ids, champs); if (r.corrections.length) { ecrire(p, r.code); noter(p, r.corrections); } }
   for (const p of css) { const r = reparerCSS(lire(p), regles); if (r.corrections.length) { ecrire(p, r.code); noter(p, r.corrections); } }
   const fonctions = fonctionsDeclarees(js.map(lire).concat(...html.map((p) => scriptsInline(lire(p)))));
   for (const p of html) {
     let h = lire(p); const c = [];
     h = h.replace(/(<script(?![^>]*\bsrc=)[^>]*>)([\s\S]*?)(<\/script>)/gi, (tout, a, code, b) => {
-      const r = reparerJS(code, declares, regles, ids); c.push(...r.corrections.map((x) => corr(x.code, "script : " + x.texte))); return a + r.code + b;
+      const r = reparerJS(code, declares, regles, ids, champs); c.push(...r.corrections.map((x) => corr(x.code, "script : " + x.texte))); return a + r.code + b;
     });
     if (actif(regles, "A8")) {
       h = h.replace(/(\bon[a-z]+\s*=\s*["'][^"']*?)\b([A-Za-z_$][\w$]*)(\s*\()/gi, (tout, a, nom, b) => {
