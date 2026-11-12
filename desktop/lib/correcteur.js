@@ -21,8 +21,10 @@ const TOLERANCE = { active: true, max: 5, regles: { A1: 0.25, A2: 0.25, A4: 0.25
    parType : une erreur de forme est pénalisée une fois par TYPE sur toute la copie (sinon une fois par occurrence) ;
    plafond : pénalités de forme au plus sur la copie (0 = sans plafond) ;
    ecartAnnexe : points retirés par type d'écart à l'annexe (vérification « conforme ») ;
-   erreurSql : points retirés par type d'erreur dans une requête (commande principale fausse = 0). */
-const REGLAGES = { pas: 0.25, arrondi: "proche", parType: true, plafond: 0, ecartAnnexe: 0.25, erreurSql: 0.25, noteFinale: 0.25 };
+   erreurSql : points retirés par type d'erreur dans une requête (commande principale fausse = 0) ;
+   attribut : points retirés par attribut / propriété manquant (au lieu de perdre toute la part du motif) ;
+   logique : part des points perdus rendue quand la démarche est juste en partie mais le résultat faux (0 = désactivé). */
+const REGLAGES = { pas: 0.25, arrondi: "proche", parType: true, plafond: 0, ecartAnnexe: 0.25, erreurSql: 0.25, noteFinale: 0.25, attribut: 0.25, logique: 0.5 };
 // note sur 20, arrondie au pas choisi (0,25 par défaut : 14,67 n'existe pas sur une copie)
 function noteSur20(total, max, R) {
   const n = max ? total * 20 / max : 0, p = Number((R || REGLAGES).noteFinale);
@@ -45,7 +47,7 @@ function deduire(ctx, corrections, pts) {
     if (deja.has(k)) { dejaComptees++; continue; }
     deja.add(k); nouvelles++;
     let m = c.montant !== undefined ? Number(c.montant) : Number(((ctx.tolerance || {}).regles || {})[c.code]) || 0;
-    if (ctx.difficulte && c.code !== "E" && c.code !== "S") m = 0;   // erreurs de forme ignorées
+    if (ctx.difficulte && c.code !== "E" && c.code !== "S" && c.code !== "F") m = 0;   // erreurs de forme ignorées
     if (plafond) m = Math.max(0, Math.min(m, plafond - cumul.v));
     cumul.v += m; retrait += m;
   }
@@ -526,10 +528,18 @@ async function verifier(c, ctx) {
       // tolérant : espaces, guillemets et casse ignorés ; nom mal orthographié = crédit avec pénalité
       const r = mo.map((m) => Object.assign({ m: m.m }, TOL.chercherMotif(m.m, tout, c.verif === "contient" && regleActive(ctx, "C1") ? 0.5 : 0)));
       if (c.verif === "contient") {
-        const part = pts / r.length, exacts = r.filter((x) => x.score === 1).length, approx = r.filter((x) => x.score > 0 && x.score < 1), manque = r.filter((x) => !x.score).map((x) => x.m);
+        const part = pts / r.length, exacts = r.filter((x) => x.score === 1).length, approx = r.filter((x) => x.score > 0 && x.score < 1);
+        let manque = r.filter((x) => !x.score).map((x) => x.m);
         const d = approx.length ? deduire(ctx, approx.map((x) => ({ code: "C1", texte: x.detail })), part * approx.length) : { retrait: 0 };
-        const o = res(part * (exacts + approx.length) - d.retrait, (manque.length ? "Manque : " + manque.join(", ") : "Tout est présent") + (approx.length ? " — orthographe approchée : " + approx.map((x) => x.detail).join(" ; ") + texteRetrait(d) : ""));
-        if (approx.length) o.revoir = true;
+        // attribut / propriété manquant : −0,25 (réglable) au lieu de perdre toute la part, si le travail existe
+        const attrs = Number(R.attribut) > 0 && tout.replace(/\s+/g, "").length >= 30 && (exacts + approx.length > 0 || manque.every(TOL.estAttribut)) ? manque.filter(TOL.estAttribut) : [];
+        let fa = { retrait: 0 };
+        if (attrs.length) {
+          fa = deduire(ctx, attrs.map((x) => ({ code: "F", type: "F|" + x.toLowerCase(), cle: "F|" + x.toLowerCase(), montant: Math.min(part, Number(R.attribut)), texte: x })), part * attrs.length);
+          manque = manque.filter((x) => !attrs.includes(x));
+        }
+        const o = res(part * (exacts + approx.length + attrs.length) - d.retrait - fa.retrait, (manque.length ? "Manque : " + manque.join(", ") : attrs.length ? "Le reste est présent" : "Tout est présent") + (attrs.length ? " — attribut(s) manquant(s) : " + attrs.join(", ") + texteRetrait(fa) : "") + (approx.length ? " — orthographe approchée : " + approx.map((x) => x.detail).join(" ; ") + texteRetrait(d) : ""));
+        if (approx.length || attrs.length) o.revoir = true;
         return o;
       }
       const interdits = r.filter((x) => x.score === 1).map((x) => x.m);
@@ -591,7 +601,23 @@ async function verifier(c, ctx) {
       // D3 (id approché) et D4 (message reformulé) : pénalités comptées une fois par type
       const formes = (rr) => (rr.substitutions || []).map((x) => ({ code: "D3", cle: "D3|" + [x.de, x.vers].sort().join("|"), texte: p + " : id « " + x.de + " » trouvé sous « " + x.vers + " »" }))
         .concat((rr.reformules || []).map((x) => ({ code: "D4", cle: "D4|" + x, texte: "message reformulé accepté : « " + x + " »" })));
-      const finir = (o, rr) => {
+      // démarche juste en partie mais résultat faux : une part des points perdus est rendue (lecture du code)
+      const logique = (o) => {
+        const part = Number(R.logique) || 0;
+        if (!part || !(ctx.tolerance || {}).active || o.points === null || o.points >= pts) return o;
+        const racines = [path.join(ctx.base, projet)].concat(ctx.ressources ? [ctx.ressources.dossier] : []);
+        const L = TOL.logiqueStatique(racines, rel, c.param || "");
+        if (!L.total || L.presents < 2 || L.code < 20) return o;
+        const pas = Number(R.pas) || 0.01, perdu = pts - o.points;
+        const bonus = Math.min(arrondiPas(perdu * part * L.presents / L.total, R), Math.max(0, pts - pas - o.points));
+        if (bonus <= 0) return o;
+        o.points = arrondi(o.points + bonus);
+        o.justif += " — démarche juste en partie (" + L.presents + "/" + L.total + " : " + L.trouves.join(", ") + (L.manquants.length ? " ; manque : " + L.manquants.join(", ") : "") + ") : +" + String(bonus).replace(".", ",") + " pt";
+        o.revoir = true;
+        return o;
+      };
+      const finir = (o, rr) => logique(finir0(o, rr));
+      const finir0 = (o, rr) => {
         const sc = formes(rr);
         if (sc.length && !rr.erreur && rr.total && o.points > 0) {
           const d = deduire(ctx, sc, o.points);
@@ -614,7 +640,7 @@ async function verifier(c, ctx) {
       const d = deduire(ctx, toutes, avant);
       const o = res(avant - d.retrait, r2.reussis + "/" + r2.total + " contrôle(s) réussi(s) après correction de " + toutes.length + " erreur(s) de forme" + texteRetrait(d) + " : " + toutes.map((x) => x.texte + " [" + x.code + "]").join(" ; "));
       o.revoir = true; o.corrections = corr;
-      return o;
+      return logique(o);
     }
     case "sql": {
       const info = infoSql(c);

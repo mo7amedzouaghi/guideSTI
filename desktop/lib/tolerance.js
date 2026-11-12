@@ -94,7 +94,7 @@ const REGLES = {
   A8: "Nom de fonction différent entre HTML et JS",
   A9: "Point-virgule oublié (CSS)",
   A10: "Accolade oubliée (CSS)",
-  A11: "Propriété .value oubliée (champ de formulaire)",
+  A11: "Propriété oubliée (.value, .checked, .innerHTML)",
   B1: "Conformité : margin-* / padding-* / border-* détaillées",
   B2: "Conformité : sélecteur descendant (div a)",
   C1: "Nom approché cherché par « contient »",
@@ -142,44 +142,51 @@ function reparerJS(code, declares, regles, ids, champs) {
       return a + bon + b;
     });
   }
-  // A11 : .value oubliée sur un champ de formulaire (input, select, textarea, output) — lecture du code, pas de l'exécution
-  //   N = document.getElementById("n"); alert(N)  →  N = document.getElementById("n").value
-  //   alert(document.getElementById("n"))          →  alert(document.getElementById("n").value)
+  // A11 : propriété oubliée — lecture du code, pas de l'exécution (−0,25 au lieu de 0)
+  //   N = document.getElementById("n"); alert(N)   →  N = document.getElementById("n").value
+  //   if (document.getElementById("c")) (case)      →  .checked
+  //   document.getElementById("r") = "Bravo"        →  document.getElementById("r").innerHTML = "Bravo"
+  //   r = document.getElementById("r"); r = "Bravo" →  r.innerHTML = "Bravo"
   if (actif(regles, "A11") && champs && champs.length) {
-    const estChamp = (id) => champs.some((x) => x.toLowerCase() === id.toLowerCase());
+    const genre = (id) => { const x = champs.find((c) => c.id.toLowerCase() === id.toLowerCase()); return x ? x.k : null; };
+    const prop = (id) => { const k = genre(id); return k === "checked" ? ".checked" : k === "html" ? ".innerHTML" : ".value"; };
     const echap = (x) => x.replace(/[$]/g, "\\$");
-    // 1. variable qui reçoit l'élément puis n'est jamais utilisée avec un point (N.value, N.focus…)
     const affect = /(^|[^\w$.])((?:var|let|const)\s+)?([A-Za-z_$][\w$]*)\s*=\s*document\s*\.\s*getElementById\s*\(\s*(["'])([^"']+)\4\s*\)(?!\s*[.\[])/gi;
     const aCorriger = [];
     const masque0 = masquer(code), horsChaine = (i) => masque0[i] === code[i];
     const usagesDe = (v, depuis) => Array.from(masque0.slice(depuis).matchAll(new RegExp("(^|[^\\w$.])" + echap(v) + "(?![\\w$])(\\s*(?:===?|!==?|[.\\[]|=))?", "g")));
     let m;
-    affect.lastIndex = 0;
+    // 1. variable qui reçoit l'élément puis n'est jamais utilisée avec un point
     while ((m = affect.exec(code))) {
       const debut = m.index + m[1].length;
       if (!horsChaine(debut)) continue;
-      const v = m[3], id = m[5];
-      if (!estChamp(id)) continue;
+      const v = m[3], id = m[5], k = genre(id);
+      if (!k) continue;
       const fin = m.index + m[0].length, usages = usagesDe(v, fin);
-      if (!usages.length) continue;
-      if (usages.some((u) => u[2] && /^\s*[.\[]/.test(u[2]))) continue;          // N.value ou N.focus() ailleurs : pas d'oubli
-      if (usages.every((u) => u[2] && /^\s*=$/.test(u[2]))) continue;            // seulement réaffectée
-      aCorriger.push({ pos: fin, v, id, avant: true });
+      if (!usages.length || usages.some((u) => u[2] && /^\s*[.\[]/.test(u[2]))) continue;   // N.value, N.focus()… ailleurs : pas d'oubli
+      const ecrit = usages.filter((u) => u[2] && /^\s*=$/.test(u[2])), lu = usages.length - ecrit.length;
+      if (k === "html") {
+        // zone d'affichage : r = "texte" au lieu de r.innerHTML = "texte"
+        if (lu || !ecrit.length) continue;
+        for (const u of ecrit) aCorriger.push({ pos: fin + u.index + u[1].length + v.length, ajout: ".innerHTML", txt: v + " = … → " + v + ".innerHTML = …", id });
+      } else if (lu) aCorriger.push({ pos: fin, ajout: prop(id), txt: v + " = getElementById(\"" + id + "\") puis " + v + " utilisée comme valeur → " + prop(id) + " ajoutée", id });
     }
-    // 2. élément utilisé directement comme une valeur (dans alert, un calcul, une condition…)
+    // 2. élément utilisé directement comme une valeur, ou affecté directement
     const direct = /document\s*\.\s*getElementById\s*\(\s*(["'])([^"'\n]+)\1\s*\)(?!\s*[.\[])/gi;
     while ((m = direct.exec(code))) {
-      if (!horsChaine(m.index) || !estChamp(m[2])) continue;
+      const k = genre(m[2]);
+      if (!horsChaine(m.index) || !k) continue;
       const fin = m.index + m[0].length;
       if (aCorriger.some((x) => x.pos === fin)) continue;
-      const avant = masque0.slice(0, m.index).replace(/\s+$/, "");
-      if (/(^|[^=!<>])=$/.test(avant)) continue;                                 // affectation à une variable (cas 1)
-      aCorriger.push({ pos: fin, id: m[2] });
+      const avant = masque0.slice(0, m.index).replace(/\s+$/, ""), apres = masque0.slice(fin);
+      if (/^\s*=(?!=)/.test(apres)) { aCorriger.push({ pos: fin, ajout: k === "html" ? ".innerHTML" : prop(m[2]), txt: "getElementById(\"" + m[2] + "\") = … → " + (k === "html" ? ".innerHTML" : prop(m[2])) + " ajoutée", id: m[2] }); continue; }
+      if (k === "html" || /(^|[^=!<>])=$/.test(avant) || /\breturn$/.test(avant)) continue;
+      aCorriger.push({ pos: fin, ajout: prop(m[2]), txt: "getElementById(\"" + m[2] + "\") utilisé comme valeur → " + prop(m[2]) + " ajoutée", id: m[2] });
     }
     for (const x of aCorriger.sort((a, b) => b.pos - a.pos)) {
       const l = ligneDe(code, x.pos);
-      code = code.slice(0, x.pos) + ".value" + code.slice(x.pos);
-      corrections.push(Object.assign(corr("A11", "L" + l + " : " + (x.v ? x.v + " = getElementById(\"" + x.id + "\") puis " + x.v + " utilisée comme valeur" : "getElementById(\"" + x.id + "\") utilisé comme valeur") + " → .value ajoutée"), { cle: "A11|" + x.id.toLowerCase() }));
+      code = code.slice(0, x.pos) + x.ajout + code.slice(x.pos);
+      corrections.push(Object.assign(corr("A11", "L" + l + " : " + x.txt), { cle: "A11|" + x.id.toLowerCase() + x.ajout, type: "A11|" + x.id.toLowerCase() + x.ajout }));
     }
   }
   // A6 : d.getFullYear → d.getFullYear()
@@ -281,7 +288,14 @@ function reparerProjet(src, dest, regles) {
   const rel = (p) => path.relative(dest, p).split(path.sep).join("/");
   const noter = (p, l) => { if (l.length) parFichier[rel(p)] = (parFichier[rel(p)] || []).concat(l); };
   const ids = Array.from(new Set([].concat(...html.map((p) => Array.from(lire(p).matchAll(/\bid\s*=\s*["']([^"']+)["']/gi)).map((m) => m[1])))));
-  const champs = Array.from(new Set([].concat(...html.map((p) => Array.from(lire(p).matchAll(/<(?:input|select|textarea|output)\b[^>]*?\bid\s*=\s*["']([^"']+)["']/gi)).map((m) => m[1])))));
+  // éléments de la page : propriété attendue (value pour un champ, checked pour une case, innerHTML pour une zone d'affichage)
+  const champs = [];
+  for (const p of html) for (const m of lire(p).matchAll(/<([a-z][a-z0-9]*)\b([^>]*?)\bid\s*=\s*["']([^"']+)["']([^>]*)>/gi)) {
+    const tag = m[1].toLowerCase(), attrs = m[2] + " " + m[4], type = ((/\btype\s*=\s*["']?([a-z-]+)/i.exec(attrs) || [])[1] || "").toLowerCase();
+    if (/^(script|style|link|meta|img|iframe|video|audio|source|form|table|ul|ol|br|hr)$/.test(tag)) continue;
+    const k = /^(select|textarea|output)$/.test(tag) ? "value" : tag === "input" ? (/^(checkbox|radio)$/.test(type) ? "checked" : /^(button|submit|reset|image)$/.test(type) ? null : "value") : "html";
+    if (k && !champs.some((c) => c.id === m[3])) champs.push({ id: m[3], k });
+  }
   const declares = fonctionsDeclarees(js.map(lire).concat(...html.map((p) => scriptsInline(lire(p)))));
   for (const p of js) { const r = reparerJS(lire(p), declares, regles, ids, champs); if (r.corrections.length) { ecrire(p, r.code); noter(p, r.corrections); } }
   for (const p of css) { const r = reparerCSS(lire(p), regles); if (r.corrections.length) { ecrire(p, r.code); noter(p, r.corrections); } }
@@ -324,4 +338,49 @@ function estFauteDeFrappe(nom) {
   return API.concat(GLOBAUX).some((a) => a.toLowerCase() === n.toLowerCase() || proche(a, n));
 }
 
-module.exports = { REGLES, estFauteDeFrappe, distance, proche, normaliser, chercherMotif, reparerJS, reparerCSS, reparerProjet, correctionsDePage };
+
+/* ---------------------------------------------------------------- logique partiellement juste (lecture du code)
+   Quand le résultat est faux, on cherche dans le code les éléments de la démarche attendue par le scénario :
+   fonction appelée écrite, champs lus, zone d'affichage écrite, alert et message, condition. */
+function sansComm(t) { return String(t || "").replace(/\/\*[\s\S]*?\*\//g, " ").replace(/(^|[^:\\"'])\/\/[^\n]*/g, "$1").replace(/<!--[\s\S]*?-->/g, " "); }
+function sansAccents(t) { return String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); }
+function logiqueStatique(racines, pageRel, scenario) {
+  const lireDe = (rel) => { for (const r of racines) { try { return fs.readFileSync(path.join(r, rel), "utf8"); } catch (e) { /* suivant */ } } return ""; };
+  const html = lireDe(pageRel);
+  if (!html) return { total: 0, presents: 0, manquants: [], trouves: [] };
+  const dir = path.posix.dirname(pageRel.split(path.sep).join("/"));
+  let code = scriptsInline(html).join("\n");
+  for (const m of html.matchAll(/<script\b[^>]*\bsrc\s*=\s*["']([^"']+)["']/gi)) if (!/^(https?:)?\/\//i.test(m[1])) code += "\n" + lireDe(path.posix.normalize(path.posix.join(dir === "." ? "" : dir, m[1])));
+  code = sansComm(code);
+  const gestionnaires = Array.from(html.matchAll(/\bon[a-z]+\s*=\s*["']\s*(?:return\s+)?([A-Za-z_$][\w$]*)\s*\(/gi)).map((m) => m[1]);
+  const declarees = Array.from(code.matchAll(/function\s+([A-Za-z_$][\w$]*)\s*\([^)]*\)\s*\{([\s\S]*?)\}/g)).filter((m) => m[2].replace(/\s+/g, "").length > 0).map((m) => m[1]);
+  const lit = (id) => new RegExp("(getElementById|querySelector)\\s*\\(\\s*[\"']#?" + id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[\"']", "i").test(code)
+    || identifiants(code.match(/getElementById\s*\(\s*["'][^"']+["']/gi) ? code.match(/getElementById\s*\(\s*["']([^"']+)["']/gi).map((x) => x.replace(/^[^"']*["']/, "")).join(" ") : "").some((x) => proche(x, id));
+  const elements = [], ajout = (label, ok) => { if (!elements.some((e) => e.label === label)) elements.push({ label, ok: !!ok }); };
+  const etapes = String(scenario || "").split(/\s*;\s*|\n/).map((x) => x.trim()).filter(Boolean);
+  let alertes = 0, conditions = 0;
+  for (const x of etapes) {
+    let m;
+    if ((m = /^(?:saisir|choisir)\s+#([\w-]+)/i.exec(x)) || (m = /^cocher\s+#([\w-]+)/i.exec(x))) ajout("lecture de #" + m[1], lit(m[1]));
+    else if (/^cliquer\b/i.test(x)) ajout("fonction appelée écrite", gestionnaires.some((g) => declarees.some((d) => d === g || proche(d, g))) || (!gestionnaires.length && declarees.length));
+    else if ((m = /^(?:texte|valeur)\s+#([\w-]+)/i.exec(x))) { ajout("affichage dans #" + m[1], lit(m[1]) && /\.(innerHTML|value|textContent|innerText)\s*=(?!=)/i.test(code)); conditions++; }
+    else if ((m = /^alerte\s+contient\s+(.+)$/i.exec(x))) {
+      alertes++; ajout("alert()", /\balert\s*\(/i.test(code));
+      const mots = sansAccents(m[1]).match(/[a-z0-9]{3,}/g) || [], c2 = sansAccents(code);
+      if (mots.length) ajout("message « " + m[1].trim() + " »", mots.filter((w) => c2.includes(w)).length / mots.length >= 0.6);
+    } else if (/^aucune\s+alerte/i.test(x)) alertes++;
+  }
+  if (alertes || conditions > 1) ajout("condition (if)", /\bif\s*\(/.test(code));
+  const presents = elements.filter((e) => e.ok).length;
+  return { total: elements.length, presents, manquants: elements.filter((e) => !e.ok).map((e) => e.label), trouves: elements.filter((e) => e.ok).map((e) => e.label), code: code.replace(/\s+/g, "").length };
+}
+
+/* motif de la grille qui désigne un attribut HTML ou une propriété JS (type="email", required, .value) */
+const ATTRS = ["required", "checked", "selected", "disabled", "readonly", "multiple", "autofocus", "placeholder", "min", "max", "step", "pattern", "maxlength", "minlength", "size", "alt", "title", "value", "name", "id", "class", "href", "src", "type", "action", "method", "for", "colspan", "rowspan", "width", "height", "controls", "autoplay", "loop", "muted", "target", "list", "rows", "cols", "onclick", "onchange", "oninput", "onsubmit", "onload", "onmouseover", "onmouseout"];
+function estAttribut(m) {
+  const t = String(m || "").trim();
+  if (/^\/.+\/[a-z]*$/.test(t)) return false;
+  return /^\.[A-Za-z_$][\w$]*(\(\))?$/.test(t) || /^[a-z][\w-]*\s*=/i.test(t) || ATTRS.includes(t.toLowerCase());
+}
+
+module.exports = { REGLES, logiqueStatique, estAttribut, estFauteDeFrappe, distance, proche, normaliser, chercherMotif, reparerJS, reparerCSS, reparerProjet, correctionsDePage };

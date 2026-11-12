@@ -216,7 +216,7 @@
   }
 
   /* ---------- réglages de notation (personnalisation du devoir) */
-  var REGL = { pas: 0.25, arrondi: "proche", parType: true, plafond: 0, ecartAnnexe: 0.25, erreurSql: 0.25, noteFinale: 0.25 };
+  var REGL = { pas: 0.25, arrondi: "proche", parType: true, plafond: 0, ecartAnnexe: 0.25, erreurSql: 0.25, noteFinale: 0.25, attribut: 0.25, logique: 0.5 };
   function reglages() { return Object.assign({}, REGL, dev.reglages || {}); }
   function carteReglages() {
     var r = reglages(), sel = function (id, val, opts) { return '<select id="' + id + '">' + opts.map(function (o) { return '<option value="' + o[0] + '"' + (String(o[0]) === String(val) ? " selected" : "") + ">" + o[1] + "</option>"; }).join("") + "</select>"; };
@@ -227,13 +227,15 @@
       "<label>Plafond des pénalités " + sel("r-plaf", r.plafond, [[0, "aucun"], [0.5, "0,5 pt"], [1, "1 pt"], [2, "2 pts"], [3, "3 pts"]]) + "</label>" +
       "<label>Écart à l'annexe (par type) " + sel("r-annexe", r.ecartAnnexe, [[0, "toléré"], [0.25, "−0,25"], [0.5, "−0,5"], [1, "−1"]]) + "</label>" +
       "<label>Erreur dans une requête SQL (par type) " + sel("r-sql", r.erreurSql, [[0.25, "−0,25"], [0.5, "−0,5"], [1, "−1"]]) + "</label>" +
+      "<label>Attribut / propriété manquant " + sel("r-attr", r.attribut, [[0, "toute la part perdue"], [0.25, "−0,25"], [0.5, "−0,5"]]) + "</label>" +
+      "<label>Démarche juste, résultat faux " + sel("r-log", r.logique, [[0, "0 (aucun point)"], [0.25, "jusqu'à 25 % des points"], [0.5, "jusqu'à 50 % des points"], [0.75, "jusqu'à 75 % des points"]]) + "</label>" +
       "<label>Note finale sur 20 " + sel("r-note", r.noteFinale, [[0.25, "arrondie au quart (0,25)"], [0.5, "arrondie au demi (0,5)"], [0, "exacte (0,01)"]]) + "</label>" +
       "</div></div>";
   }
   function brancherReglages() {
-    ["r-pas", "r-arr", "r-type", "r-plaf", "r-annexe", "r-sql", "r-note"].forEach(function (id) {
+    ["r-pas", "r-arr", "r-type", "r-plaf", "r-annexe", "r-sql", "r-attr", "r-log", "r-note"].forEach(function (id) {
       $(id).addEventListener("change", async function () {
-        dev.reglages = { pas: Number($("r-pas").value), arrondi: $("r-arr").value, parType: $("r-type").value === "1", plafond: Number($("r-plaf").value), ecartAnnexe: Number($("r-annexe").value), erreurSql: Number($("r-sql").value), noteFinale: Number($("r-note").value) };
+        dev.reglages = { pas: Number($("r-pas").value), arrondi: $("r-arr").value, parType: $("r-type").value === "1", plafond: Number($("r-plaf").value), ecartAnnexe: Number($("r-annexe").value), erreurSql: Number($("r-sql").value), attribut: Number($("r-attr").value), logique: Number($("r-log").value), noteFinale: Number($("r-note").value) };
         await sauver({ reglages: dev.reglages });
         S.toast("Réglages enregistrés — relancez la correction pour les appliquer", "ok");
       });
@@ -251,7 +253,7 @@
     ["A8", "Nom de fonction différent entre HTML et JS", "onclick=\"verif()\" / function verife()"],
     ["A9", "Point-virgule oublié (CSS)", "color: red⏎text-align: center;"],
     ["A10", "Accolade oubliée (CSS)", "règle non fermée"],
-    ["A11", "Propriété .value oubliée (champ de formulaire)", "N = document.getElementById(\"n\"); alert(N)"],
+    ["A11", "Propriété oubliée (.value, .checked, .innerHTML)", "N = document.getElementById(\"n\"); alert(N)"],
     ["B1", "Conformité : margin-* / padding-* / border-* détaillées", "margin-top, padding-left, border-top"],
     ["B2", "Conformité : sélecteur descendant", "div a, #menu li (pas >, +, ~)"],
     ["C1", "Nom approché cherché par « contient »", "afficherDat au lieu de afficherDate"],

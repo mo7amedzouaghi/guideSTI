@@ -75,7 +75,9 @@ Types de parties : `tableau` (colonnes + nombre de lignes), `surprise` (débloca
 
 ### 1.5.2 — correction JS sur le code
 
-- **A11 — `.value` oubliée** (−0,25, réglable) : le correcteur lit le code de l'élève comme l'enseignant. `N = document.getElementById("n"); alert(N)` ou `alert(document.getElementById("n"))` sur un champ de formulaire (input, select, textarea, output) : `.value` est ajoutée, le scénario est rejoué et la question garde ses points moins la pénalité. Pas de réparation si la variable est déjà utilisée avec un point ailleurs (`N.focus()`, `N.value`).
+- **A11 — propriété oubliée** (−0,25 par élément, réglable) : le correcteur lit le code de l'élève comme l'enseignant. `N = document.getElementById("n"); alert(N)` → `.value` ; case ou bouton radio → `.checked` ; `document.getElementById("r") = "…"` ou `r = "…"` sur une zone d'affichage → `.innerHTML`. Le scénario est rejoué sur le code corrigé. Pas de correction si l'élément est déjà utilisé avec un point ailleurs (`N.focus()`, `N.value`).
+- **Attribut / propriété manquant** (vérification « contient ») : `required`, `type="email"`, `.value`… absent → −0,25 (réglable) au lieu de perdre toute la part du motif, si le travail existe.
+- **Démarche juste, résultat faux** (vérification « page ») : le code est lu (fonction appelée écrite, champs lus, zone d'affichage écrite, alert et message, condition) ; jusqu'à 50 % des points perdus sont rendus (réglable : 0, 25, 50, 75 %) en proportion des éléments présents, sans jamais atteindre la note entière. Ligne marquée « à revoir » avec le détail.
 
 ### 1.5.1 — seconde expertise du correcteur
 
