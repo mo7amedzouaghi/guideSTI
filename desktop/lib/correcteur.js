@@ -22,7 +22,12 @@ const TOLERANCE = { active: true, max: 5, regles: { A1: 0.25, A2: 0.25, A4: 0.25
    plafond : pénalités de forme au plus sur la copie (0 = sans plafond) ;
    ecartAnnexe : points retirés par type d'écart à l'annexe (vérification « conforme ») ;
    erreurSql : points retirés par type d'erreur dans une requête (commande principale fausse = 0). */
-const REGLAGES = { pas: 0.25, arrondi: "proche", parType: true, plafond: 0, ecartAnnexe: 0.25, erreurSql: 0.25 };
+const REGLAGES = { pas: 0.25, arrondi: "proche", parType: true, plafond: 0, ecartAnnexe: 0.25, erreurSql: 0.25, noteFinale: 0.25 };
+// note sur 20, arrondie au pas choisi (0,25 par défaut : 14,67 n'existe pas sur une copie)
+function noteSur20(total, max, R) {
+  const n = max ? total * 20 / max : 0, p = Number((R || REGLAGES).noteFinale);
+  return Math.round((p ? Math.round(n / p + 1e-9) * p : n) * 100) / 100;
+}
 // élève en difficulté : erreurs de forme ignorées, pénalités plafonnées à 1 point
 const DIFFICULTE = { plafond: 1 };
 function reglages(ctx) { return Object.assign({}, REGLAGES, ctx.reglages || {}); }
@@ -61,11 +66,13 @@ function arrondiPas(x, R) {
 function sansCommentaires(t, f) {
   const e = ((/\.(\w+)$/.exec(f || "") || [])[1] || "").toLowerCase();
   let s = String(t || "");
-  if (/^html?$/.test(e)) s = s.replace(/<!--[\s\S]*?-->/g, " ");
+  const ligne = (x) => x.replace(/(^|[^:\\"'])\/\/[^\n]*/g, "$1");
+  if (/^(html?|php)$/.test(e)) s = s.replace(/<!--[\s\S]*?-->/g, " ");
   s = s.replace(/\/\*[\s\S]*?\*\//g, " ");
-  if (/^(js|php|html?)$/.test(e)) s = s.replace(/(^|[^:\\"'])\/\/[^\n]*/g, "$1");
+  if (e === "js") s = ligne(s);
+  // HTML / PHP : « // » n'est un commentaire que dans un script ou un bloc PHP (pas dans le texte de la page)
+  else if (/^(html?|php)$/.test(e)) s = s.replace(/(<script\b[^>]*>)([\s\S]*?)(<\/script>)/gi, (t, a, c, b) => a + ligne(c) + b).replace(/(<\?(?:php)?)([\s\S]*?)(\?>|$)/gi, (t, a, c, b) => a + ligne(c) + b);
   if (e === "sql") s = s.replace(/(^|\s)(--|#)[^\n]*/g, "$1");
-  if (e === "php") s = s.replace(/^\s*#[^\n]*/gm, "");
   return s;
 }
 
@@ -284,10 +291,10 @@ const AIDE = [
   ["fichier", "Le fichier existe dans le travail de l'élève.", "style.css", ""],
   ["contient", "Le code contient chaque motif (séparés par |). Points proportionnels aux motifs trouvés. /regex/ accepté.", "index.html", "<nav | <footer | <figure"],
   ["absent", "Le code ne contient aucun des motifs (éléments interdits). Tous les points ou 0.", "*.js", "charAt | Math.floor | console.log"],
-  ["conforme", "Aucun élément hors annexe ni au-dessus du niveau (vérificateur du guide). 0 problème : tous les points ; 1 ou 2 : la moitié ; plus : 0.", "*.html", ""],
+  ["conforme", "Aucun élément hors annexe ni au-dessus du niveau (vérificateur du guide). −0,25 par type d'écart (réglable).", "*.html", ""],
   ["page", "Ouvre la page dans un navigateur caché et joue un scénario (étapes séparées par ;). Points proportionnels aux contrôles réussis.", "index.html",
     "saisir #nom = Ben Salah ; choisir #spec = 1 ; cocher #n3 ; saisir #cap = {#code} ; cliquer input[type=button] ; texte #resultat contient Inscription"],
-  ["sql", "Exécute la requête de l'élève (repérée par -- Q3 dans son fichier) sur la base de référence et compare au résultat de la requête attendue.", "requetes.sql",
+  ["sql", "Exécute la requête de l'élève (repérée par -- Q3, « 3) » ou retrouvée dans son fichier) sur la base de référence et compare au résultat attendu. Sinon −0,25 par type d'erreur ; commande principale fausse : 0 ; fautes d'orthographe tolérées.", "requetes.sql",
     "SELECT titre FROM Livre, Emprunt WHERE Livre.codeLivre = Emprunt.codeLivre AND numEl = 3"]
 ];
 const ETAPES = [
@@ -416,13 +423,86 @@ function racineProjet(ctx, p, fournie) {
   }
   return meilleur;
 }
-function lireTextes(base, l) { return l.map((f) => { try { return { f, t: fs.readFileSync(path.join(base, f), "utf8").replace(/^﻿/, "") }; } catch (e) { return { f, t: "" }; } }); }
+// fichier texte d'un élève : UTF-8, sinon ANSI (Windows-1252, Bloc-notes) ou UTF-16 — les accents restent lisibles
+function lireTexte(p) {
+  const b = fs.readFileSync(p);
+  if (b.length >= 2 && b[0] === 0xff && b[1] === 0xfe) return b.slice(2).toString("utf16le");
+  const t = b.toString("utf8");
+  if (!t.includes("\uFFFD")) return t.replace(/^\uFEFF/, "");
+  try { return new TextDecoder("windows-1252").decode(b); } catch (e) { return b.toString("latin1"); }
+}
+function lireTextes(base, l) { return l.map((f) => { try { return { f, t: lireTexte(path.join(base, f)) }; } catch (e) { return { f, t: "" }; } }); }
 // type d'un écart à l'annexe (sans numéro de ligne) : « la propriété margin-top… », « la balise <b>… »
 function typeEcart(message) { return String(message || "").split(/\.\s/)[0].replace(/\s+/g, " ").trim().toLowerCase(); }
+
+/* ================================================================ SQL : requêtes de l'élève et affectation aux questions */
+// étiquette et requête attendue d'un critère : « Q3b :: SELECT … » ou numéro tiré de la colonne Question
+function infoSql(c) {
+  let param = String(c.param || ""), etiq = "";
+  const m = /^\s*(Q?\s*\d+\s*[a-z]?)\s*::\s*/i.exec(param);
+  if (m) { etiq = "Q" + m[1].replace(/[^0-9a-z]/gi, "").replace(/^q/i, "").toUpperCase(); param = param.slice(m[0].length); }
+  else {
+    const txt = String(c.question || ""), q = /(?:Q|question)\s*(\d+)\s*[.\-)]?\s*([a-h])?\s*$/i.exec(txt) || /(\d+)\s*[.\-)]?\s*([a-h])?\s*\)?\s*$/i.exec(txt);
+    if (q) etiq = "Q" + q[1] + (q[2] ? q[2].toUpperCase() : "");
+  }
+  return { etiq, param };
+}
+const RX_MOT_SQL = "(?:select|insert|update|delete|create|alter|drop)\\b";
+// requêtes d'un fichier d'élève ; numérotation tolérée : « -- Q3 », « -- 3) », « 3) SELECT … », « R3 : SELECT … »
+function requetesFichier(texte) {
+  return STISQL.decouper(texte).map((r) => {
+    const num = new RegExp("^\\s*(?:(?:q|r|question|requ[eê]te|req)\\s*[°n.:]*\\s*)?(\\d{1,2})\\s*[.\\-]?\\s*([a-h])?\\s*[).:\\-–/]*\\s*(?=" + RX_MOT_SQL + ")", "i").exec(r.sql);
+    if (num && (/^\s*\D/.test(r.sql) || /^\s*\d{1,2}\s*[.\-]?\s*[a-h]?\s*[).:\-–/]/i.test(r.sql))) { r.sql = r.sql.slice(num[0].length); if (!r.etiquette) r.etiquette = "Q" + num[1] + (num[2] || "").toUpperCase(); }
+    if (!r.etiquette) { const m = /^\s*(?:n\s*[°o]\s*)?(\d{1,2})\s*[.\-]?\s*([a-h])?\s*(?:[).:\-–]|$)/i.exec(r.commentaire || ""); if (m) r.etiquette = "Q" + m[1] + (m[2] || "").toUpperCase(); }
+    return r;
+  }).filter((r) => new RegExp("^\\s*\\(?\\s*" + RX_MOT_SQL, "i").test(r.sql) || /^\s*with\b/i.test(r.sql));
+}
+/* Une requête de l'élève par question SQL de la grille :
+   1. requête étiquetée (-- Q3) ; 2. sans étiquette (règle C2) : la requête qui donne le résultat attendu ;
+   3. sinon la requête restante la plus proche (même commande). Une requête ne sert qu'à une seule question. */
+function affecterSql(ctx) {
+  const memo = ctx.memo || (ctx.memo = {});
+  if (memo.sql) return memo.sql;
+  const R = reglages(ctx), parFichier = {}, aff = (memo.sql = {}), prises = new Set();
+  const requetes = (motif) => {
+    if (parFichier[motif]) return parFichier[motif];
+    const l = trouver(ctx.fichiers, motif, (f) => /\.sql$/i.test(f));
+    const lt = l.length ? l : trouver(ctx.fichiers, "", (f) => /\.(sql|txt)$/i.test(f));
+    const toutes = []; lireTextes(ctx.base, lt).forEach((x) => requetesFichier(x.t).forEach((r) => toutes.push(r)));
+    return (parFichier[motif] = { fichiers: lt, toutes });
+  };
+  const crit = (ctx.grille && ctx.grille.length ? ctx.grille : []).filter((c) => c.verif === "sql" && infoSql(c).param.trim());
+  const infos = crit.map((c) => { const i = infoSql(c), q = requetes(c.fichier || ""); return { c, etiq: i.etiq, q, o: { M: STISQL, SQL: ctx.SQL, refSql: ctx.refSql, attendu: i.param, pts: Number(c.points) || 0, penalite: Number(R.erreurSql) || 0 } }; });
+  const sansLettre = (e) => e.replace(/[A-Z]$/, "");
+  for (const x of infos) {
+    if (!x.q.fichiers.length) { aff[x.c.id] = { vide: "Aucun fichier .sql" }; continue; }
+    if (!x.q.toutes.length) { aff[x.c.id] = { vide: "Fichier SQL vide" }; continue; }
+    const ref = SQLN.reference(x.o);
+    if (!ref.executable && ref.estSelect) { aff[x.c.id] = { manuel: "requête attendue non exécutable sur la base de référence (" + ref.r.erreur + ") — à noter à la main" }; continue; }
+    const cible = x.etiq && (x.q.toutes.find((r) => r.etiquette === x.etiq && !prises.has(r)) || x.q.toutes.find((r) => r.etiquette && /\d$/.test(r.etiquette) && r.etiquette === sansLettre(x.etiq) && !prises.has(r)));
+    if (cible) { prises.add(cible); aff[x.c.id] = { cible, etiquetee: true, ev: SQLN.evaluer(x.o, cible) }; }
+  }
+  const reste = infos.filter((x) => !aff[x.c.id]);
+  if (!regleActive(ctx, "C2")) { reste.forEach((x) => { aff[x.c.id] = { vide: "Requête « " + x.etiq + " » introuvable (commentaire -- " + x.etiq + " attendu)" }; }); return aff; }
+  const libres = (x) => x.q.toutes.filter((r) => !r.etiquette && !prises.has(r));
+  // la requête qui donne exactement le résultat attendu
+  for (const x of reste) {
+    for (const r of libres(x)) { const ev = SQLN.evaluer(x.o, r); if (ev.egal) { prises.add(r); aff[x.c.id] = { cible: r, etiquetee: false, ev }; break; } }
+  }
+  // sinon la requête libre la plus proche, de même commande (à égalité : la première dans le fichier)
+  for (const x of reste.filter((y) => !aff[y.c.id])) {
+    let m = null;
+    for (const r of libres(x)) { const ev = SQLN.evaluer(x.o, r); if (ev.memeCommande && (!m || ev.erreurs.length < m.ev.erreurs.length)) m = { cible: r, etiquetee: false, ev }; }
+    if (m) { prises.add(m.cible); aff[x.c.id] = m; }
+    else aff[x.c.id] = { vide: "Requête « " + x.etiq + " » introuvable : question non traitée" };
+  }
+  return aff;
+}
 
 /* contexte : { base (dossier de l'élève), fichiers, niveau, SQL, refSql (base de référence), testerPage, tolerance, reglages, difficulte } */
 async function verifier(c, ctx) {
   const pts = Number(c.points) || 0, R = reglages(ctx);
+  if (!ctx.grille) { ctx.grille = [c]; ctx.memo = {}; }      // appel isolé (tests) : pas d'affectation d'ensemble
   const res = (obtenu, justif) => ({ points: arrondi(Math.max(0, Math.min(pts, arrondiPas(obtenu, R)))), justif, auto: true });
   const code = (f) => EXT_CODE.test(f);
   switch (c.verif) {
@@ -460,7 +540,10 @@ async function verifier(c, ctx) {
       const l = trouver(ctx.fichiers, c.fichier, (f) => /\.(html?|css|js|php|sql)$/i.test(f)).filter((f) => !identiqueRessource(ctx, f));
       if (!l.length) return res(0, "Aucun fichier à vérifier (fichiers fournis non modifiés exclus)");
       const ecarts = new Map(), toleres = [];
-      for (const x of lireTextes(ctx.base, l)) {
+      // un fichier vide (ou presque) n'est pas « conforme » : il n'y a rien à évaluer
+      const textes = lireTextes(ctx.base, l).filter((x) => sansCommentaires(x.t, x.f).replace(/<!doctype[^>]*>|<\/?(html|head|body|meta|title)\b[^>]*>|\s+/gi, "").length >= 30);
+      if (!textes.length) return res(0, "Fichier(s) vide(s) ou presque : rien à évaluer");
+      for (const x of textes) {
         for (const p of ctx.verificateur.analyser(x.t, ctx.niveau, langueDe(x.f)).problemes) {
           if (p.type === "convention") continue;
           // tolérance : une faute de frappe sur une méthode du programme n'est pas un élément hors annexe
@@ -534,39 +617,24 @@ async function verifier(c, ctx) {
       return o;
     }
     case "sql": {
-      let param = String(c.param || ""), etiq = "";
-      const m = /^\s*(Q?\s*\d+\s*[a-z]?)\s*::\s*/i.exec(param);
-      if (m) { etiq = "Q" + m[1].replace(/[^0-9a-z]/gi, "").replace(/^q/i, "").toUpperCase(); param = param.slice(m[0].length); }
-      else { const q = /(\d+)\s*[.\-)]?\s*([a-z])?\b/i.exec(String(c.question || "").replace(/^.*?(?:Q|question)\s*(?=\d)/i, "")); if (q) etiq = "Q" + q[1] + (q[2] && /^[a-z]$/i.test(q[2]) ? q[2].toUpperCase() : ""); }
-      if (!param.trim()) return { points: null, justif: "Requête attendue à renseigner dans la grille (colonne Paramètre) : à noter à la main en attendant", auto: false };
+      const info = infoSql(c);
+      if (!info.param.trim()) return { points: null, justif: "Requête attendue à renseigner dans la grille (colonne Paramètre) : à noter à la main en attendant", auto: false };
       if (!ctx.SQL || !ctx.refSql) return { points: null, justif: "Aucune base de référence (.sql) jointe : à noter à la main", auto: false };
-      const l = trouver(ctx.fichiers, c.fichier, (f) => /\.sql$/i.test(f));
-      const lt = l.length ? l : trouver(ctx.fichiers, "", (f) => /\.(sql|txt)$/i.test(f));
-      if (!lt.length) return res(0, "Aucun fichier .sql");
-      const toutes = [];
-      for (const x of lireTextes(ctx.base, lt)) STISQL.decouper(x.t).forEach((r) => toutes.push(r));
-      if (!toutes.length) return res(0, "Fichier SQL vide");
-      // requête étiquetée « -- Q3 » ; sans étiquette, toutes les requêtes du fichier sont essayées (C2)
-      let cible = toutes.find((r) => r.etiquette === etiq) || (etiq && toutes.find((r) => r.etiquette.replace(/[A-Z]$/, "") === etiq.replace(/[A-Z]$/, "") && /\d$/.test(r.etiquette)));
-      const penalites = [];
-      if (!cible && !regleActive(ctx, "C2")) return res(0, "Requête « " + etiq + " » introuvable (commentaire -- " + etiq + " attendu)");
-      // fichier étiqueté mais sans « -- Q3 » : la question n'est pas traitée (on n'emprunte pas la requête d'une autre question)
-      const candidats = cible ? [cible] : toutes.some((r) => r.etiquette) ? toutes.filter((r) => !r.etiquette) : toutes;
-      if (!candidats.length) return res(0, "Requête « " + etiq + " » introuvable : question non traitée");
-      if (!cible) penalites.push({ code: "C2", texte: "requête « " + etiq + " » non étiquetée", dit: "étiquette -- " + etiq + " absente : requête retrouvée dans le fichier" });
-      const n = SQLN.noter({ M: STISQL, SQL: ctx.SQL, refSql: ctx.refSql, attendu: param, candidats, pts, penalite: Number(R.erreurSql) || 0, rang: cible ? 0 : parseInt(etiq.replace(/\D/g, ""), 10) || 0 });
-      if (n.points === null) return { points: null, justif: etiq + " : " + n.raison, auto: false };
+      const a = affecterSql(ctx)[c.id] || { vide: "Aucune requête" }, etiq = info.etiq;
+      if (a.manuel) return { points: null, justif: etiq + " : " + a.manuel, auto: false };
+      if (a.vide) return res(0, a.vide);
+      const n = a.ev, penalites = [];
+      if (!a.etiquetee) penalites.push({ code: "C2", texte: "requête « " + etiq + " » non étiquetée", dit: "étiquette -- " + etiq + " absente : requête retrouvée dans le fichier" });
       // C3 : seules les colonnes sont dans un autre ordre (même résultat) → règle de tolérance C3
       if (!n.egal && n.erreurs.length === 1 && n.erreurs[0] === "ordre des colonnes" && regleActive(ctx, "C3")) {
         n.egal = true; n.raison = "Résultat identique, colonnes dans un autre ordre";
         penalites.push({ code: "C3", texte: "colonnes " + etiq, dit: "colonnes dans un autre ordre" });
       }
-      const ou = !cible && n.choisie ? " [requête l." + n.choisie.ligne + "]" : "";
+      const ou = !a.etiquetee ? " [requête l." + a.cible.ligne + "]" : "";
       if (!n.egal) { const o = res(n.points, etiq + ou + " : " + n.raison + (penalites.length ? " — " + penalites[0].dit : "")); o.revoir = n.points > 0; return o; }
-      if (!penalites.length) return res(pts, etiq + ou + " : " + n.raison);
-      const d = deduire(ctx, penalites, pts);
-      const o = res(pts - d.retrait, etiq + ou + " : " + n.raison + " — " + penalites.map((x) => x.dit).join(" ; ") + texteRetrait(d));
-      if (d.retrait) o.revoir = true;
+      const d = penalites.length ? deduire(ctx, penalites, pts) : { retrait: 0 };
+      const o = res(pts - d.retrait, etiq + ou + " : " + n.raison + (penalites.length ? " — " + penalites.map((x) => x.dit).join(" ; ") + texteRetrait(d) : ""));
+      if (d.retrait || n.suspect || (n.orthographe && n.orthographe.length)) o.revoir = true;
       return o;
     }
     default:
@@ -579,6 +647,8 @@ function couleurNote(n) { return n >= 14 ? "FFE7F5EC" : n >= 10 ? "FFFFF6D6" : "
 function lettre(i) { let s = ""; i++; while (i > 0) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; }
 
 async function exporterExcel(fichier, devoir, criteres, eleves, resultats) {
+  const RG = Object.assign({}, REGLAGES, devoir.reglages || {}), pasNote = Number(RG.noteFinale) || 0;
+  const formuleNote = (cellule, max) => pasNote ? "ROUND(" + cellule + "*20/" + (max || 1) + "/" + pasNote + ",0)*" + pasNote : "ROUND(" + cellule + "*20/" + (max || 1) + ",2)";
   const wb = new ExcelJS.Workbook(); wb.creator = "STI Guide — " + (devoir.auteur || "Correcteur de devoirs"); wb.created = new Date();
   wb.calcProperties.fullCalcOnLoad = true;   // Excel recalcule les totaux à l'ouverture
   const questions = [];
@@ -611,9 +681,9 @@ async function exporterExcel(fichier, devoir, criteres, eleves, resultats) {
       row.getCell(3 + j).value = v;
     });
     total = arrondi(total);
-    const note = maxTotal ? arrondi(total * 20 / maxTotal) : 0;
+    const note = noteSur20(total, maxTotal, RG);
     row.getCell(colTot).value = { formula: "SUM(" + lettre(2) + r + ":" + lettre(1 + questions.length) + r + ")", result: total };
-    row.getCell(colNote).value = { formula: "ROUND(" + lettre(colTot - 1) + r + "*20/" + (maxTotal || 1) + ",2)", result: note };
+    row.getCell(colNote).value = { formula: formuleNote(lettre(colTot - 1) + r, maxTotal), result: note };
     row.getCell(colNote).font = { bold: true };
     row.getCell(colNote).fill = { type: "pattern", pattern: "solid", fgColor: { argb: couleurNote(note) } };
     const manquants = q0(e);
@@ -673,8 +743,8 @@ async function exporterExcel(fichier, devoir, criteres, eleves, resultats) {
     const sommes = [];
     let kk = 3; questions.forEach((q) => { kk += q.criteres.length; sommes.push(lettre(kk - 1) + r); kk++; });
     wd.getCell(r, k).value = { formula: sommes.join("+"), result: total }; wd.getCell(r, k).font = { bold: true };
-    const note = maxTotal ? arrondi(total * 20 / maxTotal) : 0;
-    wd.getCell(r, k + 1).value = { formula: "ROUND(" + lettre(k - 1) + r + "*20/" + (maxTotal || 1) + ",2)", result: note };
+    const note = noteSur20(total, maxTotal, RG);
+    wd.getCell(r, k + 1).value = { formula: formuleNote(lettre(k - 1) + r, maxTotal), result: note };
     wd.getCell(r, k + 1).font = { bold: true }; wd.getCell(r, k + 1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: couleurNote(note) } };
     wd.getRow(r).eachCell({ includeEmpty: true }, (c, j) => { c.border = bordure; if (j > 2) { c.alignment = { horizontal: "center" }; c.numFmt = "0.##"; } });
   });
@@ -727,7 +797,7 @@ async function exporterExcel(fichier, devoir, criteres, eleves, resultats) {
     criteres.forEach((c, j) => { const v = pt(e, c); wo.getCell(r, 3 + j).value = v === null ? null : v; });
     const tot = arrondi(criteres.reduce((a, c) => a + (pt(e, c) || 0), 0));
     wo.getCell(r, cT).value = { formula: "SUM(C" + r + ":" + lettre(cT - 2) + r + ")", result: tot };
-    wo.getCell(r, cT + 1).value = { formula: "ROUND(" + lettre(cT - 1) + r + "*20/" + (maxTotal || 1) + ",2)", result: maxTotal ? arrondi(tot * 20 / maxTotal) : 0 };
+    wo.getCell(r, cT + 1).value = { formula: formuleNote(lettre(cT - 1) + r, maxTotal), result: noteSur20(tot, maxTotal, RG) };
     wo.getRow(r).eachCell({ includeEmpty: true }, (cell, k) => { cell.border = bordure; if (k > 2) { cell.alignment = { horizontal: "center" }; cell.numFmt = "0.##"; } });
   });
 
@@ -742,4 +812,4 @@ async function exporterExcel(fichier, devoir, criteres, eleves, resultats) {
   return fichier;
 }
 
-module.exports = { TOLERANCE, REGLAGES, VERIFS, importerTravaux, fichiersEleve, lireGrille, modeleGrille, chargerVerificateur, verifier, exporterExcel, extraireArchive };
+module.exports = { TOLERANCE, REGLAGES, VERIFS, lireTexte, infoSql, requetesFichier, noteSur20, importerTravaux, fichiersEleve, lireGrille, modeleGrille, chargerVerificateur, verifier, exporterExcel, extraireArchive };

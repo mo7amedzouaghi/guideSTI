@@ -41,6 +41,7 @@ function normItem(s) {
     .replace(/"/g, "'")
     .replace(/\b[a-z_]\w*\.(?=[a-z_*])/g, "")          // préfixe de table : Livre.titre → titre
     .replace(/\s+as\s+['\w]+$/i, "")                    // alias de colonne
+    .replace(/(\))\s+[a-z_]\w*$/i, "$1")                 // alias sans AS : COUNT(*) nb
     .replace(/\s+/g, "")
     .replace(/(\d+)\.0+\b/g, "$1");
 }
@@ -185,55 +186,94 @@ function memeEtat(a, b) {
   return ka.every((k) => a[k].colonnes === b[k].colonnes && a[k].lignes === b[k].lignes);
 }
 
-/* ---------------------------------------------------------------- notation
-   o : { M (sqlmoteur), SQL (sql.js), refSql, attendu, candidats [{sql, etiquette}], pts, penalite }
-   → { points | null, egal, erreurs[], choisie, raison } */
-function noter(o) {
-  const cmdA = commande(o.attendu);
-  const estSelect = cmdA === "select";
-  const essayer = (sql) => {
-    const b = o.M.creerBase(o.SQL, o.refSql);
-    try {
-      const r = o.M.executer(b.db, sql)[0] || { erreur: "requête vide", colonnes: [], lignes: [] };
-      return { r, etat: estSelect ? null : etatBase(b.db) };
-    } finally { b.db.close(); }
-  };
-  const ref = essayer(o.attendu);
-  const refExecutable = !ref.r.erreur;
-  if (!refExecutable && estSelect) return { points: null, raison: "Requête attendue non exécutable sur la base de référence : " + ref.r.erreur + " — à noter à la main" };
-  const ordonne = /\border\s+by\b/i.test(o.attendu);
-  // 1) une requête de l'élève donne exactement le résultat attendu
-  const essais = [];
-  for (const c of o.candidats) {
-    if (commande(c.sql) !== cmdA && !(cmdA.startsWith("create") && commande(c.sql).startsWith("create"))) { essais.push({ c, cmd: commande(c.sql) }); continue; }
-    if (!refExecutable) { essais.push({ c, cmd: commande(c.sql) }); continue; }
-    const e = essayer(c.sql);
-    let egal = false, raison = "";
-    if (e.r.erreur) raison = "Erreur SQL : " + e.r.erreur;
-    else if (estSelect) { const cmp = o.M.comparer(ref.r, e.r, ordonne); egal = cmp.egal; raison = cmp.raison; }
-    else { egal = memeEtat(ref.etat, e.etat); raison = egal ? "Même effet sur la base" : "Effet différent sur la base"; }
-    if (egal) return { points: o.pts, egal: true, erreurs: [], choisie: c, raison };
-    essais.push({ c, cmd: commande(c.sql), raison, erreurSql: !!e.r.erreur });
+/* ---------------------------------------------------------------- exécution tolérante aux fautes d'orthographe
+   « fautes d'orthographe tolérées » : un nom de table ou de colonne mal orthographié (Livres, titr) est remplacé
+   par le nom le plus proche du schéma, puis la requête est rejouée. */
+function nomsSchema(db) {
+  const noms = new Set();
+  const t = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'");
+  if (t.length) for (const [n] of t[0].values) { noms.add(String(n)); const c = db.exec("PRAGMA table_info(" + n + ")"); if (c.length) c[0].values.forEach((x) => noms.add(String(x[1]))); }
+  return Array.from(noms);
+}
+function nomProche(nom, noms) {
+  const bas = nom.toLowerCase();
+  const l = noms.filter((x) => x.toLowerCase() !== bas && (TOL.proche(x, nom) || (Math.min(x.length, nom.length) >= 3 && TOL.distance(x, nom) === 1)));
+  // un seul nom possible, sinon on ne devine pas
+  return l.length === 1 ? l[0] : (l.find((x) => TOL.proche(x, nom) && l.filter((y) => TOL.proche(y, nom)).length === 1) || null);
+}
+function executerTolerant(M, db, sql) {
+  const corrige = [];
+  let r = null, cour = sql;
+  for (let essai = 0; essai < 4; essai++) {
+    r = M.executer(db, cour)[0] || { erreur: "requête vide", colonnes: [], lignes: [] };
+    const m = /no such (?:column|table):\s*([\w.]+)/i.exec(r.erreur || "");
+    if (!m) break;
+    const faux = m[1].split(".").pop(), bon = nomProche(faux, nomsSchema(db));
+    if (!bon) break;
+    const suivant = cour.replace(new RegExp("\\b" + faux.replace(/[$]/g, "\\$&") + "\\b", "gi"), bon);
+    if (suivant === cour) break;
+    corrige.push(faux + " → " + bon); cour = suivant;
   }
-  // 2) sinon : la requête la plus proche (même commande), notée clause par clause
-  const memeCmd = essais.filter((x) => x.cmd === cmdA || (cmdA.startsWith("create") && x.cmd.startsWith("create")));
-  if (!memeCmd.length) {
-    const vue = essais[0];
-    return { points: 0, egal: false, erreurs: ["commande principale"], choisie: vue && vue.c, raison: vue ? "Commande « " + (vue.cmd || "?").toUpperCase() + " » au lieu de « " + cmdA.toUpperCase() + " » : requête fausse" : "Aucune requête" };
-  }
-  let meilleur = null;
-  for (const x of memeCmd) {
-    const err = estSelect ? erreursSelect(o.attendu, x.c.sql) : erreursModif(o.attendu, x.c.sql);
-    if (x.erreurSql && !err.includes("syntaxe")) err.push("syntaxe");
-    if (!err.length) err.push(refExecutable ? "résultat différent" : "à vérifier");
-    // sans étiquette : à égalité, la requête placée au rang de la question (3e requête pour Q3)
-    const rang = o.rang && o.candidats.indexOf(x.c) === o.rang - 1 ? -0.5 : 0;
-    if (!meilleur || err.length + rang < meilleur.score) meilleur = { x, err, score: err.length + rang };
-  }
-  const n = meilleur.err.length, attendus = Math.max(meilleur.err.attendus || 0, n);
-  // quelques erreurs : −pénalité par type ; requête largement fausse (3 types ou plus) : points des éléments justes seulement
-  const p = n <= 2 ? Math.max(0, o.pts - n * o.penalite) : Math.max(0, Math.floor(o.pts * (attendus - n) / attendus * 4) / 4);
-  return { points: p, egal: false, erreurs: meilleur.err, choisie: meilleur.x.c, raison: (meilleur.x.raison ? meilleur.x.raison + " — " : "") + n + " type(s) d'erreur : " + meilleur.err.join(", ") + (n > 2 ? " (requête largement fausse : seuls les éléments justes sont comptés)" : "") };
+  return { r, corrige, sql: cour };
 }
 
-module.exports = { noter, commande, clausesSelect, erreursSelect, erreursModif, etatBase };
+/* ---------------------------------------------------------------- notation
+   contexte o : { M (sqlmoteur), SQL (sql.js), refSql, attendu, pts, penalite }
+   evaluer(o, candidat) → { memeCommande, egal, erreurs[], points, raison, orthographe[], suspect } */
+function reference(o) {
+  if (o._ref) return o._ref;
+  const cmdA = commande(o.attendu), estSelect = cmdA === "select";
+  const b = o.M.creerBase(o.SQL, o.refSql);
+  let r, etat = null;
+  try { r = o.M.executer(b.db, o.attendu)[0] || { erreur: "requête vide", colonnes: [], lignes: [] }; if (!estSelect) etat = etatBase(b.db); } finally { b.db.close(); }
+  return (o._ref = { cmdA, estSelect, r, etat, executable: !r.erreur, ordonne: /\border\s+by\b/i.test(o.attendu) });
+}
+const memeFamille = (a, b) => a === b || (a.startsWith("create") && b.startsWith("create"));
+function evaluer(o, c) {
+  const ref = reference(o), cmd = commande(c.sql);
+  if (!memeFamille(ref.cmdA, cmd)) return { memeCommande: false, egal: false, erreurs: ["commande principale"], points: 0, raison: "Commande « " + (cmd || "?").toUpperCase() + " » au lieu de « " + ref.cmdA.toUpperCase() + " » : requête fausse" };
+  let egal = false, raison = "", erreurSql = false, orthographe = [], sqlVu = c.sql;
+  if (ref.executable) {
+    const b = o.M.creerBase(o.SQL, o.refSql);
+    try {
+      const x = executerTolerant(o.M, b.db, c.sql);
+      orthographe = x.corrige; sqlVu = x.sql;
+      if (x.r.erreur) { erreurSql = true; raison = "Erreur SQL : " + x.r.erreur; }
+      else if (ref.estSelect) { const cmp = o.M.comparer(ref.r, x.r, ref.ordonne); egal = cmp.egal; raison = cmp.raison; }
+      else { egal = memeEtat(ref.etat, etatBase(b.db)); raison = egal ? "Même effet sur la base" : "Effet différent sur la base"; }
+    } finally { b.db.close(); }
+  }
+  const err = ref.estSelect ? erreursSelect(o.attendu, sqlVu) : erreursModif(o.attendu, sqlVu);
+  const note = orthographe.length ? " — orthographe tolérée : " + orthographe.join(", ") : "";
+  // tri demandé mais absent de la requête : l'ordre obtenu n'est dû qu'aux données
+  if (egal && ref.estSelect && clausesSelect(o.attendu).tri.length && !clausesSelect(sqlVu).tri.length) { egal = false; raison = "Même résultat sur ces données, mais sans ORDER BY"; }
+  if (egal) {
+    // même résultat sur la base de référence, mais une condition attendue n'apparaît pas : à vérifier par l'enseignant
+    let suspect = false;
+    if (ref.estSelect) { const A = clausesSelect(o.attendu), B = clausesSelect(sqlVu); suspect = B.conditions.length + B.jointures.length + B.having.length < A.conditions.length + A.jointures.length + A.having.length && err.some((e) => /condition|HAVING/.test(e)) && !/\b(between|in)\b/i.test(sqlVu); }
+    return { memeCommande: true, egal: true, erreurs: [], points: o.pts, raison: raison + note + (suspect ? " — attention : une condition attendue n'apparaît pas dans la requête (même résultat sur ces données)" : ""), orthographe, suspect };
+  }
+  // requête attendue non exécutable ici (CREATE d'une table déjà présente, syntaxe propre à MySQL) : comparaison de l'écriture seule
+  if (!ref.executable && !err.length) return { memeCommande: true, egal: true, erreurs: [], points: o.pts, raison: "Requête conforme à la requête attendue (non exécutée)" + note, orthographe };
+  if (erreurSql && !err.includes("syntaxe")) err.push("syntaxe");
+  if (!err.length) err.push("résultat différent");
+  const n = err.length, attendus = err.attendus || 0;
+  // −pénalité par type d'erreur ; plus rien de juste dans la requête → 0
+  const points = attendus && n >= attendus + (erreurSql ? 1 : 0) ? 0 : Math.max(0, o.pts - n * o.penalite);
+  return { memeCommande: true, egal: false, erreurs: err, points, raison: (raison ? raison + " — " : "") + n + " type(s) d'erreur : " + err.join(", ") + note, orthographe };
+}
+/* la meilleure requête parmi les candidates (compatibilité) */
+function noter(o) {
+  const ref = reference(o);
+  if (!ref.executable && ref.estSelect) return { points: null, raison: "Requête attendue non exécutable sur la base de référence : " + ref.r.erreur + " — à noter à la main" };
+  let meilleur = null;
+  for (const c of o.candidats) {
+    const e = evaluer(o, c); e.choisie = c;
+    if (e.egal) return e;
+    const score = (e.memeCommande ? 0 : 100) + e.erreurs.length;
+    if (!meilleur || score < meilleur.score) { meilleur = e; meilleur.score = score; }
+  }
+  return meilleur || { points: 0, egal: false, erreurs: ["aucune requête"], raison: "Aucune requête" };
+}
+
+module.exports = { noter, evaluer, reference, commande, clausesSelect, erreursSelect, erreursModif, etatBase };

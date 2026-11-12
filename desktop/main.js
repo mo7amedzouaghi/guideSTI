@@ -822,7 +822,12 @@ function actionPage(a) {
         var n = S.alertes.slice(S.marque || 0), cherche = rempl(a.v).toLowerCase();
         var ok = n.some(function (x) { return x.toLowerCase().indexOf(cherche) >= 0; });
         // D4 : une alerte est bien affichée au bon moment, mais avec un message reformulé
-        if (!ok && n.length && a.reformule) { S.reform = S.reform || []; S.reform.push(n[n.length - 1].slice(0, 60)); return { ok: true, detail: "message reformulé" }; }
+        // (un message de réussite n'est jamais accepté à la place d'un message d'erreur, ni l'inverse)
+        if (!ok && n.length && a.reformule) {
+          var der = n[n.length - 1].toLowerCase(), POS = /r[ée]ussi|succ[èe]s|bienvenue|merci|f[ée]licitation|enregistr[ée]|accept[ée]|\bvalid[ée]e?s?\b|\bcorrecte?s?\b/, NEG = /invalid|incorrect|erreur|erron|obligatoire|\bvide|saisir|veuillez|\bdoit\b|doivent|\b(non|pas)\b|interdit|refus|manqu|impossible|[ée]chec/;
+          var sens = function (t) { return NEG.test(t) ? -1 : POS.test(t) ? 1 : 0; };
+          if (sens(cherche) * sens(der) >= 0) { S.reform = S.reform || []; S.reform.push(n[n.length - 1].slice(0, 60)); return { ok: true, detail: "message reformulé" }; }
+        }
         return { ok: ok, detail: n.length ? "alerte(s) « " + n.join(" » « ").slice(0, 120) + " »" : "aucune alerte" };
       }
       case "sansalerte": { var n2 = S.alertes.slice(S.marque || 0); return { ok: !n2.length, detail: n2.length ? "alerte « " + n2[n2.length - 1] + " »" : "" }; }
@@ -1060,12 +1065,12 @@ ipcMain.handle("cor:corriger", async (e, id, o) => {
     const res = devoir.resultats[el.id] = devoir.resultats[el.id] || {};
     // copie réparée du travail (créée seulement si un test de page échoue)
     let repare = null;
-    const penalisees = new Set(), cumul = { v: 0 };   // une erreur de forme n'est pénalisée qu'une fois par élève (par type), plafond sur la copie
+    const penalisees = new Set(), cumul = { v: 0 }, memo = {};   // une erreur de forme n'est pénalisée qu'une fois par élève (par type), plafond sur la copie
     const reparer = () => repare || (repare = { dossier: path.join(os.tmpdir(), "sti-repare", propre(id), el.id), rep: null }, repare.rep = require("./lib/tolerance").reparerProjet(base, repare.dossier, tolerance.regles || {}), repare);
     for (const c of devoir.grille) {
       if (res[c.id] && res[c.id].modifie && !o.ecraser) continue;            // note saisie par l'enseignant conservée
-      try { res[c.id] = await COR.verifier(c, { base, fichiers, ressources, niveau: devoir.niveau, verificateur: verif, SQL, refSql, testerPage: testerAvecRessources, tolerance, reglages, difficulte: !!el.difficulte, reparer, penalisees, cumul }); }
-      catch (err) { res[c.id] = { points: 0, justif: "Erreur de vérification : " + err.message, auto: true }; }
+      try { res[c.id] = await COR.verifier(c, { base, fichiers, ressources, niveau: devoir.niveau, verificateur: verif, SQL, refSql, testerPage: testerAvecRessources, tolerance, reglages, difficulte: !!el.difficulte, reparer, penalisees, cumul, grille: devoir.grille, memo }); }
+      catch (err) { res[c.id] = { points: null, justif: "Vérification impossible (" + err.message + ") : à noter à la main", auto: false }; }
     }
     fait++;
     if (fenetre && !fenetre.isDestroyed()) fenetre.webContents.send("cor:progression", { fait, total: liste.length, eleve: el.nom });

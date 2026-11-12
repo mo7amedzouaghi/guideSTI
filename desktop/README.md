@@ -73,6 +73,13 @@ Types de parties : `tableau` (colonnes + nombre de lignes), `surprise` (débloca
 - **Personnalisation** : réglages de notation par devoir, correction adaptée par élève (erreurs de forme ignorées, pénalités ≤ 1 pt), message d'alerte reformulé accepté (D4), colonne « Réf. » pour saisir votre note à la main et voir l'écart.
 - **Export** : feuille « Grille officielle » (format correcteurAuto : une colonne par critère, ligne « Détail »), notes provisoires signalées.
 
+### 1.5.1 — seconde expertise du correcteur
+
+- **SQL** : règle stricte « −0,25 par type d'erreur, commande principale fausse = 0 » ; noms de tables / colonnes mal orthographiés tolérés (requête rejouée avec le bon nom) ; numérotation « 1) SELECT… », « -- 1) », « R1 : » reconnue ; sans étiquette, chaque requête est affectée à une seule question ; CREATE / ALTER non exécutables comparés à l'écriture ; ORDER BY demandé mais absent = erreur même si l'ordre coïncide.
+- **Fichiers ANSI** (Bloc-notes, Windows-1252) lus avec leurs accents ; « // » dans le texte d'une page n'est plus pris pour un commentaire ; fichier vide ≠ conforme ; une vérification en erreur devient « à noter à la main » (plus de 0 silencieux).
+- **Note finale** arrondie au quart de point (réglable) ; message de réussite jamais accepté à la place d'un message d'erreur (D4).
+- **Énoncé** : barème en tableau vertical (« Question | Points »), en ligne (« Ex1 : 5 pts – Ex2 : 7 pts »), points dans la cellule de droite, sections I- / II-, « 1) a) », consigne mère (« Écrire les requêtes permettant de : a)… »), vrai/faux et QCM notés à la main, PHP (connexion, exécution, affichage).
+
 ## Correcteur de devoirs : la grille
 
 Une ligne par critère (le modèle s'obtient avec **Modèle de grille (Excel)**, feuille *Aide* incluse) :

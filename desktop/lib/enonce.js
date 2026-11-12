@@ -125,6 +125,15 @@ function pointsLigne(l) {
   const v = d ? parseFloat(d[1].replace(",", ".")) : (RX_SUR.exec(l) ? parseFloat(RX_SUR.exec(l)[1].replace(",", ".")) : null);
   return v !== null && v > 0 && v <= 40 ? v : null;
 }
+// question dans un tableau : les points sont dans la cellule de droite (« 1) Créer la page…	1,5 »)
+const RX_CELLULE = new RegExp("\\t\\s*" + NB + "\\s*(?:points?|pts?)?\\s*$", "i");
+function pointsQuestion(brut) {
+  const p = pointsLigne(brut.replace(/\t+/g, "  "));
+  if (p !== null) return p;
+  const m = RX_CELLULE.exec(brut);
+  const v = m ? parseFloat(m[1].replace(",", ".")) : null;
+  return v !== null && v > 0 && v <= 20 ? v : null;
+}
 const sansPoints = (l) => l.replace(RX_POINTS, " ").replace(RX_SUR, "").replace(/\s*(\(\s*\)|\[\s*\])\s*\.?\s*$/, "").replace(/[\s.…:\-–]+$/, "").trim();
 
 const RX_PARTIE = /^\s*(exercice|partie|activit[ée]|[ée]tape|probl[èe]me|situation|dossier|t[âa]che|application)\s*(?:n\s*[°ºo]\s*|no\.?\s*|#\s*)?(\d{1,2}|[IVX]{1,4}\b|[A-H]\b|pratique|th[ée]orique)?\s*(.*)$/i;
@@ -139,11 +148,12 @@ function nouvelleFeuille(o) { return Object.assign({ enfants: [], pts: null, tex
 function structure(texte) {
   const lignes = String(texte || "").replace(/\r/g, "").split("\n").map((l) => l.replace(/\u00a0/g, " ").replace(/[ \t]+$/, ""));
   const racine = nouvelleFeuille({ niveau: 0 }), bareme = [];
-  let partie = null, q = null, sq = null, dansBareme = false, consignes = "";
+  let partie = null, q = null, sq = null, dansBareme = false, consignes = "", intro = "";
   const courant = () => sq || q || partie;
   const assurerPartie = () => { if (!partie) { partie = nouvelleFeuille({ niveau: 1, nom: "", num: "", implicite: true }); racine.enfants.push(partie); } return partie; };
   for (let i = 0; i < lignes.length; i++) {
-    const brut = lignes[i], l = brut.replace(/\t+/g, "  ").trim();
+    const brut = lignes[i], l = (RX_CELLULE.test(brut) && pointsLigne(brut.replace(/\t+/g, "  ")) === null ? brut.replace(RX_CELLULE, "") : brut).replace(/\t+/g, "  ").trim();
+    const pl = () => pointsQuestion(brut);
     if (!l) continue;
     if (RX_FIN.test(l)) { dansBareme = false; if (/^\s*annexe/i.test(l)) break; continue; }
     if (!dansBareme && RX_BAREME.test(l) && l.length < 90) { dansBareme = true; const reste = l.replace(RX_BAREME, "").replace(/^[\s:.\-–]+/, ""); if (reste) bareme.push(reste); continue; }
@@ -151,6 +161,7 @@ function structure(texte) {
     if (dansBareme && (brut.split(/\t|\s{2,}|\s*\|\s*/).filter((x) => x.trim()).length >= 2 || /^[\d.,\s]+$/.test(l) || RX_BAREME.test(l))) { bareme.push(brut); continue; }
     let m;
     const estPartie = (m = RX_PARTIE.exec(l)) && l.length < 150 && (m[2] || pointsLigne(l) !== null) && !/^\s*(partie|section)\s+\d+\s+(du|de la|des)\b/i.test(l);
+    if (dansBareme && !estPartie && (RX_QUESTION.test(l) || RX_QSOUS.test(l)) && sansPoints(l).length > 28) dansBareme = false;
     if (dansBareme && !estPartie) { bareme.push(brut); continue; }
     if (estPartie) {
       dansBareme = false;
@@ -158,32 +169,56 @@ function structure(texte) {
       const num = (m[2] || "").replace(/^(pratique|th[ée]orique)$/i, (x) => x.toLowerCase());
       partie = nouvelleFeuille({ niveau: 1, mot: m[1][0].toUpperCase() + m[1].slice(1).toLowerCase(), num, titre, pts: pointsLigne(l) });
       partie.nom = partie.mot + (num ? " " + (/^\d+$|^[IVXA-H]+$/i.test(num) ? num.toUpperCase() : num) : "") + (titre && titre.length <= 45 ? " : " + titre : "");
+      racine.enfants.push(partie); q = null; sq = null; intro = "";
+      continue;
+    }
+    if ((m = /^\s*([IVX]{1,4})\s*[-–.)/:]\s*(\S.*)$/.exec(l)) && l.length < 110 && !/^\s*(I|V|X)\s*[-–]\s*\d/.test(l)) {
+      // dans un exercice : simple section (I- Répondre par vrai ou faux), sa consigne vaut pour les questions qui suivent
+      if (partie && !partie.romain && !partie.implicite) { intro = m[2]; q = null; sq = null; partie.consignes = (partie.consignes || "") + "\n" + m[2]; continue; }
+      intro = "";
+      const titre = sansPoints(m[2]);
+      partie = nouvelleFeuille({ niveau: 1, mot: "Partie", num: m[1], titre, pts: pointsLigne(l), romain: true });
+      partie.nom = "Partie " + m[1] + (titre && titre.length <= 45 ? " : " + titre : "");
       racine.enfants.push(partie); q = null; sq = null;
       continue;
     }
     if ((m = RX_QSOUS.exec(l)) && (!q || String(q.num) === m[1] || !q.enfants.length)) {
       // « 1.a) … » : question 1, sous-question a
       assurerPartie();
-      if (!q || String(q.num) !== m[1]) { q = nouvelleFeuille({ niveau: 2, num: m[1], titre: "" }); partie.enfants.push(q); }
-      sq = nouvelleFeuille({ niveau: 3, lettre: m[2].toLowerCase(), titre: sansPoints(m[3]), texte: m[3], pts: pointsLigne(l) });
+      if (!q || String(q.num) !== m[1]) { q = nouvelleFeuille({ niveau: 2, num: m[1], titre: "", intro }); partie.enfants.push(q); }
+      sq = nouvelleFeuille({ niveau: 3, lettre: m[2].toLowerCase(), titre: sansPoints(m[3]), texte: m[3], pts: pl() });
       q.enfants.push(sq);
       continue;
     }
     if ((m = RX_QUESTION.exec(l)) && !(q && +m[1] > +q.num + 3) && !/^\d{1,2}[.,]\d/.test(l)) {
       assurerPartie();
-      q = nouvelleFeuille({ niveau: 2, num: m[1], titre: sansPoints(m[2]), texte: m[2], pts: pointsLigne(l) });
+      const s1 = RX_SOUS.exec(m[2]);
+      if (s1) {
+        // « 1) a) … » : la première sous-question est sur la ligne de la question
+        q = nouvelleFeuille({ niveau: 2, num: m[1], titre: "", intro }); partie.enfants.push(q);
+        sq = nouvelleFeuille({ niveau: 3, lettre: s1[1].toLowerCase(), titre: sansPoints(s1[2]), texte: s1[2], pts: pl() }); q.enfants.push(sq);
+        continue;
+      }
+      // « 4) Créer la feuille de style : a) fond jaune… » : première sous-question après les deux-points
+      const s2 = /^(.{8,}?[:;])\s*a\s*[)\-–]\s+(\S.+)$/.exec(m[2]);
+      if (s2) {
+        q = nouvelleFeuille({ niveau: 2, num: m[1], titre: sansPoints(s2[1]), texte: s2[1], intro }); partie.enfants.push(q);
+        sq = nouvelleFeuille({ niveau: 3, lettre: "a", titre: sansPoints(s2[2]), texte: s2[2], pts: pl() }); q.enfants.push(sq);
+        continue;
+      }
+      q = nouvelleFeuille({ niveau: 2, num: m[1], titre: sansPoints(m[2]), texte: m[2], pts: pl(), intro });
       partie.enfants.push(q); sq = null;
       continue;
     }
     if ((m = RX_SOUS.exec(l)) && (q || partie)) {
       const parent = q || partie;
-      sq = nouvelleFeuille({ niveau: q ? 3 : 2, lettre: m[1].toLowerCase(), num: q ? undefined : m[1].toLowerCase(), titre: sansPoints(m[2]), texte: m[2], pts: pointsLigne(l) });
+      sq = nouvelleFeuille({ niveau: q ? 3 : 2, lettre: m[1].toLowerCase(), num: q ? undefined : m[1].toLowerCase(), titre: sansPoints(m[2]), texte: m[2], pts: pl() });
       parent.enfants.push(sq);
       if (!q) { q = null; }
       continue;
     }
     const c = courant();
-    if (c) { c.texte += "\n" + l; if (c.pts === null && c !== partie && pointsLigne(l) !== null && l.length < 40) c.pts = pointsLigne(l); else if (c === partie) partie.consignes = (partie.consignes || "") + "\n" + l; }
+    if (c) { c.texte += "\n" + l; if (c.pts === null && c !== partie && pointsLigne(l) !== null && l.length < 40) c.pts = pointsLigne(l); else if (c === partie) { partie.consignes = (partie.consignes || "") + "\n" + l; if (l.length < 160) intro = l; } }
     else consignes += "\n" + l;
   }
   // une partie sans question numérotée est elle-même une question
@@ -261,8 +296,8 @@ const API_JS = ["getElementById", "innerHTML", "indexOf", "lastIndexOf", "substr
 const PHP = [
   [/connexion|se\s+connect|connecter/i, "mysqli_connect", "connexion (mysqli_connect)"],
   [/ex[ée]cut|requ[eê]te/i, "mysqli_query", "exécution (mysqli_query)"],
-  [/r[ée]cup[ée]r|donn[ée]es\s+(?:saisies|du\s+formulaire)|envoy[ée]es/i, "/\\$_(POST|GET|REQUEST)\\s*\\[/", "récupération ($_POST)"],
-  [/ins[ée]r|ajout|enregistr/i, "/insert\\s+into/", "INSERT INTO"],
+  [/r[ée]cup[éèe]r|donn[ée]es\s+(?:saisies|du\s+formulaire)|envoy[ée]es/i, "/\\$_(POST|GET|REQUEST)\\s*\\[/", "récupération ($_POST)"],
+  [/ins[éèe]r|ajout|enregistr/i, "/insert\\s+into/", "INSERT INTO"],
   [/supprim/i, "/delete\\s+from/", "DELETE FROM"],
   [/modifi|mettre\s+[àa]\s+jour/i, "/update\\s+\\w+\\s+set/", "UPDATE … SET"],
   [/affich(?:er|age)\s+(?:la\s+)?liste|parcour|tableau\s+des|tous\s+les/i, "/mysqli_fetch_(array|assoc|row)/", "parcours (mysqli_fetch_…)"],
@@ -272,8 +307,13 @@ const RX_COURS = /^\s*(d[ée]fini[rs]?|citer|cite[zr]?|expliquer|donner\s+(?:la\
 const RX_CODE = /\b(code|html|css|javascript|script|fonction|requ[eê]te|sql|php|balise|propri[ée]t[ée]|fichier|page|programme|instruction)\b|\.(html?|css|js|php|sql)\b/i;
 
 function echapperRe(s) { return s.replace(/[.*+?^${}()|[\]\\\/]/g, "\\$&"); }
-function verifsQuestion(texte, contexte) {
-  const t = String(texte || ""), tout = (contexte ? contexte + "\n" : "") + t, v = [];
+const RX_INTRO_COURS = /vrai\s+ou\s+faux|\bqcm\b|cocher|choisir\s+la\s+(bonne|ou\s+les)|compl[ée]ter\s+(le|les|par|ce)|relier|r[ée]pondre\s+(par|aux)|questions?\s+de\s+cours|corriger\s+les\s+erreurs/i;
+function verifsQuestion(texte, contexte, parent, intro) {
+  const t0 = String(texte || ""), mere = String(parent || "").trim().split("\n")[0];
+  // « 2) Écrire les requêtes SQL permettant de : a) … b) … » : la consigne de la question vaut pour ses sous-questions
+  const t = mere && /[:…]\s*$|\b(de|d.|suivantes?|pour)\s*:?\s*$/i.test(mere) ? mere + " " + t0 : t0;
+  const tout = (contexte ? contexte + "\n" : "") + t, v = [];
+  if (intro && RX_INTRO_COURS.test(intro) && !/\.(html?|css|js|php|sql)\b/i.test(t0)) return { nature: "cours", verifs: [] };
   const ajout = (verif, fichier, motif, libelle) => { if (!v.some((x) => x.verif === verif && x.fichier === fichier && x.motif === motif)) v.push({ verif, fichier, motif, libelle }); };
   const premiere = t.split("\n")[0];
   const cours = RX_COURS.test(premiere) && !/(?:code|requ[eê]te|script|programme)\s+(html|css|javascript|js|sql|php|permettant)/i.test(t) && !/^\s*(donner|[ée]crire|proposer)\s+(le|la|une|un)\s+(code|requ[eê]te|script|fonction|r[èe]gle)/i.test(premiere);
@@ -281,15 +321,15 @@ function verifsQuestion(texte, contexte) {
   const fichiers = Array.from(new Set((t.match(/[\w\-]+\.(?:html?|css|js|php|sql)\b/gi) || []).map((x) => x)));
   const fCtx = Array.from(new Set((tout.match(/[\w\-]+\.(?:html?|css|js|php|sql)\b/gi) || [])));
   const fHtml = fichiers.find((x) => /\.html?$/i.test(x)) || "", fPhp = fichiers.find((x) => /\.php$/i.test(x)) || fCtx.find((x) => /\.php$/i.test(x)) || "*.php";
-  const estSql = /\brequ[eê]tes?\b|\ben\s+sql\b|langage\s+sql|\bselect\b|cr[ée]er\s+la\s+table|ajouter\s+(?:la|une)\s+(?:colonne|contrainte|cl[ée])|alter\s+table/i.test(t) && !/\bphp\b|\.php\b|mysqli/i.test(t);
+  const estSql = /\brequ[eê]tes?\b|\ben\s+sql\b|langage\s+sql|\bselect\b|cr[ée]e[rz]?\s+la\s+table|ajouter\s+(?:la|une)\s+(?:colonne|contrainte|cl[ée])|alter\s+table/i.test(t) && !/\bphp\b|\.php\b|mysqli/i.test(t);
   const estPhp = /\bphp\b|\.php\b|mysqli|serveur|base\s+de\s+donn[ée]es.*(?:formulaire|page)/i.test(t) && /\bphp\b|\.php\b|mysqli/i.test(tout);
   const estJs = /javascript|\bjs\b|\.js\b|\bfonction\b|\bscript\b|contr[ôo]le\s+de\s+saisie|au\s+clic|\bonclick\b|\bvalider\b.*\bbouton|\bbouton\b.*\bclic/i.test(t);
-  const estCss = /\bcss\b|feuille\s+de\s+style|\.css\b|\bstyle\b|mise\s+en\s+forme|mettre\s+en\s+forme|couleur|police|bordure|marge|arri[èe]re-?plan|align|centr|gras|italique|soulign|taille|largeur|hauteur|ombre|transition|animation|transform|flottant|\bfloat\b|position|survol|hover|opacit/i.test(t);
+  const estCss = /\bcss\b|feuille\s+de\s+style|\.css\b|\bstyle\b|mise\s+en\s+forme|mettre\s+en\s+forme|[àa]\s+(gauche|droite)\b|m[êe]me\s+ligne|c[ôo]te\s+[àa]\s+c[ôo]te|\bfond\b|couleur|police|bordure|marge|arri[èe]re-?plan|align|centr|gras|italique|soulign|taille|largeur|hauteur|ombre|transition|animation|transform|flottant|\bfloat\b|position|survol|hover|opacit/i.test(t);
   const cssVise = estCss && (/\.css\b|feuille\s+de\s+style|r[èe]gles?\s+css/i.test(tout)) && !/<\s*[a-z]|\b(?:ins[ée]rer|ajouter)\s+(?:un|une|des)\s+(?:formulaire|tableau|image|lien|liste|section|div)/i.test(t.replace(/bordure|ombre|marge|couleur/gi, ""));
-  const estHtml = !cssVise && /\bhtml\b|balise|\b(?:cr[ée]er|ajouter|ins[ée]rer|placer|int[ée]grer|r[ée]aliser|compl[ée]ter|d[ée]finir|construire)\b/i.test(t) && !estSql && !estPhp;
+  const estHtml = !cssVise && /\bhtml\b|balise|\b(?:cr[ée]e[rz]?|ajouter|ins[ée]rer|placer|int[ée]grer|r[ée]aliser|compl[ée]ter|d[ée]finir|construire)\b/i.test(t) && !estSql && !estPhp;
   // fichiers à créer
   // fichiers à créer : nommés après « créer / enregistrer… » et pas comme lieu (« dans la page x », « à la page x »)
-  for (const m of t.matchAll(/(?:cr[ée]er|enregistrer|sauvegarder|nommer?|r[ée]aliser)\b([^.\n]{0,90}?)([\w\-]+\.(?:html?|css|js|php|sql))\b/gi)) {
+  for (const m of t.matchAll(/(?:cr[ée]e[rz]?|enregistrer|sauvegarder|nommer?|r[ée]aliser)\b([^.\n]{0,90}?)([\w\-]+\.(?:html?|css|js|php|sql))\b/gi)) {
     if (/\b(?:dans|[àa]|vers|de|depuis)\s+(?:la\s+page|le\s+fichier|la\s+feuille)\s*["«“']?\s*$/i.test(m[1])) continue;
     ajout("fichier", m[2], "", "fichier " + m[2]);
   }
@@ -299,13 +339,15 @@ function verifsQuestion(texte, contexte) {
     for (const f of fichiers.filter((x) => /\.css$/i.test(x))) ajout("contient", fHtml || "*.html", "/<link[^>]+" + echapperRe(f) + "/", "liaison " + f);
     for (const f of fichiers.filter((x) => /\.js$/i.test(x))) ajout("contient", fHtml || "*.html", "/<script[^>]+" + echapperRe(f) + "/", "liaison " + f);
   }
-  for (const m of t.matchAll(/(?:lien|liens|pointant|renvoy\w*)\s+(?:vers\s+)?(?:la\s+page\s+)?["«“']?([\w\-]+\.(?:html?|php))/gi)) ajout("contient", fHtml || "*.html", "/<a\\s[^>]*href\\s*=\\s*[\"']?[^\"'>]*" + echapperRe(m[1]) + "/", "lien vers " + m[1]);
+  for (const m of t.matchAll(/(?:lien|liens|pointant|renvoy\w*)\s+(?:vers\s+)?(?:la\s+page\s+)?["«“']?([\w\-]+\.(?:html?|php))/gi)) { const src = fichiers.find((x) => /\.html?$/i.test(x) && x.toLowerCase() !== m[1].toLowerCase()) || ""; ajout("contient", src, "/<a\\s[^>]*href\\s*=\\s*[\"']?[^\"'>]*" + echapperRe(m[1]) + "/", "lien vers " + m[1]); }
   // HTML : balises citées (<nav>) ou décrites (« un tableau », « une liste déroulante »)
   if (estHtml && !estJs) {
-    const cible = fHtml || "";
+    // page à modifier : jamais la page vers laquelle pointe un lien
+    const ciblesLien = Array.from(t.matchAll(/(?:lien|liens|pointant|renvoy\w*)\s+(?:vers\s+)?(?:la\s+page\s+)?["«“']?([\w\-]+\.(?:html?|php))/gi)).map((m) => m[1].toLowerCase());
+    const cible = fichiers.find((x) => /\.html?$/i.test(x) && !ciblesLien.includes(x.toLowerCase())) || "";
     for (const m of t.matchAll(/<\s*([a-z][a-z0-9]*)\b[^>]*>/gi)) ajout("contient", cible, "<" + m[1].toLowerCase(), "<" + m[1].toLowerCase() + ">");
     for (const m of t.matchAll(/\bbalises?\s+["«“<]*\s*([a-z][a-z0-9]{0,9})\b/gi)) if (!/^(de|du|des|la|le|les|html|qui|pour|et|nomm)/i.test(m[1])) ajout("contient", cible, "<" + m[1].toLowerCase(), "<" + m[1].toLowerCase() + ">");
-    for (const [re, motif, lib] of BALISES) if (re.test(t)) ajout("contient", cible, motif, lib);
+    for (const [re, motif, lib] of BALISES) if (re.test(t) && !(lib === "lien" && v.some((x) => /^lien vers/.test(x.libelle)))) ajout("contient", cible, motif, lib);
     const h = /titre\s+(?:de\s+niveau\s+|h)([1-6])/i.exec(t); if (h) ajout("contient", cible, "<h" + h[1], "titre <h" + h[1] + ">");
     for (const m of t.matchAll(/identifiant\s+(?:est\s+|égal\s+à\s+)?["«“']?\s*([A-Za-z][\w\-]*)/gi)) if (!MOTS_VIDES.has(m[1].toLowerCase())) ajout("contient", cible, "id=\"" + m[1] + "\"", "id « " + m[1] + " »");
     for (const m of t.matchAll(/([\w\-]+\.(?:jpe?g|png|gif|webp|svg|mp4|webm|mp3|ogg|wav))\b/gi)) ajout("contient", cible, m[1], m[1]);
@@ -328,12 +370,18 @@ function verifsQuestion(texte, contexte) {
       ajout("contient", "", "function " + m[1] + "(", "fonction " + m[1] + "()");
     }
     for (const a of API_JS) if (new RegExp("(^|[^\\w.])" + a.replace(".", "\\.") + "\\b").test(t)) ajout("contient", "", a.includes(".") ? a : (/^[A-Z]|^(parseInt|parseFloat|isNaN)$/.test(a) ? a + "(" : "." + a), a);
+    if (/\bmessages?\b|\balert/i.test(t)) ajout("contient", "", "/alert\\s*\\(|\\.innerHTML\\s*=|\\.value\\s*=/", "affichage du message");
     if (/au\s+clic|\bclique|\bonclick\b/i.test(t)) ajout("contient", fHtml || "", "onclick", "évènement onclick");
     if (/onchange|au\s+changement/i.test(t)) ajout("contient", fHtml || "", "onchange", "évènement onchange");
     if (/oninput|au\s+cours\s+de\s+la\s+saisie/i.test(t)) ajout("contient", fHtml || "", "oninput", "évènement oninput");
   }
   // PHP / MySQL
-  if (estPhp) for (const [re, motif, lib] of PHP) if (re.test(t)) ajout("contient", fPhp, motif, lib);
+  if (estPhp) {
+    for (const [re, motif, lib] of PHP) if (re.test(t)) ajout("contient", fPhp, motif, lib);
+    // une requête sur la base suppose la connexion et l'exécution
+    if (v.some((x) => /insert|delete|update|fetch|num_rows/i.test(x.motif))) { ajout("contient", fPhp, "mysqli_connect", "connexion (mysqli_connect)"); ajout("contient", fPhp, "mysqli_query", "exécution (mysqli_query)"); }
+    if (/\bmessages?\b|affich/i.test(t)) ajout("contient", fPhp, "/\\b(echo|print)\\b/", "affichage (echo)");
+  }
   const nature = estPhp ? "php" : estJs ? "js" : estCss && !v.some((x) => /^<|^\/</.test(x.motif)) ? "css" : estHtml ? "html" : RX_CODE.test(t) ? "code" : "autre";
   return { nature, verifs: v };
 }
@@ -343,37 +391,40 @@ function verifsQuestion(texte, contexte) {
 function lireEtiquette(e) {
   const s = String(e).trim().replace(/\s+/g, "");
   let m;
-  if ((m = /^(?:ex(?:ercice)?|exo|e|partie|p|activit[ée]|act|a)\.?(?:n°)?(\d+|[IVX]+|[A-H])(?:[.\-_/]?(?:q)?(\d+))?(?:[.\-_/]?([a-h]))?$/i.exec(s))) return { partie: m[1].toUpperCase(), q: m[2], sous: m[3] && m[3].toLowerCase() };
+  if ((m = /^(?:ex(?:ercice)?|exo|e|partie|p|activit[ée]|act|a|[ée]tape)\.?(?:n°)?(\d+|[IVX]+|[A-H])(?:[.\-_/]?(?:q)?(\d+))?(?:[.\-_/]?([a-h]))?$/i.exec(s))) return { partie: m[1].toUpperCase(), q: m[2], sous: m[3] && m[3].toLowerCase() };
   if ((m = /^(?:q(?:uestion)?)?(\d{1,2})(?:[.\-_/)]?([a-h]))?\)?$/i.exec(s))) return { q: m[1], sous: m[2] && m[2].toLowerCase() };
   if ((m = /^([IVX]+|[A-H])(?:[.\-_/]?(\d{1,2})(?:[.\-_/]?([a-h]))?)?$/.exec(s))) return { partie: m[1].toUpperCase(), q: m[2], sous: m[3] && m[3].toLowerCase() };
   return null;
 }
 function lireTableauBareme(lignes) {
-  const nombre = (x) => { const v = parseFloat(String(x).replace(",", ".")); return isFinite(v) ? v : null; };
+  const nombre = (x) => { const m = /^(\d{1,2}(?:[.,]\d{1,2})?)\s*(?:points?|pts?)?\.?$/i.exec(String(x).trim()); return m ? parseFloat(m[1].replace(",", ".")) : null; };
   const cellules = (l) => l.split(/\t|\s{2,}|\s*\|\s*/).map((x) => x.trim()).filter(Boolean);
-  // a) deux rangées : « Questions | 1 | 2 | 3 » puis « Barème | 2 | 3 | 1,5 » (éventuellement une cellule par ligne)
-  const jetons = [];
-  for (const l of lignes) cellules(l).forEach((c) => jetons.push(c));
-  const iL = jetons.findIndex((x) => /^(questions?|exercices?|parties?|q|n°|num[ée]ros?|activit[ée]s?)$/i.test(x));
-  const iP = jetons.findIndex((x, k) => k > iL && /^(bar[èe]me|points?|pts|notes?|nombre\s+de\s+points)$/i.test(x));
-  if (iL >= 0 && iP > iL) {
+  const paire = (e, n) => ({ etiquette: e, cle: lireEtiquette(e), points: n });
+  const sansTotal = (l) => l.filter((x) => !/^(total|note)\b/i.test(x.etiquette));
+  const ENT_Q = /^(questions?|exercices?|parties?|q|n\s*°|num[ée]ros?|activit[ée]s?|[ée]tapes?)$/i, ENT_P = /^(bar[èe]mes?|points?|pts|notes?|nombre\s+de\s+points|nb\.?\s*(de\s+)?points)$/i;
+  const rangs = lignes.map(cellules).filter((c) => c.length);
+  // a) tableau vertical : une ligne par question, « étiquette | points » (« 1 | 2 », « 3.a | 1,5 », « Exercice 2 | 6 pts »)
+  const vert = rangs.filter((c) => c.length === 2 && lireEtiquette(c[0]) && nombre(c[1]) !== null);
+  if (vert.length >= 2 && vert.length >= rangs.filter((c) => c.length === 2).length - 2 && !rangs.some((c) => c.length > 2 && c.slice(1).every((x) => nombre(x) !== null)))
+    return vert.map((c) => paire(c[0], nombre(c[1])));
+  // b) deux rangées : « Questions | 1 | 2 | 3 » puis « Barème | 2 | 3 | 1,5 » (éventuellement une cellule par ligne)
+  const jetons = [].concat(...rangs);
+  const iL = jetons.findIndex((x) => ENT_Q.test(x));
+  const iP = jetons.findIndex((x, k) => k > iL && ENT_P.test(x));
+  if (iL >= 0 && iP > iL + 1) {
     const etiq = jetons.slice(iL + 1, iP).filter((x) => !/^total$/i.test(x));
     const pts = jetons.slice(iP + 1).map(nombre).filter((x) => x !== null).slice(0, etiq.length);
-    if (etiq.length && pts.length === etiq.length) return etiq.map((e, k) => ({ etiquette: e, cle: lireEtiquette(e), points: pts[k] }));
+    if (etiq.length && pts.length === etiq.length) return etiq.map((e, k) => paire(e, pts[k]));
   }
-  // b) deux lignes voisines : étiquettes (« Exercice 1   Exercice 2 ») puis nombres (« 8   12 »)
-  for (let i = 0; i + 1 < lignes.length; i++) {
-    const e = cellules(lignes[i]).filter((x) => !/^total$/i.test(x)), n = cellules(lignes[i + 1]).map(nombre);
-    if (e.length >= 2 && e.every((x) => lireEtiquette(x)) && n.length >= e.length && n.slice(0, e.length).every((x) => x !== null)) return e.map((x, k) => ({ etiquette: x, cle: lireEtiquette(x), points: n[k] }));
+  // c) deux lignes voisines : étiquettes (« Exercice 1   Exercice 2 ») puis nombres (« 8   12 »)
+  for (let i = 0; i + 1 < rangs.length; i++) {
+    const e = rangs[i].filter((x) => !/^total$/i.test(x) && !ENT_Q.test(x)), n = rangs[i + 1].filter((x) => !ENT_P.test(x)).map(nombre);
+    if (e.length >= 2 && e.every((x) => lireEtiquette(x)) && n.length >= e.length && n.slice(0, e.length).every((x) => x !== null)) return e.map((x, k) => paire(x, n[k]));
   }
-  // c) une ligne par question : « Q1 : 2 pts », « Exercice 2 ....... 6 points »
-  const paires = [];
-  for (const l of lignes) {
-    const c = cellules(l);
-    const m = /^(.{1,20}?)\s*[:=\t.…\-–]*\s*(\d{1,2}(?:[.,]\d{1,2})?)\s*(?:points?|pts?)?\s*$/i.exec(c.length === 2 ? c.join("\t") : l.trim());
-    if (m && lireEtiquette(m[1].replace(/[\s:.…\-–]+$/, ""))) paires.push({ etiquette: m[1], cle: lireEtiquette(m[1].replace(/[\s:.…\-–]+$/, "")), points: nombre(m[2]) });
-  }
-  return paires.length >= 2 ? paires : null;
+  // d) en ligne ou une par ligne : « Ex1 : 5 pts – Ex2 : 7 pts », « Q1 = 2 », « Exercice 2 ....... 6 points »
+  const paires = [], RX = /((?:exercice|exo|ex|partie|activit[ée]|[ée]tape|question|q)?\s*(?:n\s*°\s*)?(?:\d{1,2}|[IVX]{1,4}|[A-H])(?:\s*[.\-]?\s*[a-h]\b)?\)?)\s*(?:[:=]|\.{2,}|…+|\t)\s*(\d{1,2}(?:[.,]\d{1,2})?)\s*(?:points?|pts?)?(?=\s*(?:[;,\-–|/+]|$|\s))/gi;
+  for (const l of lignes) { let m; RX.lastIndex = 0; while ((m = RX.exec(l))) { const e = m[1].trim(); if (lireEtiquette(e)) paires.push(paire(e, parseFloat(m[2].replace(",", ".")))); } }
+  return sansTotal(paires).length >= 2 ? sansTotal(paires) : null;
 }
 const somme = (l) => Math.round(l.reduce((a, b) => a + (Number(b) || 0), 0) * 100) / 100;
 const quart = (x) => Math.round(x * 4) / 4;
@@ -412,7 +463,7 @@ function feuilles(racine) {
 }
 function libelleCourt(t) {
   const s = String(t || "").split("\n")[0].replace(/\s+/g, " ").trim()
-    .replace(/\s+(tout en|permettant de|qui permet|afin d|situ[ée]e? |conform[ée]ment|en lui attribuant|selon le format|comme le montre).*$/i, "");
+    .replace(/\s+(conform[ée]ment|comme le montre|comme l.indique|\(voir).*$/i, "");
   return s.length > 90 ? s.slice(0, 88) + "…" : s;
 }
 function etiquetteQuestion(f, avecParties) {
@@ -432,9 +483,9 @@ function analyser(texte, opts) {
   const lf = feuilles(racine), remarques = [];
   for (const f of lf) {
     const contexte = [f.p.consignes || "", f.q && f.s ? f.q.titre + "\n" + f.q.texte : ""].join("\n");
-    const r = verifsQuestion((f.n.titre ? f.n.titre + "\n" : "") + f.n.texte, contexte);
+    const r = verifsQuestion((f.n.titre ? f.n.titre + "\n" : "") + f.n.texte, contexte, f.q && f.s ? f.q.titre : "", (f.q || f.n).intro || "");
     f.nature = r.nature; f.verifs = r.verifs;
-    f.n.poids = Math.max(1, Math.min(4, r.verifs.length));
+    f.n.poids = /^(js|php|sql)$/.test(r.nature) ? 2 : r.nature === "cours" ? 1 : Math.min(2, 1 + 0.5 * Math.max(0, r.verifs.length - 1));
   }
   // barème : tableau imprimé dans l'énoncé
   let source = "";

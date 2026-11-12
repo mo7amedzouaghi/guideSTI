@@ -224,15 +224,25 @@ function reparerProjet(src, dest, regles) {
   fs.cpSync(src, dest, { recursive: true });
   const tous = [];
   (function lister(d) { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) lister(p); else tous.push(p); } })(dest);
-  const lire = (p) => { try { return fs.readFileSync(p, "utf8"); } catch (e) { return ""; } };
+  // fichiers ANSI (Windows-1252) : lus correctement, réécrits en UTF-8 avec BOM pour que le navigateur garde les accents
+  const ansi = new Set();
+  const lire = (p) => {
+    try {
+      const buf = fs.readFileSync(p), t = buf.toString("utf8");
+      if (!t.includes("\uFFFD")) return t;
+      ansi.add(p);
+      try { return new TextDecoder("windows-1252").decode(buf); } catch (e) { return buf.toString("latin1"); }
+    } catch (e) { return ""; }
+  };
+  const ecrire = (p, t) => fs.writeFileSync(p, (ansi.has(p) && t.charCodeAt(0) !== 0xfeff ? "\uFEFF" : "") + t);
   const js = tous.filter((p) => /\.js$/i.test(p)), css = tous.filter((p) => /\.css$/i.test(p)), html = tous.filter((p) => /\.html?$/i.test(p));
   const parFichier = {};
   const rel = (p) => path.relative(dest, p).split(path.sep).join("/");
   const noter = (p, l) => { if (l.length) parFichier[rel(p)] = (parFichier[rel(p)] || []).concat(l); };
   const ids = Array.from(new Set([].concat(...html.map((p) => Array.from(lire(p).matchAll(/\bid\s*=\s*["']([^"']+)["']/gi)).map((m) => m[1])))));
   const declares = fonctionsDeclarees(js.map(lire).concat(...html.map((p) => scriptsInline(lire(p)))));
-  for (const p of js) { const r = reparerJS(lire(p), declares, regles, ids); if (r.corrections.length) { fs.writeFileSync(p, r.code); noter(p, r.corrections); } }
-  for (const p of css) { const r = reparerCSS(lire(p), regles); if (r.corrections.length) { fs.writeFileSync(p, r.code); noter(p, r.corrections); } }
+  for (const p of js) { const r = reparerJS(lire(p), declares, regles, ids); if (r.corrections.length) { ecrire(p, r.code); noter(p, r.corrections); } }
+  for (const p of css) { const r = reparerCSS(lire(p), regles); if (r.corrections.length) { ecrire(p, r.code); noter(p, r.corrections); } }
   const fonctions = fonctionsDeclarees(js.map(lire).concat(...html.map((p) => scriptsInline(lire(p)))));
   for (const p of html) {
     let h = lire(p); const c = [];
@@ -248,7 +258,7 @@ function reparerProjet(src, dest, regles) {
         return a + bon + b;
       });
     }
-    if (c.length) { fs.writeFileSync(p, h); noter(p, c); }
+    if (c.length) { ecrire(p, h); noter(p, c); }
   }
   return { parFichier };
 }

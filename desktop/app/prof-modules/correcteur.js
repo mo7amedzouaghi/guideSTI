@@ -24,7 +24,8 @@
   }
   function pts(e, c) { var r = (dev.resultats[e.id] || {})[c.id]; return r && r.points !== null && r.points !== undefined ? Number(r.points) : null; }
   function totalEleve(e) { return Math.round(dev.grille.reduce(function (a, c) { return a + (pts(e, c) || 0); }, 0) * 100) / 100; }
-  function sur20(t) { var m = maxTotal(); return m ? Math.round(t * 2000 / m) / 100 : 0; }
+  // note sur 20 arrondie au pas choisi (quart de point par défaut)
+  function sur20(t) { var m = maxTotal(), n = m ? t * 20 / m : 0, p = Number(reglages().noteFinale); return Math.round((p ? Math.round(n / p + 1e-9) * p : n) * 100) / 100; }
   function teinte(n) { return n >= 14 ? "ok" : n >= 10 ? "moyen" : "ko"; }
   function reference(e) { var v = (dev.resultats[e.id] || {})._reference; return v === undefined || v === null || v === "" ? null : Number(v); }
 
@@ -206,13 +207,16 @@
       dessiner();
       var t = $("g-corps").querySelectorAll('[data-k="critere"]'); t[t.length - 1].focus();
     });
-    $("g-sauver").addEventListener("click", async function () { await sauver({ grille: dev.grille }); S.toast("Grille enregistrée", "ok"); liste(); });
+    $("g-sauver").addEventListener("click", async function () {
+      if (dev.grilleSource === "proposée à partir de l'énoncé") dev.grilleSource = "proposée à partir de l'énoncé, modifiée";
+      await sauver({ grille: dev.grille, grilleSource: dev.grilleSource }); S.toast("Grille enregistrée", "ok"); liste();
+    });
     $("g-xlsx").addEventListener("click", async function () { await sauver({ grille: dev.grille }); var f = await C.modeleGrille(dev.id); if (f) { S.toast("Grille exportée", "ok"); C.ouvrirFichier(f); } });
     $("g-import").addEventListener("click", async function () { try { var g = await C.importerGrille(dev.id); if (g) { dev = g; dessiner(); S.toast(dev.grille.length + " critère(s) importé(s)", "ok"); } } catch (err) { S.toast(S.msg(err), "ko"); } });
   }
 
   /* ---------- réglages de notation (personnalisation du devoir) */
-  var REGL = { pas: 0.25, arrondi: "proche", parType: true, plafond: 0, ecartAnnexe: 0.25, erreurSql: 0.25 };
+  var REGL = { pas: 0.25, arrondi: "proche", parType: true, plafond: 0, ecartAnnexe: 0.25, erreurSql: 0.25, noteFinale: 0.25 };
   function reglages() { return Object.assign({}, REGL, dev.reglages || {}); }
   function carteReglages() {
     var r = reglages(), sel = function (id, val, opts) { return '<select id="' + id + '">' + opts.map(function (o) { return '<option value="' + o[0] + '"' + (String(o[0]) === String(val) ? " selected" : "") + ">" + o[1] + "</option>"; }).join("") + "</select>"; };
@@ -223,12 +227,13 @@
       "<label>Plafond des pénalités " + sel("r-plaf", r.plafond, [[0, "aucun"], [0.5, "0,5 pt"], [1, "1 pt"], [2, "2 pts"], [3, "3 pts"]]) + "</label>" +
       "<label>Écart à l'annexe (par type) " + sel("r-annexe", r.ecartAnnexe, [[0, "toléré"], [0.25, "−0,25"], [0.5, "−0,5"], [1, "−1"]]) + "</label>" +
       "<label>Erreur dans une requête SQL (par type) " + sel("r-sql", r.erreurSql, [[0.25, "−0,25"], [0.5, "−0,5"], [1, "−1"]]) + "</label>" +
+      "<label>Note finale sur 20 " + sel("r-note", r.noteFinale, [[0.25, "arrondie au quart (0,25)"], [0.5, "arrondie au demi (0,5)"], [0, "exacte (0,01)"]]) + "</label>" +
       "</div></div>";
   }
   function brancherReglages() {
-    ["r-pas", "r-arr", "r-type", "r-plaf", "r-annexe", "r-sql"].forEach(function (id) {
+    ["r-pas", "r-arr", "r-type", "r-plaf", "r-annexe", "r-sql", "r-note"].forEach(function (id) {
       $(id).addEventListener("change", async function () {
-        dev.reglages = { pas: Number($("r-pas").value), arrondi: $("r-arr").value, parType: $("r-type").value === "1", plafond: Number($("r-plaf").value), ecartAnnexe: Number($("r-annexe").value), erreurSql: Number($("r-sql").value) };
+        dev.reglages = { pas: Number($("r-pas").value), arrondi: $("r-arr").value, parType: $("r-type").value === "1", plafond: Number($("r-plaf").value), ecartAnnexe: Number($("r-annexe").value), erreurSql: Number($("r-sql").value), noteFinale: Number($("r-note").value) };
         await sauver({ reglages: dev.reglages });
         S.toast("Réglages enregistrés — relancez la correction pour les appliquer", "ok");
       });
