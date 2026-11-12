@@ -821,6 +821,8 @@ function actionPage(a) {
         // une alerte (au moins) affichée depuis la dernière action contient le texte
         var n = S.alertes.slice(S.marque || 0), cherche = rempl(a.v).toLowerCase();
         var ok = n.some(function (x) { return x.toLowerCase().indexOf(cherche) >= 0; });
+        // D4 : une alerte est bien affichée au bon moment, mais avec un message reformulé
+        if (!ok && n.length && a.reformule) { S.reform = S.reform || []; S.reform.push(n[n.length - 1].slice(0, 60)); return { ok: true, detail: "message reformulé" }; }
         return { ok: ok, detail: n.length ? "alerte(s) « " + n.join(" » « ").slice(0, 120) + " »" : "aucune alerte" };
       }
       case "sansalerte": { var n2 = S.alertes.slice(S.marque || 0); return { ok: !n2.length, detail: n2.length ? "alerte « " + n2[n2.length - 1] + " »" : "" }; }
@@ -856,6 +858,7 @@ async function testerPage(fichierHtml, scenario, opts) {
     for (const a of etapesScenario(scenario)) {
       if (a.t === "attendre") { await delai(a.ms); continue; }
       if (opts.idsTolerants) a.idsTol = true;
+      if (opts.reformule) a.reformule = true;
       const r = await Promise.race([w.webContents.executeJavaScript("(" + actionPage.toString() + ")(" + JSON.stringify(a) + ")", true), delai(4000).then(() => ({ ok: false, detail: "délai dépassé (boucle infinie ?)" }))]);
       if (a.c) { res.total++; if (r.ok) res.reussis++; else res.echecs.push(r.detail || a.t); }
       else if (!r.ok) res.echecs.push(r.detail);
@@ -863,6 +866,7 @@ async function testerPage(fichierHtml, scenario, opts) {
     }
     try { res.erreursJs = await w.webContents.executeJavaScript("(window.__sti && window.__sti.erreurs) || []", true); } catch (e) { /* ignoré */ }
     try { res.substitutions = await w.webContents.executeJavaScript("(window.__sti && window.__sti.subs) || []", true); } catch (e) { res.substitutions = []; }
+    try { res.reformules = await w.webContents.executeJavaScript("(window.__sti && window.__sti.reform) || []", true); } catch (e) { res.reformules = []; }
   } catch (e) { res.erreur = e.message; }
   finally { if (!w.isDestroyed()) w.destroy(); ressourcesCourantes = null; }
   return res;
@@ -930,6 +934,8 @@ ipcMain.handle("cor:importerGrille", async (e, id) => {
   devoir.grille = await COR.lireGrille(r.filePaths[0]);
   devoir.grilleSource = path.basename(r.filePaths[0]);
   fs.copyFileSync(r.filePaths[0], path.join(dossierDevoir(id), "grille" + path.extname(r.filePaths[0]).toLowerCase()));
+  // grille au barème seul (format officiel « Détail ») : vérifications automatiques reprises de l'énoncé
+  if (devoir.enonce && devoir.grille.every((c) => c.verif === "manuel")) await proposerGrille(devoir, "completer");
   ecrireDevoir(id, devoir);
   return lireDevoir(id);
 });
@@ -953,7 +959,44 @@ ipcMain.handle("cor:joindre", async (e, id, type) => {
   if (type === "base") {
     const SQL = await chargerSql(), b = STISQL_creer(SQL, fs.readFileSync(f, "utf8"));
     devoir.base.tables = b.tables; devoir.base.erreurs = b.erreurs.length;
+  } else await proposerGrille(devoir, "auto");
+  ecrireDevoir(id, devoir);
+  return lireDevoir(id);
+});
+/* Grille proposée à partir de l'énoncé (barème trouvé dans le sujet) :
+   auto      : grille vide → grille proposée ; grille officielle importée (critères manuels) → vérifications ajoutées ;
+   remplacer : la grille proposée remplace la grille actuelle ;
+   completer : les critères « manuel » reçoivent les vérifications trouvées pour la même question. */
+async function proposerGrille(devoir, mode) {
+  const ENO = require("./lib/enonce");
+  if (!devoir.enonce) throw new Error("Joignez d'abord l'énoncé du devoir.");
+  const dd = dossierDevoir(devoir.id), cache = path.join(dd, "enonce.txt");
+  let texte = "";
+  try {
+    texte = await ENO.texteEnonce(path.join(dd, devoir.enonce.fichier));
+    fs.writeFileSync(cache, texte);
+  } catch (e) {
+    devoir.proposition = { erreur: "Lecture de l'énoncé impossible : " + e.message, date: new Date().toISOString() };
+    return devoir;
   }
+  let p;
+  try { p = ENO.analyser(texte); } catch (e) { devoir.proposition = { erreur: e.message, date: new Date().toISOString() }; return devoir; }
+  const estVide = !devoir.grille || !devoir.grille.length;
+  const toutManuel = !estVide && devoir.grille.every((c) => c.verif === "manuel");
+  let applique = "";
+  if (mode === "remplacer" || (mode === "auto" && (estVide || devoir.grilleSource === "proposée à partir de l'énoncé"))) {
+    devoir.grille = p.criteres; devoir.grilleSource = "proposée à partir de l'énoncé"; devoir.resultats = {}; applique = "grille";
+  } else if (mode === "completer" || (mode === "auto" && toutManuel)) {
+    const n = ENO.fusionner(devoir.grille, p); applique = n + " critère(s) complété(s)";
+  }
+  devoir.proposition = { remarques: p.remarques, source: p.source, total: p.total, criteres: p.criteres.length, applique, date: new Date().toISOString() };
+  return devoir;
+}
+ipcMain.handle("cor:proposer", async (e, id, mode) => {
+  exigerProf();
+  const devoir = lireDevoir(id);
+  await proposerGrille(devoir, mode || "remplacer");
+  if (devoir.proposition && devoir.proposition.erreur) throw new Error(devoir.proposition.erreur);
   ecrireDevoir(id, devoir);
   return lireDevoir(id);
 });
@@ -992,8 +1035,13 @@ ipcMain.handle("cor:corriger", async (e, id, o) => {
   const SQL = devoir.grille.some((c) => c.verif === "sql") ? await chargerSql() : null;
   const liste = devoir.eleves.filter((x) => !o.eleves || o.eleves.includes(x.id));
   // ancien format (pénalité unique) ou réglages absents : règles validées par défaut
-  const tolerance = Object.assign({}, COR.TOLERANCE, devoir.tolerance && devoir.tolerance.regles ? devoir.tolerance : { active: devoir.tolerance ? devoir.tolerance.active !== false : true });
-  if (devoir.tolerance && devoir.tolerance.regles && true) for (const k of ["B1", "B2"]) if (!(devoir.tolerance.connues || []).includes(k) && !(k in tolerance.regles)) tolerance.regles = Object.assign({ [k]: COR.TOLERANCE.regles[k] }, tolerance.regles);
+  const tolerance = JSON.parse(JSON.stringify(Object.assign({}, COR.TOLERANCE, devoir.tolerance && devoir.tolerance.regles ? devoir.tolerance : { active: devoir.tolerance ? devoir.tolerance.active !== false : true })));
+  // règles apparues dans une version plus récente (inconnues lors du réglage du devoir) : valeur par défaut
+  if (devoir.tolerance && devoir.tolerance.regles) {
+    const connues = devoir.tolerance.connues || Object.keys(devoir.tolerance.regles);
+    for (const k of Object.keys(COR.TOLERANCE.regles)) if (!connues.includes(k) && !(k in tolerance.regles)) tolerance.regles[k] = COR.TOLERANCE.regles[k];
+  }
+  const reglages = Object.assign({}, COR.REGLAGES, devoir.reglages || {});
   const dossierRess = devoir.ressources ? path.join(dd, "ressources") : null;
   const ressources = dossierRess && fs.existsSync(dossierRess) ? { dossier: dossierRess, fichiers: COR.fichiersEleve(dossierRess) } : null;
   // test de page sur le projet de l'élève complété par les ressources fournies (le travail de l'élève est prioritaire)
@@ -1012,11 +1060,11 @@ ipcMain.handle("cor:corriger", async (e, id, o) => {
     const res = devoir.resultats[el.id] = devoir.resultats[el.id] || {};
     // copie réparée du travail (créée seulement si un test de page échoue)
     let repare = null;
-    const penalisees = new Set();   // une erreur de forme n'est pénalisée qu'une fois par élève
+    const penalisees = new Set(), cumul = { v: 0 };   // une erreur de forme n'est pénalisée qu'une fois par élève (par type), plafond sur la copie
     const reparer = () => repare || (repare = { dossier: path.join(os.tmpdir(), "sti-repare", propre(id), el.id), rep: null }, repare.rep = require("./lib/tolerance").reparerProjet(base, repare.dossier, tolerance.regles || {}), repare);
     for (const c of devoir.grille) {
       if (res[c.id] && res[c.id].modifie && !o.ecraser) continue;            // note saisie par l'enseignant conservée
-      try { res[c.id] = await COR.verifier(c, { base, fichiers, ressources, niveau: devoir.niveau, verificateur: verif, SQL, refSql, testerPage: testerAvecRessources, tolerance, reparer, penalisees }); }
+      try { res[c.id] = await COR.verifier(c, { base, fichiers, ressources, niveau: devoir.niveau, verificateur: verif, SQL, refSql, testerPage: testerAvecRessources, tolerance, reglages, difficulte: !!el.difficulte, reparer, penalisees, cumul }); }
       catch (err) { res[c.id] = { points: 0, justif: "Erreur de vérification : " + err.message, auto: true }; }
     }
     fait++;

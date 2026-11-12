@@ -14,23 +14,59 @@ const TOL = require("./tolerance.js");
 // réglages par défaut de la correction tolérante (modifiables pour chaque devoir)
 // règles validées par l'enseignant : code → points retirés (0 = toléré sans pénalité) ; une règle absente n'est pas appliquée.
 // Une erreur n'est pénalisée qu'une fois par élève, même si elle touche plusieurs critères.
-const TOLERANCE = { active: true, max: 3, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A7: 0.25, A9: 0, A10: 0.25, B1: 0, B2: 0, C1: 0.25, D3: 0.25 } };
+const SQLN = require("./sqlnote.js");
+const TOLERANCE = { active: true, max: 5, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A6: 0.25, A7: 0.25, A8: 0.25, A9: 0, A10: 0.25, B1: 0, B2: 0, C1: 0.25, C2: 0, C3: 0.25, D3: 0.25, D4: 0 } };
+/* Réglages de notation (personnalisables pour chaque devoir) :
+   pas : arrondi de chaque critère (0,25 comme l'enseignant ; 0 = sans arrondi) ; arrondi : proche | superieur | inferieur ;
+   parType : une erreur de forme est pénalisée une fois par TYPE sur toute la copie (sinon une fois par occurrence) ;
+   plafond : pénalités de forme au plus sur la copie (0 = sans plafond) ;
+   ecartAnnexe : points retirés par type d'écart à l'annexe (vérification « conforme ») ;
+   erreurSql : points retirés par type d'erreur dans une requête (commande principale fausse = 0). */
+const REGLAGES = { pas: 0.25, arrondi: "proche", parType: true, plafond: 0, ecartAnnexe: 0.25, erreurSql: 0.25 };
+// élève en difficulté : erreurs de forme ignorées, pénalités plafonnées à 1 point
+const DIFFICULTE = { plafond: 1 };
+function reglages(ctx) { return Object.assign({}, REGLAGES, ctx.reglages || {}); }
 const regleActive = (ctx, code) => { const t = ctx.tolerance || {}; return t.active && t.regles && Object.prototype.hasOwnProperty.call(t.regles, code) && t.regles[code] !== null && t.regles[code] !== false; };
+/* pénalités de forme : une fois par type d'erreur (ou par occurrence) et par élève, plafonnées sur la copie */
 function deduire(ctx, corrections, pts) {
-  const deja = ctx.penalisees || new Set(), ici = new Set(); let retrait = 0, nouvelles = 0, dejaComptees = 0;
+  const R = reglages(ctx), deja = ctx.penalisees || new Set(), ici = new Set();
+  const cumul = ctx.cumul || (ctx.cumul = { v: 0 });
+  const plafond = ctx.difficulte ? Math.min(Number(R.plafond) || DIFFICULTE.plafond, DIFFICULTE.plafond) : Number(R.plafond) || 0;
+  let retrait = 0, nouvelles = 0, dejaComptees = 0;
   for (const c of corrections) {
-    const k = c.cle || (c.code + "|" + c.texte);
+    const k = R.parType ? (c.type || c.code) : (c.cle || c.code + "|" + c.texte);
     if (ici.has(k)) continue;            // la même faute vue deux fois dans ce critère
     ici.add(k);
     if (deja.has(k)) { dejaComptees++; continue; }
     deja.add(k); nouvelles++;
-    retrait += Number((ctx.tolerance.regles || {})[c.code]) || 0;
+    let m = c.montant !== undefined ? Number(c.montant) : Number(((ctx.tolerance || {}).regles || {})[c.code]) || 0;
+    if (ctx.difficulte && c.code !== "E" && c.code !== "S") m = 0;   // erreurs de forme ignorées
+    if (plafond) m = Math.max(0, Math.min(m, plafond - cumul.v));
+    cumul.v += m; retrait += m;
   }
   return { retrait: Math.min(pts, retrait), nouvelles, dejaComptees };
 }
 function texteRetrait(d) {
   return d.retrait ? " (−" + String(Math.round(d.retrait * 100) / 100).replace(".", ",") + " pt" + (d.retrait > 1 ? "s" : "") + (d.dejaComptees ? ", " + d.dejaComptees + " erreur(s) déjà pénalisée(s) ailleurs" : "") + ")"
     : d.dejaComptees ? " (erreur déjà pénalisée dans un autre critère)" : "";
+}
+/* arrondi au pas choisi (0,25 par défaut), comme une correction à la main */
+function arrondiPas(x, R) {
+  const p = Number(R.pas) || 0;
+  if (!p) return Math.round(x * 100) / 100;
+  const k = x / p, f = R.arrondi === "superieur" ? Math.ceil(k - 1e-6) : R.arrondi === "inferieur" ? Math.floor(k + 1e-6) : Math.round(k + 1e-9);
+  return Math.round(f * p * 100) / 100;
+}
+/* code sans les commentaires (le code commenté n'est pas évalué) */
+function sansCommentaires(t, f) {
+  const e = ((/\.(\w+)$/.exec(f || "") || [])[1] || "").toLowerCase();
+  let s = String(t || "");
+  if (/^html?$/.test(e)) s = s.replace(/<!--[\s\S]*?-->/g, " ");
+  s = s.replace(/\/\*[\s\S]*?\*\//g, " ");
+  if (/^(js|php|html?)$/.test(e)) s = s.replace(/(^|[^:\\"'])\/\/[^\n]*/g, "$1");
+  if (e === "sql") s = s.replace(/(^|\s)(--|#)[^\n]*/g, "$1");
+  if (e === "php") s = s.replace(/^\s*#[^\n]*/gm, "");
+  return s;
 }
 
 const EXT_CODE = /\.(html?|css|js|php|sql|txt)$/i;
@@ -189,6 +225,8 @@ async function lireGrille(fichier) {
   } else {
     const wb = new ExcelJS.Workbook();
     await wb.xlsx.readFile(fichier);
+    // grille officielle STI (format correcteurAuto) : une colonne par critère, barème sur la ligne « Détail »
+    for (const w of wb.worksheets) { const o = lireGrilleOfficielle(w); if (o) return o; }
     const ws = wb.worksheets.find((w) => /grille|bar[eè]me/i.test(w.name)) || wb.worksheets[0];
     ws.eachRow({ includeEmpty: false }, (row) => { const v = []; for (let i = 1; i <= 8; i++) v.push(texteCellule(row.getCell(i).value)); lignes.push(v); });
   }
@@ -209,6 +247,34 @@ async function lireGrille(fichier) {
       verif: cV >= 0 ? normVerif(l[cV]) : "manuel", fichier: cF >= 0 ? String(l[cF] || "").trim() : "", param: cPa >= 0 ? String(l[cPa] || "").trim() : "" });
   });
   if (!criteres.length) throw new Error("Aucun critère trouvé : la grille doit contenir au moins les colonnes Question, Critère et Points.");
+  return criteres;
+}
+
+/* Grille officielle : lignes Partie / Question / sous-question au-dessus de la ligne « Détail » (points),
+   colonnes « Total /x » et « Note /20 » à droite. Renvoie null si la feuille n'a pas de ligne « Détail ». */
+function lireGrilleOfficielle(ws) {
+  let lD = 0, cL = 0;
+  ws.eachRow((row, r) => row.eachCell((c, col) => { if (!lD && /^\s*d[ée]tail/i.test(texteCellule(c.value))) { lD = r; cL = col; } }));
+  if (!lD) return null;
+  const val = (r, col) => { const c = ws.getCell(r, col); return texteCellule(c.isMerged && c.master ? c.master.value : c.value).replace(/\s+/g, " ").trim(); };
+  const adr = (r, col) => { const c = ws.getCell(r, col); return c.isMerged && c.master ? c.master.address : c.address; };
+  let fin = ws.columnCount;
+  for (let r = 1; r <= lD; r++) for (let col = cL + 1; col <= ws.columnCount; col++) if (/^(total|note)\b/i.test(val(r, col)) && col - 1 < fin) fin = col - 1;
+  const criteres = [], compte = {};
+  for (let col = cL + 1; col <= fin; col++) {
+    const pts = nombre(ws.getCell(lD, col).value);
+    if (!pts) continue;
+    const e = [3, 2, 1].map((k) => (lD - k > 0 ? val(lD - k, col) : ""));
+    const a = [3, 2, 1].map((k) => (lD - k > 0 ? adr(lD - k, col) : ""));
+    const etape = e[0].replace(/\s*\(.*\)\s*$/, ""), question = e[1], sous = a[2] === a[1] ? "" : e[2].replace(/\s*\(.*\)\s*$/, "");
+    const cle = [etape, question, sous].join("|"); compte[cle] = (compte[cle] || 0) + 1;
+    const lettreCol = ws.getColumn(col).letter;
+    criteres.push({ id: "c" + lettreCol, colonne: lettreCol, etape, q: String(question).replace(/^q(uestion)?\s*/i, ""), sous,
+      question: (etape ? etape + " – " : "") + (question ? "Q" + String(question).replace(/^q(uestion)?\s*/i, "") : "") + (sous ? " " + sous : ""),
+      critere: "critère " + compte[cle], points: pts, verif: "manuel", fichier: "", param: "" });
+  }
+  if (!criteres.length) return null;
+  criteres.officielle = true;
   return criteres;
 }
 
@@ -290,8 +356,27 @@ function chargerVerificateur(dossierContenu) {
 }
 function langueDe(f) { const e = (/\.(\w+)$/.exec(f) || [])[1] || ""; return e === "htm" ? "html" : e.toLowerCase(); }
 
+/* motifs séparés par « | » (avec ou sans espaces) ; /expression/ acceptée ; « || » reste un motif littéral */
+function decouperMotifs(param) {
+  const s = String(param || ""), out = [];
+  let i = 0;
+  while (i < s.length) {
+    while (i < s.length && /[\s|]/.test(s[i]) && !(s[i] === "|" && s[i + 1] === "|")) i++;
+    if (i >= s.length) break;
+    if (s[i] === "/") {
+      // expression régulière : jusqu'au « / » non échappé suivi des options puis d'un séparateur ou de la fin
+      let j = i + 1;
+      for (; j < s.length; j++) if (s[j] === "/" && s[j - 1] !== "\\" && /^[a-z]*\s*(\||\n|$)/.test(s.slice(j + 1)) && s.slice(j + 1, j + 3) !== "||") break;
+      if (j < s.length) { const fl = /^[a-z]*/.exec(s.slice(j + 1))[0]; out.push(s.slice(i, j + 1 + fl.length)); i = j + 1 + fl.length; continue; }
+    }
+    let j = i;
+    while (j < s.length && s[j] !== "\n" && !(s[j] === "|" && s[j + 1] !== "|" && s[j - 1] !== "|")) j++;
+    out.push(s.slice(i, j).trim()); i = j;
+  }
+  return out.filter(Boolean);
+}
 function motifs(param) {
-  return String(param || "").split(/\s\|\s|\n/).map((s) => s.trim()).filter(Boolean).map((m) => {
+  return decouperMotifs(param).map((m) => {
     const r = /^\/(.+)\/([a-z]*)$/.exec(m);
     if (r) { try { const re = new RegExp(r[1], r[2].includes("i") ? r[2] : r[2] + "i"); return { m, test: (t) => re.test(t) }; } catch (e) { /* motif littéral */ } }
     const bas = m.toLowerCase();
@@ -308,7 +393,7 @@ function identiqueRessource(ctx, f) {
   const cand = R.fichiers.filter((x) => x.toLowerCase() === f.toLowerCase() || x.split("/").pop().toLowerCase() === nom);
   if (!cand.length) return false;
   let a; try { a = fs.readFileSync(path.join(ctx.base, f)); } catch (e) { return false; }
-  const norm = (b) => b.toString("utf8").replace(/^\uFEFF/, "").replace(/\r\n/g, "\n").trim();
+  const norm = (b) => b.toString("utf8").replace(/^﻿/, "").replace(/\r\n/g, "\n").trim();
   return cand.some((x) => { try { const b = fs.readFileSync(path.join(R.dossier, x)); return a.equals(b) || (/\.(html?|css|js|sql|php|txt)$/i.test(f) && norm(a) === norm(b)); } catch (e) { return false; } });
 }
 // dossier du projet de l'élève (préfixe de chemin) sur lequel on superpose les ressources
@@ -331,12 +416,14 @@ function racineProjet(ctx, p, fournie) {
   }
   return meilleur;
 }
-function lireTextes(base, l) { return l.map((f) => { try { return { f, t: fs.readFileSync(path.join(base, f), "utf8") }; } catch (e) { return { f, t: "" }; } }); }
+function lireTextes(base, l) { return l.map((f) => { try { return { f, t: fs.readFileSync(path.join(base, f), "utf8").replace(/^﻿/, "") }; } catch (e) { return { f, t: "" }; } }); }
+// type d'un écart à l'annexe (sans numéro de ligne) : « la propriété margin-top… », « la balise <b>… »
+function typeEcart(message) { return String(message || "").split(/\.\s/)[0].replace(/\s+/g, " ").trim().toLowerCase(); }
 
-/* contexte : { base (dossier de l'élève), fichiers, niveau, SQL, refSql (base de référence), testerPage } */
+/* contexte : { base (dossier de l'élève), fichiers, niveau, SQL, refSql (base de référence), testerPage, tolerance, reglages, difficulte } */
 async function verifier(c, ctx) {
-  const pts = Number(c.points) || 0;
-  const res = (obtenu, justif) => ({ points: arrondi(Math.max(0, Math.min(pts, obtenu))), justif, auto: true });
+  const pts = Number(c.points) || 0, R = reglages(ctx);
+  const res = (obtenu, justif) => ({ points: arrondi(Math.max(0, Math.min(pts, arrondiPas(obtenu, R)))), justif, auto: true });
   const code = (f) => EXT_CODE.test(f);
   switch (c.verif) {
     case "fichier": {
@@ -347,18 +434,18 @@ async function verifier(c, ctx) {
     case "contient": case "absent": {
       const l = trouver(ctx.fichiers, c.fichier, code), mo = motifs(c.param);
       if (!l.length) return res(0, "Aucun fichier « " + (c.fichier || "de code") + " »");
-      if (!mo.length) return res(0, "Paramètre vide dans la grille");
-      const tout = lireTextes(ctx.base, l).map((x) => x.t).join("\n");
+      if (!mo.length) return { points: null, justif: "Paramètre vide dans la grille : à compléter (ou noter à la main)", auto: false };
+      // le code commenté n'est pas évalué
+      const tout = lireTextes(ctx.base, l).map((x) => sansCommentaires(x.t, x.f)).join("\n");
       const tol = ctx.tolerance || {};
       if (!tol.active) {
         const trouves = mo.filter((m) => m.test(tout)), manquants = mo.filter((m) => !m.test(tout));
         if (c.verif === "contient") return res(pts * trouves.length / mo.length, trouves.length === mo.length ? "Tout est présent" : "Manque : " + manquants.map((m) => m.m).join(", "));
         return trouves.length ? res(0, "Interdit trouvé : " + trouves.map((m) => m.m).join(", ")) : res(pts, "Aucun élément interdit");
       }
-      // tolérant : espaces, guillemets et casse ignorés ; nom mal orthographié = crédit partiel
+      // tolérant : espaces, guillemets et casse ignorés ; nom mal orthographié = crédit avec pénalité
       const r = mo.map((m) => Object.assign({ m: m.m }, TOL.chercherMotif(m.m, tout, c.verif === "contient" && regleActive(ctx, "C1") ? 0.5 : 0)));
       if (c.verif === "contient") {
-        // motif écrit avec une faute (C1) : points du motif moins la pénalité, une fois par élève
         const part = pts / r.length, exacts = r.filter((x) => x.score === 1).length, approx = r.filter((x) => x.score > 0 && x.score < 1), manque = r.filter((x) => !x.score).map((x) => x.m);
         const d = approx.length ? deduire(ctx, approx.map((x) => ({ code: "C1", texte: x.detail })), part * approx.length) : { retrait: 0 };
         const o = res(part * (exacts + approx.length) - d.retrait, (manque.length ? "Manque : " + manque.join(", ") : "Tout est présent") + (approx.length ? " — orthographe approchée : " + approx.map((x) => x.detail).join(" ; ") + texteRetrait(d) : ""));
@@ -369,10 +456,10 @@ async function verifier(c, ctx) {
       return interdits.length ? res(0, "Interdit trouvé : " + interdits.join(", ")) : res(pts, "Aucun élément interdit");
     }
     case "conforme": {
-      if (!ctx.verificateur) return res(0, "Vérificateur indisponible");
+      if (!ctx.verificateur) return { points: null, justif: "Vérificateur de l'annexe indisponible : à noter à la main", auto: false };
       const l = trouver(ctx.fichiers, c.fichier, (f) => /\.(html?|css|js|php|sql)$/i.test(f)).filter((f) => !identiqueRessource(ctx, f));
       if (!l.length) return res(0, "Aucun fichier à vérifier (fichiers fournis non modifiés exclus)");
-      const probs = [], toleres = [];
+      const ecarts = new Map(), toleres = [];
       for (const x of lireTextes(ctx.base, l)) {
         for (const p of ctx.verificateur.analyser(x.t, ctx.niveau, langueDe(x.f)).problemes) {
           if (p.type === "convention") continue;
@@ -381,22 +468,23 @@ async function verifier(c, ctx) {
           if ((regleActive(ctx, "A4") || regleActive(ctx, "A5")) && nom && TOL.estFauteDeFrappe(nom.split(".").pop())) continue;
           // B1 : margin-top, padding-left, border-top… (forme détaillée de margin / padding / border) tolérées
           const det = /propriété\s+((?:margin|padding|border)-(?:top|right|bottom|left)(?:-(?:width|style|color))?)(?![\w-])/i.exec(p.message);
-          if (det && regleActive(ctx, "B1")) { toleres.push({ code: "B1", cle: "B1|" + det[1].toLowerCase(), texte: det[1].toLowerCase() }); continue; }
+          if (det && regleActive(ctx, "B1")) { toleres.push({ code: "B1", type: "B1|" + det[1].toLowerCase(), cle: "B1|" + det[1].toLowerCase(), texte: det[1].toLowerCase() }); continue; }
           // B2 : sélecteur descendant (div a, #menu li) — les combinateurs > + ~ restent hors annexe
           const comb = /sélecteur combiné « ([^»]+) »/.exec(p.message);
-          if (comb && !/[>+~]/.test(comb[1]) && regleActive(ctx, "B2")) { const sel = comb[1].trim().replace(/\s+/g, " "); toleres.push({ code: "B2", cle: "B2|" + sel, texte: "« " + sel + " »" }); continue; }
-          probs.push(x.f + " L" + p.ligne + " : " + p.message.split(".")[0]);
+          if (comb && !/[>+~]/.test(comb[1]) && regleActive(ctx, "B2")) { const sel = comb[1].trim().replace(/\s+/g, " "); toleres.push({ code: "B2", type: "B2|" + sel, cle: "B2|" + sel, texte: "« " + sel + " »" }); continue; }
+          const t = typeEcart(p.message);
+          if (!ecarts.has(t)) ecarts.set(t, { f: x.f, ligne: p.ligne, texte: p.message.split(/\.\s/)[0] });
         }
       }
-      let note = "";
-      if (toleres.length) {
-        const d = deduire(ctx, toleres, pts);
-        const noms = Array.from(new Set(toleres.map((t) => t.texte)));
-        note = " — toléré : " + noms.join(", ") + texteRetrait(d);
-        if (!probs.length) { const o = res(pts - d.retrait, "Conforme à l'annexe (" + ctx.niveau + "ème)" + note); if (d.retrait) o.revoir = true; return o; }
-      }
-      if (!probs.length) return res(pts, "Conforme à l'annexe (" + ctx.niveau + "ème)");
-      return res(probs.length <= 2 ? pts / 2 : 0, probs.length + " écart(s) : " + probs.slice(0, 3).join(" ; ") + (probs.length > 3 ? " ; …" : "") + note);
+      // −ecartAnnexe par TYPE d'écart (une balise interdite répétée 10 fois = une seule erreur), au lieu de « moitié ou 0 »
+      const liste = Array.from(ecarts.entries()).map(([t, e]) => ({ code: "E", type: "E|" + t, cle: "E|" + t, montant: Number(R.ecartAnnexe) || 0, texte: e.f + " L" + e.ligne + " : " + e.texte }));
+      const d = deduire(ctx, toleres.concat(liste), pts);
+      const noms = Array.from(new Set(toleres.map((t) => t.texte)));
+      const note = (noms.length ? " — toléré : " + noms.join(", ") : "") + texteRetrait(d);
+      if (!liste.length) { const o = res(pts - d.retrait, "Conforme à l'annexe (" + ctx.niveau + "ème)" + note); if (d.retrait) o.revoir = true; return o; }
+      const o = res(pts - d.retrait, liste.length + " type(s) d'écart : " + liste.slice(0, 3).map((x) => x.texte).join(" ; ") + (liste.length > 3 ? " ; …" : "") + note);
+      o.revoir = true;
+      return o;
     }
     case "page": {
       const estHtml = (f) => /\.html?$/i.test(f), choisir = (l) => l.find((f) => /(^|\/)index\.html?$/i.test(f)) || l[0];
@@ -404,80 +492,82 @@ async function verifier(c, ctx) {
       // page HTML fournie (prête à l'emploi) et non rendue par l'élève : prise dans les ressources
       if (!p && ctx.ressources) { p = choisir(trouver(ctx.ressources.fichiers, c.fichier, estHtml)); fournie = !!p; }
       if (!p) return res(0, "Page HTML introuvable");
-      if (!ctx.testerPage) return res(0, "Test de page indisponible");
-      const idsTol = regleActive(ctx, "D3");
+      if (!ctx.testerPage) return { points: null, justif: "Test de page indisponible : à noter à la main", auto: false };
+      if (!String(c.param || "").trim()) return { points: null, justif: "Scénario vide dans la grille : à compléter (ou noter à la main)", auto: false };
+      const idsTol = regleActive(ctx, "D3"), reformule = regleActive(ctx, "D4");
       const projet = racineProjet(ctx, p, fournie), rel = fournie ? p : p.slice(projet.length);
-      const tester = (dossier) => ctx.testerPage(path.join(dossier, projet, rel), c.param || "", { idsTolerants: idsTol, racine: path.join(dossier, projet), page: rel });
+      const tester = (dossier) => ctx.testerPage(path.join(dossier, projet, rel), c.param || "", { idsTolerants: idsTol, reformule, racine: path.join(dossier, projet), page: rel });
       const r = await tester(ctx.base);
       if (fournie) r.fournie = p;
-      const brut = r.erreur ? res(0, r.erreur)
-        : !r.total ? res(r.chargee ? pts : 0, r.chargee ? "Page chargée (aucun contrôle dans le scénario)" : "Page non chargée")
-        : res(pts * r.reussis / r.total, r.reussis + "/" + r.total + " contrôle(s) réussi(s)" + (r.echecs.length ? " — " + r.echecs.slice(0, 2).join(" ; ") : "") + (r.erreursJs.length ? " — erreur JS : " + r.erreursJs[0] : ""));
+      const resultat = (rr, apres) => rr.erreur ? res(0, rr.erreur)
+        : !rr.total ? res(rr.chargee ? pts : 0, rr.chargee ? "Page chargée (aucun contrôle dans le scénario)" : "Page non chargée")
+        : res(pts * rr.reussis / rr.total, rr.reussis + "/" + rr.total + " contrôle(s) réussi(s)" + (apres || "") + (rr.echecs.length ? " — " + rr.echecs.slice(0, 2).join(" ; ") : "") + (rr.erreursJs.length ? " — erreur JS : " + rr.erreursJs[0] : ""));
+      const brut = resultat(r);
       if (fournie) brut.justif += " (page « " + p + " » fournie, non rendue)";
       if (r.complets && r.complets.length) brut.justif += " — fichier(s) fourni(s) utilisé(s) : " + r.complets.slice(0, 4).join(", ");
-      const tol = ctx.tolerance || {};
-      // D3 : sélecteur #id du scénario trouvé sous un id très proche ; la pénalité n'est comptée que sur la note retenue
-      const finir = () => {
-        if (r.substitutions && r.substitutions.length && !r.erreur && r.total && brut.points > 0) {
-          const sc = r.substitutions.map((x) => ({ code: "D3", cle: "D3|" + [x.de, x.vers].sort().join("|"), texte: p + " : id « " + x.de + " » trouvé sous « " + x.vers + " »" }));
-          const d = deduire(ctx, sc, brut.points);
-          brut.points = arrondi(Math.max(0, brut.points - d.retrait)); brut.justif += " — " + sc.map((x) => x.texte).join(" ; ") + texteRetrait(d); brut.revoir = true;
+      // D3 (id approché) et D4 (message reformulé) : pénalités comptées une fois par type
+      const formes = (rr) => (rr.substitutions || []).map((x) => ({ code: "D3", cle: "D3|" + [x.de, x.vers].sort().join("|"), texte: p + " : id « " + x.de + " » trouvé sous « " + x.vers + " »" }))
+        .concat((rr.reformules || []).map((x) => ({ code: "D4", cle: "D4|" + x, texte: "message reformulé accepté : « " + x + " »" })));
+      const finir = (o, rr) => {
+        const sc = formes(rr);
+        if (sc.length && !rr.erreur && rr.total && o.points > 0) {
+          const d = deduire(ctx, sc, o.points);
+          o.points = arrondi(Math.max(0, arrondiPas(o.points - d.retrait, R))); o.justif += " — " + sc.map((x) => x.texte).join(" ; ") + texteRetrait(d); o.revoir = true;
         }
-        return brut;
+        return o;
       };
-      if (!tol.active || !ctx.reparer || brut.points >= pts) return finir();
-      // le code ne fonctionne pas : on rejoue le test sur une copie réparée, avec une pénalité par réparation
+      const tol = ctx.tolerance || {};
+      if (!tol.active || !ctx.reparer || brut.points >= pts) return finir(brut, r);
+      // le code ne fonctionne pas : on rejoue le test sur une copie réparée, avec une pénalité par type d'erreur réparée
       const rp = ctx.reparer();
       const corr = TOL.correctionsDePage(rp.rep, rp.dossier, p);
-      if (!corr.length) return finir();
-      if (corr.length > (tol.max || 3)) { brut.justif += " — " + corr.length + " erreurs de forme (au-delà de la tolérance : " + (tol.max || 3) + ")"; brut.revoir = true; return finir(); }
+      if (!corr.length) return finir(brut, r);
+      if (corr.length > (tol.max || 5)) { brut.justif += " — " + corr.length + " erreurs de forme (au-delà de la tolérance : " + (tol.max || 5) + ") : à revoir"; brut.revoir = true; return finir(brut, r); }
       const r2 = await tester(rp.dossier);
-      if (r2.erreur || !r2.total) return finir();
+      if (r2.erreur || !r2.total) return finir(brut, r);
       const avant = pts * r2.reussis / r2.total;
-      if (avant <= brut.points) return finir();
-      const toutes = corr.concat((r2.substitutions || []).map((x) => ({ code: "D3", cle: "D3|" + [x.de, x.vers].sort().join("|"), texte: p + " : id « " + x.de + " » trouvé sous « " + x.vers + " »" })));
+      if (avant <= brut.points) return finir(brut, r);
+      const toutes = corr.concat(formes(r2));
       const d = deduire(ctx, toutes, avant);
       const o = res(avant - d.retrait, r2.reussis + "/" + r2.total + " contrôle(s) réussi(s) après correction de " + toutes.length + " erreur(s) de forme" + texteRetrait(d) + " : " + toutes.map((x) => x.texte + " [" + x.code + "]").join(" ; "));
       o.revoir = true; o.corrections = corr;
       return o;
     }
     case "sql": {
-      if (!ctx.SQL || !ctx.refSql) return res(0, "Aucune base de référence (.sql) pour ce devoir");
       let param = String(c.param || ""), etiq = "";
       const m = /^\s*(Q?\s*\d+\s*[a-z]?)\s*::\s*/i.exec(param);
       if (m) { etiq = "Q" + m[1].replace(/[^0-9a-z]/gi, "").replace(/^q/i, "").toUpperCase(); param = param.slice(m[0].length); }
-      else { const q = /(\d+)\s*[.\-]?\s*([a-z])?\b/i.exec(c.question || ""); if (q) etiq = "Q" + q[1] + (q[2] && /^[a-z]$/i.test(q[2]) && !/^\d+$/.test(c.question.trim()) ? q[2].toUpperCase() : ""); }
+      else { const q = /(\d+)\s*[.\-)]?\s*([a-z])?\b/i.exec(String(c.question || "").replace(/^.*?(?:Q|question)\s*(?=\d)/i, "")); if (q) etiq = "Q" + q[1] + (q[2] && /^[a-z]$/i.test(q[2]) ? q[2].toUpperCase() : ""); }
+      if (!param.trim()) return { points: null, justif: "Requête attendue à renseigner dans la grille (colonne Paramètre) : à noter à la main en attendant", auto: false };
+      if (!ctx.SQL || !ctx.refSql) return { points: null, justif: "Aucune base de référence (.sql) jointe : à noter à la main", auto: false };
       const l = trouver(ctx.fichiers, c.fichier, (f) => /\.sql$/i.test(f));
-      if (!l.length) return res(0, "Aucun fichier .sql");
+      const lt = l.length ? l : trouver(ctx.fichiers, "", (f) => /\.(sql|txt)$/i.test(f));
+      if (!lt.length) return res(0, "Aucun fichier .sql");
       const toutes = [];
-      for (const x of lireTextes(ctx.base, l)) STISQL.decouper(x.t).forEach((r) => toutes.push(r));
-      let cible = toutes.find((r) => r.etiquette === etiq) || (etiq && toutes.find((r) => r.etiquette.replace(/[A-Z]$/, "") === etiq.replace(/[A-Z]$/, "")));
-      const tol = ctx.tolerance || {};
-      let penalites = [];
-      // étiquettes « -- Q3 » oubliées dans tout le fichier : la requête est prise à sa position (3e requête)
-      if (!cible && regleActive(ctx, "C2") && toutes.length && !toutes.some((r) => r.etiquette)) {
-        const n = parseInt(etiq.replace(/\D/g, ""), 10);
-        if (n >= 1 && n <= toutes.length) { cible = toutes[n - 1]; penalites.push({ code: "C2", texte: "étiquettes -- Qn absentes", dit: "étiquettes -- Qn absentes : requête n° " + n + " du fichier" }); }
+      for (const x of lireTextes(ctx.base, lt)) STISQL.decouper(x.t).forEach((r) => toutes.push(r));
+      if (!toutes.length) return res(0, "Fichier SQL vide");
+      // requête étiquetée « -- Q3 » ; sans étiquette, toutes les requêtes du fichier sont essayées (C2)
+      let cible = toutes.find((r) => r.etiquette === etiq) || (etiq && toutes.find((r) => r.etiquette.replace(/[A-Z]$/, "") === etiq.replace(/[A-Z]$/, "") && /\d$/.test(r.etiquette)));
+      const penalites = [];
+      if (!cible && !regleActive(ctx, "C2")) return res(0, "Requête « " + etiq + " » introuvable (commentaire -- " + etiq + " attendu)");
+      // fichier étiqueté mais sans « -- Q3 » : la question n'est pas traitée (on n'emprunte pas la requête d'une autre question)
+      const candidats = cible ? [cible] : toutes.some((r) => r.etiquette) ? toutes.filter((r) => !r.etiquette) : toutes;
+      if (!candidats.length) return res(0, "Requête « " + etiq + " » introuvable : question non traitée");
+      if (!cible) penalites.push({ code: "C2", texte: "requête « " + etiq + " » non étiquetée", dit: "étiquette -- " + etiq + " absente : requête retrouvée dans le fichier" });
+      const n = SQLN.noter({ M: STISQL, SQL: ctx.SQL, refSql: ctx.refSql, attendu: param, candidats, pts, penalite: Number(R.erreurSql) || 0, rang: cible ? 0 : parseInt(etiq.replace(/\D/g, ""), 10) || 0 });
+      if (n.points === null) return { points: null, justif: etiq + " : " + n.raison, auto: false };
+      // C3 : seules les colonnes sont dans un autre ordre (même résultat) → règle de tolérance C3
+      if (!n.egal && n.erreurs.length === 1 && n.erreurs[0] === "ordre des colonnes" && regleActive(ctx, "C3")) {
+        n.egal = true; n.raison = "Résultat identique, colonnes dans un autre ordre";
+        penalites.push({ code: "C3", texte: "colonnes " + etiq, dit: "colonnes dans un autre ordre" });
       }
-      if (!cible) return res(0, "Requête « " + etiq + " » introuvable (commentaire -- " + etiq + " attendu)");
-      const b1 = STISQL.creerBase(ctx.SQL, ctx.refSql), b2 = STISQL.creerBase(ctx.SQL, ctx.refSql);
-      try {
-        const att = STISQL.executer(b1.db, param)[0], obt = STISQL.executer(b2.db, cible.sql)[0];
-        if (!att || att.erreur) return res(0, "Requête de référence invalide : " + (att ? att.erreur : "vide"));
-        const ordonne = /\border\s+by\b/i.test(param);
-        let cmp = STISQL.comparer(att, obt, ordonne);
-        if (!cmp.egal && regleActive(ctx, "C3") && !obt.erreur && att.colonnes.length === obt.colonnes.length && att.colonnes.length > 1) {
-          // mêmes colonnes dans un autre ordre : même résultat, une erreur de forme
-          const trier = (x) => ({ colonnes: x.colonnes.slice().sort(), lignes: x.lignes.map((l) => l.map(String).sort()) });
-          if (STISQL.comparer(trier(att), trier(obt), false).egal) { cmp = { egal: true, raison: "Résultat identique, colonnes dans un autre ordre" }; penalites.push({ code: "C3", texte: "colonnes " + etiq, dit: "colonnes dans un autre ordre" }); }
-        }
-        if (!cmp.egal) return res(0, etiq + " : " + cmp.raison);
-        if (!penalites.length) return res(pts, etiq + " : " + cmp.raison);
-        const d = deduire(ctx, penalites, pts);
-        const o = res(pts - d.retrait, etiq + " : " + cmp.raison + " — " + penalites.map((x) => x.dit).join(" ; ") + texteRetrait(d));
-        o.revoir = true;
-        return o;
-      } finally { b1.db.close(); b2.db.close(); }
+      const ou = !cible && n.choisie ? " [requête l." + n.choisie.ligne + "]" : "";
+      if (!n.egal) { const o = res(n.points, etiq + ou + " : " + n.raison + (penalites.length ? " — " + penalites[0].dit : "")); o.revoir = n.points > 0; return o; }
+      if (!penalites.length) return res(pts, etiq + ou + " : " + n.raison);
+      const d = deduire(ctx, penalites, pts);
+      const o = res(pts - d.retrait, etiq + ou + " : " + n.raison + " — " + penalites.map((x) => x.dit).join(" ; ") + texteRetrait(d));
+      if (d.retrait) o.revoir = true;
+      return o;
     }
     default:
       return { points: null, justif: "À noter par l'enseignant", auto: false };
@@ -506,9 +596,11 @@ async function exporterExcel(fichier, devoir, criteres, eleves, resultats) {
   ws.mergeCells(2, 1, 2, nbCol);
   ws.getCell(2, 1).value = "Niveau : " + (devoir.niveau || "") + "ème · Barème sur " + maxTotal + " · Corrigé le " + new Date().toLocaleDateString("fr-FR") + (devoir.auteur ? " · " + devoir.auteur : "");
   ws.getCell(2, 1).font = { italic: true, color: { argb: "FF4A5568" } };
-  const ent = ["N°", "Élève"].concat(questions.map((q) => q.nom + "\n(/" + arrondi(q.max) + ")"), ["Total\n(/" + maxTotal + ")", "Note\n/20", "Observation"]);
+  const avecRef = eleves.some((e) => { const v = (resultats[e.id] || {})._reference; return v !== undefined && v !== null && v !== ""; });
+  const q0 = (e) => criteres.filter((c) => pt(e, c) === null).length;
+  const ent = ["N°", "Élève"].concat(questions.map((q) => q.nom + "\n(/" + arrondi(q.max) + ")"), ["Total\n(/" + maxTotal + ")", "Note\n/20", "Observation"], avecRef ? ["Note de\nréférence", "Écart"] : []);
   ws.getRow(4).values = ent; stylerEntete(ws.getRow(4)); ws.getRow(4).height = 36;
-  ws.columns = [{ width: 5 }, { width: 30 }].concat(questions.map(() => ({ width: 10 })), [{ width: 10 }, { width: 9 }, { width: 40 }]);
+  ws.columns = [{ width: 5 }, { width: 30 }].concat(questions.map(() => ({ width: 10 })), [{ width: 10 }, { width: 9 }, { width: 40 }], avecRef ? [{ width: 11 }, { width: 9 }] : []);
   const colTot = 3 + questions.length, colNote = colTot + 1;
   eleves.forEach((e, i) => {
     const r = 5 + i, row = ws.getRow(r);
@@ -524,7 +616,12 @@ async function exporterExcel(fichier, devoir, criteres, eleves, resultats) {
     row.getCell(colNote).value = { formula: "ROUND(" + lettre(colTot - 1) + r + "*20/" + (maxTotal || 1) + ",2)", result: note };
     row.getCell(colNote).font = { bold: true };
     row.getCell(colNote).fill = { type: "pattern", pattern: "solid", fgColor: { argb: couleurNote(note) } };
-    row.getCell(colNote + 1).value = ((resultats[e.id] || {})._observation) || "";
+    const manquants = q0(e);
+    row.getCell(colNote + 1).value = [((resultats[e.id] || {})._observation) || "", manquants ? "Note provisoire : " + manquants + " critère(s) à noter à la main" : "", e.difficulte ? "Correction adaptée (élève en difficulté)" : ""].filter(Boolean).join(" — ");
+    if (avecRef) {
+      const ref = (resultats[e.id] || {})._reference;
+      if (ref !== undefined && ref !== null && ref !== "") { row.getCell(colNote + 2).value = Number(ref); row.getCell(colNote + 3).value = { formula: lettre(colNote - 1) + r + "-" + lettre(colNote + 1) + r, result: arrondi(note - Number(ref)) }; }
+    }
     row.eachCell({ includeEmpty: true }, (c, k) => { c.border = bordure; if (k > 2 && k <= colNote) { c.alignment = { horizontal: "center" }; c.numFmt = "0.##"; } });
   });
   const rMoy = 5 + eleves.length;
@@ -603,6 +700,37 @@ async function exporterExcel(fichier, devoir, criteres, eleves, resultats) {
       n.length ? Math.round(100 * n.filter((x) => x >= c.points).length / n.length) + " %" : "", n.filter((x) => x === 0).length, v.length - n.length]).alignment = { vertical: "top", wrapText: true };
   });
 
+  /* --- Grille officielle (format correcteurAuto) : une colonne par critère, ligne « Détail » = barème */
+  const wo = wb.addWorksheet("Grille officielle", { views: [{ state: "frozen", xSplit: 2, ySplit: 5 }], pageSetup: { orientation: "landscape", fitToPage: true, fitToWidth: 1 } });
+  wo.getCell(1, 1).value = titre; wo.getCell(1, 1).font = { bold: true, size: 14, color: { argb: "FF0D2B6B" } };
+  wo.getCell(5, 1).value = "N° candidat"; wo.getCell(5, 2).value = "Détail";
+  wo.getCell(2, 2).value = "Partie"; wo.getCell(3, 2).value = "Question"; wo.getCell(4, 2).value = "Critère";
+  const decoupe = (c) => {
+    const m = /^(.*?)\s*[–-]\s*Q\s*(\d+)\s*([a-h])?\s*$/i.exec(c.question || "") || /^()Q?\s*(\d+)\s*([a-h])?$/i.exec(c.question || "");
+    if (m) return [m[1], "Q" + m[2], m[3] || c.sous || ""];
+    if (c.etape !== undefined || c.q !== undefined) return [c.etape || "", c.q ? "Q" + String(c.q).replace(/^q/i, "") : "", c.sous || ""];
+    return ["", c.question || "", ""];
+  };
+  criteres.forEach((c, j) => {
+    const col = 3 + j, d = decoupe(c);
+    wo.getCell(2, col).value = d[0]; wo.getCell(3, col).value = d[1]; wo.getCell(4, col).value = d[2]; wo.getCell(5, col).value = Number(c.points) || 0;
+  });
+  const cT = 3 + criteres.length;
+  wo.getCell(4, cT).value = "Total /" + maxTotal; wo.getCell(4, cT + 1).value = "Note /20";
+  // fusion des parties et questions identiques et voisines
+  [2, 3].forEach((r) => { let deb = 3; for (let col = 4; col <= cT; col++) { const prec = String(wo.getCell(r, col - 1).value || ""), cur = col < cT ? String(wo.getCell(r, col).value || "") : "\u0000"; if (cur !== prec || (r === 3 && String(wo.getCell(2, col).value || "") !== String(wo.getCell(2, col - 1).value || ""))) { if (col - 1 > deb && prec) wo.mergeCells(r, deb, r, col - 1); deb = col; } } });
+  for (let r = 2; r <= 5; r++) for (let col = 1; col <= cT + 1; col++) { const cell = wo.getCell(r, col); cell.font = { bold: true, color: { argb: r === 5 ? "FF0D2B6B" : "FFFFFFFF" } }; cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: r === 5 ? "FFE9EEF8" : "FF0D2B6B" } }; cell.alignment = { horizontal: "center", vertical: "middle", wrapText: true }; cell.border = bordure; }
+  wo.getColumn(1).width = 12; wo.getColumn(2).width = 28; for (let col = 3; col <= cT + 1; col++) wo.getColumn(col).width = 11;
+  eleves.forEach((e, i) => {
+    const r = 6 + i;
+    wo.getCell(r, 1).value = i + 1; wo.getCell(r, 2).value = e.nom;
+    criteres.forEach((c, j) => { const v = pt(e, c); wo.getCell(r, 3 + j).value = v === null ? null : v; });
+    const tot = arrondi(criteres.reduce((a, c) => a + (pt(e, c) || 0), 0));
+    wo.getCell(r, cT).value = { formula: "SUM(C" + r + ":" + lettre(cT - 2) + r + ")", result: tot };
+    wo.getCell(r, cT + 1).value = { formula: "ROUND(" + lettre(cT - 1) + r + "*20/" + (maxTotal || 1) + ",2)", result: maxTotal ? arrondi(tot * 20 / maxTotal) : 0 };
+    wo.getRow(r).eachCell({ includeEmpty: true }, (cell, k) => { cell.border = bordure; if (k > 2) { cell.alignment = { horizontal: "center" }; cell.numFmt = "0.##"; } });
+  });
+
   /* --- Barème */
   const wg = wb.addWorksheet("Barème");
   wg.columns = [{ header: "Question", width: 10 }, { header: "Critère", width: 46 }, { header: "Points", width: 8 }, { header: "Vérification", width: 13 }, { header: "Fichier", width: 16 }, { header: "Paramètre", width: 70 }];
@@ -614,4 +742,4 @@ async function exporterExcel(fichier, devoir, criteres, eleves, resultats) {
   return fichier;
 }
 
-module.exports = { TOLERANCE, VERIFS, importerTravaux, fichiersEleve, lireGrille, modeleGrille, chargerVerificateur, verifier, exporterExcel, extraireArchive };
+module.exports = { TOLERANCE, REGLAGES, VERIFS, importerTravaux, fichiersEleve, lireGrille, modeleGrille, chargerVerificateur, verifier, exporterExcel, extraireArchive };

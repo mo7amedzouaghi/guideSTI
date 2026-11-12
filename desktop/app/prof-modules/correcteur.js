@@ -26,6 +26,7 @@
   function totalEleve(e) { return Math.round(dev.grille.reduce(function (a, c) { return a + (pts(e, c) || 0); }, 0) * 100) / 100; }
   function sur20(t) { var m = maxTotal(); return m ? Math.round(t * 2000 / m) / 100 : 0; }
   function teinte(n) { return n >= 14 ? "ok" : n >= 10 ? "moyen" : "ko"; }
+  function reference(e) { var v = (dev.resultats[e.id] || {})._reference; return v === undefined || v === null || v === "" ? null : Number(v); }
 
   /* ================================================== liste */
   async function liste(choix) {
@@ -79,6 +80,33 @@
     ({ fichiers: vueFichiers, grille: vueGrille, notes: vueNotes })[onglet]();
   }
 
+  /* ---------- grille proposée à partir de l'énoncé */
+  function etatProposition() {
+    var p = dev.proposition;
+    if (!p) return "";
+    if (p.erreur) return ' <span style="color:var(--rouge)">— ' + esc(p.erreur) + "</span>";
+    return " — barème : " + esc(p.source || "");
+  }
+  function annoncerProposition() {
+    var p = dev.proposition;
+    if (!p) return;
+    if (p.erreur) { S.toast(p.erreur, "ko"); return; }
+    if (p.applique === "grille") S.toast("Grille proposée : " + p.criteres + " critère(s), " + n2(p.total) + " points — vérifiez-la dans l'onglet 2", "ok");
+    else if (p.applique) S.toast("Grille officielle : " + p.applique + " à partir de l'énoncé", "ok");
+    else S.toast("Énoncé analysé. Votre grille est conservée (« Proposer la grille » pour la remplacer).", "ok");
+  }
+  async function proposer() {
+    var mode = "remplacer";
+    if (dev.grille.length) {
+      var v = await S.dialogue({ titre: "Grille proposée à partir de l'énoncé", valider: "Appliquer", champs: [{ id: "mode", label: "Votre grille actuelle", type: "select", valeur: dev.grille.every(function (c) { return c.verif === "manuel"; }) ? "completer" : "remplacer",
+        options: [["remplacer", "Remplacer par la grille proposée (notes effacées)"], ["completer", "Garder mon barème, ajouter les vérifications aux critères manuels"]] }] });
+      if (!v) return;
+      mode = v.mode;
+    }
+    dev = await C.proposer(dev.id, mode);
+    rendre(); liste(); annoncerProposition();
+  }
+
   /* ---------- 1. fichiers */
   function vueFichiers() {
     var sqlUtile = dev.grille.some(function (c) { return c.verif === "sql"; });
@@ -86,10 +114,12 @@
       return '<div class="cr-source' + (ok ? " ok" : "") + '"><div class="cr-ico">' + ico + "</div><div class=\"cr-src-corps\"><h3>" + titre + "</h3><p>" + etat + "</p>" + (texte ? '<p class="m-aide">' + texte + "</p>" : "") + '<div class="rangee">' + boutons + "</div></div></div>";
     };
     var h = '<div class="cr-sources">' +
-      carte("📄", "Énoncé", dev.enonce ? "✔ " + esc(dev.enonce.original) : "Aucun énoncé joint (facultatif).", !!dev.enonce,
-        '<button type="button" class="btn sec" data-a="enonce">Joindre l\'énoncé</button>' + (dev.enonce ? '<button type="button" class="btn sec" data-a="voirEnonce">Ouvrir</button>' : ""), "PDF, Word ou page HTML : gardé avec le devoir pour la correction.") +
-      carte("📋", "Grille d'évaluation", dev.grille.length ? "✔ " + dev.grille.length + " critère(s), " + n2(maxTotal()) + " points" + (dev.grilleSource ? " — " + esc(dev.grilleSource) : "") : "Aucune grille.", !!dev.grille.length,
-        '<button type="button" class="btn" data-a="grille">Importer la grille (Excel)</button><button type="button" class="btn sec" data-a="modele">Modèle de grille</button>', "Colonnes : Question · Critère · Points · Vérification · Fichier · Paramètre. Une grille sans les trois dernières colonnes est acceptée : tous les critères sont alors notés à la main.") +
+      carte("📄", "Énoncé", dev.enonce ? "✔ " + esc(dev.enonce.original) + etatProposition() : "Aucun énoncé joint.", !!dev.enonce,
+        '<button type="button" class="btn' + (dev.enonce ? " sec" : "") + '" data-a="enonce">Joindre l\'énoncé</button>' + (dev.enonce ? '<button type="button" class="btn sec" data-a="voirEnonce">Ouvrir</button><button type="button" class="btn sec" data-a="proposer">↻ Proposer la grille</button>' : ""),
+        "PDF, Word, ODT ou HTML. L'énoncé est analysé : parties, questions et barème du sujet (points des questions, tableau « Barème », points des exercices) donnent une grille proposée, que vous pouvez modifier.") +
+      carte("📋", "Grille d'évaluation", dev.grille.length ? "✔ " + dev.grille.length + " critère(s), " + n2(maxTotal()) + " points" + (dev.grilleSource ? " — " + esc(dev.grilleSource) : "") : (dev.enonce ? "Aucune grille : relancez « Proposer la grille »." : "Proposée automatiquement dès que l'énoncé est joint."), !!dev.grille.length,
+        (dev.grille.length ? '<button type="button" class="btn sec" data-a="voirGrille">Voir / modifier</button>' : "") + '<button type="button" class="btn sec" data-a="grille">Importer une grille (Excel)</button><button type="button" class="btn sec" data-a="modele">Modèle de grille</button>',
+        "Facultatif : la grille proposée à partir de l'énoncé suffit. Excel accepté : grille officielle (ligne « Détail », barème conservé et vérifications ajoutées depuis l'énoncé) ou grille Question · Critère · Points · Vérification · Fichier · Paramètre.") +
       carte("🗄️", "Base de référence SQL", dev.base ? "✔ " + esc(dev.base.original) + " — " + esc((dev.base.tables || []).join(", ")) + (dev.base.erreurs ? " · " + dev.base.erreurs + " instruction(s) ignorée(s)" : "") : (sqlUtile ? "⚠ Nécessaire : la grille contient des vérifications SQL." : "Facultative (devoirs de bases de données)."), !!dev.base,
         '<button type="button" class="btn sec" data-a="base">Joindre le script .sql</button>', "Export phpMyAdmin ou script CREATE TABLE + INSERT INTO : les requêtes des élèves sont exécutées sur cette base.") +
       carte("🧩", "Ressources fournies aux élèves", dev.ressources ? "✔ " + esc(dev.ressources.original) + " — " + dev.ressources.fichiers + " fichier(s)" : "Facultatif.", !!dev.ressources,
@@ -98,8 +128,8 @@
         '<button type="button" class="btn" data-a="rar">Importer l\'archive RAR / ZIP</button><button type="button" class="btn sec" data-a="dossierTravaux">…ou un dossier</button>', "Une archive contenant un dossier (ou une archive) par élève, nommé avec son nom. Les archives imbriquées sont extraites automatiquement.") +
       "</div><div id=\"journal\"></div>";
     if (dev.eleves.length) {
-      h += '<div class="m-carte" style="--c:var(--sarcelle)"><h2>Élèves repérés<span class="pts">' + dev.eleves.length + '</span></h2><p class="m-aide">Vérifiez les noms : ils sont tirés des dossiers (ou archives) de l\'archive. Cliquez sur un nom pour le corriger.</p><div class="cr-eleves">' +
-        dev.eleves.map(function (e) { return '<button type="button" class="cr-eleve" data-e="' + e.id + '"><b>' + esc(e.nom) + "</b><small>" + e.fichiers + " fichier(s)</small></button>"; }).join("") + "</div></div>";
+      h += '<div class="m-carte" style="--c:var(--sarcelle)"><h2>Élèves repérés<span class="pts">' + dev.eleves.length + '</span></h2><p class="m-aide">Vérifiez les noms : ils sont tirés des dossiers (ou archives) de l\'archive. Cliquez sur un nom pour le corriger ou activer la correction adaptée (élève en difficulté : erreurs de forme ignorées, pénalités plafonnées à 1 point).</p><div class="cr-eleves">' +
+        dev.eleves.map(function (e) { return '<button type="button" class="cr-eleve' + (e.difficulte ? " adapte" : "") + '" data-e="' + e.id + '"><b>' + esc(e.nom) + "</b><small>" + e.fichiers + " fichier(s)" + (e.difficulte ? " · correction adaptée" : "") + "</small></button>"; }).join("") + "</div></div>";
     }
     if (dev.grille.length && dev.eleves.length) h += '<p><button type="button" class="btn or" data-a="aller" style="font-size:16px;padding:13px 20px">▶ Passer à la correction</button></p>';
     $("corps").innerHTML = h;
@@ -107,14 +137,21 @@
       var b = e.target.closest("[data-a]"), el = e.target.closest("[data-e]");
       if (el) {
         var x = dev.eleves.find(function (y) { return y.id === el.dataset.e; });
-        var v = await S.dialogue({ titre: "Nom de l'élève", valider: "Enregistrer", champs: [{ id: "nom", label: "Nom et prénom", valeur: x.nom, requis: true }] });
-        if (v) { x.nom = v.nom; await sauver({ eleves: dev.eleves }); rendre(); }
+        var v = await S.dialogue({ titre: "Élève", valider: "Enregistrer", champs: [{ id: "nom", label: "Nom et prénom", valeur: x.nom, requis: true },
+          { id: "dif", label: "Correction", type: "select", valeur: x.difficulte ? "1" : "0", options: [["0", "normale"], ["1", "adaptée (élève en difficulté)"]] }] });
+        if (v) { x.nom = v.nom; x.difficulte = v.dif === "1"; await sauver({ eleves: dev.eleves }); rendre(); }
         return;
       }
       if (!b) return;
       var a = b.dataset.a;
       try {
-        if (a === "enonce" || a === "base") { var r = await C.joindre(dev.id, a); if (r) { dev = r; rendre(); } }
+        if (a === "enonce" || a === "base") {
+          if (a === "enonce") $("journal").innerHTML = '<div class="m-carte"><p class="m-aide">Analyse de l\'énoncé…</p><div class="barre-prog indet"><i></i></div></div>';
+          var r = await C.joindre(dev.id, a); $("journal").innerHTML = "";
+          if (r) { dev = r; rendre(); liste(); if (a === "enonce") annoncerProposition(); }
+        }
+        if (a === "proposer") await proposer();
+        if (a === "voirGrille") { onglet = "grille"; S.ecrire("sti-cor-onglet", onglet); rendre(); }
         if (a === "voirEnonce") C.ouvrirEnonce(dev.id);
         if (a === "ressDossier" || a === "ressArchive" || a === "ressRetirer") { var rr = await C.ressources(dev.id, a === "ressDossier" ? "dossier" : a === "ressArchive" ? "archive" : "retirer"); if (rr) { dev = rr; rendre(); S.toast(dev.ressources ? dev.ressources.fichiers + " ressource(s) jointe(s)" : "Ressources retirées", "ok"); } }
         if (a === "grille") { var g = await C.importerGrille(dev.id); if (g) { dev = g; S.toast(dev.grille.length + " critère(s) importé(s)", "ok"); rendre(); liste(); } }
@@ -132,14 +169,18 @@
 
   /* ---------- 2. grille */
   function vueGrille() {
-    var h = '<div class="m-carte" style="--c:var(--n3)"><h2>Grille d\'évaluation<span class="pts" id="g-total"></span></h2>' +
+    var P = dev.proposition, bandeau = P && !P.erreur && P.remarques ? '<div class="m-carte cr-propose" style="--c:var(--or)"><h2>Grille proposée à partir de l\'énoncé</h2><ul>' + P.remarques.map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("") +
+      '</ul><p class="m-aide">Tout reste modifiable ci-dessous : libellés, points, vérifications. Pour les questions SQL, collez la requête attendue dans « Paramètre ». Enregistrez puis relancez la correction.</p></div>' : "";
+    var h = bandeau + '<div class="m-carte" style="--c:var(--n3)"><h2>Grille d\'évaluation<span class="pts" id="g-total"></span></h2>' +
       '<p class="m-aide">Une ligne par critère. Les critères d\'une même question sont additionnés dans l\'export Excel. Le paramètre dépend de la vérification choisie (survolez la liste).</p>' +
-      '<div style="overflow:auto"><table class="t cr-grille"><thead><tr><th style="width:80px">Question</th><th>Critère</th><th style="width:70px">Points</th><th style="width:150px">Vérification</th><th style="width:120px">Fichier</th><th>Paramètre</th><th style="width:40px"></th></tr></thead><tbody id="g-corps"></tbody></table></div>' +
+      '<div style="overflow:auto"><table class="t cr-grille"><thead><tr><th style="width:150px">Question</th><th>Critère</th><th style="width:70px">Points</th><th style="width:150px">Vérification</th><th style="width:120px">Fichier</th><th>Paramètre</th><th style="width:40px"></th></tr></thead><tbody id="g-corps"></tbody></table></div>' +
       '<div class="rangee" style="margin-top:12px"><button type="button" class="btn sec" id="g-ajout">＋ Ajouter un critère</button><button type="button" class="btn" id="g-sauver">✔ Enregistrer la grille</button>' +
-      '<button type="button" class="btn sec" id="g-xlsx">⇩ Exporter la grille (Excel)</button><button type="button" class="btn sec" id="g-import">⇧ Importer une grille</button></div></div>' +
-      carteTolerance();
+      '<button type="button" class="btn sec" id="g-xlsx">⇩ Exporter la grille (Excel)</button><button type="button" class="btn sec" id="g-import">⇧ Importer une grille</button>' +
+      (dev.enonce ? '<button type="button" class="btn sec" id="g-proposer">↻ Proposer depuis l\'énoncé</button>' : "") + "</div></div>" +
+      carteReglages() + carteTolerance();
     $("corps").innerHTML = h;
-    brancherTolerance();
+    brancherTolerance(); brancherReglages();
+    if ($("g-proposer")) $("g-proposer").addEventListener("click", async function () { try { await proposer(); } catch (err) { S.toast(S.msg(err), "ko"); } });
     function ligne(c) {
       return '<tr data-id="' + esc(c.id) + '"><td><input type="text" data-k="question" value="' + esc(c.question) + '"></td><td><textarea rows="2" data-k="critere">' + esc(c.critere) + '</textarea></td>' +
         '<td><input type="text" data-k="points" value="' + n2(c.points) + '"></td><td><select data-k="verif" title="' + esc(AIDE[c.verif] || "") + '">' + VERIFS.map(function (v) { return '<option value="' + v[0] + '"' + (v[0] === c.verif ? " selected" : "") + ">" + v[1] + "</option>"; }).join("") + "</select></td>" +
@@ -170,6 +211,30 @@
     $("g-import").addEventListener("click", async function () { try { var g = await C.importerGrille(dev.id); if (g) { dev = g; dessiner(); S.toast(dev.grille.length + " critère(s) importé(s)", "ok"); } } catch (err) { S.toast(S.msg(err), "ko"); } });
   }
 
+  /* ---------- réglages de notation (personnalisation du devoir) */
+  var REGL = { pas: 0.25, arrondi: "proche", parType: true, plafond: 0, ecartAnnexe: 0.25, erreurSql: 0.25 };
+  function reglages() { return Object.assign({}, REGL, dev.reglages || {}); }
+  function carteReglages() {
+    var r = reglages(), sel = function (id, val, opts) { return '<select id="' + id + '">' + opts.map(function (o) { return '<option value="' + o[0] + '"' + (String(o[0]) === String(val) ? " selected" : "") + ">" + o[1] + "</option>"; }).join("") + "</select>"; };
+    return '<div class="m-carte" style="--c:var(--n2)"><h2>Réglages de notation</h2><p class="m-aide">Comme une correction à la main : chaque critère est arrondi au pas choisi, une erreur de forme coûte une fois par type sur toute la copie.</p><div class="cr-regl">' +
+      "<label>Arrondi de chaque critère " + sel("r-pas", r.pas, [[0.25, "au quart (0,25)"], [0.5, "au demi (0,5)"], [0, "sans arrondi (0,01)"]]) + "</label>" +
+      "<label>Sens " + sel("r-arr", r.arrondi, [["proche", "le plus proche"], ["superieur", "supérieur (favorable)"], ["inferieur", "inférieur"]]) + "</label>" +
+      "<label>Erreur de forme pénalisée " + sel("r-type", r.parType ? "1" : "0", [["1", "une fois par type (copie)"], ["0", "une fois par occurrence"]]) + "</label>" +
+      "<label>Plafond des pénalités " + sel("r-plaf", r.plafond, [[0, "aucun"], [0.5, "0,5 pt"], [1, "1 pt"], [2, "2 pts"], [3, "3 pts"]]) + "</label>" +
+      "<label>Écart à l'annexe (par type) " + sel("r-annexe", r.ecartAnnexe, [[0, "toléré"], [0.25, "−0,25"], [0.5, "−0,5"], [1, "−1"]]) + "</label>" +
+      "<label>Erreur dans une requête SQL (par type) " + sel("r-sql", r.erreurSql, [[0.25, "−0,25"], [0.5, "−0,5"], [1, "−1"]]) + "</label>" +
+      "</div></div>";
+  }
+  function brancherReglages() {
+    ["r-pas", "r-arr", "r-type", "r-plaf", "r-annexe", "r-sql"].forEach(function (id) {
+      $(id).addEventListener("change", async function () {
+        dev.reglages = { pas: Number($("r-pas").value), arrondi: $("r-arr").value, parType: $("r-type").value === "1", plafond: Number($("r-plaf").value), ecartAnnexe: Number($("r-annexe").value), erreurSql: Number($("r-sql").value) };
+        await sauver({ reglages: dev.reglages });
+        S.toast("Réglages enregistrés — relancez la correction pour les appliquer", "ok");
+      });
+    });
+  }
+
   /* ---------- tolérance aux petites erreurs (règles validées par l'enseignant) */
   var REGLES = [
     ["A1", "Parenthèse oubliée ou en trop (JS)", "if (n == \"\" {"],
@@ -186,19 +251,21 @@
     ["C1", "Nom approché cherché par « contient »", "afficherDat au lieu de afficherDate"],
     ["C2", "SQL : étiquettes -- Qn oubliées", "requêtes sans commentaire"],
     ["C3", "SQL : colonnes dans un autre ordre", "SELECT prenom, nom"],
-    ["D3", "Faute de frappe dans un identifiant (id)", "id=\"resulat\" / getElementById(\"resultat\")"]
+    ["D3", "Faute de frappe dans un identifiant (id)", "id=\"resulat\" / getElementById(\"resultat\")"],
+    ["D4", "Message d'alerte reformulé (affiché au bon moment)", "« Nom obligatoire » au lieu de « Saisir le nom »"]
   ];
-  var DEFAUT = { active: true, max: 3, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A7: 0.25, A9: 0, A10: 0.25, B1: 0, B2: 0, C1: 0.25, D3: 0.25 } };
+  var DEFAUT = { active: true, max: 5, regles: { A1: 0.25, A2: 0.25, A4: 0.25, A5: 0.25, A6: 0.25, A7: 0.25, A8: 0.25, A9: 0, A10: 0.25, B1: 0, B2: 0, C1: 0.25, C2: 0, C3: 0.25, D3: 0.25, D4: 0 } };
   function tol() {
     var t = dev.tolerance;
-    if (t && t.regles) ["B1", "B2"].forEach(function (k) { if ((t.connues || []).indexOf(k) < 0 && !(k in t.regles)) { t = JSON.parse(JSON.stringify(t)); t.regles[k] = DEFAUT.regles[k]; } });
+    // règles ajoutées depuis le réglage de ce devoir : valeur par défaut
+    if (t && t.regles) { var connues = t.connues || Object.keys(t.regles); Object.keys(DEFAUT.regles).forEach(function (k) { if (connues.indexOf(k) < 0 && !(k in t.regles)) { t = JSON.parse(JSON.stringify(t)); t.regles[k] = DEFAUT.regles[k]; } }); }
     return t && t.regles ? t : { active: !t || t.active !== false, max: DEFAUT.max, regles: Object.assign({}, DEFAUT.regles) }; }
   function carteTolerance() {
     var t = tol(), montants = [[0, "toléré (0 pt)"], [0.25, "−0,25 pt"], [0.5, "−0,5 pt"], [1, "−1 pt"]];
     return '<div class="m-carte" style="--c:var(--n4)"><h2>Tolérance aux petites erreurs</h2>' +
-      '<p class="m-aide">Pour chaque règle cochée, l\'application répare une copie du travail, rejoue le test et retire le montant choisi, une seule fois par élève même si l\'erreur touche plusieurs critères. Les critères concernés sont marqués « à revoir ». Une erreur de logique n\'est jamais réparée.</p>' +
+      '<p class="m-aide">Pour chaque règle cochée, l\'application répare une copie du travail, rejoue le test et retire le montant choisi, une seule fois par type d\'erreur sur la copie, même si l\'erreur se répète ou touche plusieurs critères. Les critères concernés sont marqués « à revoir ». Une erreur de logique n\'est jamais réparée.</p>' +
       '<div class="rangee" style="margin-bottom:10px"><label><input type="checkbox" id="t-active"' + (t.active ? " checked" : "") + '> Correction tolérante activée</label>' +
-      '<label>Erreurs réparées au plus par page <select id="t-max">' + [1, 2, 3, 5].map(function (n) { return '<option' + (n === Number(t.max) ? " selected" : "") + ">" + n + "</option>"; }).join("") + "</select></label>" +
+      '<label>Erreurs réparées au plus par page <select id="t-max">' + [1, 2, 3, 5, 8].map(function (n) { return '<option' + (n === Number(t.max) ? " selected" : "") + ">" + n + "</option>"; }).join("") + "</select></label>" +
       '<button type="button" class="btn sec" id="t-defaut">Revenir aux règles validées</button></div>' +
       '<table class="t" style="--c:var(--n4)"><thead><tr><th style="width:60px">Règle</th><th>Erreur de l\'élève</th><th>Exemple</th><th style="width:70px">Appliquer</th><th style="width:150px">Pénalité</th></tr></thead><tbody>' +
       REGLES.map(function (r) {
@@ -226,6 +293,15 @@
     });
   }
 
+  // comparaison avec les copies corrigées à la main (colonne « Réf. ») : écart moyen
+  function bilanReference() {
+    var l = dev.eleves.filter(function (e) { return reference(e) !== null; });
+    if (!l.length) return "";
+    var ec = l.map(function (e) { return sur20(totalEleve(e)) - reference(e); }), m = ec.reduce(function (a, b) { return a + b; }, 0) / ec.length;
+    var abs = ec.reduce(function (a, b) { return a + Math.abs(b); }, 0) / ec.length;
+    return '<div class="bilan-c" style="--c:var(--sarcelle)"><b>' + (m > 0 ? "+" : "") + n2(m) + '</b><span>écart moyen avec vos ' + l.length + " correction(s) à la main (écart absolu " + n2(abs) + ")</span></div>";
+  }
+
   /* ---------- 3. correction et notes */
   function vueNotes() {
     if (!dev.grille.length || !dev.eleves.length) { $("corps").innerHTML = '<div class="m-carte"><p class="vide">Importez d\'abord la grille et les travaux (onglet « Fichiers »).</p></div>'; return; }
@@ -238,9 +314,9 @@
       var aSaisir = 0, aRevoir = 0; dev.eleves.forEach(function (e) { dev.grille.forEach(function (c) { var r = (dev.resultats[e.id] || {})[c.id] || {}; if (pts(e, c) === null) aSaisir++; if (r.revoir && !r.modifie) aRevoir++; }); });
       h += '<div class="cartes-bilan"><div class="bilan-c"><b>' + n2(moy) + '</b><span>moyenne /20</span></div><div class="bilan-c" style="--c:var(--n2)"><b>' + dev.eleves.filter(function (e) { return sur20(totalEleve(e)) >= 10; }).length + "/" + dev.eleves.length +
         '</b><span>élèves ≥ 10</span></div><div class="bilan-c" style="--c:var(--orange)"><b>' + aSaisir + "</b><span>note(s) à saisir (critères manuels)</span></div>" +
-        '<div class="bilan-c" style="--c:var(--n4)"><b>' + aRevoir + "</b><span>critère(s) à revoir (tolérance appliquée)</span></div></div>";
+        '<div class="bilan-c" style="--c:var(--n4)"><b>' + aRevoir + "</b><span>critère(s) à revoir (tolérance appliquée)</span></div>" + bilanReference() + "</div>";
       h += '<div class="m-carte" style="--c:var(--n4)"><h2>Grille détaillée<span class="pts">cliquez sur un nom pour voir le travail</span></h2><div class="cr-mat-wrap"><table class="t cr-mat"><thead><tr><th rowspan="2" class="cr-nom">Élève</th>' +
-        qs.map(function (q, i) { return '<th colspan="' + (q.criteres.length + 1) + '" class="q' + (i % 6) + '">' + esc(q.nom) + "</th>"; }).join("") + '<th rowspan="2">Total<br>/' + n2(maxTotal()) + '</th><th rowspan="2">Note<br>/20</th></tr><tr>' +
+        qs.map(function (q, i) { return '<th colspan="' + (q.criteres.length + 1) + '" class="q' + (i % 6) + '">' + esc(q.nom) + "</th>"; }).join("") + '<th rowspan="2">Total<br>/' + n2(maxTotal()) + '</th><th rowspan="2">Note<br>/20</th><th rowspan="2" title="Votre note à la main (facultatif) : l\'écart s\'affiche à côté">Réf.<br>/20</th><th rowspan="2">Écart</th></tr><tr>' +
         qs.map(function (q, i) { return q.criteres.map(function (c) { return '<th class="crit q' + (i % 6) + '" title="' + esc(c.critere + " — " + (AIDE[c.verif] || "")) + '">' + esc(c.critere.length > 26 ? c.critere.slice(0, 24) + "…" : c.critere) + "<br><small>/" + n2(c.points) + (c.verif === "manuel" ? " ✎" : "") + "</small></th>"; }).join("") + '<th class="crit q' + (i % 6) + ' tq">Σ</th>'; }).join("") + "</tr></thead><tbody>" +
         dev.eleves.map(function (e) {
           var t = totalEleve(e), n = sur20(t);
@@ -251,9 +327,10 @@
                 var cl = v === null ? "vide" : v >= c.points ? "plein" : v === 0 ? "zero" : "part";
                 return '<td class="' + cl + (r.modifie ? " modif" : "") + (r.revoir && !r.modifie ? " revoir" : "") + '" title="' + esc(r.justif || "") + '"><input type="text" data-c="' + c.id + '" value="' + n2(v) + '"></td>';
               }).join("") + '<td class="tq"><b>' + n2(q.criteres.reduce(function (a, c) { return a + (pts(e, c) || 0); }, 0)) + "</b></td>";
-            }).join("") + '<td class="tq"><b>' + n2(t) + '</b></td><td class="note ' + teinte(n) + '"><b>' + n2(n) + "</b></td></tr>";
+            }).join("") + '<td class="tq"><b>' + n2(t) + '</b></td><td class="note ' + teinte(n) + '"><b>' + n2(n) + (dev.grille.some(function (c) { return pts(e, c) === null; }) ? '<small title="critère(s) à noter à la main"> *</small>' : "") + "</b></td>" +
+              '<td class="ref"><input type="text" data-ref="1" value="' + n2(reference(e)) + '" placeholder="—"></td><td class="ecart">' + (reference(e) === null ? "" : (n - reference(e) > 0 ? "+" : "") + n2(Math.round((n - reference(e)) * 100) / 100)) + "</td></tr>";
         }).join("") + "</tbody></table></div>" +
-        '<p class="cr-legende"><span class="plein">points complets</span><span class="part">partiels</span><span class="zero">0</span><span class="vide">à saisir</span><span class="modif">modifié à la main</span><span class="revoir">à revoir (tolérance)</span> · Survolez une case pour la justification automatique.</p></div>';
+        '<p class="cr-legende"><span class="plein">points complets</span><span class="part">partiels</span><span class="zero">0</span><span class="vide">à saisir</span><span class="modif">modifié à la main</span><span class="revoir">à revoir (tolérance)</span> · * note provisoire (critères manuels à saisir) · Réf. : votre note à la main, pour comparer · Survolez une case pour la justification automatique.</p></div>';
     }
     h += '<div id="detail"></div>';
     $("corps").innerHTML = h;
@@ -273,7 +350,13 @@
     var tab = vue.querySelector(".cr-mat");
     if (tab) {
       tab.addEventListener("change", async function (e) {
-        var inp = e.target; if (!inp.dataset.c) return;
+        var inp = e.target;
+        if (inp.dataset.ref) {
+          var eid0 = inp.closest("tr").dataset.e, r0 = dev.resultats[eid0] = dev.resultats[eid0] || {};
+          r0._reference = inp.value.trim() === "" ? null : Math.max(0, Math.min(20, num(inp.value)));
+          await sauver({ resultats: dev.resultats }); rendre(); return;
+        }
+        if (!inp.dataset.c) return;
         var eid = inp.closest("tr").dataset.e, c = dev.grille.find(function (x) { return x.id === inp.dataset.c; });
         var v = inp.value.trim() === "" ? null : Math.max(0, Math.min(Number(c.points), num(inp.value)));
         var ancien = (dev.resultats[eid] = dev.resultats[eid] || {})[c.id] || {};

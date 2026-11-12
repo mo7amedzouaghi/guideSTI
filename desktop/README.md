@@ -65,6 +65,14 @@ Champs facultatifs pour un TP de bases de données : `"console": "sql"`, `"base"
 
 Types de parties : `tableau` (colonnes + nombre de lignes), `surprise` (déblocage en minutes, fiches attribuées par poste), `info` (texte).
 
+## Correcteur de devoirs (1.5) : grille proposée, notation comme à la main
+
+- **Grille proposée depuis l'énoncé** : en joignant le sujet (PDF, Word — numérotation automatique comprise —, ODT, HTML, texte), l'application repère parties, questions, sous-questions et le **barème du sujet** (points écrits à côté des questions, tableau « Barème / Grille d'évaluation », points des exercices ; sinon répartition sur 20). Chaque question reçoit ses vérifications (fichier, balises, propriétés CSS, fonctions JS, PHP, requête SQL) ; les questions de cours sont « manuel ». Tout reste modifiable (onglet 2, « ↻ Proposer depuis l'énoncé »). Une grille officielle (ligne « Détail ») importée garde son barème et reçoit les vérifications de l'énoncé.
+- **Notation** : chaque critère arrondi au quart (réglable) ; une erreur de forme coûte une fois **par type** sur la copie ; conformité à l'annexe : −0,25 par type d'écart (et non plus « moitié ou 0 ») ; code commenté ignoré ; motifs séparés par « | » avec ou sans espaces.
+- **SQL** : résultat identique → tous les points ; sinon −0,25 par type d'erreur (colonnes, tables, jointure, condition, GROUP BY, ORDER BY…), commande principale fausse → 0, requête largement fausse → éléments justes seulement ; INSERT/UPDATE/DELETE jugés sur l'état de la base ; requêtes sans « -- Qn » retrouvées dans le fichier.
+- **Personnalisation** : réglages de notation par devoir, correction adaptée par élève (erreurs de forme ignorées, pénalités ≤ 1 pt), message d'alerte reformulé accepté (D4), colonne « Réf. » pour saisir votre note à la main et voir l'écart.
+- **Export** : feuille « Grille officielle » (format correcteurAuto : une colonne par critère, ligne « Détail »), notes provisoires signalées.
+
 ## Correcteur de devoirs : la grille
 
 Une ligne par critère (le modèle s'obtient avec **Modèle de grille (Excel)**, feuille *Aide* incluse) :

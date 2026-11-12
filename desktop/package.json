@@ -1,7 +1,7 @@
 {
   "name": "sti-guide",
   "productName": "STI Guide",
-  "version": "1.4.5",
+  "version": "1.5.0",
   "description": "Guide du Programme STI — version bureau hors ligne (Espace Élève + Espace Prof, sans inscription)",
   "author": {
     "name": "Zouaghi Mohamed",
@@ -27,6 +27,7 @@
     "exceljs": "^4.4.0",
     "fflate": "^0.8.3",
     "node-unrar-js": "^2.0.2",
+    "pdf-parse": "^1.1.1",
     "sql.js": "^1.15.2"
   }
 }
